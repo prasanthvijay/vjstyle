@@ -67,6 +67,45 @@ class Users_model extends CI_Model
         }
         return $successMsg;
     }
+
+    public function getUserTypeList($usertypeid){
+
+        $userTypeArray = array();
+
+        $sql = "SELECT t.usertypeid, t.usertype, t.redirecturl FROM `tbl_usertype` t WHERE t.active = 'active' ";
+        if($usertypeid != null){
+            $sql = $sql . " and usertypeid = ".$usertypeid;
+        }
+        $sql = $sql . " order by usertypeid asc";
+        $userTypeQuery = $this->db->query($sql);
+        $k = 0;
+        foreach ($userTypeQuery->result() as $row)
+        {
+            $userTypeArray[$k]['usertypeid'] = $row->usertypeid;
+            $userTypeArray[$k]['usertype'] = $row->usertype;
+            $userTypeArray[$k]['redirecturl'] = $row->redirecturl;
+            $k++;
+        }
+
+        return $userTypeArray;
+    }
+
+    public function createUserMaster($userDetailsArray){
+
+    }
+
+    public function validateUserMaster($userDetailsArray){
+        $validationArray = array();
+        $validationArray['validateSuccess'] = 0;
+        $validationArray['errorMsg'] = "";
+
+        if(count($userDetailsArray)>0){
+            $validationArray['validateSuccess'] = 1;
+        } else {
+
+        }
+        return $validationArray;
+    }
 }
 
 ?>

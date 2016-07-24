@@ -54,6 +54,16 @@ $route['default_controller'] = 'Frontend';
 $route['dashboard'] = 'Frontend/dashboard';
 $route['checkLogin'] = 'Frontend/checkLogin';
 $route['logout'] = 'Frontend/logout';
+
+//User Masters
+$route['adminMaster'] = 'Frontend/adminMaster';
+$route['sellerMaster'] = 'Frontend/sellerMaster';
+$route['retailerShowRoomMaster'] = 'Frontend/retailerShowRoomMaster';
+$route['salesExecutiveMaster'] = 'Frontend/salesExecutiveMaster';
+$route['logout'] = 'Frontend/logout';
+$route['addUserMaster'] = 'Frontend/addUserMaster';
+
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 $route['default_controller'] = 'Frontend';

@@ -21,7 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/images/favicon_1.ico">
 
-    <title>Minton - Responsive Admin Dashboard Template</title>
+    <title><?php echo $title; ?></title>
 
     <link href="<?php echo base_url(); ?>assets/plugins/jquery-circliful/css/jquery.circliful.css" rel="stylesheet" type="text/css" />
 
