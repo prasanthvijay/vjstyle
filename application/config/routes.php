@@ -62,6 +62,7 @@ $route['retailerShowRoomMaster'] = 'Frontend/retailerShowRoomMaster';
 $route['salesExecutiveMaster'] = 'Frontend/salesExecutiveMaster';
 $route['logout'] = 'Frontend/logout';
 $route['addUserMaster'] = 'Frontend/addUserMaster';
+$route['getUserListDetails'] = 'Frontend/getUserListDetails';
 
 
 $route['404_override'] = '';

@@ -11,7 +11,7 @@
                     <a href="#"><i class="md md-pages"></i>Master </a>
                     <ul class="submenu">
                         <li><a href="adminMaster">Admin </a></li>
-                        <li><a href="sellerMaster">Seller </a></li>
+                        <!--<li><a href="sellerMaster">Seller </a></li>-->
                         <li><a href="retailerShowRoomMaster">Retailer Show Room </a></li>
                         <li><a href="salesExecutiveMaster">Sales Executive </a></li>
 <!--                        <li><a href="deliveryPersonMaster">Delivery Person </a></li>-->

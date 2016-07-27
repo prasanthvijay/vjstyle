@@ -149,20 +149,39 @@ class Frontend extends CI_Controller {
     public function retailerShowRoomMaster()
     {
         $dataheader['title'] = "Retailer Show Room Master";
+        $userTypeArray = $this->users_model->getUserTypeList("2"); //For admin
+        $dataheader['userTypeArray'] = $userTypeArray;
+        $dataheader['addUserMasterUrl'] = "addUserMaster";
+        $dataheader['fromUrl'] = "adminMaster";
         $this->load->view('layout/backend_header',$dataheader);
         $this->load->view('layout/backend_menu');
-        $this->load->view('frontend/frontend_dashboard');
+        $this->load->view('frontend/retailerShowRoomMaster');
         $this->load->view('layout/backend_footer');
     }
 
     public function salesExecutiveMaster()
     {
         $dataheader['title'] = "Sales Executive Master";
+        $userTypeArray = $this->users_model->getUserTypeList("2"); //For admin
+        $dataheader['userTypeArray'] = $userTypeArray;
+        $dataheader['addUserMasterUrl'] = "addUserMaster";
+        $dataheader['fromUrl'] = "adminMaster";
         $this->load->view('layout/backend_header',$dataheader);
         $this->load->view('layout/backend_menu');
-        $this->load->view('frontend/frontend_dashboard');
+        $this->load->view('frontend/salesExecutiveMaster');
         $this->load->view('layout/backend_footer');
     }
+
+    public function getUserListDetails()
+    {
+  
+	$usertypeid = $this->input->post('usertypeid');
+	$adminid = $this->input->post('adminid');
+	$retailerShowRoomId = $this->input->post('retailerShowRoomId');
+        $userArray = $this->users_model->getUsersList($usertypeid, $adminid, $retailerShowRoomId);
+	print_r($userArray);
+      	$this->load->view('frontend/getUserListDetails');
+    }	
 }
 
 ?>

@@ -25,6 +25,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <link href="<?php echo base_url(); ?>assets/plugins/jquery-circliful/css/jquery.circliful.css" rel="stylesheet" type="text/css" />
 
+
+	<link href="<?php echo base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+	<link href="<?php echo base_url(); ?>assets/plugins/datatables/buttons.bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="<?php echo base_url(); ?>assets/plugins/datatables/fixedHeader.bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="<?php echo base_url(); ?>assets/plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="<?php echo base_url(); ?>assets/plugins/datatables/scroller.bootstrap.min.css" rel="stylesheet" type="text/css" />
+
     <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url(); ?>assets/css/core.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url(); ?>assets/css/components.css" rel="stylesheet" type="text/css" />
@@ -172,3 +179,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
     <!-- End topbar -->
+<script src="<?php echo base_url(); ?>assets/js/jquery.min.js"></script>

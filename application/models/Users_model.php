@@ -90,6 +90,42 @@ class Users_model extends CI_Model
         return $userTypeArray;
     }
 
+    public function getUsersList($usertypeid, $adminid, $retailerShowRoomId){
+
+        $userArray = array();
+        $sql = "SELECT * FROM `tbl_user` t WHERE t.active = 'active' ";
+	if($adminid != "" && $adminid != null){
+		$sql .= " and adminid = '".$adminid."' "; 
+	}
+
+        if($usertypeid != null && $usertypeid != ""){
+            $sql = $sql . " and usertypeid = ".$usertypeid;
+        }
+
+        $sql = $sql . " order by userid desc";
+        $userQuery = $this->db->query($sql);
+        $k = 0;
+        foreach ($userQuery->result() as $row)
+        {
+            $userArray[$k]['userid'] = $row->userid;
+            $userArray[$k]['name'] = $row->name;
+	    $userArray[$k]['email'] = $row->email;
+	    $userArray[$k]['password'] = $row->password;
+            $userArray[$k]['usertypeid'] = $row->usertypeid;
+	    $userArray[$k]['adminid'] = $row->adminid;
+	    $userArray[$k]['mobile'] = $row->mobile;
+	    $userArray[$k]['address'] = $row->address;
+	    $userArray[$k]['doj'] = $row->doj;
+	    $userArray[$k]['dob'] = $row->dob;
+	    $userArray[$k]['lastlogin'] = $row->lastlogin;
+	    $userArray[$k]['createdat'] = $row->createdat;
+            $k++;
+        }
+
+        return $userArray;
+    }
+
+
     public function createUserMaster($userDetailsArray){
 
     }
