@@ -51,6 +51,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 //$route['default_controller'] = 'welcome';
 $route['default_controller'] = 'Frontend';
+$route['sales_controller'] = 'Sales';
+
+
+
+
 $route['dashboard'] = 'Frontend/dashboard';
 $route['checkLogin'] = 'Frontend/checkLogin';
 $route['logout'] = 'Frontend/logout';
@@ -63,6 +68,10 @@ $route['salesExecutiveMaster'] = 'Frontend/salesExecutiveMaster';
 $route['logout'] = 'Frontend/logout';
 $route['addUserMaster'] = 'Frontend/addUserMaster';
 $route['getUserListDetails'] = 'Frontend/getUserListDetails';
+
+
+//Sales 
+$route['pos'] = 'Sales/pos';
 
 
 $route['404_override'] = '';
