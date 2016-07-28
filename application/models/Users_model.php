@@ -127,9 +127,17 @@ class Users_model extends CI_Model
 
 
     public function createUserMaster($userDetailsArray){
-
+	 $sql = "INSERT INTO tbl_user (name,email,password,usertypeid,adminid,retailerShowRoomId,mobile,address,doj,dob,active,createdat) " ."VALUES (" .$this->db->escape($userDetailsArray['name']) ."," .$this->db->escape($userDetailsArray['email']) ."," .$this->db->escape($userDetailsArray['password']) ."," .$this->db->escape($userDetailsArray['usertypeid']) ."," .$this->db->escape($userDetailsArray['adminid']) ."," .$this->db->escape($userDetailsArray['retailerShowRoomId']) ."," .$this->db->escape($userDetailsArray['mobile']) ."," .$this->db->escape($userDetailsArray['address']) ."," .$this->db->escape($userDetailsArray['doj']) ."," .$this->db->escape($userDetailsArray['dob']) ."," .$this->db->escape($userDetailsArray['active']) ."," .$this->db->escape($userDetailsArray['createdAt']) .")";
+			$this->db->query($sql);
     }
-
+ public function createBrandMaster($BrandDetailsArray){
+	 $sql = "INSERT INTO tbl_brand (brandname,adminid,active,createdat) " ."VALUES (" .$this->db->escape($BrandDetailsArray['brandname']) ."," .$this->db->escape($BrandDetailsArray['adminid']) ."," .$this->db->escape($BrandDetailsArray['active']) ."," .$this->db->escape($BrandDetailsArray['createdAt']) .")";
+			$this->db->query($sql);
+    }
+	public function createProductMaster($ProductDetailsArray){
+	 $sql = "INSERT INTO tbl_product (productname,productrate,availablequantity,barcode,productsize,categorytypeid,brandid,adminid,active,createdat) " ."VALUES (" .$this->db->escape($ProductDetailsArray['productname']) ."," .$this->db->escape($ProductDetailsArray['price']) ."," .$this->db->escape($ProductDetailsArray['quantity']) ."," .$this->db->escape($ProductDetailsArray['barcode']) ."," .$this->db->escape($ProductDetailsArray['size']) ."," .$this->db->escape($ProductDetailsArray['categorytypeid']) ."," .$this->db->escape($ProductDetailsArray['brandname']) ."," .$this->db->escape($ProductDetailsArray['adminid']) ."," .$this->db->escape($ProductDetailsArray['active']) ."," .$this->db->escape($ProductDetailsArray['createdAtdate']) .")";
+			$this->db->query($sql);
+    }
     public function validateUserMaster($userDetailsArray){
         $validationArray = array();
         $validationArray['validateSuccess'] = 0;

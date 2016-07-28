@@ -29,19 +29,19 @@
 										<h3 class="panel-title">Add/Edit Admin</h3>
 									</div>
 									<div class="panel-body">
-										<form action="<?php echo $addUserMasterUrl; ?>" method="POST" data-parsley-validate novalidate>
+										<form action="<?php echo $addUserMasterUrl; ?>" method="POST" data-parsley-validate novalidate >
 											<input type="text" class="form-control" id="fromUrl" name="fromUrl" placeholder="fromUrl" value="<?php echo $fromUrl; ?>">
 											<div class="row">
 												<div class="col-md-6">
 													<div class="form-group">
 														<label for="name" class="control-label">Name</label>
-														<input type="text" class="form-control" id="name" name="name" placeholder="Name">
+														<input type="text" class="form-control" required id="name" name="name" placeholder="Name">
 													</div>
 												</div>
 												<div class="col-md-6">
 													<div class="form-group">
 														<label for="usertypeid" class="control-label">User Type</label>
-														<select name="usertypeid" id="usertypeid" class="form-control">
+														<select name="usertypeid" required id="usertypeid" class="form-control ">
 															<?php for($k=0; $k<count($userTypeArray); $k++) { ?>
 																<option value="<?php echo $userTypeArray[$k]['usertypeid']; ?>"><?php echo $userTypeArray[$k]['usertype']; ?></option>
 															<?php } ?>
@@ -53,13 +53,13 @@
 												<div class="col-md-6">
 													<div class="form-group">
 														<label for="email" class="control-label">Email</label>
-														<input type="text" class="form-control" id="email" name="email" placeholder="Email">
+														<input type="text" class="form-control" required parsley-type="email" id="email" name="email" placeholder="Email">
 													</div>
 												</div>
 												<div class="col-md-6">
 													<div class="form-group">
 														<label for="password" class="control-label">Password</label>
-														<input type="password" class="form-control" id="password" name="password" placeholder="Password">
+														<input type="password" class="form-control" id="password" name="password" required placeholder="Password">
 													</div>
 												</div>
 											</div>
@@ -67,19 +67,18 @@
 												<div class="col-md-4">
 													<div class="form-group">
 														<label for="field-4" class="control-label">Mobile</label>
-														<input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile">
+														<input  data-parsley-type="number" type="text" class="form-control" required id="mobile" name="mobile" placeholder="Mobile">
 													</div>
 												</div>
-												<div class="col-md-4">
+												<div class="col-md-4"> 
 													<div class="form-group">
 														<label for="doj" class="control-label">Date of Joining</label>
-														<input type="text" class="form-control" id="doj" name="doj" placeholder="DD-MM-YYYY">
-													</div>
+ <div class="input-group"><input type="text" class="form-control datepicker-autoclose" placeholder="DD/MM/YYYY"  name="doj" id="doj"><span class="input-group-addon bg-primary b-0 text-white"><i class="ion-calendar"></i></span></div>													</div>
 												</div>
 												<div class="col-md-4">
 													<div class="form-group">
 														<label for="dob" class="control-label">Date of Birth</label>
-														<input type="text" class="form-control" id="dob" name="dob" placeholder="DD-MM-YYYY">
+														 <div class="input-group"><input type="text" class="form-control datepicker-autoclose" placeholder="DD/MM/YYYY"  name="dob" id="dob"><span class="input-group-addon bg-primary b-0 text-white"><i class="ion-calendar"></i></span></div>
 													</div>
 												</div>
 											</div>
@@ -87,13 +86,13 @@
 												<div class="col-md-6">
 													<div class="form-group">
 														<label for="email" class="control-label">Upload Profile Photo</label>
-														<input type="file" class="form-control" id="profilephoto" name="profilephoto" >
+														<input  type="file" class="form-control" id="profilephoto" name="profilephoto" >
 													</div>
 												</div>
 												<div class="col-md-6">
 													<div class="form-group no-margin">
 														<label for="address" class="control-label">Address</label>
-														<textarea class="form-control autogrow" id="address" name="address" placeholder="Address" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
+														<textarea required class="form-control autogrow" id="address" name="address" placeholder="Address" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
 													</div>
 												</div>
 											</div>

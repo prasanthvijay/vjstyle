@@ -24,14 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <title><?php echo $title; ?></title>
 
     <link href="<?php echo base_url(); ?>assets/plugins/jquery-circliful/css/jquery.circliful.css" rel="stylesheet" type="text/css" />
-
-
-	<link href="<?php echo base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
-	<link href="<?php echo base_url(); ?>assets/plugins/datatables/buttons.bootstrap.min.css" rel="stylesheet" type="text/css" />
-	<link href="<?php echo base_url(); ?>assets/plugins/datatables/fixedHeader.bootstrap.min.css" rel="stylesheet" type="text/css" />
-	<link href="<?php echo base_url(); ?>assets/plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css" />
-	<link href="<?php echo base_url(); ?>assets/plugins/datatables/scroller.bootstrap.min.css" rel="stylesheet" type="text/css" />
-
+<link href="<?php echo base_url(); ?>assets/plugins/select2/select2.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url(); ?>assets/css/core.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url(); ?>assets/css/components.css" rel="stylesheet" type="text/css" />
@@ -39,6 +32,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link href="<?php echo base_url(); ?>assets/css/pages.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url(); ?>assets/css/menu.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url(); ?>assets/css/responsive.css" rel="stylesheet" type="text/css" />
+	<link href="<?php echo base_url(); ?>assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
 
     <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -72,7 +66,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
             <!-- Logo container-->
             <div class="logo">
-                <a href="index-2.html" class="logo"><i class="md md-equalizer"></i> <span>Minton</span> </a>
+                <a href="index-2.html" class="logo"><i class="md md-equalizer"></i> <span>Jonam</span> </a>
             </div>
             <!-- End Logo container-->
 
@@ -179,4 +173,3 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
     <!-- End topbar -->
-<script src="<?php echo base_url(); ?>assets/js/jquery.min.js"></script>

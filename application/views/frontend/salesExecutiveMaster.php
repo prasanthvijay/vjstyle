@@ -34,7 +34,7 @@
 										<h3 class="panel-title">Add/Edit Sales Executive</h3>
 									</div>
 									<div class="panel-body">
-										<form action="<?php echo $addUserMasterUrl; ?>" method="POST" data-parsley-validate novalidate>
+										<form action="<?php echo $addProductMaster; ?>" method="POST" data-parsley-validate novalidate>
 											<input type="text" class="form-control" id="fromUrl" name="fromUrl" placeholder="fromUrl" value="<?php echo $fromUrl; ?>">
 											<div class="row">
 												<div class="col-md-6">

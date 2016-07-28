@@ -11,7 +11,7 @@
 
 
 <!-- jQuery  -->
-
+<script src="<?php echo base_url(); ?>assets/js/jquery.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/detect.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/fastclick.js"></script>
@@ -35,34 +35,14 @@
 <!-- Page js  -->
 <script src="<?php echo base_url(); ?>assets/pages/jquery.dashboard.js"></script>
 
-
-        <!-- Datatables-->
-        <script src="<?php echo base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.js"></script>
-        <script src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.buttons.min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/plugins/datatables/buttons.bootstrap.min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/plugins/datatables/jszip.min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/plugins/datatables/pdfmake.min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/plugins/datatables/vfs_fonts.js"></script>
-        <script src="<?php echo base_url(); ?>assets/plugins/datatables/buttons.html5.min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/plugins/datatables/buttons.print.min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.fixedHeader.min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.keyTable.min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.responsive.min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/plugins/datatables/responsive.bootstrap.min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.scroller.min.js"></script>
-
-        <!-- Datatable init js -->
-        <script src="<?php echo base_url(); ?>assets/pages/datatables.init.js"></script>
-
+<script src="<?php echo base_url(); ?>assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 <!-- Custom main Js -->
 <script src="<?php echo base_url(); ?>assets/js/jquery.core.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.app.js"></script>
 
-
+<script type="text/javascript" src=" <?php echo base_url(); ?>assets/plugins/parsleyjs/dist/parsley.min.js"></script>
 <script type="text/javascript">
-    jQuery(document).ready(function($) {
-                $('#datatable-responsive').DataTable();
+    /*jQuery(document).ready(function($) {
         $('.counter').counterUp({
             delay: 100,
             time: 1200
@@ -71,6 +51,11 @@
     });
 
     /* BEGIN SVG WEATHER ICON */
+	
+	$(document).ready(function() {
+			
+						$('form').parsley();
+			});
     if (typeof Skycons !== 'undefined'){
         var icons = new Skycons(
             {"color": "#00b19d"},
@@ -87,9 +72,19 @@
             icons.set(list[i], list[i]);
         icons.play();
     };
-
+// Date Picker
+             
+                jQuery('.datepicker-autoclose').datepicker({
+                	autoclose: true,
+                	todayHighlight: true
+                });
+               
+				
+				
+				
 </script>
-
+<script>
+</script>
 </body>
 
 <!-- Mirrored from coderthemes.com/minton_1.6/green_hori/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jul 2016 21:45:33 GMT -->
