@@ -26,6 +26,7 @@ class Sales extends CI_Controller {
 		parent::__construct();
 		$this->load->helper(array('form', 'url'));
 		$this->load->model('users_model');
+		$this->load->model('pos_model');
 		$this->load->library('session');
 	}
 
@@ -38,6 +39,13 @@ class Sales extends CI_Controller {
 	public function pos()
     	{
 		$dataheader['title'] = "POS";
+
+		$tablename="tbl_product";
+		$fieldname=array('productid','productname');
+		$condition="t.adminid=1 and t.active=1";
+	
+		$productList = $this->pos_model->selectQueryList($tablename,$fieldname,$condition);
+		$dataheader['productList'] = $productList;
 		
 		$this->load->view('layout/backend_header',$dataheader);
 		$this->load->view('layout/backend_menu');

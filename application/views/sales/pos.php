@@ -75,7 +75,6 @@
 				<div class="card-box table-responsive">
 					<p class="text-muted m-b-20 font-13">
 						Point Of Sales
-
 						<form action="" method="POST" data-parsley-validate novalidate>
 							<div class="row">
 							    <div class="col-lg-8">
