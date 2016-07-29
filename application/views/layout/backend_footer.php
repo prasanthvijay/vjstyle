@@ -41,6 +41,11 @@
 <script src="<?php echo base_url(); ?>assets/js/jquery.app.js"></script>
 
 <script type="text/javascript" src=" <?php echo base_url(); ?>assets/plugins/parsleyjs/dist/parsley.min.js"></script>
+
+
+<!----Select2----------->
+<script src="<?php echo base_url(); ?>assets/plugins/select2/select2.min.js" type="text/javascript"></script>
+
 <script type="text/javascript">
     /*jQuery(document).ready(function($) {
         $('.counter').counterUp({
@@ -55,6 +60,7 @@
 	$(document).ready(function() {
 			
 						$('form').parsley();
+						$(".select2").select2();
 			});
     if (typeof Skycons !== 'undefined'){
         var icons = new Skycons(

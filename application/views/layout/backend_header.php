@@ -42,6 +42,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <![endif]-->
 
     <script src="<?php echo base_url(); ?>assets/js/modernizr.min.js"></script>
+
+
+
+	<!----------Select2------------>
+	<link href="<?php echo base_url(); ?>assets/plugins/select2/select2.css" rel="stylesheet" type="text/css" />
+
+
 <!--    <script>-->
 <!--        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){-->
 <!--                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),-->

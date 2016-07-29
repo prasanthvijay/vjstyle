@@ -22,12 +22,12 @@ class Sales extends CI_Controller {
 
 
 	public function __construct()
-    	{
-        parent::__construct();
-        $this->load->helper('url');
-        $this->load->database();
-        $this->load->library('session');
-    	}
+	{
+		parent::__construct();
+		$this->load->helper(array('form', 'url'));
+		$this->load->model('users_model');
+		$this->load->library('session');
+	}
 
 	public function index()
 	{
