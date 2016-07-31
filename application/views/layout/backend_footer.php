@@ -46,6 +46,11 @@
 <!----Select2----------->
 <script src="<?php echo base_url(); ?>assets/plugins/select2/select2.min.js" type="text/javascript"></script>
 
+
+<!-- Notification js -->
+        <script src="<?php echo base_url(); ?>assets/plugins/notifyjs/dist/notify.min.js"></script>
+        <script src="<?php echo base_url(); ?>assets/plugins/notifications/notify-metro.js"></script>
+
 <script type="text/javascript">
     /*jQuery(document).ready(function($) {
         $('.counter').counterUp({

@@ -51,6 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 //$route['default_controller'] = 'welcome';
 $route['default_controller'] = 'Frontend';
+$route['Sales_controller'] = 'sales';
 $route['dashboard'] = 'Frontend/dashboard';
 $route['checkLogin'] = 'Frontend/checkLogin';
 $route['logout'] = 'Frontend/logout';
@@ -66,6 +67,12 @@ $route['getUserListDetails'] = 'Frontend/getUserListDetails';
 $route['AddProduct'] = 'Frontend/AddProduct';
 $route['addProductMaster'] = 'Frontend/addProductMaster';
 $route['AddBrand'] = 'Frontend/AddBrand';
+
+
+//Sales
+$route['pos'] = 'sales/pos';
+$route['posajax'] = 'sales/posajax';
+
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
