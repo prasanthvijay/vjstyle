@@ -125,6 +125,29 @@ class Users_model extends CI_Model
         return $userArray;
     }
 
+public function getBrandList($adminid){
+
+        $BrandArray = array();
+       $sql = "SELECT * FROM `tbl_brand` t WHERE t.active = 'active' ";
+	if($adminid != "" && $adminid != null){
+		$sql .= " and adminid = '".$adminid."' "; 
+	}
+
+        $sql = $sql . " order by brandid desc";
+        $userQuery = $this->db->query($sql);
+        $k = 0;
+        foreach ($userQuery->result() as $row)
+        {
+            $BrandArray[$k]['brandid'] = $row->brandid;
+            $BrandArray[$k]['brandname'] = $row->brandname;
+	    $BrandArray[$k]['adminid'] = $row->adminid;
+	    $BrandArray[$k]['active'] = $row->active;
+            $BrandArray[$k]['createdat'] = $row->createdat;
+	    $k++;
+        }
+
+        return $BrandArray;
+    }
 
     public function createUserMaster($userDetailsArray){
 	 $sql = "INSERT INTO tbl_user (name,email,password,usertypeid,adminid,retailerShowRoomId,mobile,address,doj,dob,active,createdat) " ."VALUES (" .$this->db->escape($userDetailsArray['name']) ."," .$this->db->escape($userDetailsArray['email']) ."," .$this->db->escape($userDetailsArray['password']) ."," .$this->db->escape($userDetailsArray['usertypeid']) ."," .$this->db->escape($userDetailsArray['adminid']) ."," .$this->db->escape($userDetailsArray['retailerShowRoomId']) ."," .$this->db->escape($userDetailsArray['mobile']) ."," .$this->db->escape($userDetailsArray['address']) ."," .$this->db->escape($userDetailsArray['doj']) ."," .$this->db->escape($userDetailsArray['dob']) ."," .$this->db->escape($userDetailsArray['active']) ."," .$this->db->escape($userDetailsArray['createdAt']) .")";

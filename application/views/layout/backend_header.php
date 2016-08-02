@@ -46,7 +46,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 	<!----------Select2------------>
-	<link href="<?php echo base_url(); ?>assets/plugins/select2/select2.css" rel="stylesheet" type="text/css" />
+	
 
 
 <!--    <script>-->

@@ -188,16 +188,23 @@ class Frontend extends CI_Controller {
     {
 		$dataheader['title'] = "Add Product";
 		$dataheader['addProductMasterUrl'] = "addProductMaster";
-			$this->load->view('layout/backend_header',$dataheader);
-			$this->load->view('layout/backend_menu');
-       		$this->load->view('layout/backend_footer');
-  
-  
-	      	$this->load->view('frontend/AddProduct');
+		$this->load->view('layout/backend_header',$dataheader);
+		$this->load->view('layout/backend_menu');
+
+	$adminid = $this->session->userdata('userid');
+   	$BrandArray = $this->users_model->getBrandList($adminid);
+	
+  		$this->load->view('frontend/AddProduct');
+		$this->load->view('layout/backend_footer');
+		echo "<br><br><br><br><br>";
+ 	
+	
+
+	      	
     }	
 	 public function addProductMaster()
     {
-       print_r($_POST); 
+       //print_r($_POST); 
 	   $submit= $this->input->post('submit');
 	  
         $dataheader['addProductMasterUrl'] = "addProductMaster";
@@ -223,7 +230,7 @@ class Frontend extends CI_Controller {
         $errorMsg = $validationArray['errorMsg'];
         if($validateSuccess == 1){
             $userTypeArray = $this->users_model->createProductMaster($ProductDetailsArray); //For admin
-            //redirect("/AddProduct");
+            redirect("/AddProduct");
 			//print_r($ProductDetailsArray);
         } else {
             $output = array('status' => "2", 'message' => "Invalid Login!!");
@@ -248,7 +255,7 @@ class Frontend extends CI_Controller {
 				$errorMsg = $validationArray['errorMsg'];
         if($validateSuccess == 1){
             $userTypeArray = $this->users_model->createBrandMaster($BrandDetailsArray); //For admin
-            //redirect("/dashboard");
+            redirect("/dashboard");
 			
         } else {
             $output = array('status' => "2", 'message' => "Invalid Login!!");

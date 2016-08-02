@@ -4,7 +4,7 @@
                 <!-- Page-Title -->
                 <div class="row">
                     <div class="col-sm-12">
-                        <h4 class="page-title"><?php  echo $title; ?></h4>
+                        <h4 class="page-title"><?php print_r($BrandArray); echo $title; ?></h4>
 						
 		
                     </div>
@@ -26,7 +26,11 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Brand Name</label>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control" id="brandname" name="brandname" required data-parsley-name="name" placeholder="Brand Name" />
+                                                <select class="select2 select2-multiple" multiple="multiple" multiple data-placeholder="Choose ...">
+
+				                    <option value="AK">Alaska</option>
+				                    <option value="HI">Hawaii</option>
+						 </select>
                                             </div>
                                         </div>
                                         <div class="form-group">
