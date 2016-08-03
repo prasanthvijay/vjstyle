@@ -72,6 +72,7 @@ $route['AddBrand'] = 'Frontend/AddBrand';
 //Sales
 $route['pos'] = 'sales/pos';
 $route['posajax'] = 'sales/posajax';
+$route['receipt'] = 'sales/receipt/$1';
 
 
 $route['404_override'] = '';

@@ -80,7 +80,8 @@ class Pos_model extends CI_Model
 		'discount'=>$insertValue['totdiscount'],
 		'roundoff'=>$insertValue['roundoff'],
 		'Total'=>$insertValue['FinalTotal'],
-		'customerId'=>$customerId
+		'customerId'=>$customerId,
+		'date'=>date("Y-m-d H:i:s")
 		);
 
 		$this->db->insert('tbl_customerreceipt',$data);
@@ -102,6 +103,40 @@ class Pos_model extends CI_Model
 
 		
 	}
+
+    public function receiptDetails($receiptId){
+
+        
+	$this->db->select('*');
+	$this->db->where('id', $receiptId);
+	$q = $this->db->get('tbl_customerreceipt');
+	$returnValue['customerreceipt'] = $q->result_array();
+
+
+	$this->db->select('*');
+	$this->db->where('receiptId', $receiptId);
+	$q = $this->db->get('tbl_customerreceiptproduct');
+	$returnValue['productDetails'] = $q->result_array();
+
+
+	if(count($returnValue['customerreceipt'])>0)
+	{
+		$this->db->select('name,mobileno');
+		$this->db->where('id', $returnValue['customerreceipt'][0]['customerId']);
+		$q = $this->db->get('tbl_customer');
+		$returnValue['customer'] = $q->result_array();
+	}
+
+	if(count($returnValue['productDetails'])>0)
+	{
+		$this->db->select('productname,barcode');
+		$this->db->where('`productid` in ', '(select `productId` from `tbl_customerreceiptproduct` where `receiptId` = '.$receiptId.')', false);
+		$q = $this->db->get('tbl_product');
+		$returnValue['product'] = $q->result_array();
+	}
+
+        return $returnValue;
+    }
 	
 }
 

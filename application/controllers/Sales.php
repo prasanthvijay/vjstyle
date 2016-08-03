@@ -92,4 +92,20 @@ class Sales extends CI_Controller {
 		$productDetails = $this->pos_model->productDetails($productId);
 		echo json_encode($productDetails);
 	}
+
+	public function receipt($receiptId)
+	{
+
+		$dataheader['title'] = "Receipt";
+
+
+		$receiptDetails = $this->pos_model->receiptDetails($receiptId);
+
+		$dataheader['receiptDetails']=$receiptDetails;
+
+		$this->load->view('layout/backend_header',$dataheader);
+		$this->load->view('layout/backend_menu');
+		$this->load->view('sales/receipt');
+		$this->load->view('layout/backend_footer');
+	}
 }
