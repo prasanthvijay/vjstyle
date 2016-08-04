@@ -68,11 +68,7 @@ $route['AddProduct'] = 'Frontend/AddProduct';
 $route['addProductMaster'] = 'Frontend/addProductMaster';
 $route['AddBrand'] = 'Frontend/AddBrand';
 $route['BrandList'] = 'Frontend/BrandList';
-<<<<<<< HEAD
 $route['ProductList'] = 'Frontend/ProductList';
-=======
-
->>>>>>> 7d6b641c3b673f4198c7025007a31485c41a7550
 
 //Sales
 $route['pos'] = 'sales/pos';

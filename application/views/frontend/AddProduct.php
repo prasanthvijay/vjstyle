@@ -26,7 +26,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Brand Name</label>
                                             <div class="col-sm-6">
-                                                <select class="select2 form-control" >
+                                                <select class="select2 form-control" id="brandname" name="brandname">
 							<option value="">Select Brand</option>
 						<?php for($i=0;$i<count($BrandArray);$i++){ ?>
 				                    <option value="<?php echo $BrandArray[$i]['brandid']; ?>"><?php echo $BrandArray[$i]['brandname']; ?></option>
