@@ -282,6 +282,7 @@ public function AddBrand()
     }
 public function BrandList()
     {
+<<<<<<< HEAD
   
 	$adminid = $this->input->post('adminid');
 	$dataheader['title'] = "BrandList";
@@ -311,6 +312,17 @@ public function ProductList()
       	$this->load->view('frontend/ProductList');
 	$this->load->view('layout/backend_footer');
     }	
+=======
+  
+	$adminid = $this->input->post('adminid');
+	$dataheader['title'] = "BrandList";
+        $BrandList = $this->users_model->getBrandList($adminid);
+	print_r($BrandList);
+	$this->load->view('layout/backend_header',$dataheader);
+      	$this->load->view('frontend/BrandList');
+	$this->load->view('layout/backend_footer');
+    }		
+>>>>>>> 7d6b641c3b673f4198c7025007a31485c41a7550
 		
 }
 
