@@ -22,6 +22,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/images/favicon_1.ico">
 
     <title><?php echo $title; ?></title>
+<link href="<?php echo base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+        <link href="<?php echo base_url(); ?>assets/plugins/datatables/buttons.bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="<?php echo base_url(); ?>assets/plugins/datatables/fixedHeader.bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="<?php echo base_url(); ?>assets/plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="<?php echo base_url(); ?>assets/plugins/datatables/scroller.bootstrap.min.css" rel="stylesheet" type="text/css" />
 
     <link href="<?php echo base_url(); ?>assets/plugins/jquery-circliful/css/jquery.circliful.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo base_url(); ?>assets/plugins/select2/select2.css" rel="stylesheet" type="text/css" />
@@ -60,6 +65,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!--    </script>-->
 
 
+ 
 </head>
 
 

@@ -4,7 +4,7 @@
                 <!-- Page-Title -->
                 <div class="row">
                     <div class="col-sm-12">
-                        <h4 class="page-title"><?php print_r($BrandArray); echo $title; ?></h4>
+                        <h4 class="page-title"><?php echo $title; ?></h4>
 						
 		
                     </div>
@@ -26,10 +26,11 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Brand Name</label>
                                             <div class="col-sm-6">
-                                                <select class="select2 select2-multiple" multiple="multiple" multiple data-placeholder="Choose ...">
-
-				                    <option value="AK">Alaska</option>
-				                    <option value="HI">Hawaii</option>
+                                                <select class="select2 form-control" >
+							<option value="">Select Brand</option>
+						<?php for($i=0;$i<count($BrandArray);$i++){ ?>
+				                    <option value="<?php echo $BrandArray[$i]['brandid']; ?>"><?php echo $BrandArray[$i]['brandname']; ?></option>
+				             			<?php } ?>
 						 </select>
                                             </div>
                                         </div>

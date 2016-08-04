@@ -184,7 +184,9 @@ class Frontend extends CI_Controller {
 	print_r($userArray);
       	$this->load->view('frontend/getUserListDetails');
     }	
-	  public function AddProduct()
+
+
+public function AddProduct()
     {
 		$dataheader['title'] = "Add Product";
 		$dataheader['addProductMasterUrl'] = "addProductMaster";
@@ -208,42 +210,44 @@ class Frontend extends CI_Controller {
 	   $submit= $this->input->post('submit');
 	  
         $dataheader['addProductMasterUrl'] = "addProductMaster";
-		 if($submit=='product'){
-        $productname = $this->input->post('productname');
-        $brandname = $this->input->post('brandname');
-        $barcode = $this->input->post('barcode');
-        $size = $this->input->post('size');
-        $adminid = $this->session->userdata('userid');
-        $quantity = $this->input->post('quantity');
-        $price = $this->input->post('price');
-		$categorytypeid = '1';
-		$active = '1';
-		$createdAtdate = date("Y-m-d H:i:s");
-		
-        $fromUrl = $this->input->post('fromUrl');
+		 if($submit=='product')
+			{
+			$productname = $this->input->post('productname');
+			$brandname = $this->input->post('brandname');
+			$barcode = $this->input->post('barcode');
+			$size = $this->input->post('size');
+			$adminid = $this->session->userdata('userid');
+			$quantity = $this->input->post('quantity');
+			$price = $this->input->post('price');
+			$categorytypeid = '1';
+			$active = '1';
+			$createdAtdate = date("Y-m-d H:i:s");
 
-        $ProductDetailsArray = array('productname'=>$productname, 'brandname'=>$brandname, 'barcode'=>$barcode, 'size'=>$size,
-            'adminid'=>$adminid, 'quantity'=>$quantity, 'price'=>$price,'createdAtdate'=>$createdAtdate ,'categorytypeid'=>$categorytypeid,'active'=>$active);
+			$fromUrl = $this->input->post('fromUrl');
 
-        $validationArray = $this->users_model->validateUserMaster($ProductDetailsArray);
-        $validateSuccess = $validationArray['validateSuccess'];
-        $errorMsg = $validationArray['errorMsg'];
-        if($validateSuccess == 1){
-            $userTypeArray = $this->users_model->createProductMaster($ProductDetailsArray); //For admin
-            redirect("/AddProduct");
-			//print_r($ProductDetailsArray);
-        } else {
-            $output = array('status' => "2", 'message' => "Invalid Login!!");
-            //print_r($output);
-            $this->session->set_flashdata('output', $output);
-//            redirect("http://localhost/pos/".$fromUrl);
-        }
-//        $this->load->view('layout/backend_header',$dataheader);
-//        $this->load->view('layout/backend_menu');
-//        $this->load->view('frontend/frontend_adminMaster');
-//        $this->load->view('layout/backend_footer');
-		 }
-			if($submit=="brand") {
+			$ProductDetailsArray = array('productname'=>$productname, 'brandname'=>$brandname, 'barcode'=>$barcode, 'size'=>$size,
+			'adminid'=>$adminid, 'quantity'=>$quantity, 'price'=>$price,'createdAtdate'=>$createdAtdate ,'categorytypeid'=>$categorytypeid,'active'=>$active);
+
+			$validationArray = $this->users_model->validateUserMaster($ProductDetailsArray);
+			$validateSuccess = $validationArray['validateSuccess'];
+			$errorMsg = $validationArray['errorMsg'];
+				if($validateSuccess == 1){
+				    $userTypeArray = $this->users_model->createProductMaster($ProductDetailsArray); //For admin
+				    redirect("/AddProduct");
+						//print_r($ProductDetailsArray);
+				} else {
+				    $output = array('status' => "2", 'message' => "Invalid Login!!");
+				    //print_r($output);
+				    $this->session->set_flashdata('output', $output);
+					//redirect("http://localhost/pos/".$fromUrl);
+				}
+				//        $this->load->view('layout/backend_header',$dataheader);
+				//        $this->load->view('layout/backend_menu');
+				//        $this->load->view('frontend/frontend_adminMaster');
+				//        $this->load->view('layout/backend_footer');
+		 	}
+		if($submit=="brand") 
+		{
 				$adminid=$this->session->userdata('userid');
 				$brandname = $this->input->post('brandname');
 				$createdAt = date("Y-m-d H:i:s");
@@ -253,29 +257,40 @@ class Frontend extends CI_Controller {
 				$validationArray = $this->users_model->validateUserMaster($BrandDetailsArray);
 				$validateSuccess = $validationArray['validateSuccess'];
 				$errorMsg = $validationArray['errorMsg'];
-        if($validateSuccess == 1){
-            $userTypeArray = $this->users_model->createBrandMaster($BrandDetailsArray); //For admin
-            redirect("/dashboard");
+					if($validateSuccess == 1){
+					    $userTypeArray = $this->users_model->createBrandMaster($BrandDetailsArray); //For admin
+					    redirect("/dashboard");
 			
-        } else {
-            $output = array('status' => "2", 'message' => "Invalid Login!!");
-            //print_r($output);
-            $this->session->set_flashdata('output', $output);
-//            redirect("http://localhost/pos/".$fromUrl);
-        }
-			}
+					} else {
+					    $output = array('status' => "2", 'message' => "Invalid Login!!");
+					    //print_r($output);
+					    $this->session->set_flashdata('output', $output);
+				//            redirect("http://localhost/pos/".$fromUrl);
+					}
+		}
     }
-	  public function AddBrand()
+
+public function AddBrand()
     {
-		$dataheader['title'] = "Add Brand";
-		$dataheader['addProductMasterUrl'] = "addProductMaster";
+			$dataheader['title'] = "Add Brand";
+			$dataheader['addProductMasterUrl'] = "addProductMaster";
 			$this->load->view('layout/backend_header',$dataheader);
 			$this->load->view('layout/backend_menu');
-       		$this->load->view('layout/backend_footer');
+			$this->load->view('frontend/AddBrand');
+       			$this->load->view('layout/backend_footer');
+  	      		
+    }
+public function BrandList()
+    {
   
-  
-	      	$this->load->view('frontend/AddBrand');
-    }	
+	$adminid = $this->input->post('adminid');
+	$dataheader['title'] = "BrandList";
+        $BrandList = $this->users_model->getBrandList($adminid);
+	print_r($BrandList);
+	$this->load->view('layout/backend_header',$dataheader);
+      	$this->load->view('frontend/BrandList');
+	$this->load->view('layout/backend_footer');
+    }		
 		
 }
 
