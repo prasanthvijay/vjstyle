@@ -148,13 +148,41 @@ public function getBrandList($adminid){
 
         return $BrandArray;
     }
+public function getProductList($adminid){
+
+        $ProductList = array();
+       $sql = "SELECT * FROM `tbl_product` t WHERE t.active = 'active' ";
+	if($adminid != "" && $adminid != null){
+		$sql .= " and adminid = '".$adminid."' "; 
+	}
+
+        $sql = $sql . " order by productid desc";
+        $userQuery = $this->db->query($sql);
+        $k = 0;
+        foreach ($userQuery->result() as $row)
+        {
+		$ProductList[$k]['productid'] = $row->productid;
+		$ProductList[$k]['productname'] = $row->productname;
+		$ProductList[$k]['productrate'] = $row->productrate;
+		$ProductList[$k]['availablequantity'] = $row->availablequantity;
+		$ProductList[$k]['barcode'] = $row->barcode;
+		$ProductList[$k]['productsize'] = $row->productsize;
+		$ProductList[$k]['categorytypeid'] = $row->categorytypeid;
+		$ProductList[$k]['active'] = $row->active;
+		$ProductList[$k]['adminid'] = $row->adminid;
+		$ProductList[$k]['brandid'] = $row->brandid;
+	    $k++;
+        }
+
+        return $ProductList;
+    }
 
     public function createUserMaster($userDetailsArray){
 	 $sql = "INSERT INTO tbl_user (name,email,password,usertypeid,adminid,retailerShowRoomId,mobile,address,doj,dob,active,createdat) " ."VALUES (" .$this->db->escape($userDetailsArray['name']) ."," .$this->db->escape($userDetailsArray['email']) ."," .$this->db->escape($userDetailsArray['password']) ."," .$this->db->escape($userDetailsArray['usertypeid']) ."," .$this->db->escape($userDetailsArray['adminid']) ."," .$this->db->escape($userDetailsArray['retailerShowRoomId']) ."," .$this->db->escape($userDetailsArray['mobile']) ."," .$this->db->escape($userDetailsArray['address']) ."," .$this->db->escape($userDetailsArray['doj']) ."," .$this->db->escape($userDetailsArray['dob']) ."," .$this->db->escape($userDetailsArray['active']) ."," .$this->db->escape($userDetailsArray['createdAt']) .")";
 			$this->db->query($sql);
     }
  public function createBrandMaster($BrandDetailsArray){
-	 $sql = "INSERT INTO tbl_brand (brandname,adminid,active,createdat) " ."VALUES (" .$this->db->escape($BrandDetailsArray['brandname']) ."," .$this->db->escape($BrandDetailsArray['adminid']) ."," .$this->db->escape($BrandDetailsArray['active']) ."," .$this->db->escape($BrandDetailsArray['createdAt']) .")";
+	 $sql = "INSERT INTO tbl_brand (brandname,adminid,createdat) " ."VALUES (" .$this->db->escape($BrandDetailsArray['brandname']) ."," .$this->db->escape($BrandDetailsArray['adminid']) ."," .$this->db->escape($BrandDetailsArray['createdAt']) .")";
 			$this->db->query($sql);
     }
 	public function createProductMaster($ProductDetailsArray){

@@ -67,7 +67,8 @@ $route['getUserListDetails'] = 'Frontend/getUserListDetails';
 $route['AddProduct'] = 'Frontend/AddProduct';
 $route['addProductMaster'] = 'Frontend/addProductMaster';
 $route['AddBrand'] = 'Frontend/AddBrand';
-
+$route['BrandList'] = 'Frontend/BrandList';
+$route['ProductList'] = 'Frontend/ProductList';
 
 //Sales
 $route['pos'] = 'sales/pos';
