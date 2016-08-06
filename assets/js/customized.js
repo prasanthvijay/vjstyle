@@ -11,8 +11,18 @@ function loadUsersListDetails(postUrl, postData, displayDiv){
     });
 }
 
-function loadUsersEditDetails(postUrl, postData, displayDiv){
-    $.ajax({
+function loadAddOrEditContentWithModal(postUrl, postData, displayDiv){
+        $.ajax({
+        url : postUrl,
+        type : "POST",
+        data : postData,
+        success : function (responseFromSite) {
+            $("#"+displayDiv).html(responseFromSite);
+            $("#panel-modal").modal('show');
+        }
+
+    });
+    /*$.ajax({
         url : postUrl,
         type : "POST",
         data : postData,
@@ -21,5 +31,5 @@ function loadUsersEditDetails(postUrl, postData, displayDiv){
             alert("successs")
         }
 
-    });
+    });*/
 }

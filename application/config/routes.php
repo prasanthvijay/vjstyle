@@ -64,6 +64,7 @@ $route['salesExecutiveMaster'] = 'Frontend/salesExecutiveMaster';
 $route['logout'] = 'Frontend/logout';
 $route['addUserMaster'] = 'Frontend/addUserMaster';
 $route['getUserListDetails'] = 'Frontend/getUserListDetails';
+$route['getAddOrEditUserMasterContent'] = 'Frontend/getAddOrEditUserMasterContent';
 $route['AddProduct'] = 'Frontend/AddProduct';
 $route['addProductMaster'] = 'Frontend/addProductMaster';
 $route['AddBrand'] = 'Frontend/AddBrand';

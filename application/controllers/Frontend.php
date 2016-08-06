@@ -310,6 +310,20 @@ class Frontend extends CI_Controller
         $this->load->view('layout/backend_footer');
     }
 
+
+    public function getAddOrEditUserMasterContent(){
+
+        $actionType = $this->input->post('actionType');
+        $actionId = $this->input->post('actionId');
+        $userTypeId = $this->input->post('userTypeId');
+        $addUserMasterUrl = "";
+        $dataArray['actionType'] = $actionType;
+        $dataArray['actionId'] = $actionId;
+        $dataArray['addUserMasterUrl'] = $actionId;
+        $dataArray['masterName'] = "Retailer Show Room";
+        $this->load->view('frontend/getAddOrEditUserMasterContent', $dataArray);
+    }
+
 }
 
 ?>
