@@ -49,7 +49,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <script src="<?php echo base_url(); ?>assets/js/modernizr.min.js"></script>
 
 
-
+    <script src="<?php echo base_url(); ?>assets/js/jquery.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/customized.js"></script>
 	<!----------Select2------------>
 	
 

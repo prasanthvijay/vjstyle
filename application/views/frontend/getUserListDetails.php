@@ -1,39 +1,33 @@
-<table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
-<thead>
+<table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0"
+       width="100%">
+    <thead>
     <tr>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>Position</th>
-        <th>Office</th>
-        <th>Age</th>
-        <th>Start date</th>
-        <th>Salary</th>
-        <th>Extn.</th>
-        <th>E-mail</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Mobile</th>
+        <th>LastLogin</th>
+        <th>Address</th>
+        <th>DOJ</th>
+        <th>Created At</th>
+        <th>DOB</th>
+        <th>Edit</th>
+        <th>Delete</th>
     </tr>
-</thead>
-<tbody>
-    <tr>
-        <td>Tiger</td>
-        <td>Nixon</td>
-        <td>System Architect</td>
-        <td>Edinburgh</td>
-        <td>61</td>
-        <td>2011/04/25</td>
-        <td>$320,800</td>
-        <td>5421</td>
-        <td>t.nixon@datatables.net</td>
-    </tr>
-    <tr>
-        <td>Garrett</td>
-        <td>Winters</td>
-        <td>Accountant</td>
-        <td>Tokyo</td>
-        <td>63</td>
-        <td>2011/07/25</td>
-        <td>$170,750</td>
-        <td>8422</td>
-        <td>g.winters@datatables.net</td>
-    </tr>
-</tbody>
+    </thead>
+    <tbody>
+    <?php for ($k = 0; $k < count($userArray); $k++) { ?>
+        <tr>
+            <td><?php echo $userArray[$k]['name']; ?></td>
+            <td><?php echo $userArray[$k]['email']; ?></td>
+            <td><?php echo $userArray[$k]['mobile']; ?></td>
+            <td><?php echo $userArray[$k]['lastlogin']; ?></td>
+            <td><?php echo $userArray[$k]['address']; ?></td>
+            <td><?php echo $userArray[$k]['doj']; ?></td>
+            <td><?php echo $userArray[$k]['createdat']; ?></td>
+            <td><?php echo $userArray[$k]['dob']; ?></td>
+            <td><input type="button" value="Edit" class="btn btn-info btn-sm"></td>
+            <td><input type="button" value="Delete" class="btn btn-danger btn-sm"></td>
+        </tr>
+    <?php } ?>
+    </tbody>
 </table>

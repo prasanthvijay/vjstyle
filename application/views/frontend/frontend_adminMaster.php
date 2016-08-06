@@ -13,9 +13,10 @@
 		</div>
 		<!-- Page-Title -->
 		<!-- Custom Modals -->
+		<div class="card-box">
+			<div class="form-group">
 		<div class="row">
 			<div class="col-md-12">
-				<div class="card-box">
 					<p class="text-muted m-b-20 font-13">
 						Add, Edit and Delete Admin
 					</p>
@@ -124,6 +125,14 @@
 					<button class="btn btn-primary waves-effect waves-light m-t-10" data-toggle="modal" data-target="#panel-modal">Add Admin</button>
 				</div>
 			</div>
+				</div>
+			<div class="form-group">
+			<div class="row">
+				<div class="col-md-12">
+					<div id="usersListDiv"></div>
+				</div>
+			</div>
+			</div>
 		</div>
 		<!-- End row -->
 		<footer class="footer text-right">
@@ -153,3 +162,12 @@
 		Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 	</div>
 </div>
+<script>
+	var postUrl = "Frontend/getUserListDetails";
+	var postData = "usertypeid=2";
+	var displayDiv = "usersListDiv";
+	loadUsersListDetails(postUrl, postData, displayDiv);
+//	loadUsersEditDetails(postUrl, postData, displayDiv);
+
+
+</script>

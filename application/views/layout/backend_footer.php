@@ -11,7 +11,7 @@
 
 
 <!-- jQuery  -->
-<script src="<?php echo base_url(); ?>assets/js/jquery.min.js"></script>
+
 <script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/detect.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/fastclick.js"></script>
@@ -52,7 +52,7 @@
         <script src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.keyTable.min.js"></script>
         <script src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.responsive.min.js"></script>
         <script src="<?php echo base_url(); ?>assets/plugins/datatables/responsive.bootstrap.min.js"></script>
- 
+
 
 <!-- Custom main Js -->
 <script src="<?php echo base_url(); ?>assets/js/jquery.core.js"></script>
@@ -83,9 +83,9 @@
     });
 
     /* BEGIN SVG WEATHER ICON */
-	
+
 	$(document).ready(function() {
-			
+
 						$('form').parsley();
 						$(".select2").select2();
 			});
@@ -106,20 +106,20 @@
         icons.play();
     };
 // Date Picker
-             
+
                 jQuery('.datepicker-autoclose').datepicker({
                 	autoclose: true,
                 	todayHighlight: true
                 });
-               
-		$(".select2").select2();		
-		
+
+		$(".select2").select2();
+
 
 $(document).ready(function() {
                 $('#datatable').dataTable();
-             
+
                 $('#datatable-responsive').DataTable();
-             
+
             } );
 
 </script>
