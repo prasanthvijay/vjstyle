@@ -25,8 +25,12 @@
             <td><?php echo $userArray[$k]['doj']; ?></td>
             <td><?php echo $userArray[$k]['createdat']; ?></td>
             <td><?php echo $userArray[$k]['dob']; ?></td>
-            <td><input type="button" value="Edit" class="btn btn-info btn-sm"></td>
-            <td><input type="button" value="Delete" class="btn btn-danger btn-sm"></td>
+            <td><button class="btn btn-primary waves-effect waves-light" type="button">
+                    Edit
+                </button></td>
+            <td><button class="btn btn-danger waves-effect waves-light" type="button">
+                    Delete
+                </button></td>
         </tr>
     <?php } ?>
     </tbody>

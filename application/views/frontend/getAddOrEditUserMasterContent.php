@@ -15,10 +15,19 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="usertypeid" class="control-label">User Type</label>
-                        <select name="usertypeid" id="usertypeid" class="form-control">
-                            <option value="">Select</option>
-                        </select>
+                    <input type="hidden" value="<?php echo $usertypeid; ?>" name="usertypeid" id="usertypeid">
+                        <?php if($usertypeid == 5){ ?>
+                            <label for="usertypeid" class="control-label">Retailer Show Room</label>
+                            <select name="retailershowroomid" id="retailershowroomid" class="form-control ">
+                                <?php for($k=0; $k<count($retailerShowRoomList); $k++) { ?>
+                                    <option value="<?php echo $retailerShowRoomList[$k]['userid']; ?>"><?php echo $retailerShowRoomList[$k]['name']; ?></option>
+                                <?php } ?>
+                            </select>
+                        <?php } else if($usertypeid == 4){  ?>
+                            <label for="field-4" class="control-label">Mobile</label>
+                            <input type="text" class="form-control" id="mobile" name="mobile"
+                                   placeholder="Mobile">
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -38,6 +47,7 @@
                     </div>
                 </div>
             </div>
+            <?php if($usertypeid != 4){ ?>
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
@@ -49,18 +59,22 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="doj" class="control-label">Date of Joining</label>
-                        <input type="text" class="form-control" id="doj" name="doj"
-                               placeholder="DD-MM-YYYY">
+                        <div class="input-group"><input type="text"
+                                                        class="form-control datepicker-autoclose"
+                                                        placeholder="DD-MM-YYYY"
+                                                        name="doj" id="doj"><span
+                                class="input-group-addon bg-primary b-0 text-white"><i
+                                    class="ion-calendar"></i></span></div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="dob" class="control-label">Date of Birth</label>
-                        <input type="text" class="form-control" id="dob" name="dob"
-                               placeholder="DD-MM-YYYY">
+                        <div class="input-group"><input type="text" class="form-control datepicker-autoclose" placeholder="DD-MM-YYYY" name="dob" id="dob"><span class="input-group-addon bg-primary b-0 text-white"><i class="ion-calendar"></i></span></div>
                     </div>
                 </div>
             </div>
+            <?php } ?>
 
             <div class="row">
                 <div class="col-md-6">

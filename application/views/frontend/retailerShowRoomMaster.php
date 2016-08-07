@@ -21,7 +21,7 @@
                             <p class="text-muted m-b-20 font-13">
                                 Add, Edit and Delete Retailer Show Room
                             </p>
-                            <button class="btn btn-primary waves-effect waves-light m-t-10" onclick="loadAddOrEditContentWithModal('getAddOrEditUserMasterContent','','modalContentArea')">Add Retailer Show Room</button>
+                            <button class="btn btn-primary waves-effect waves-light m-t-10" onclick="loadAddOrEditContentWithModal('getAddOrEditUserMasterContent','usertypeid=4','modalContentArea')">Add Retailer Show Room</button>
                         </div>
                     </div>
                 </div>

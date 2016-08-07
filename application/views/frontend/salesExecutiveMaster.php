@@ -21,7 +21,7 @@
 							<p class="text-muted m-b-20 font-13">
 								Add, Edit and Delete Sales Executive
 							</p>
-							<button class="btn btn-primary waves-effect waves-light m-t-10" onclick="loadAddOrEditContentWithModal('getAddOrEditUserMasterContent','','modalContentArea')">Add Sales Executive</button>
+							<button class="btn btn-primary waves-effect waves-light m-t-10" onclick="loadAddOrEditContentWithModal('getAddOrEditUserMasterContent','usertypeid=5','modalContentArea')">Add Sales Executive</button>
 						</div>
 					</div>
 				</div>
@@ -64,5 +64,4 @@
 	var postData = "usertypeid=5";
 	var displayDiv = "usersListDiv";
 	loadUsersListDetails(postUrl, postData, displayDiv);
-	//	loadUsersEditDetails(postUrl, postData, displayDiv);
 </script>

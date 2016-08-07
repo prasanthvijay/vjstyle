@@ -19,6 +19,12 @@ function loadAddOrEditContentWithModal(postUrl, postData, displayDiv){
         success : function (responseFromSite) {
             $("#"+displayDiv).html(responseFromSite);
             $("#panel-modal").modal('show');
+            // $("#addOrEditUserDetailsForm").parsley();
+            jQuery('.datepicker-autoclose').datepicker({
+                autoclose: true,
+                format : "dd-mm-yyyy",
+                todayHighlight: true
+            });
         }
 
     });

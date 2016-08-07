@@ -315,12 +315,19 @@ class Frontend extends CI_Controller
 
         $actionType = $this->input->post('actionType');
         $actionId = $this->input->post('actionId');
-        $userTypeId = $this->input->post('userTypeId');
-        $addUserMasterUrl = "";
+        $usertypeid = $this->input->post('usertypeid');
+        $userTypeArray = $this->users_model->getUserTypeList($usertypeid); //For admin
+        $usertype = $userTypeArray[0]['usertype'];
+        $dataArray['userTypeArray'] = $userTypeArray;
         $dataArray['actionType'] = $actionType;
         $dataArray['actionId'] = $actionId;
         $dataArray['addUserMasterUrl'] = $actionId;
-        $dataArray['masterName'] = "Retailer Show Room";
+        $dataArray['usertypeid'] = $usertypeid;
+        $dataArray['masterName'] = $usertype;
+        $adminid = 2;
+        $retailerShowRoomId = "";
+        $retailerShowRoomList = $this->users_model->getUsersList('4', $adminid, $retailerShowRoomId);
+        $dataArray['retailerShowRoomList'] = $retailerShowRoomList;
         $this->load->view('frontend/getAddOrEditUserMasterContent', $dataArray);
     }
 
