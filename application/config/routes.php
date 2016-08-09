@@ -65,11 +65,13 @@ $route['logout'] = 'Frontend/logout';
 $route['addUserMaster'] = 'Frontend/addUserMaster';
 $route['getUserListDetails'] = 'Frontend/getUserListDetails';
 $route['getAddOrEditUserMasterContent'] = 'Frontend/getAddOrEditUserMasterContent';
+$route['deleteUsersFromMaster'] = 'Frontend/deleteUsersFromMaster';
 $route['AddProduct'] = 'Frontend/AddProduct';
 $route['addProductMaster'] = 'Frontend/addProductMaster';
 $route['AddBrand'] = 'Frontend/AddBrand';
 $route['BrandList'] = 'Frontend/BrandList';
 $route['ProductList'] = 'Frontend/ProductList';
+
 
 //Sales
 $route['pos'] = 'sales/pos';

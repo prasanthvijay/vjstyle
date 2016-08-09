@@ -62,7 +62,7 @@
 
 <script>
     var postUrl = "Frontend/getUserListDetails";
-    var postData = "usertypeid=3";
+    var postData = "usertypeid=4";
     var displayDiv = "usersListDiv";
     loadUsersListDetails(postUrl, postData, displayDiv);
 </script>

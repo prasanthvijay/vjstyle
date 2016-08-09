@@ -176,7 +176,22 @@ class Users_model extends CI_Model
 
     public function createUserMaster($userDetailsArray)
     {
-        $sql = "INSERT INTO tbl_user (name,email,password,usertypeid,adminid,retailerShowRoomId,mobile,address,doj,dob,active,createdat) " . "VALUES (" . $this->db->escape($userDetailsArray['name']) . "," . $this->db->escape($userDetailsArray['email']) . "," . $this->db->escape($userDetailsArray['password']) . "," . $this->db->escape($userDetailsArray['usertypeid']) . "," . $this->db->escape($userDetailsArray['adminid']) . "," . $this->db->escape($userDetailsArray['retailerShowRoomId']) . "," . $this->db->escape($userDetailsArray['mobile']) . "," . $this->db->escape($userDetailsArray['address']) . "," . $this->db->escape($userDetailsArray['doj']) . "," . $this->db->escape($userDetailsArray['dob']) . "," . $this->db->escape($userDetailsArray['active']) . "," . $this->db->escape($userDetailsArray['createdAt']) . ")";
+        $doj = $userDetailsArray['doj'];
+        if($doj == NULL){
+            $doj = "0000-00-00";
+        }
+
+        $dob = $userDetailsArray['dob'];
+        if($dob == NULL){
+            $dob = "0000-00-00";
+        }
+
+        $retailershowroomid = $userDetailsArray['retailershowroomid'];
+        if($retailershowroomid == NULL){
+            $retailershowroomid = 0;
+        }
+
+        $sql = "INSERT INTO tbl_user (name,email,password,usertypeid,adminid,retailerShowRoomId,mobile,address,doj,dob,active,createdat) " . "VALUES (" . $this->db->escape($userDetailsArray['name']) . "," . $this->db->escape($userDetailsArray['email']) . "," . $this->db->escape($userDetailsArray['password']) . "," . $this->db->escape($userDetailsArray['usertypeid']) . "," . $this->db->escape($userDetailsArray['adminid']) . "," . $this->db->escape($retailershowroomid) . "," . $this->db->escape($userDetailsArray['mobile']) . "," . $this->db->escape($userDetailsArray['address']) . "," . $this->db->escape($doj) . "," . $this->db->escape($dob) . "," . $this->db->escape($userDetailsArray['active']) . "," . $this->db->escape($userDetailsArray['createdAt']) . ")";
         $this->db->query($sql);
     }
 
@@ -192,18 +207,76 @@ class Users_model extends CI_Model
         $this->db->query($sql);
     }
 
-    public function validateUserMaster($userDetailsArray)
+    public function validateUserMaster($userDetailsArray, $action)
     {
         $validationArray = array();
         $validationArray['validateSuccess'] = 0;
         $validationArray['errorMsg'] = "";
 
         if (count($userDetailsArray) > 0) {
-            $validationArray['validateSuccess'] = 1;
-        } else {
+            $email = $userDetailsArray['email'];
+            $alreadyExistList = self::getUsersExistList($email);
 
+            if((count($alreadyExistList) > 0 && $action =='Add') || count($alreadyExistList) > 1 && $action =='Edit' ){
+                $validationArray['validateSuccess'] = 1;
+                $validationArray['errorMsg'] = "Emails Already Exist";
+            } else {
+                $validationArray['validateSuccess'] = 0;
+                $validationArray['errorMsg'] = "";
+            }
+        } else {
+            $validationArray['validateSuccess'] = 1;
+            $validationArray['errorMsg'] = "Please check all details!";
         }
         return $validationArray;
+    }
+
+    public function getUsersExistList($email)
+    {
+
+        $userArray = array();
+        $sql = "SELECT userid FROM `tbl_user` t ";
+
+        if ($email != "" && $email != null) {
+            $sql .= " WHERE t.email = '" . $email . "' ";
+        }
+
+//        $sql = $sql . " limit 1";
+        $userQuery = $this->db->query($sql);
+        $k = 0;
+        foreach ($userQuery->result() as $row) {
+            $userArray[$k]['userid'] = $row->userid;
+            $k++;
+        }
+
+        return $userArray;
+    }
+
+    public function getRedirectURLForMaster($usertypeid){
+
+        $redirectUrl = "";
+        switch ($usertypeid){
+            case 1 :
+                $redirectUrl = "adminMaster";
+                break;
+            case 2 :
+                $redirectUrl = "adminMaster";
+                break;
+            case 3 :
+                $redirectUrl = "sellerMaster";
+                break;
+            case 4 :
+                $redirectUrl = "retailerShowRoomMaster";
+                break;
+            case 5 :
+                $redirectUrl = "salesExecutiveMaster";
+                break;
+        }
+        return $redirectUrl;
+    }
+
+    public function deleteUsersFromMaster($userid, $adminid){
+
     }
 }
 

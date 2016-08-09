@@ -4,13 +4,26 @@
         <h3 class="panel-title">Add/Edit <?php echo $masterName; ?></h3>
     </div>
     <div class="panel-body">
-        <form action="<?php echo $addUserMasterUrl; ?>" method="POST" name="addOrEditUserDetailsForm" id="addOrEditUserDetailsForm" data-parsley-validate novalidate>
+        <form action="<?php echo base_url(); ?>/index.php/addUserMaster" method="POST" name="addOrEditUserDetailsForm" enctype="multipart/form-data" id="addOrEditUserDetailsForm" data-parsley-validate novalidate>
+            <?php if($sessionUserTypeId == 1){ ?>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="dob" class="control-label">Admin</label>
+                            <select name="adminid" id="adminid" class="form-control ">
+                                <?php for($k=0; $k<count($adminList); $k++) { ?>
+                                    <option value="<?php echo $adminList[$k]['userid']; ?>"><?php echo $adminList[$k]['name']; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="name" class="control-label">Name</label>
-                        <input type="text" class="form-control" id="name" name="name"
-                               placeholder="Name">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Name">
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -25,8 +38,7 @@
                             </select>
                         <?php } else if($usertypeid == 4){  ?>
                             <label for="field-4" class="control-label">Mobile</label>
-                            <input type="text" class="form-control" id="mobile" name="mobile"
-                                   placeholder="Mobile">
+                            <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile">
                         <?php } ?>
                     </div>
                 </div>
@@ -35,15 +47,13 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="email" class="control-label">Email</label>
-                        <input type="text" class="form-control" id="email" name="email"
-                               placeholder="Email">
+                        <input type="text" class="form-control" id="email" name="email" placeholder="Email">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="password" class="control-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password"
-                               placeholder="Password">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                     </div>
                 </div>
             </div>
@@ -59,12 +69,12 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="doj" class="control-label">Date of Joining</label>
-                        <div class="input-group"><input type="text"
-                                                        class="form-control datepicker-autoclose"
-                                                        placeholder="DD-MM-YYYY"
-                                                        name="doj" id="doj"><span
-                                class="input-group-addon bg-primary b-0 text-white"><i
-                                    class="ion-calendar"></i></span></div>
+                        <div class="input-group">
+                            <input type="text" class="form-control datepicker-autoclose" placeholder="DD-MM-YYYY" name="doj" id="doj">
+                            <span class="input-group-addon bg-primary b-0 text-white">
+                                <i class="ion-calendar"></i>
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -78,18 +88,19 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="email" class="control-label">Upload Profile Photo</label>
-                        <input type="file" class="form-control" id="profilephoto"
-                               name="profilephoto">
+                    <div class="form-group fileupload">
+                        <label for=""></label>
+<!--                        <input type="file" class="form-control" id="profilephoto" name="profilephoto" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;">-->
+                        <div class=" btn btn-rounded btn-default waves-effect waves-light" style="width: 100%">
+                            <span><i class="ion-upload m-r-5"></i> Upload Profile Photo</span>
+                            <input type="file" class="upload" id="profilephoto" name="profilephoto" >
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group no-margin">
                         <label for="address" class="control-label">Address</label>
-                                            <textarea class="form-control autogrow" id="address" name="address"
-                                                      placeholder="Address"
-                                                      style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
+                        <textarea class="form-control autogrow" id="address" name="address" placeholder="Address" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
                     </div>
                 </div>
             </div>

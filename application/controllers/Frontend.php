@@ -86,12 +86,23 @@ class Frontend extends CI_Controller
         $dataheader['title'] = "Admin Master";
         $dataheader['addUserMasterUrl'] = "addUserMaster";
 
+        $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
+        $adminid = "0";
+
+        if($sessionUserTypeIdIsset == 1){
+            $sessionUserTypeId = $this->session->userdata('usertypeid');
+            if($sessionUserTypeId == 2){
+                $adminid = $this->session->userdata('userid');
+            } else {
+                $adminid = $this->input->post('adminid');
+            }
+        }
+
+        $retailershowroomid = $this->input->post('retailershowroomid');
         $name = $this->input->post('name');
         $email = $this->input->post('email');
         $password = $this->input->post('password');
         $usertypeid = $this->input->post('usertypeid');
-        $adminid = "0";
-        $retailerShowRoomId = "0";
         $mobile = $this->input->post('mobile');
         $address = $this->input->post('address');
         $doj = $this->input->post('doj');
@@ -99,29 +110,28 @@ class Frontend extends CI_Controller
         $active = "active";
         $createdAt = date("Y-m-d H:i:s");
 
-        $fromUrl = $this->input->post('fromUrl');
+        if($usertypeid == 2){
+            $adminid = 0;
+        }
+        $redirectUrl = "";
 
         $userDetailsArray = array('name' => $name, 'email' => $email, 'password' => $password, 'usertypeid' => $usertypeid,
-            'adminid' => $adminid, 'retailerShowRoomId' => $retailerShowRoomId, 'mobile' => $mobile, 'address' => $address,
+            'adminid' => $adminid, 'retailershowroomid' => $retailershowroomid, 'mobile' => $mobile, 'address' => $address,
             'doj' => $doj, 'dob' => $dob, 'active' => $active, 'createdAt' => $createdAt);
 
-        $validationArray = $this->users_model->validateUserMaster($userDetailsArray);
+
+        $validationArray = $this->users_model->validateUserMaster($userDetailsArray,'Add');
         $validateSuccess = $validationArray['validateSuccess'];
         $errorMsg = $validationArray['errorMsg'];
-        if ($validateSuccess == 1) {
-            $userTypeArray = $this->users_model->createUserMaster($userDetailsArray); //For admin
-            redirect("/adminMaster");
-            //print_r($userDetailsArray);
+        $redirectUrl = $this->users_model->getRedirectURLForMaster($usertypeid);
+
+        if ($validateSuccess == 0) {
+            $this->users_model->createUserMaster($userDetailsArray); //For admin
         } else {
-            $output = array('status' => "2", 'message' => "Invalid Login!!");
-            print_r($output);
+            $output = array('status' => "2", 'message' => $errorMsg);
             $this->session->set_flashdata('output', $output);
-//            redirect("http://localhost/pos/".$fromUrl);
         }
-//        $this->load->view('layout/backend_header',$dataheader);
-//        $this->load->view('layout/backend_menu');
-//        $this->load->view('frontend/frontend_adminMaster');
-//        $this->load->view('layout/backend_footer');
+        redirect(base_url()."index.php/".$redirectUrl);
     }
 
     public function adminMaster()
@@ -178,7 +188,21 @@ class Frontend extends CI_Controller
 
         $usertypeid = $this->input->post('usertypeid');
         $adminid = $this->input->post('adminid');
-        $retailerShowRoomId = $this->input->post('retailerShowRoomId');
+        $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
+        $adminid = "0";
+
+        $adminList = array();
+        if($sessionUserTypeIdIsset == 1) {
+            $sessionUserTypeId = $this->session->userdata('usertypeid');
+            $dataArray['sessionUserTypeId'] = $sessionUserTypeId;
+
+            if ($sessionUserTypeId == 2) {
+                $adminid = $this->session->userdata('userid');
+            } else {
+                $adminid = $this->input->post('adminid');
+            }
+        }
+            $retailerShowRoomId = $this->input->post('retailerShowRoomId');
         $userArray = $this->users_model->getUsersList($usertypeid, $adminid, $retailerShowRoomId);
         
         $dataheader['userArray'] = $userArray;
@@ -226,7 +250,7 @@ class Frontend extends CI_Controller
             $ProductDetailsArray = array('productname' => $productname, 'brandname' => $brandname, 'barcode' => $barcode, 'size' => $size,
                 'adminid' => $adminid, 'quantity' => $quantity, 'price' => $price, 'createdAtdate' => $createdAtdate, 'categorytypeid' => $categorytypeid, 'active' => $active);
 
-            $validationArray = $this->users_model->validateUserMaster($ProductDetailsArray);
+            $validationArray = $this->users_model->validateUserMaster($ProductDetailsArray,'Add');
             $validateSuccess = $validationArray['validateSuccess'];
             $errorMsg = $validationArray['errorMsg'];
             if ($validateSuccess == 1) {
@@ -251,7 +275,7 @@ class Frontend extends CI_Controller
 
             $BrandDetailsArray = array('brandname' => $brandname, 'adminid' => $adminid, 'createdAt' => $createdAt);
 
-            $validationArray = $this->users_model->validateUserMaster($BrandDetailsArray);
+            $validationArray = $this->users_model->validateUserMaster($BrandDetailsArray,'Add');
             $validateSuccess = $validationArray['validateSuccess'];
             $errorMsg = $validationArray['errorMsg'];
             if ($validateSuccess == 1) {
@@ -321,14 +345,54 @@ class Frontend extends CI_Controller
         $dataArray['userTypeArray'] = $userTypeArray;
         $dataArray['actionType'] = $actionType;
         $dataArray['actionId'] = $actionId;
-        $dataArray['addUserMasterUrl'] = $actionId;
+        $dataArray['addUserMasterUrl'] = "addUserMaster";
         $dataArray['usertypeid'] = $usertypeid;
         $dataArray['masterName'] = $usertype;
-        $adminid = 2;
-        $retailerShowRoomId = "";
-        $retailerShowRoomList = $this->users_model->getUsersList('4', $adminid, $retailerShowRoomId);
-        $dataArray['retailerShowRoomList'] = $retailerShowRoomList;
-        $this->load->view('frontend/getAddOrEditUserMasterContent', $dataArray);
+        $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
+        $adminid = "0";
+        $retailershowroomid = "0";
+        $adminList = array();
+        if($sessionUserTypeIdIsset == 1){
+            $sessionUserTypeId = $this->session->userdata('usertypeid');
+            $dataArray['sessionUserTypeId'] = $sessionUserTypeId;
+            if($sessionUserTypeId == 2){
+                $adminid = $this->session->userdata('userid');
+            } else {
+                $adminid = $this->input->post('adminid');
+            }
+
+            if($sessionUserTypeId == 1){
+                $adminid = $this->session->userdata('adminid');
+                $adminList = $this->users_model->getUsersList('2', null, null);
+            }
+
+            $dataArray['adminList'] = $adminList;
+            $retailerShowRoomList = $this->users_model->getUsersList('4', $adminid, $retailershowroomid);
+            $dataArray['retailerShowRoomList'] = $retailerShowRoomList;
+            $this->load->view('frontend/getAddOrEditUserMasterContent', $dataArray);
+        }
+    }
+
+    public function deleteUsersFromMaster(){
+
+        $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
+        if($sessionUserTypeIdIsset == 1){
+            $userid = $this->input->post('userid');
+            $sessionUserTypeId = $this->session->userdata('usertypeid');
+            if($sessionUserTypeId == 2){
+                $adminid = $this->session->userdata('userid');
+            } else {
+                $adminid = $this->input->post('adminid');
+            }
+
+            $usertypeid = "";
+            $redirectUrl = $this->users_model->getRedirectURLForMaster($usertypeid);
+            $this->users_model->deleteUsersFromMaster($userid, $adminid); //For admin
+
+            redirect(base_url()."index.php/".$redirectUrl);
+        }
+
+        echo "test";
     }
 
 }
