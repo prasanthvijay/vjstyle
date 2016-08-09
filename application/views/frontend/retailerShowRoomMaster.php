@@ -29,6 +29,13 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-12">
+                        <div id="msgDiv"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
                         <div id="usersListDiv"></div>
                     </div>
                 </div>
@@ -59,10 +66,25 @@
     </div> <!-- end container -->
 </div>
 <!-- End wrapper -->
-
+<a class="btn btn-default waves-effect waves-light" href="javascript:;" onclick="">Left</a>
 <script>
     var postUrl = "Frontend/getUserListDetails";
     var postData = "usertypeid=4";
     var displayDiv = "usersListDiv";
     loadUsersListDetails(postUrl, postData, displayDiv);
+    function deleteUsers(userid, adminid) {
+        var approve = confirm("Are you sure to delete!");
+        if(approve){
+            var postDataDelete = "userid="+userid+"&adminid="+adminid;
+            $.ajax({
+                url: "Frontend/deleteUsersFromMaster",
+                type: "POST",
+                data: postDataDelete,
+                success: function (responseFromSite) {
+                    $.Notification.notify('success','top right', 'Delete Retailer Show room', 'Retailer Show room was successfully Deleted ')
+                    loadUsersListDetails(postUrl, postData, displayDiv);
+                }
+            });
+        }
+    }
 </script>

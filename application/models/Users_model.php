@@ -276,7 +276,12 @@ class Users_model extends CI_Model
     }
 
     public function deleteUsersFromMaster($userid, $adminid){
-
+        $success = 0;
+        if($userid !="" && $adminid!=""){
+            $sql = "Update tbl_user set active = 'deleted' where active='active' and userid=".$userid." and adminid=".$adminid;
+            $success = $this->db->query($sql);
+        }
+        return $success;
     }
 }
 

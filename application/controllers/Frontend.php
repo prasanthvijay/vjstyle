@@ -384,15 +384,12 @@ class Frontend extends CI_Controller
             } else {
                 $adminid = $this->input->post('adminid');
             }
-
-            $usertypeid = "";
-            $redirectUrl = $this->users_model->getRedirectURLForMaster($usertypeid);
-            $this->users_model->deleteUsersFromMaster($userid, $adminid); //For admin
-
-            redirect(base_url()."index.php/".$redirectUrl);
+            $success = $this->users_model->deleteUsersFromMaster($userid, $adminid); //For admin
         }
 
-        echo "test";
+        if($success){
+                echo "Deleted successfully!";
+        }
     }
 
 }
