@@ -7,7 +7,7 @@
  */
 
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+ // echo "<br><br><br><br><br><br>";print_r($_SESSION);
 ?>
 <!DOCTYPE html>
 <html>

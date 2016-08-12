@@ -229,7 +229,7 @@ class Frontend extends CI_Controller
 
     public function addProductMaster()
     {
-        //print_r($_POST);
+      
         $submit = $this->input->post('submit');
 
         $dataheader['addProductMasterUrl'] = "addProductMaster";
@@ -238,11 +238,11 @@ class Frontend extends CI_Controller
             $brandname = $this->input->post('brandname');
             $barcode = $this->input->post('barcode');
             $size = $this->input->post('size');
-            $adminid = $this->session->userdata('userid');
+            $adminid = $this->session->userdata('usertypeid');
             $quantity = $this->input->post('quantity');
             $price = $this->input->post('price');
             $categorytypeid = '1';
-            $active = '1';
+            $active = 'active';
             $createdAtdate = date("Y-m-d H:i:s");
 
             $fromUrl = $this->input->post('fromUrl');
@@ -255,7 +255,7 @@ class Frontend extends CI_Controller
             $errorMsg = $validationArray['errorMsg'];
             if ($validateSuccess == 1) {
                 $userTypeArray = $this->users_model->createProductMaster($ProductDetailsArray); //For admin
-                redirect("/AddProduct");
+                redirect("index.php/AddProduct");
                 //print_r($ProductDetailsArray);
             } else {
                 $output = array('status' => "2", 'message' => "Invalid Login!!");
@@ -320,13 +320,13 @@ class Frontend extends CI_Controller
     public function ProductList()
     {
 
-        $adminid = $this->input->post('adminid');
+$adminid = $this->session->userdata('usertypeid');
         $dataheader['title'] = "ProductList";
 
         $ProductList = $this->users_model->getProductList($adminid);
 
         $dataheader['ProductList'] = $ProductList;
-//echo "<br><br><br><br><br><br>";
+	//echo "<br><br><br><br><br><br>";
         //print_r($ProductList);
         $this->load->view('layout/backend_header', $dataheader);
         $this->load->view('layout/backend_menu');
