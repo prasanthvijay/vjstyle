@@ -11,6 +11,7 @@
                         <div class="form-group">
                             <label for="dob" class="control-label">Admin</label>
                             <select name="adminid" id="adminid" class="form-control ">
+                                <option value="">Select</option>
                                 <?php for($k=0; $k<count($adminList); $k++) { ?>
                                     <option value="<?php echo $adminList[$k]['userid']; ?>"><?php echo $adminList[$k]['name']; ?></option>
                                 <?php } ?>
@@ -29,14 +30,14 @@
                 <div class="col-md-6">
                     <div class="form-group">
                     <input type="hidden" value="<?php echo $usertypeid; ?>" name="usertypeid" id="usertypeid">
-                        <?php if($usertypeid == 5){ ?>
+                        <?php if($usertypeid == 4 || $usertypeid == 5){ ?>
                             <label for="usertypeid" class="control-label">Retailer Show Room</label>
                             <select name="retailershowroomid" id="retailershowroomid" class="form-control ">
                                 <?php for($k=0; $k<count($retailerShowRoomList); $k++) { ?>
                                     <option value="<?php echo $retailerShowRoomList[$k]['userid']; ?>"><?php echo $retailerShowRoomList[$k]['name']; ?></option>
                                 <?php } ?>
                             </select>
-                        <?php } else if($usertypeid == 4){  ?>
+                        <?php } else if($usertypeid == 3){  ?>
                             <label for="field-4" class="control-label">Mobile</label>
                             <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile">
                         <?php } ?>
@@ -57,7 +58,7 @@
                     </div>
                 </div>
             </div>
-            <?php if($usertypeid != 4){ ?>
+            <?php if($usertypeid != 3){ ?>
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">

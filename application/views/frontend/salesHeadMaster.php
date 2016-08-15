@@ -19,9 +19,9 @@
 					<div class="col-md-12">
 						<div class="table-responsive">
 							<p class="text-muted m-b-20 font-13">
-								Add, Edit and Delete Sales Executive
+								Add, Edit and Delete Sales Head
 							</p>
-							<button class="btn btn-primary waves-effect waves-light m-t-10" onclick="loadAddOrEditContentWithModal('getAddOrEditUserMasterContent','usertypeid=5','modalContentArea')">Add Sales Executive</button>
+							<button class="btn btn-primary waves-effect waves-light m-t-10" onclick="loadAddOrEditContentWithModal('getAddOrEditUserMasterContent','usertypeid=4','modalContentArea')">Add Sales Head</button>
 						</div>
 					</div>
 				</div>
@@ -60,7 +60,7 @@
 
 <script>
 	var postUrl = "Frontend/getUserListDetails";
-	var postData = "usertypeid=5";
+	var postData = "usertypeid=4";
 	var displayDiv = "usersListDiv";
 	loadUsersListDetails(postUrl, postData, displayDiv);
 	function deleteUsers(userid, adminid) {
@@ -72,7 +72,7 @@
 				type: "POST",
 				data: postDataDelete,
 				success: function (responseFromSite) {
-					$.Notification.notify('success','top right', 'Delete Sales Executive', 'Sales Executive was successfully Deleted ')
+					$.Notification.notify('success','top right', 'Delete Sales Head', 'Sales Head was successfully Deleted ');
 					loadUsersListDetails(postUrl, postData, displayDiv);
 				}
 			});

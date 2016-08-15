@@ -114,6 +114,8 @@ class Frontend extends CI_Controller
             $adminid = 0;
         }
         $redirectUrl = "";
+        $doj = $this->users_model->convertDDMMYYtoYYMMDD($doj);
+        $dob = $this->users_model->convertDDMMYYtoYYMMDD($dob);
 
         $userDetailsArray = array('name' => $name, 'email' => $email, 'password' => $password, 'usertypeid' => $usertypeid,
             'adminid' => $adminid, 'retailershowroomid' => $retailershowroomid, 'mobile' => $mobile, 'address' => $address,
@@ -160,10 +162,6 @@ class Frontend extends CI_Controller
     public function retailerShowRoomMaster()
     {
         $dataheader['title'] = "Retailer Show Room Master";
-        $userTypeArray = $this->users_model->getUserTypeList("2"); //For admin
-        $dataheader['userTypeArray'] = $userTypeArray;
-        $dataheader['addUserMasterUrl'] = "addUserMaster";
-        $dataheader['fromUrl'] = "adminMaster";
         $this->load->view('layout/backend_header', $dataheader);
         $this->load->view('layout/backend_menu');
         $this->load->view('frontend/retailerShowRoomMaster');
@@ -173,13 +171,18 @@ class Frontend extends CI_Controller
     public function salesExecutiveMaster()
     {
         $dataheader['title'] = "Sales Executive Master";
-        $userTypeArray = $this->users_model->getUserTypeList("2"); //For admin
-        $dataheader['userTypeArray'] = $userTypeArray;
-        $dataheader['addUserMasterUrl'] = "addUserMaster";
-        $dataheader['fromUrl'] = "adminMaster";
         $this->load->view('layout/backend_header', $dataheader);
         $this->load->view('layout/backend_menu');
         $this->load->view('frontend/salesExecutiveMaster');
+        $this->load->view('layout/backend_footer');
+    }
+
+    public function salesHeadMaster()
+    {
+        $dataheader['title'] = "Sales Head Master";
+        $this->load->view('layout/backend_header', $dataheader);
+        $this->load->view('layout/backend_menu');
+        $this->load->view('frontend/salesHeadMaster');
         $this->load->view('layout/backend_footer');
     }
 
@@ -187,11 +190,9 @@ class Frontend extends CI_Controller
     {
 
         $usertypeid = $this->input->post('usertypeid');
-        $adminid = $this->input->post('adminid');
         $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
         $adminid = "0";
 
-        $adminList = array();
         if($sessionUserTypeIdIsset == 1) {
             $sessionUserTypeId = $this->session->userdata('usertypeid');
             $dataArray['sessionUserTypeId'] = $sessionUserTypeId;
@@ -202,13 +203,103 @@ class Frontend extends CI_Controller
                 $adminid = $this->input->post('adminid');
             }
         }
-            $retailerShowRoomId = $this->input->post('retailerShowRoomId');
+        $retailerShowRoomId = $this->input->post('retailerShowRoomId');
         $userArray = $this->users_model->getUsersList($usertypeid, $adminid, $retailerShowRoomId);
         
         $dataheader['userArray'] = $userArray;
         $this->load->view('frontend/getUserListDetails', $dataheader);
     }
 
+    public function getRetailerShowRoomDetails()
+    {
+
+        $usertypeid = $this->input->post('usertypeid');
+        $jsondata = $this->input->get('jsondata');
+        $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
+        $adminid = "0";
+
+        if($sessionUserTypeIdIsset == 1) {
+            $sessionUserTypeId = $this->session->userdata('usertypeid');
+            $dataArray['sessionUserTypeId'] = $sessionUserTypeId;
+
+            if ($sessionUserTypeId == 2) {
+                $adminid = $this->session->userdata('userid');
+            } else {
+                $adminid = $this->input->get('adminid');
+            }
+        }
+
+        $retailerShowRoomId = $this->input->post('retailerShowRoomId');
+        $userArray = $this->users_model->getUsersList($usertypeid, $adminid, $retailerShowRoomId);
+        if($jsondata==1){
+            echo json_encode($userArray);
+        } else {
+            $selectBoxReturn = "<select name='' id='' class=''> <option value=''>Select</option></select>";
+            for ($k=0;$k<count($userArray);$k++){
+                $selectBoxReturn = $selectBoxReturn . "<option value='".$userArray[$k]['userid']."'>".$userArray[$k]['name']."</option>";
+            }
+            $selectBoxReturn = $selectBoxReturn . "</select>";
+            echo $selectBoxReturn;
+        }
+
+    }
+
+    public function getAddOrEditUserMasterContent(){
+
+        $actionType = $this->input->post('actionType');
+        $actionId = $this->input->post('actionId');
+        $usertypeid = $this->input->post('usertypeid');
+        $userTypeArray = $this->users_model->getUserTypeList($usertypeid); //For admin
+        $usertype = $userTypeArray[0]['usertype'];
+        $dataArray['userTypeArray'] = $userTypeArray;
+        $dataArray['actionType'] = $actionType;
+        $dataArray['actionId'] = $actionId;
+        $dataArray['addUserMasterUrl'] = "addUserMaster";
+        $dataArray['usertypeid'] = $usertypeid;
+        $dataArray['masterName'] = $usertype;
+        $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
+        $adminid = "0";
+        $retailershowroomid = "0";
+        $adminList = array();
+        if($sessionUserTypeIdIsset == 1){
+            $sessionUserTypeId = $this->session->userdata('usertypeid');
+            $dataArray['sessionUserTypeId'] = $sessionUserTypeId;
+            if($sessionUserTypeId == 2){
+                $adminid = $this->session->userdata('userid');
+            } else {
+                $adminid = $this->input->post('adminid');
+            }
+
+            if($sessionUserTypeId == 1){
+                $adminid = $this->session->userdata('adminid');
+                $adminList = $this->users_model->getUsersList('2', null, null);
+            }
+
+            $dataArray['adminList'] = $adminList;
+            $retailerShowRoomList = $this->users_model->getUsersList('3', $adminid, $retailershowroomid);
+            $dataArray['retailerShowRoomList'] = $retailerShowRoomList;
+            $this->load->view('frontend/getAddOrEditUserMasterContent', $dataArray);
+        }
+    }
+
+    public function deleteUsersFromMaster(){
+
+        $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
+        if($sessionUserTypeIdIsset == 1){
+            $userid = $this->input->post('userid');
+            $sessionUserTypeId = $this->session->userdata('usertypeid');
+            if($sessionUserTypeId == 2){
+                $adminid = $this->session->userdata('userid');
+            } else {
+                $adminid = $this->input->post('adminid');
+            }
+            $success = $this->users_model->deleteUsersFromMaster($userid, $adminid); //For admin
+        }
+
+        if($success){
+            echo "Deleted successfully!";
+        }
+    }
 
     public function AddProduct()
     {
@@ -333,65 +424,6 @@ $adminid = $this->session->userdata('usertypeid');
         $this->load->view('frontend/ProductList');
         $this->load->view('layout/backend_footer');
     }
-
-
-    public function getAddOrEditUserMasterContent(){
-
-        $actionType = $this->input->post('actionType');
-        $actionId = $this->input->post('actionId');
-        $usertypeid = $this->input->post('usertypeid');
-        $userTypeArray = $this->users_model->getUserTypeList($usertypeid); //For admin
-        $usertype = $userTypeArray[0]['usertype'];
-        $dataArray['userTypeArray'] = $userTypeArray;
-        $dataArray['actionType'] = $actionType;
-        $dataArray['actionId'] = $actionId;
-        $dataArray['addUserMasterUrl'] = "addUserMaster";
-        $dataArray['usertypeid'] = $usertypeid;
-        $dataArray['masterName'] = $usertype;
-        $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
-        $adminid = "0";
-        $retailershowroomid = "0";
-        $adminList = array();
-        if($sessionUserTypeIdIsset == 1){
-            $sessionUserTypeId = $this->session->userdata('usertypeid');
-            $dataArray['sessionUserTypeId'] = $sessionUserTypeId;
-            if($sessionUserTypeId == 2){
-                $adminid = $this->session->userdata('userid');
-            } else {
-                $adminid = $this->input->post('adminid');
-            }
-
-            if($sessionUserTypeId == 1){
-                $adminid = $this->session->userdata('adminid');
-                $adminList = $this->users_model->getUsersList('2', null, null);
-            }
-
-            $dataArray['adminList'] = $adminList;
-            $retailerShowRoomList = $this->users_model->getUsersList('4', $adminid, $retailershowroomid);
-            $dataArray['retailerShowRoomList'] = $retailerShowRoomList;
-            $this->load->view('frontend/getAddOrEditUserMasterContent', $dataArray);
-        }
-    }
-
-    public function deleteUsersFromMaster(){
-
-        $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
-        if($sessionUserTypeIdIsset == 1){
-            $userid = $this->input->post('userid');
-            $sessionUserTypeId = $this->session->userdata('usertypeid');
-            if($sessionUserTypeId == 2){
-                $adminid = $this->session->userdata('userid');
-            } else {
-                $adminid = $this->input->post('adminid');
-            }
-            $success = $this->users_model->deleteUsersFromMaster($userid, $adminid); //For admin
-        }
-
-        if($success){
-                echo "Deleted successfully!";
-        }
-    }
-
 }
 
 ?>

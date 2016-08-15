@@ -58,12 +58,13 @@ $route['logout'] = 'Frontend/logout';
 
 //User Masters
 $route['adminMaster'] = 'Frontend/adminMaster';
-$route['sellerMaster'] = 'Frontend/sellerMaster';
 $route['retailerShowRoomMaster'] = 'Frontend/retailerShowRoomMaster';
+$route['salesHeadMaster'] = 'Frontend/salesHeadMaster';
 $route['salesExecutiveMaster'] = 'Frontend/salesExecutiveMaster';
-$route['logout'] = 'Frontend/logout';
+$route['sellerMaster'] = 'Frontend/sellerMaster';
 $route['addUserMaster'] = 'Frontend/addUserMaster';
 $route['getUserListDetails'] = 'Frontend/getUserListDetails';
+$route['getRetailerShowRoomDetails'] = 'Frontend/getRetailerShowRoomDetails';
 $route['getAddOrEditUserMasterContent'] = 'Frontend/getAddOrEditUserMasterContent';
 $route['deleteUsersFromMaster'] = 'Frontend/deleteUsersFromMaster';
 $route['AddProduct'] = 'Frontend/AddProduct';

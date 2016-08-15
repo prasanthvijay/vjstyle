@@ -283,6 +283,21 @@ class Users_model extends CI_Model
         }
         return $success;
     }
+
+    public function convertDDMMYYtoYYMMDD($bookingDate)
+    {
+        $returnBookingDate = "0000-00-00";
+        if ($bookingDate != null) {
+            if ($bookingDate != "" && $bookingDate != "00-00-0000") {
+                $returnBookingDateArray = explode("-", $bookingDate);
+                if (count($returnBookingDateArray) > 0) {
+                    $returnBookingDate = $returnBookingDateArray[2] . "-" . $returnBookingDateArray[1] . "-" . $returnBookingDateArray[0];
+                }
+            }
+        }
+        return $returnBookingDate;
+    }
+
 }
 
 ?>

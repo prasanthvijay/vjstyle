@@ -21,7 +21,7 @@
                             <p class="text-muted m-b-20 font-13">
                                 Add, Edit and Delete Retailer Show Room
                             </p>
-                            <button class="btn btn-primary waves-effect waves-light m-t-10" onclick="loadAddOrEditContentWithModal('getAddOrEditUserMasterContent','usertypeid=4','modalContentArea')">Add Retailer Show Room</button>
+                            <button class="btn btn-primary waves-effect waves-light m-t-10" onclick="loadAddOrEditContentWithModal('getAddOrEditUserMasterContent','usertypeid=3','modalContentArea')">Add Retailer Show Room</button>
                         </div>
                     </div>
                 </div>
@@ -52,24 +52,15 @@
         </div><!-- /.modal -->
 
 
-        <footer class="footer text-right">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12">
-                        2016 © Minton.
-                    </div>
-                </div>
-            </div>
-        </footer>
+        <?php include_once "innerFooter.php"; ?>
         <!-- End Footer -->
 
     </div> <!-- end container -->
 </div>
 <!-- End wrapper -->
-<a class="btn btn-default waves-effect waves-light" href="javascript:;" onclick="">Left</a>
 <script>
     var postUrl = "Frontend/getUserListDetails";
-    var postData = "usertypeid=4";
+    var postData = "usertypeid=3";
     var displayDiv = "usersListDiv";
     loadUsersListDetails(postUrl, postData, displayDiv);
     function deleteUsers(userid, adminid) {

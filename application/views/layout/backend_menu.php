@@ -10,9 +10,10 @@
                         <a href="dashboard"><i class="md md-dashboard"></i>Dashboard</a>
                     </li>
                     <li class="has-submenu">
-                        <a href="#"><i class="md md-pages"></i>Master </a>
+                        <a href="#"><i class="md md-pages"></i>Users </a>
                         <ul class="submenu">
                             <li><a href="retailerShowRoomMaster">Retailer Show Room </a></li>
+                            <li><a href="salesHeadMaster">Sales Head </a></li>
                             <li><a href="salesExecutiveMaster">Sales Executive </a></li>
                         </ul>
                     </li>
@@ -45,6 +46,15 @@
                 <ul class="navigation-menu">
                     <li class="has-submenu active">
                         <a href="dashboard"><i class="md md-dashboard"></i>Dashboard</a>
+                    </li>
+                    <li class="has-submenu">
+                        <a href="#"><i class="md md-pages"></i>Users </a>
+                        <ul class="submenu">
+                            <li><a href="adminMaster">Admin </a></li>
+                            <li><a href="retailerShowRoomMaster">Retailer Show Room </a></li>
+                            <li><a href="salesHeadMaster">Sales Head </a></li>
+                            <li><a href="salesExecutiveMaster">Sales Executive </a></li>
+                        </ul>
                     </li>
                    <!-- <li class="has-submenu">
                         <a href="#"><i class="md md-pages"></i>Master </a>
