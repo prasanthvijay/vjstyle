@@ -78,4 +78,18 @@
 			});
 		}
 	}
+
+	function getRetailerShowRooms(){
+		var adminid = $("#adminid").val();
+		var usertypeid = "4";
+		var formData = "adminid="+adminid+"&usertypeid="+usertypeid;
+		$.ajax({
+			url : "getRetailerShowRoomDetails",
+			type : "post",
+			data : formData,
+			success : function(response){
+				alert(response);
+			}
+		});
+		}
 </script>

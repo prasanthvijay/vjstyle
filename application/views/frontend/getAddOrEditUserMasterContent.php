@@ -10,7 +10,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="dob" class="control-label">Admin</label>
-                            <select name="adminid" id="adminid" class="form-control ">
+                            <select name="adminid" id="adminid" class="form-control " onchange="getRetailerShowRooms();">
                                 <option value="">Select</option>
                                 <?php for($k=0; $k<count($adminList); $k++) { ?>
                                     <option value="<?php echo $adminList[$k]['userid']; ?>"><?php echo $adminList[$k]['name']; ?></option>

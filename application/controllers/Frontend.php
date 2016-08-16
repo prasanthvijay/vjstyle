@@ -213,7 +213,7 @@ class Frontend extends CI_Controller
     public function getRetailerShowRoomDetails()
     {
 
-        $usertypeid = $this->input->post('usertypeid');
+        $usertypeid = $this->input->get('usertypeid');
         $jsondata = $this->input->get('jsondata');
         $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
         $adminid = "0";
