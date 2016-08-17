@@ -1,25 +1,11 @@
-<div class="wrapper">
-            <div class="container">
 
-                <!-- Page-Title -->
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h4 class="page-title"><?php echo $title; ?></h4>
-                    </div>
-                </div>
-                <!-- Page-Title -->
-
-
-
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="card-box table-responsive">
-
-                                    <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                    <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap example" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
                                         <th>Sno</th>
                                         <th>Brand Name</th>
+					 <th>Edit</th>
+					 <th>Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -28,14 +14,14 @@
 					
                                         <td><?php echo $i+1; ?></td>
 					<td><?php echo $BrandList[$i]['brandname']; ?></td>
-                                       
+                                       <td><button class="btn btn-primary waves-effect waves-light" type="button" >
+                    Edit
+                </button></td>
+					<td><button class="btn btn-danger waves-effect waves-light" type="button" >
+                    Delete
+                </button></td>
                                      </tr>
                                     	<?php } ?>
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-                </div>
-
-                </div>
-</div>
+                   

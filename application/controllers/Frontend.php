@@ -354,13 +354,9 @@ class Frontend extends CI_Controller
                 $this->session->set_flashdata('output', $output);
                 //redirect("http://localhost/pos/".$fromUrl);
             }
-            //        $this->load->view('layout/backend_header',$dataheader);
-            //        $this->load->view('layout/backend_menu');
-            //        $this->load->view('frontend/frontend_adminMaster');
-            //        $this->load->view('layout/backend_footer');
-        }
+          }
         if ($submit == "brand") {
-            $adminid = $this->session->userdata('userid');
+           $adminid = $this->session->userdata('usertypeid');
             $brandname = $this->input->post('brandname');
             $createdAt = date("Y-m-d H:i:s");
 
@@ -371,7 +367,7 @@ class Frontend extends CI_Controller
             $errorMsg = $validationArray['errorMsg'];
             if ($validateSuccess == 1) {
                 $userTypeArray = $this->users_model->createBrandMaster($BrandDetailsArray); //For admin
-                redirect("/dashboard");
+                redirect("index.php/ProductMaster");
 
             } else {
                 $output = array('status' => "2", 'message' => "Invalid Login!!");
@@ -384,13 +380,12 @@ class Frontend extends CI_Controller
 
     public function AddBrand()
     {
-        $dataheader['title'] = "Add Brand";
+        $sessionUserTypeId = $this->session->userdata('usertypeid');
+        $dataheader['adminid'] = $sessionUserTypeId;
+        $dataheader['title'] = "Brand";
         $dataheader['addProductMasterUrl'] = "addProductMaster";
-        $this->load->view('layout/backend_header', $dataheader);
-        $this->load->view('layout/backend_menu');
-        $this->load->view('frontend/AddBrand');
-        $this->load->view('layout/backend_footer');
-
+        $this->load->view('frontend/AddBrand',$dataheader);
+       
     }
 
     public function BrandList()
@@ -411,7 +406,7 @@ class Frontend extends CI_Controller
     public function ProductList()
     {
 
-$adminid = $this->session->userdata('usertypeid');
+	$adminid = $this->session->userdata('usertypeid');
         $dataheader['title'] = "ProductList";
 
         $ProductList = $this->users_model->getProductList($adminid);
@@ -424,6 +419,16 @@ $adminid = $this->session->userdata('usertypeid');
         $this->load->view('frontend/ProductList');
         $this->load->view('layout/backend_footer');
     }
+	public function ProductMaster()
+    {
+
+	$adminid = $this->session->userdata('usertypeid');
+        $this->load->view('layout/backend_header');
+        $this->load->view('layout/backend_menu');
+        $this->load->view('frontend/ProductMaster');
+        $this->load->view('layout/backend_footer');
+    }
+
 }
 
 ?>

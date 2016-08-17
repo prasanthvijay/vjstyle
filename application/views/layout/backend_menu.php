@@ -4,7 +4,7 @@
         <div id="navigation">
             <!-- Navigation Menu-->
 
-            <?php if ($_SESSION['usertype'] == 'Admin') { ?>
+          <?php  if($_SESSION['usertype']=="Admin"){ ?>
                 <ul class="navigation-menu">
                     <li class="has-submenu active">
                         <a href="dashboard"><i class="md md-dashboard"></i>Dashboard</a>
@@ -20,8 +20,7 @@
                     <li class="has-submenu">
                         <a href="#"><i class="md md-pages"></i>Product </a>
                         <ul class="submenu">
-                            <li><a href="AddBrand">Add Brand </a></li>
-                            <li><a href="BrandList">Brand List </a></li>
+                            <li><a href="ProductMaster">Add Brand </a></li>
                             <li><a href="AddProduct">Add Product </a></li>
                             <li><a href="ProductList">Product List </a></li>
                             <!--   <li><a href="retailerShowRoomMaster">Retailer Show Room </a></li>
@@ -41,8 +40,8 @@
                 </ul>
                 </li>
                 </ul>
-            <?php } else { ?>
-
+           <?php } else { ?>
+		
                 <ul class="navigation-menu">
                     <li class="has-submenu active">
                         <a href="dashboard"><i class="md md-dashboard"></i>Dashboard</a>
@@ -78,7 +77,7 @@
                         </ul>
                     </li>-->
                 </ul>
-            <?php }?>
+          <?php } ?>
             <!-- End navigation menu -->
         </div>
     </div>
