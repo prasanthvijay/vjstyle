@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 15, 2016 at 07:29 AM
--- Server version: 5.5.49-0ubuntu0.14.04.1
--- PHP Version: 5.5.9-1ubuntu4.17
+-- Generation Time: Aug 19, 2016 at 12:51 AM
+-- Server version: 5.6.31-0ubuntu0.14.04.2
+-- PHP Version: 5.5.9-1ubuntu4.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `tbl_brand` (
   `active` varchar(255) NOT NULL DEFAULT 'active',
   `createdat` datetime DEFAULT NULL,
   PRIMARY KEY (`brandid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `tbl_brand`
@@ -45,7 +45,9 @@ INSERT INTO `tbl_brand` (`brandid`, `brandname`, `adminid`, `active`, `createdat
 (3, 'Shirt', 3, 'active', '2016-08-03 02:28:58'),
 (4, 'tshirt', 3, 'active', '2016-08-03 02:29:09'),
 (5, 'jeans', 3, 'active', '2016-08-03 02:29:18'),
-(6, 'MArts', 3, 'active', '2016-08-05 00:07:27');
+(6, 'MArts', 3, 'active', '2016-08-05 00:07:27'),
+(7, 'Paint', 2, 'active', '2016-08-18 00:40:58'),
+(8, 'Modle', 2, 'active', '2016-08-18 00:53:32');
 
 -- --------------------------------------------------------
 
@@ -139,14 +141,46 @@ CREATE TABLE IF NOT EXISTS `tbl_product` (
   `createdat` datetime DEFAULT NULL,
   PRIMARY KEY (`productid`),
   UNIQUE KEY `barcode` (`barcode`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `tbl_product`
 --
 
 INSERT INTO `tbl_product` (`productid`, `productname`, `productrate`, `productsize`, `availablequantity`, `barcode`, `categorytypeid`, `brandid`, `adminid`, `active`, `createdat`) VALUES
-(1, 'Test', '150', 'Xl', '50', 'BAR1234', 1, 1, 1, 'active', '2016-07-31 00:00:00');
+(1, 'Test', '150', 'Xl', '50', 'BAR1234', 1, 1, 2, 'active', '2016-07-31 00:00:00'),
+(2, 'Jeans', '1234', 'XXL', '34', 'DSF23222', 1, 5, 2, 'active', '2016-08-05 00:44:53'),
+(3, 'paint', '450', 'M', '30', 'PAN001', 1, 5, 2, 'active', '2016-08-12 22:24:36'),
+(4, 'T-Shirt', '350', 'XL', '60', 'TSH001', 1, 4, 2, 'active', '2016-08-12 22:25:51'),
+(5, 'shirt-Mens', '450', 'L', '60', 'SH002', 1, 3, 2, 'active', '2016-08-12 22:27:44'),
+(6, 'Jeans-Shirt', '850', 'L', '88', 'JESH002', 1, 5, 2, 'active', '2016-08-12 22:29:07'),
+(7, 'Jeans-T-Shirt', '850', 'L', '100', 'JTSH002', 1, 5, 2, 'active', '2016-08-12 22:29:07'),
+(8, 'shirt', '450', '2', '40', 'HJAHS11', 1, 8, 2, 'active', '2016-08-19 00:35:43'),
+(9, 'bew_paint', '562', '3', '40', 'FDSF111', 1, 0, 2, 'active', '2016-08-19 00:38:24');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_sizemaster`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_sizemaster` (
+  `sizeid` int(11) NOT NULL AUTO_INCREMENT,
+  `size` varchar(200) DEFAULT NULL,
+  `adminId` int(11) DEFAULT NULL,
+  `status` varchar(200) DEFAULT 'active',
+  `createdAt` date DEFAULT NULL,
+  PRIMARY KEY (`sizeid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `tbl_sizemaster`
+--
+
+INSERT INTO `tbl_sizemaster` (`sizeid`, `size`, `adminId`, `status`, `createdAt`) VALUES
+(1, 'XL', 2, 'active', '2016-08-18'),
+(2, 'XXL', 2, 'active', '2016-08-19'),
+(3, 'L', 2, 'active', '2016-08-19');
 
 -- --------------------------------------------------------
 
@@ -179,7 +213,7 @@ CREATE TABLE IF NOT EXISTS `tbl_user` (
 INSERT INTO `tbl_user` (`userid`, `name`, `email`, `password`, `usertypeid`, `adminid`, `retailerShowRoomId`, `mobile`, `address`, `doj`, `dob`, `active`, `lastlogin`, `createdat`) VALUES
 (1, 'superadmin', 'superadmin@gmail.com', '1234', 1, 0, NULL, '8344798628', '107 west street, ammaiyappan, thiruvarur, Tamil Nadu', NULL, NULL, 'active', '2016-08-14 15:08:12', '2016-07-23 00:00:00'),
 (2, 'posadmin1', 'posadmin1@gmail.com', '1234', 2, 0, NULL, '8124356981', '102 chennai', NULL, NULL, 'active', '2016-08-15 07:08:16', '2016-07-23 19:21:27'),
-(3, 'Prasanth', 'praasanth@gmail.com', '1234', 2, 0, NULL, '8122334168', 'salem', '0000-00-00', '0000-00-00', 'active', '2016-08-14 09:08:29', '2016-08-03 02:25:22'),
+(3, 'Prasanth', 'prasanth@gmail.com', '1234', 2, 0, NULL, '8122334168', 'salem', '0000-00-00', '0000-00-00', 'active', '2016-08-18 21:08:54', '2016-08-03 02:25:22'),
 (32, 'kuru', 'yughgf@hjgdfh.in', '1234', 3, 2, 0, '67567576', 'hjdsff', '0000-00-00', '0000-00-00', 'active', NULL, '2016-08-14 09:26:53'),
 (33, 'jhbnzf', 'hgjheg@jhdjg.in', '1234', 4, 2, 32, '54564', 'ok', '2016-08-17', '2016-08-31', 'deleted', NULL, '2016-08-14 09:27:39'),
 (34, 'oko', 'oko@gmail.com', '1234', 5, 2, 32, '54546', 'dgsdfgdsfg', '2016-08-16', '2016-08-30', 'active', NULL, '2016-08-14 09:28:20'),
