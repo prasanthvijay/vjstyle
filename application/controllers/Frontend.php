@@ -306,9 +306,11 @@ class Frontend extends CI_Controller
         $dataheader['title'] = "Add Product";
         $dataheader['addProductMasterUrl'] = "addProductMaster";
 
-        $adminid = $this->session->userdata('userid');
+        $adminid = $this->session->userdata('usertypeid');
         $BrandArray = $this->users_model->getBrandList($adminid);
+	$SizeArray = $this->users_model->getSizeList($adminid);
         $dataheader['BrandArray'] = $BrandArray;
+        $dataheader['SizeArray'] = $SizeArray;
 
         $this->load->view('layout/backend_header', $dataheader);
         $this->load->view('layout/backend_menu');

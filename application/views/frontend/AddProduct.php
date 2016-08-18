@@ -43,7 +43,12 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Size</label>
                                             <div class="col-sm-6">
-                                                <input type="text" id="size" name="size" class="form-control" required data-parsley-name="name" placeholder="Product size" />
+						<select class="select2 form-control" id="size" name="size">
+							<option value="">Select Size</option>
+						<?php for($j=0;$j<count($SizeArray);$j++){ ?>
+				                    <option value="<?php echo $SizeArray[$j]['sizeid']; ?>"><?php echo $SizeArray[$j]['size']; ?></option>
+				             			<?php } ?>
+						 </select>
                                             </div>
                                         </div>
                                         <div class="form-group">
