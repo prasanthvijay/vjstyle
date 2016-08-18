@@ -297,6 +297,35 @@ class Users_model extends CI_Model
         }
         return $returnBookingDate;
     }
+	 public function createSizeMaster($SizeDetailsArray)
+    {
+        $sql = "INSERT INTO tbl_sizemaster (size,adminid,createdat) " . "VALUES (" . $this->db->escape($SizeDetailsArray['size']) . "," . $this->db->escape($SizeDetailsArray['adminid']) . "," . $this->db->escape($SizeDetailsArray['createdAt']) . ")";
+        $this->db->query($sql);
+    }
+
+ public function getSizeList($adminid)
+    {
+
+        $SizeArray = array();
+        $sql = "SELECT * FROM `tbl_sizemaster` t WHERE t.status = 'active' ";
+        if ($adminid != "" && $adminid != null) {
+            $sql .= " and adminId = '" . $adminid . "' ";
+        }
+
+        $sql = $sql . " order by sizeid desc";
+        $userQuery = $this->db->query($sql);
+        $k = 0;
+        foreach ($userQuery->result() as $row) {
+            $SizeArray[$k]['sizeid'] = $row->sizeid;
+            $SizeArray[$k]['size'] = $row->size;
+            $SizeArray[$k]['adminId'] = $row->adminId;
+            $SizeArray[$k]['status'] = $row->status;
+            $SizeArray[$k]['createdAt'] = $row->createdAt;
+            $k++;
+        }
+
+        return $SizeArray;
+    }
 
 }
 

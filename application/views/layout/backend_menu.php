@@ -20,9 +20,11 @@
                     <li class="has-submenu">
                         <a href="#"><i class="md md-pages"></i>Product </a>
                         <ul class="submenu">
-                            <li><a href="ProductMaster">Add Brand </a></li>
+                            <li><a href="BrandMaster">Brand Master </a></li>
                             <li><a href="AddProduct">Add Product </a></li>
                             <li><a href="ProductList">Product List </a></li>
+                            <li><a href="SizeMaster">Size Master</a></li>
+
                             <!--   <li><a href="retailerShowRoomMaster">Retailer Show Room </a></li>
                                 <li><a href="salesExecutiveMaster">Sales Executive </a></li>
                                 <li><a href="deliveryPersonMaster">Delivery Person </a></li>-->

@@ -19,7 +19,7 @@
                     <div class="col-md-12">
                         <div class="table-responsive">
                             <p class="text-muted m-b-20 font-13">
-                                Add, Edit and Delete Brand
+                                Add, Edit and Delete <?php echo $Brand; ?>
                             </p>
                             <button class="btn btn-primary waves-effect waves-light m-t-10" onclick="loadAddOrEditModal()">Add Brand</button>
                         </div> 
@@ -57,22 +57,15 @@
 </div>
 <!-- End wrapper -->
 <script>
- $(document).ready(function(){
-	$.ajax({ url: "Frontend/BrandList",
-        success: function(data){
-	$("#usersListDiv").html(data);
-	$('.example').dataTable();
-        }});
-});
-
-
+ var brandList="brandList";
+loadbrandlist(brandList);
 function loadAddOrEditModal()
 {
  $.ajax({
         url : "Frontend/AddBrand",
    	type : "POST",
         success : function (responseFromSite) {
-		//alert(responseFromSite);
+		
             $("#modalContentArea").html(responseFromSite);
             $("#panel-modal").modal('show');
           

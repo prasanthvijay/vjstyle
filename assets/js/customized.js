@@ -39,3 +39,16 @@ function loadAddOrEditContentWithModal(postUrl, postData, displayDiv){
 
     });*/
 }
+
+function loadbrandlist(typelist){
+	
+	$.ajax({ url: "Frontend/BrandList",
+	 type : "GET",
+	data : {type:typelist },
+        success: function(data){
+
+	$("#usersListDiv").html(data);
+            $('#datatable-responsive').DataTable();
+        }});
+
+}

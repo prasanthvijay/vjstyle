@@ -72,7 +72,9 @@ $route['addProductMaster'] = 'Frontend/addProductMaster';
 $route['AddBrand'] = 'Frontend/AddBrand';
 $route['BrandList'] = 'Frontend/BrandList';
 $route['ProductList'] = 'Frontend/ProductList';
-$route['ProductMaster'] = 'Frontend/ProductMaster';
+$route['BrandMaster'] = 'Frontend/BrandMaster';
+$route['SizeMaster'] = 'Frontend/SizeMaster';
+$route['AddSize'] = 'Frontend/AddSize';
 
 //Sales
 $route['pos'] = 'sales/pos';
