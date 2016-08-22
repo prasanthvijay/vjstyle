@@ -52,6 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //$route['default_controller'] = 'welcome';
 $route['default_controller'] = 'Frontend';
 $route['Sales_controller'] = 'sales';
+$route['Product_controller'] = 'Product';
 $route['dashboard'] = 'Frontend/dashboard';
 $route['checkLogin'] = 'Frontend/checkLogin';
 $route['logout'] = 'Frontend/logout';
@@ -67,14 +68,18 @@ $route['getUserListDetails'] = 'Frontend/getUserListDetails';
 $route['getRetailerShowRoomDetails'] = 'Frontend/getRetailerShowRoomDetails';
 $route['getAddOrEditUserMasterContent'] = 'Frontend/getAddOrEditUserMasterContent';
 $route['deleteUsersFromMaster'] = 'Frontend/deleteUsersFromMaster';
-$route['AddProduct'] = 'Frontend/AddProduct';
-$route['addProductMaster'] = 'Frontend/addProductMaster';
-$route['AddBrand'] = 'Frontend/AddBrand';
-$route['BrandList'] = 'Frontend/BrandList';
-$route['ProductList'] = 'Frontend/ProductList';
-$route['BrandMaster'] = 'Frontend/BrandMaster';
-$route['SizeMaster'] = 'Frontend/SizeMaster';
-$route['AddSize'] = 'Frontend/AddSize';
+
+//Product
+$route['AddProduct'] = 'Product/AddProduct';
+$route['addProductMaster'] = 'Product/addProductMaster';
+$route['AddBrand'] = 'Product/AddBrand';
+$route['BrandList'] = 'Product/BrandList';
+$route['ProductList'] = 'Product/ProductList';
+$route['BrandMaster'] = 'Product/BrandMaster';
+$route['SizeMaster'] = 'Product/SizeMaster';
+$route['AddSize'] = 'Product/AddSize';
+$route['MapProduct'] = 'Product/MapProduct';
+
 
 //Sales
 $route['pos'] = 'sales/pos';

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 19, 2016 at 12:51 AM
+-- Generation Time: Aug 23, 2016 at 12:14 AM
 -- Server version: 5.6.31-0ubuntu0.14.04.2
 -- PHP Version: 5.5.9-1ubuntu4.19
 
@@ -141,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `tbl_product` (
   `createdat` datetime DEFAULT NULL,
   PRIMARY KEY (`productid`),
   UNIQUE KEY `barcode` (`barcode`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `tbl_product`
@@ -156,7 +156,8 @@ INSERT INTO `tbl_product` (`productid`, `productname`, `productrate`, `productsi
 (6, 'Jeans-Shirt', '850', 'L', '88', 'JESH002', 1, 5, 2, 'active', '2016-08-12 22:29:07'),
 (7, 'Jeans-T-Shirt', '850', 'L', '100', 'JTSH002', 1, 5, 2, 'active', '2016-08-12 22:29:07'),
 (8, 'shirt', '450', '2', '40', 'HJAHS11', 1, 8, 2, 'active', '2016-08-19 00:35:43'),
-(9, 'bew_paint', '562', '3', '40', 'FDSF111', 1, 0, 2, 'active', '2016-08-19 00:38:24');
+(9, 'bew_paint', '562', '3', '40', 'FDSF111', 1, 0, 2, 'active', '2016-08-19 00:38:24'),
+(11, 'test', '3245', '3', '33', 'qwqeqsa123', 1, 8, 2, 'active', '2016-08-22 23:47:39');
 
 -- --------------------------------------------------------
 
@@ -213,10 +214,10 @@ CREATE TABLE IF NOT EXISTS `tbl_user` (
 INSERT INTO `tbl_user` (`userid`, `name`, `email`, `password`, `usertypeid`, `adminid`, `retailerShowRoomId`, `mobile`, `address`, `doj`, `dob`, `active`, `lastlogin`, `createdat`) VALUES
 (1, 'superadmin', 'superadmin@gmail.com', '1234', 1, 0, NULL, '8344798628', '107 west street, ammaiyappan, thiruvarur, Tamil Nadu', NULL, NULL, 'active', '2016-08-14 15:08:12', '2016-07-23 00:00:00'),
 (2, 'posadmin1', 'posadmin1@gmail.com', '1234', 2, 0, NULL, '8124356981', '102 chennai', NULL, NULL, 'active', '2016-08-15 07:08:16', '2016-07-23 19:21:27'),
-(3, 'Prasanth', 'prasanth@gmail.com', '1234', 2, 0, NULL, '8122334168', 'salem', '0000-00-00', '0000-00-00', 'active', '2016-08-18 21:08:54', '2016-08-03 02:25:22'),
+(3, 'Prasanth', 'prasanth@gmail.com', '1234', 2, 0, NULL, '8122334168', 'salem', '0000-00-00', '0000-00-00', 'active', '2016-08-22 23:08:24', '2016-08-03 02:25:22'),
 (32, 'kuru', 'yughgf@hjgdfh.in', '1234', 3, 2, 0, '67567576', 'hjdsff', '0000-00-00', '0000-00-00', 'active', NULL, '2016-08-14 09:26:53'),
-(33, 'jhbnzf', 'hgjheg@jhdjg.in', '1234', 4, 2, 32, '54564', 'ok', '2016-08-17', '2016-08-31', 'deleted', NULL, '2016-08-14 09:27:39'),
-(34, 'oko', 'oko@gmail.com', '1234', 5, 2, 32, '54546', 'dgsdfgdsfg', '2016-08-16', '2016-08-30', 'active', NULL, '2016-08-14 09:28:20'),
+(33, 'praveen', 'praveen@dotcue.com', '1234', 5, 2, 32, '54564', 'ok', '2016-08-17', '2016-08-31', 'active', '2016-08-22 23:08:20', '2016-08-14 09:27:39'),
+(34, 'oko', 'oko@gmail.com', '1234', 4, 2, 32, '54546', 'dgsdfgdsfg', '2016-08-16', '2016-08-30', 'active', NULL, '2016-08-14 09:28:20'),
 (35, 'posaa', 'jhgjh', 'hhgh', 3, 3, 0, 'uyggg', 'hhgh', '0000-00-00', '0000-00-00', 'active', NULL, '2016-08-14 09:31:54');
 
 -- --------------------------------------------------------
@@ -240,10 +241,10 @@ CREATE TABLE IF NOT EXISTS `tbl_usertype` (
 
 INSERT INTO `tbl_usertype` (`usertypeid`, `usertype`, `redirecturl`, `active`, `createdat`) VALUES
 (1, 'Super Admin', 'index.php/dashboard', 'active', '2016-07-23 00:00:00'),
-(2, 'Admin', 'index.php/AddProduct', 'active', '2016-07-23 00:00:00'),
+(2, 'Admin', 'index.php/product/AddProduct', 'active', '2016-07-23 00:00:00'),
 (3, 'Retailer Show Room', '0', 'active', '2016-07-23 00:00:00'),
-(4, 'Sales Head', '0', 'active', '2016-07-23 00:00:00'),
-(5, 'Sales Executive', '0', 'active', '2016-07-23 00:00:00'),
+(4, 'Sales Head', 'index.php/sales/pos', 'active', '2016-07-23 00:00:00'),
+(5, 'Sales Executive', 'index.php/sales/pos', 'active', '2016-07-23 00:00:00'),
 (6, 'Seller', '0', 'active', '2016-07-23 00:00:00'),
 (7, 'Delivery Person', '0', 'active', '2016-07-23 00:00:00');
 

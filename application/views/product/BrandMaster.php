@@ -62,7 +62,7 @@ loadbrandlist(brandList);
 function loadAddOrEditModal()
 {
  $.ajax({
-        url : "Frontend/AddBrand",
+        url : "AddBrand",
    	type : "POST",
         success : function (responseFromSite) {
 		
