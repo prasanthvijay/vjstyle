@@ -74,10 +74,26 @@
 			<div class="col-md-12">
 				<div class="card-box table-responsive">
 					<p class="text-muted m-b-20 font-13">
-						Point Of Sales
+						Return Point Of Sales
 						<form action="" method="POST" data-parsley-validate novalidate>
 							<div class="row">
 							    <div class="col-lg-8">
+								
+								<div class="row col-lg-12">
+									<div class="card-box">					
+										
+										    <select class="form-control select2" name="receiptId" onchange="getReceiptProduct(this.value)">
+											<option value="">Select Receipt</option>
+											<?php for($i=0;$i<count($receiptList);$i++) { ?>
+												<option value="<?php echo $receiptList[$i]['id']; ?>"><?php echo $receiptList[$i]['id']; ?></option>
+											<?php } ?>
+										    </select>
+
+										<div id="recceiptDetails"></div>
+									
+									</div>
+									
+								</div>
 							
 								<div class="row col-lg-12">
 									<div class="card-box">
@@ -127,13 +143,13 @@
 								<div class="row form-group">
 									<div class="col-sm-3">Total</div>
 									<div class="col-sm-9">
-										<input type="text" class="form-control" name="total" id="total" disabled>
+										<input type="text" class="form-control" name="total" id="total" readonly>
 									</div>
 								</div>
 								<div class="row form-group">
 									<div class="col-sm-3">Discount</div>
 									<div class="col-sm-9">
-										<input type="text" class="form-control" name="totdiscount" id="totdiscount" onblur="calculateTotal()">
+										<input type="text" class="form-control" name="totdiscount" id="totdiscount" value="0" readonly>
 									</div>
 								</div>
 								<div class="row form-group">
@@ -142,6 +158,7 @@
 										<input type="text" class="form-control" name="roundoff" id="roundoff" onblur="calculateTotal()">
 									</div>
 								</div>
+								
 								<div class="row form-group">
 									<div class="col-sm-3">Final</div>
 									<div class="col-sm-9">
@@ -151,13 +168,13 @@
 								<div class="row form-group">
 									<div class="col-sm-3">Customer</div>
 									<div class="col-sm-9">
-										<input type="text" class="form-control" name="Customer" id="Customer">
+										<input type="text" class="form-control" name="Customer" id="Customer" readonly>
 									</div>
 								</div>
 								<div class="row form-group">
 									<div class="col-sm-3">Mobile</div>
 									<div class="col-sm-9">
-										<input type="text" class="form-control" name="mobile" id="mobile">
+										<input type="text" class="form-control" name="mobile" id="mobile" readonly>
 									</div>
 								</div>
 								<div class="row form-group">
@@ -187,9 +204,6 @@
 			</div>
 		</div>
 		<!-- End row -->
-
-
-
 
 	</div> <!-- end container -->
 </div>
@@ -242,23 +256,65 @@ function calculateTotal()
 	
 		FinalTotal=parseFloat(FinalTotal)+parseFloat(productTotal);	
 
-		document.getElementById("TDproduct_"+j).innerHTML=FinalTotal;	
+		document.getElementById("TDproduct_"+j).innerHTML=productTotal;	
 		
 	}
 
 	document.getElementById("total").value=FinalTotal;
 
-		if($("#totdiscount").val()=="")
-		{
-			document.getElementById("totdiscount").value="0";
-		}
+		
 		if($("#roundoff").val()=="")
 		{
 			document.getElementById("roundoff").value="0";
 		}
 
 
-		document.getElementById("finaltotal").value=parseFloat(FinalTotal)-parseFloat($("#roundoff").val())-(parseFloat(FinalTotal)*(parseFloat($("#totdiscount").val())/100));
+		document.getElementById("finaltotal").value=parseFloat(FinalTotal)-parseFloat($("#roundoff").val())-parseFloat($("#totdiscount").val());
+}
+
+
+function getReceiptProduct(receiptId)
+{
+	$.post( "returnposajax", { receiptId: receiptId ,type:"getReceipt"} ,function( data ) {
+		var receipt=JSON.parse(data);
+			document.getElementById("Customer").value=receipt['customer'][0]['name'];
+			document.getElementById("mobile").value=receipt['customer'][0]['mobileno'];
+		var tableData,beforeTotal=0,productTotal=0;
+			for(var i=0;i<receipt['productDetails'].length;i++)
+			{
+
+				beforeTotal=parseFloat(receipt["productDetails"][i]["price"])*parseFloat(receipt["productDetails"][i]["qty"]);
+				productTotal=(parseFloat(beforeTotal)-(parseFloat(beforeTotal)*(parseFloat(receipt["productDetails"][i]["discount"])/100)));
+
+				tableData='<tr><td>'+receipt["product"][i]["productname"]+'</td><td class="text-center"><input name="billprice_'+i+'" id="billprice_'+i+'" class="form-control editable editable-click" value="'+receipt["productDetails"][i]["price"]+'" disabled></td><td class="text-center"><input name="billqty_'+i+'" id="billqty_'+i+'" class="form-control editable editable-click" value="'+receipt["productDetails"][i]["qty"]+'" onblur="billDiscount('+i+')"></td><td class="text-center"><input name="billdisc_'+i+'" id="billdisc_'+i+'" class="form-control editable editable-click" value="'+receipt["productDetails"][i]["discount"]+'" disabled></td><td class="text-center"><input name="billtotal_'+i+'" id="billtotal_'+i+'" class="form-control editable editable-click" value="'+productTotal+'" disabled></td><input type="hidden" name="existBillQuantity_'+i+'" id="existBillQuantity_'+i+'" value="'+receipt["productDetails"][i]["qty"]+'"><input type="hidden" name="existBillproduct_'+i+'" id="existBillproduct_'+i+'" value="'+receipt["productDetails"][i]["productId"]+'"></tr>';	
+			}
+			$("#recceiptDetails").html("<table class='table table-hover'><tr><td>Name</td><td>Price</td><td>QTY</td><td>Discount</td><td>Total</td></tr>"+tableData+"</table>");
+		});
+	
+}
+function billDiscount(rowId)
+{
+
+	if(parseInt($("#billqty_"+rowId).val())<=parseInt($("#existBillQuantity_"+rowId).val()))
+	{
+		var beforeTotal=0,productTotal=0;
+		beforeTotal=parseFloat($("#billprice_"+rowId).val())*parseFloat($("#billqty_"+rowId).val());
+		productTotal=(parseFloat(beforeTotal)-(parseFloat(beforeTotal)*(parseFloat($("#billdisc_"+rowId).val())/100)));
+		document.getElementById("billtotal_"+rowId).value=parseFloat(productTotal);
+
+		
+		originalbeforeTotal=parseFloat($("#billprice_"+rowId).val())*parseFloat($("#existBillQuantity_"+rowId).val());
+		originalproductTotal=(parseFloat(originalbeforeTotal)-(parseFloat(originalbeforeTotal)*(parseFloat($("#billdisc_"+rowId).val())/100)));
+
+		document.getElementById("totdiscount").value=parseFloat($("#totdiscount").val())+(parseFloat(originalproductTotal)-parseFloat(productTotal));
+			
+	}
+	else
+	{	
+		$.Notification.notify('warning','top right','Product Qunatity Only decrease', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae orci ut dolor scelerisque aliquam.');
+		document.getElementById("billqty_"+rowId).value=$("#existBillQuantity_"+rowId).val();
+	}
+	
 }
 </script>
 

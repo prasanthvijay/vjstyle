@@ -48,6 +48,7 @@
                                         </div>
                                     </div>
                                 </div>
+<?php print_r($receiptDetails); ?>
                                 <div class="m-h-50"></div>
                                 <div class="row">
                                     <div class="col-md-12">
@@ -62,16 +63,33 @@
                                                     <th>Total</th>
                                                 </tr></thead>
                                                 <tbody>
-					<?php $total=0; for($i=0;$i<count($receiptDetails['productDetails']);$i++) { ?>
+					<?php $total=0;$reducetotal=0; for($i=0;$i<count($receiptDetails['productDetails']);$i++) { ?>
                                                     <tr>
                                                         <td><?php echo $i+1; ?></td>
                                                         <td><?php echo $receiptDetails['product'][$i]['productname']."(".$receiptDetails['product'][$i]['barcode'].")"; ?></td>
 							<td><?php echo $price=$receiptDetails['productDetails'][$i]['price']; ?></td>
                                                         <td><?php echo $qty=$receiptDetails['productDetails'][$i]['qty']; ?></td>
                                                         <td><?php echo $discount=$receiptDetails['productDetails'][$i]['discount']; ?></td>
-                                                        <td><?php echo $total+=($price-($price*$discount/100))*$qty; ?></td>
+                                                        <td><?php echo $tdtotal=($price-($price*$discount/100))*$qty; $total+=($price-($price*$discount/100))*$qty; ?></td>
                                                     </tr>
                                         <?php } ?>
+
+						<?php if(count($receiptDetails['returnDetails'])>0) { ?>
+							<tr>
+								<td colspan="6"><b><?php if($receiptDetails['returnDetails']['newReceipt']==$receiptDetails['customerreceipt'][0]['id']) echo "Discount Details: BillNo - ".$receiptDetails['returnDetails']['oldReceipt']; else echo "Return Details :BillNo - ".$receiptDetails['returnDetails']['newReceipt']; ?></b> </td>
+							</tr>
+	
+						<?php for($k=0;$k<count($receiptDetails['returnDetails']['name']);$k++) { ?>
+
+							<tr>
+		                                                <td><?php echo $k+1; ?></td>
+		                                                <td><?php echo $receiptDetails['returnDetails']['name'][$k]."(".$receiptDetails['returnDetails']['barcode'][$k].")"; ?></td>
+								<td><?php echo $price=$receiptDetails['returnDetails']['price'][$k]; ?></td>
+		                                                <td><?php echo $qty=$receiptDetails['returnDetails']['reduceCount'][$k]; ?></td>
+		                                                <td><?php echo $discount=$receiptDetails['returnDetails']['discount'][$k]; ?></td>
+		                                                <td><?php echo $tdtotal=($price-($price*$discount/100))*$qty; $reducetotal+=($price-($price*$discount/100))*$qty; ?></td>
+		                                        </tr>
+						<?php } } ?>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -92,8 +110,10 @@
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-6 col-md-offset-3 col-xs-6">
-                                        <p class="text-right"><b>Sub-total:</b> <?php echo $total; ?></p>
+                                        <p class="text-right"><b>Sub-total:</b> <?php echo $total=$total-$reducetotal; ?></p>
+				<?php if($receiptDetails['returnDetails']['newReceipt']!=$receiptDetails['customerreceipt'][0]['id']) { ?>
                                         <p class="text-right">Discount: <?php echo $discount=$receiptDetails['customerreceipt'][0]['discount']; ?></p>
+				<?php } ?>
 					<p class="text-right">Round Off: <?php echo $roundoff=$receiptDetails['customerreceipt'][0]['roundoff']; ?></p>
                                         <!--<p class="text-right">VAT: 12.9%</p>-->
                                         <hr>

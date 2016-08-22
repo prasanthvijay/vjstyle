@@ -88,7 +88,7 @@ class Pos_model extends CI_Model
 		$receiptId = $this->db->insert_id();
 
 		
-		for($i=0;$i<count($insertValue['count']);$i++)
+		for($i=0;$i<$insertValue['count'];$i++)
 		{
 			$customerreceiptproduct = array(
 			'receiptId'=>$receiptId,
@@ -101,6 +101,7 @@ class Pos_model extends CI_Model
 			$this->db->insert('tbl_customerreceiptproduct',$customerreceiptproduct);
 		}
 
+		return $receiptId;
 		
 	}
 
@@ -117,7 +118,6 @@ class Pos_model extends CI_Model
 	$this->db->where('receiptId', $receiptId);
 	$q = $this->db->get('tbl_customerreceiptproduct');
 	$returnValue['productDetails'] = $q->result_array();
-
 
 	if(count($returnValue['customerreceipt'])>0)
 	{
@@ -137,6 +137,22 @@ class Pos_model extends CI_Model
 
         return $returnValue;
     }
+
+	function insertReturnSellDetails($insertReceiptValue)
+	{
+
+		for($i=0;$i<count($insertReceiptValue['billProduct']);$i++)
+		{
+			$customerreturnreceiptproduct = array(
+			'oldReceipt'=>$insertReceiptValue['oldreceiptId'],
+			'newReceipt'=>$insertReceiptValue['newReceipt'],
+			'productId'=>$insertReceiptValue['billProduct'][$i],
+			'reduceCount'=>$insertReceiptValue['reduceCount'][$i]			
+			);
+			
+			$this->db->insert('tbl_returnProduct',$customerreturnreceiptproduct);
+		}
+	}
 	
 }
 

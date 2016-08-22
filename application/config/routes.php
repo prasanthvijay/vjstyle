@@ -80,6 +80,8 @@ $route['AddSize'] = 'Frontend/AddSize';
 $route['pos'] = 'sales/pos';
 $route['posajax'] = 'sales/posajax';
 $route['receipt'] = 'sales/receipt/$1';
+$route['returnpos'] = 'sales/returnpos';
+$route['returnposajax'] = 'sales/returnposajax';
 
 
 $route['404_override'] = '';
