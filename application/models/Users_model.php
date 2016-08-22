@@ -86,13 +86,17 @@ class Users_model extends CI_Model
         return $userTypeArray;
     }
 
-    public function getUsersList($usertypeid, $adminid, $retailerShowRoomId)
+    public function getUsersList($usertypeid, $adminid, $retailerShowRoomId, $userid)
     {
 
         $userArray = array();
         $sql = "SELECT * FROM `tbl_user` t WHERE t.active = 'active' ";
         if ($adminid != "" && $adminid != null) {
             $sql .= " and adminid = '" . $adminid . "' ";
+        }
+
+        if($userid !="" && $userid!=null){
+            $sql .= " and userid = '" . $userid . "' ";
         }
 
         if ($usertypeid != null && $usertypeid != "") {
@@ -109,6 +113,7 @@ class Users_model extends CI_Model
             $userArray[$k]['password'] = $row->password;
             $userArray[$k]['usertypeid'] = $row->usertypeid;
             $userArray[$k]['adminid'] = $row->adminid;
+            $userArray[$k]['retailerShowRoomId'] = $row->retailerShowRoomId;
             $userArray[$k]['mobile'] = $row->mobile;
             $userArray[$k]['address'] = $row->address;
             $userArray[$k]['doj'] = $row->doj;
@@ -192,6 +197,26 @@ class Users_model extends CI_Model
         }
 
         $sql = "INSERT INTO tbl_user (name,email,password,usertypeid,adminid,retailerShowRoomId,mobile,address,doj,dob,active,createdat) " . "VALUES (" . $this->db->escape($userDetailsArray['name']) . "," . $this->db->escape($userDetailsArray['email']) . "," . $this->db->escape($userDetailsArray['password']) . "," . $this->db->escape($userDetailsArray['usertypeid']) . "," . $this->db->escape($userDetailsArray['adminid']) . "," . $this->db->escape($retailershowroomid) . "," . $this->db->escape($userDetailsArray['mobile']) . "," . $this->db->escape($userDetailsArray['address']) . "," . $this->db->escape($doj) . "," . $this->db->escape($dob) . "," . $this->db->escape($userDetailsArray['active']) . "," . $this->db->escape($userDetailsArray['createdAt']) . ")";
+        $this->db->query($sql);
+    }
+
+    public function updateUserMaster($userDetailsArray){
+        $doj = $userDetailsArray['doj'];
+        if($doj == NULL){
+            $doj = "0000-00-00";
+        }
+
+        $dob = $userDetailsArray['dob'];
+        if($dob == NULL){
+            $dob = "0000-00-00";
+        }
+
+        $retailershowroomid = $userDetailsArray['retailershowroomid'];
+        if($retailershowroomid == NULL){
+            $retailershowroomid = 0;
+        }
+
+        $sql = "Update tbl_user SET name = ".$this->db->escape($userDetailsArray['name']).", email = ".$this->db->escape($userDetailsArray['email']).", password = ".$this->db->escape($userDetailsArray['password']).", retailerShowRoomId = ".$this->db->escape($retailershowroomid) .", mobile = ".$this->db->escape($userDetailsArray['mobile']).", address = ".$this->db->escape($userDetailsArray['address']) .", doj = ".$this->db->escape($doj).", dob =".$this->db->escape($dob)." WHERE userid=".$userDetailsArray['userid'];
         $this->db->query($sql);
     }
 
@@ -297,13 +322,13 @@ class Users_model extends CI_Model
         }
         return $returnBookingDate;
     }
-	 public function createSizeMaster($SizeDetailsArray)
+    public function createSizeMaster($SizeDetailsArray)
     {
         $sql = "INSERT INTO tbl_sizemaster (size,adminid,createdat) " . "VALUES (" . $this->db->escape($SizeDetailsArray['size']) . "," . $this->db->escape($SizeDetailsArray['adminid']) . "," . $this->db->escape($SizeDetailsArray['createdAt']) . ")";
         $this->db->query($sql);
     }
 
- public function getSizeList($adminid)
+    public function getSizeList($adminid)
     {
 
         $SizeArray = array();

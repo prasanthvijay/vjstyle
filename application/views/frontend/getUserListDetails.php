@@ -26,7 +26,7 @@
             <td><?php echo $userArray[$k]['doj']; ?></td>
             <td><?php echo $userArray[$k]['createdat']; ?></td>
             <td><?php echo $userArray[$k]['dob']; ?></td>
-            <td><button class="btn btn-primary waves-effect waves-light" type="button" >
+            <td><button class="btn btn-primary waves-effect waves-light" type="button" onclick="loadAddOrEditContentWithModal('getAddOrEditUserMasterContent','usertypeid=<?php echo $usertypeid; ?>&actionType=Edit&actionId=<?php echo $userid; ?>','modalContentArea')">
                     Edit
                 </button></td>
             <td><button class="btn btn-danger waves-effect waves-light" type="button" onclick="deleteUsers('<?php echo $userid; ?>','<?php echo $adminid; ?>');">
