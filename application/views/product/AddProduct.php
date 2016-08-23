@@ -4,7 +4,7 @@
                 <!-- Page-Title -->
                 <div class="row">
                     <div class="col-sm-12">
-                        <h4 class="page-title"><?php echo $title; ?></h4>
+                        <h4 class="page-title"><?php  echo $title; ?></h4>
 						
 		
                     </div>
@@ -16,7 +16,17 @@
                     <div class="col-sm-12">
                         <div class="card-box">
                             <form class="form-horizontal group-border-dashed" action="<?php echo $addProductMasterUrl; ?>" method="POST">
-
+					<div class="form-group">
+                                            <label class="col-sm-3 control-label">Select Showroom</label>
+                                            <div class="col-sm-6">
+                                                 <select class="select2 form-control" id="Showroomid" name="Showroomid">
+							<option value="">Select</option>
+						<?php for($i=0;$i<count($showroomArray);$i++){ ?>
+				                    <option value="<?php echo $showroomArray[$i]['ShowRoomId']; ?>"><?php echo $showroomArray[$i]['ShowRoomName']; ?></option>
+				             			<?php } ?>
+						 </select>
+                                            </div>
+                                        </div>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Product Name</label>
                                             <div class="col-sm-6">

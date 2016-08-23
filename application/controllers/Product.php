@@ -41,9 +41,11 @@ class Product extends CI_Controller
         $adminid = $this->session->userdata('usertypeid');
         $BrandArray = $this->users_model->getBrandList($adminid);
 	$SizeArray = $this->users_model->getSizeList($adminid);
+	$showroomArray = $this->users_model->getshowroomList($adminid);
+
         $dataheader['BrandArray'] = $BrandArray;
         $dataheader['SizeArray'] = $SizeArray;
-
+        $dataheader['showroomArray'] = $showroomArray;
         $this->load->view('layout/backend_header', $dataheader);
         $this->load->view('layout/backend_menu');
         $this->load->view('product/AddProduct');
@@ -60,6 +62,7 @@ class Product extends CI_Controller
 print_r($_POST);
         if ($submit == 'product')
 		 {
+		    $Showroomid = $this->input->post('Showroomid');
 		    $productname = $this->input->post('productname');
 		    $brandname = $this->input->post('brandname');
 		    $barcode = $this->input->post('barcode');
@@ -74,7 +77,7 @@ print_r($_POST);
 		    $fromUrl = $this->input->post('fromUrl');
 
 		    $ProductDetailsArray = array('productname' => $productname, 'brandname' => $brandname, 'barcode' => $barcode, 'size' => $size,
-		        'adminid' => $adminid, 'quantity' => $quantity, 'price' => $price, 'createdAtdate' => $createdAtdate, 'categorytypeid' => $categorytypeid, 'active' => $active);
+		        'adminid' => $adminid, 'quantity' => $quantity, 'price' => $price, 'createdAtdate' => $createdAtdate, 'categorytypeid' => $categorytypeid, 'active' => $active,'Showroomid'=>$Showroomid);
 
 		    $validationArray = $this->users_model->validateUserMaster($ProductDetailsArray,'Add');
 		    $validateSuccess = $validationArray['validateSuccess'];
@@ -205,14 +208,31 @@ print_r($_POST);
     }
   public function MapProduct()
     {
-        $sessionUserTypeId = $this->session->userdata('usertypeid');
-        $dataheader['adminid'] = $sessionUserTypeId;
+        $adminid = $this->session->userdata('usertypeid');
+        $dataheader['adminid'] = $adminid;
         $dataheader['title'] = "MapProduct";
+
+	 $ProductList = $this->users_model->getProductList($adminid);
+	$dataheader['ProductList'] = $ProductList;
+	
 	 $this->load->view('layout/backend_header',$dataheader);
         $this->load->view('layout/backend_menu');
         $this->load->view('product/MapProduct',$dataheader);
          $this->load->view('layout/backend_footer');
     }
+public function getContent()
+    {
+        $adminid = $this->session->userdata('usertypeid');
+        $dataheader['adminid'] = $adminid;
+	$productId = $this->input->get('productId');
+	$type = $this->input->get('type');
+     	$Quantity = $this->users_model->getQuantity($adminid,$productId);
+	$dataheader['Quantity'] = $Quantity;
+	$dataheader['type'] = $type;
+        $this->load->view('product/getContent',$dataheader);
+        
+    }
+	
 }
 
 ?>

@@ -228,7 +228,7 @@ class Users_model extends CI_Model
 
     public function createProductMaster($ProductDetailsArray)
     {
-        $sql = "INSERT INTO tbl_product (productname,productrate,availablequantity,barcode,productsize,categorytypeid,brandid,adminid,active,createdat) " . "VALUES (" . $this->db->escape($ProductDetailsArray['productname']) . "," . $this->db->escape($ProductDetailsArray['price']) . "," . $this->db->escape($ProductDetailsArray['quantity']) . "," . $this->db->escape($ProductDetailsArray['barcode']) . "," . $this->db->escape($ProductDetailsArray['size']) . "," . $this->db->escape($ProductDetailsArray['categorytypeid']) . "," . $this->db->escape($ProductDetailsArray['brandname']) . "," . $this->db->escape($ProductDetailsArray['adminid']) . "," . $this->db->escape($ProductDetailsArray['active']) . "," . $this->db->escape($ProductDetailsArray['createdAtdate']) . ")";
+        $sql = "INSERT INTO tbl_product (productname,productrate,availablequantity,barcode,productsize,categorytypeid,brandid,adminid,ShowRoomId,active,createdat) " . "VALUES (" . $this->db->escape($ProductDetailsArray['productname']) . "," . $this->db->escape($ProductDetailsArray['price']) . "," . $this->db->escape($ProductDetailsArray['quantity']) . "," . $this->db->escape($ProductDetailsArray['barcode']) . "," . $this->db->escape($ProductDetailsArray['size']) . "," . $this->db->escape($ProductDetailsArray['categorytypeid']) . "," . $this->db->escape($ProductDetailsArray['brandname']) . "," . $this->db->escape($ProductDetailsArray['adminid']) . "," . $this->db->escape($ProductDetailsArray['Showroomid']) . "," . $this->db->escape($ProductDetailsArray['active']) . "," . $this->db->escape($ProductDetailsArray['createdAtdate']) . ")";
         $this->db->query($sql);
     }
 
@@ -351,6 +351,48 @@ class Users_model extends CI_Model
 
         return $SizeArray;
     }
+
+
+ public function getQuantity($adminid,$productId)
+    {
+
+        $Quantity = array();
+        $sql = "SELECT  availablequantity,productrate FROM `tbl_product` t WHERE t.active = 'active' ";
+        if ($adminid != "" && $adminid != null) {
+            $sql .= " and adminid = '" . $adminid . "' ";
+        }
+
+        $sql = $sql . "and productid='".$productId."'";
+        $userQuery = $this->db->query($sql);
+        $k = 0;
+        foreach ($userQuery->result() as $row) {
+           $Quantity[$k]['availablequantity'] = $row->availablequantity;
+            $Quantity[$k]['productrate'] = $row->productrate;
+            $k++;
+        }
+
+        return $Quantity;
+    }
+public function getshowroomList($adminid)
+    {
+
+        $showroomArray = array();
+        $sql = "SELECT  ShowRoomName,ShowRoomId FROM `tbl_showroom` t WHERE t.active = 'active' ";
+        if ($adminid != "" && $adminid != null) {
+            $sql.= " and adminId = '" . $adminid . "' ";
+        }
+        
+        $userQuery = $this->db->query($sql);
+        $k = 0;
+        foreach ($userQuery->result() as $row) {
+           $showroomArray[$k]['ShowRoomName'] = $row->ShowRoomName;
+            $showroomArray[$k]['ShowRoomId'] = $row->ShowRoomId;
+            $k++;
+        }
+
+        return $showroomArray;
+    }
+
 
 }
 

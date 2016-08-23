@@ -20,28 +20,29 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Product Name</label>
                                             <div class="col-sm-6">
-                                              <select class="select2 form-control" id="brandname" name="brandname">
+                                              <select class="select2 form-control" id="productname" name="productname" onchange="getQuantity(this.value)">
 							<option value="">Select Product</option>
-						
-				                    <option value=""></option>
-				             			
+						<?php for($i=0;$i<count($ProductList);$i++){ ?>
+				                    <option value="<?php echo $ProductList[$i]['productid'] ?>"><?php echo $ProductList[$i]['productname']?></option>
+				             			<?php } ?>
 						 </select>
                                             </div>
                                         </div>
                                         
-                                       
+                                       	<div id="qytDiv">
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Product Quantity</label>
                                             <div class="col-sm-6">
-                                                <input type="text"  id="quantity" name="quantity" class="form-control" required  placeholder="Product Quantity" />
+					
+                                                <input type="text"  id="quantity" name="quantity" class="form-control" required readonly placeholder="Product Quantity" />
                                             </div>
                                         </div>
                                          <div class="form-group">
                                             <label class="col-sm-3 control-label">Actual Price</label>
                                             <div class="col-sm-6">
-                                                <input type="text" id="price" name="price" class="form-control" required  placeholder="Product Price" />
+                                                <input type="text" id="price" name="price" readonly class="form-control" required  placeholder="Product Price" />
                                             </div>
-                                        </div>
+                                        </div></div>
 						 <div class="form-group">
                                             <label class="col-sm-3 control-label">Select Showroom</label>
                                             <div class="col-sm-6">
@@ -74,3 +75,14 @@
                         </div>
                     </div>
                 </div>
+
+<script>
+function getQuantity(val)
+{
+
+$.get("getContent",{productId: val,type: "productQyt"},function(data){
+$('#qytDiv').html(data);
+    });
+}
+</script>
+
