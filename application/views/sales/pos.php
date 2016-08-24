@@ -210,7 +210,7 @@ function getProduct(productId)
 		{	
 
 		var j=parseInt(selectedProduct.length);
-			var productdata='<tr class="register-item-details"><td class="text-center"> <button class="btn btn-icon waves-effect waves-light btn-danger m-b-5" onclick="removeProduct('+productId+');"> <i class="fa fa-remove"></i> </button> </td><td>'+product[0]['productname']+" ("+product[0]['barcode']+')<input type="hidden" name="product_'+j+'" value='+product[0]['productid']+'></td><td class="text-center"><input name="price_'+j+'" id="price_'+j+'" class="form-control editable editable-click" value="'+product[0]['productrate']+'" onblur="calculateTotal()"></td><td class="text-center"><input name="qty_'+j+'" id="qty_'+j+'" class="form-control editable editable-click" value="1" onblur="calculateTotal()"><input type="hidden" name="available_'+j+'" id="available_'+j+'" value="'+product[0]['availablequantity']+'"></td><td class="text-center"><input name="disc_'+j+'" id="disc_'+j+'" class="form-control editable editable-click" value="0" onblur="calculateTotal()"></td><td class="text-center" id="TDproduct_'+j+'">'+product[0]['productrate']+'</td></tr>';
+			var productdata='<tr class="register-item-details" id="rowId'+productId+'"><td class="text-center"> <input type="button" class="btn btn-icon waves-effect waves-light btn-danger m-b-5" onclick="removeProduct('+productId+');" value="X"> </td><td>'+product[0]['productname']+" ("+product[0]['barcode']+')<input type="hidden" name="product_'+productId+'" value='+product[0]['productid']+'></td><td class="text-center"><input name="price_'+productId+'" id="price_'+productId+'" class="form-control editable editable-click" value="'+product[0]['productrate']+'" onblur="calculateTotal()"></td><td class="text-center"><input name="qty_'+productId+'" id="qty_'+productId+'" class="form-control editable editable-click" value="1" onblur="calculateTotal()"><input type="hidden" name="available_'+productId+'" id="available_'+productId+'" value="'+product[0]['availablequantity']+'"></td><td class="text-center"><input name="disc_'+productId+'" id="disc_'+productId+'" class="form-control editable editable-click" value="0" onblur="calculateTotal()"></td><td class="text-center" id="TDproduct_'+productId+'">'+product[0]['productrate']+'</td></tr>';
 		
 			$('#salesTable tr:last').after(productdata);
 			var alreadyExist=$("#selectedProduct").val();
@@ -237,12 +237,12 @@ function calculateTotal()
 	for(var i=0;i<(parseInt(selectedProduct.length)-1);i++)
 	{
 		j=parseInt(i)+1;
-		beforeTotal=parseFloat($("#price_"+j).val())*parseFloat($("#qty_"+j).val());
-		productTotal=(parseFloat(beforeTotal)-(parseFloat(beforeTotal)*(parseFloat($("#disc_"+j).val())/100)));
+		beforeTotal=parseFloat($("#price_"+selectedProduct[i]).val())*parseFloat($("#qty_"+selectedProduct[i]).val());
+		productTotal=(parseFloat(beforeTotal)-(parseFloat(beforeTotal)*(parseFloat($("#disc_"+selectedProduct[i]).val())/100)));
 	
 		FinalTotal=parseFloat(FinalTotal)+parseFloat(productTotal);	
 
-		document.getElementById("TDproduct_"+j).innerHTML=FinalTotal;	
+		document.getElementById("TDproduct_"+selectedProduct[i]).innerHTML=productTotal;	
 		
 	}
 
@@ -259,6 +259,13 @@ function calculateTotal()
 
 
 		document.getElementById("finaltotal").value=parseFloat(FinalTotal)-parseFloat($("#roundoff").val())-(parseFloat(FinalTotal)*(parseFloat($("#totdiscount").val())/100));
+}
+function removeProduct(productId)
+{
+	var alreadyExist=$("#selectedProduct").val();
+	document.getElementById("selectedProduct").value=alreadyExist.replace(productId+"|","");
+	$("#rowId"+productId).remove();	
+	calculateTotal();
 }
 </script>
 

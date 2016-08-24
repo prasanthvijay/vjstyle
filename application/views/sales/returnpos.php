@@ -224,7 +224,7 @@ function getProduct(productId)
 		{	
 
 		var j=parseInt(selectedProduct.length);
-			var productdata='<tr class="register-item-details"><td class="text-center"> <button class="btn btn-icon waves-effect waves-light btn-danger m-b-5" onclick="removeProduct('+productId+');"> <i class="fa fa-remove"></i> </button> </td><td>'+product[0]['productname']+" ("+product[0]['barcode']+')<input type="hidden" name="product_'+j+'" value='+product[0]['productid']+'></td><td class="text-center"><input name="price_'+j+'" id="price_'+j+'" class="form-control editable editable-click" value="'+product[0]['productrate']+'" onblur="calculateTotal()"></td><td class="text-center"><input name="qty_'+j+'" id="qty_'+j+'" class="form-control editable editable-click" value="1" onblur="calculateTotal()"><input type="hidden" name="available_'+j+'" id="available_'+j+'" value="'+product[0]['availablequantity']+'"></td><td class="text-center"><input name="disc_'+j+'" id="disc_'+j+'" class="form-control editable editable-click" value="0" onblur="calculateTotal()"></td><td class="text-center" id="TDproduct_'+j+'">'+product[0]['productrate']+'</td></tr>';
+			var productdata='<tr class="register-item-details" id="rowId'+productId+'"><td class="text-center"> <input type="button" class="btn btn-icon waves-effect waves-light btn-danger m-b-5" onclick="removeProduct('+productId+');" value="X"> </td><td>'+product[0]['productname']+" ("+product[0]['barcode']+')<input type="hidden" name="product_'+productId+'" value='+product[0]['productid']+'></td><td class="text-center"><input name="price_'+productId+'" id="price_'+productId+'" class="form-control editable editable-click" value="'+product[0]['productrate']+'" onblur="calculateTotal()"></td><td class="text-center"><input name="qty_'+productId+'" id="qty_'+productId+'" class="form-control editable editable-click" value="1" onblur="calculateTotal()"><input type="hidden" name="available_'+productId+'" id="available_'+productId+'" value="'+product[0]['availablequantity']+'"></td><td class="text-center"><input name="disc_'+productId+'" id="disc_'+productId+'" class="form-control editable editable-click" value="0" onblur="calculateTotal()"></td><td class="text-center" id="TDproduct_'+productId+'">'+product[0]['productrate']+'</td></tr>';
 		
 			$('#salesTable tr:last').after(productdata);
 			var alreadyExist=$("#selectedProduct").val();
@@ -251,12 +251,12 @@ function calculateTotal()
 	for(var i=0;i<(parseInt(selectedProduct.length)-1);i++)
 	{
 		j=parseInt(i)+1;
-		beforeTotal=parseFloat($("#price_"+j).val())*parseFloat($("#qty_"+j).val());
-		productTotal=(parseFloat(beforeTotal)-(parseFloat(beforeTotal)*(parseFloat($("#disc_"+j).val())/100)));
+		beforeTotal=parseFloat($("#price_"+selectedProduct[i]).val())*parseFloat($("#qty_"+selectedProduct[i]).val());
+		productTotal=(parseFloat(beforeTotal)-(parseFloat(beforeTotal)*(parseFloat($("#disc_"+selectedProduct[i]).val())/100)));
 	
 		FinalTotal=parseFloat(FinalTotal)+parseFloat(productTotal);	
 
-		document.getElementById("TDproduct_"+j).innerHTML=productTotal;	
+		document.getElementById("TDproduct_"+selectedProduct[i]).innerHTML=productTotal;	
 		
 	}
 
@@ -270,6 +270,14 @@ function calculateTotal()
 
 
 		document.getElementById("finaltotal").value=parseFloat(FinalTotal)-parseFloat($("#roundoff").val())-parseFloat($("#totdiscount").val());
+}
+
+function removeProduct(productId)
+{
+	var alreadyExist=$("#selectedProduct").val();
+	document.getElementById("selectedProduct").value=alreadyExist.replace(productId+"|","");
+	$("#rowId"+productId).remove();	
+	calculateTotal();
 }
 
 
@@ -286,7 +294,7 @@ function getReceiptProduct(receiptId)
 				beforeTotal=parseFloat(receipt["productDetails"][i]["price"])*parseFloat(receipt["productDetails"][i]["qty"]);
 				productTotal=(parseFloat(beforeTotal)-(parseFloat(beforeTotal)*(parseFloat(receipt["productDetails"][i]["discount"])/100)));
 
-				tableData='<tr><td>'+receipt["product"][i]["productname"]+'</td><td class="text-center"><input name="billprice_'+i+'" id="billprice_'+i+'" class="form-control editable editable-click" value="'+receipt["productDetails"][i]["price"]+'" disabled></td><td class="text-center"><input name="billqty_'+i+'" id="billqty_'+i+'" class="form-control editable editable-click" value="'+receipt["productDetails"][i]["qty"]+'" onblur="billDiscount('+i+')"></td><td class="text-center"><input name="billdisc_'+i+'" id="billdisc_'+i+'" class="form-control editable editable-click" value="'+receipt["productDetails"][i]["discount"]+'" disabled></td><td class="text-center"><input name="billtotal_'+i+'" id="billtotal_'+i+'" class="form-control editable editable-click" value="'+productTotal+'" disabled></td><input type="hidden" name="existBillQuantity_'+i+'" id="existBillQuantity_'+i+'" value="'+receipt["productDetails"][i]["qty"]+'"><input type="hidden" name="existBillproduct_'+i+'" id="existBillproduct_'+i+'" value="'+receipt["productDetails"][i]["productId"]+'"></tr>';	
+				tableData+='<tr><td>'+receipt["product"][i]["productname"]+'</td><td class="text-center"><input name="billprice_'+i+'" id="billprice_'+i+'" class="form-control editable editable-click" value="'+receipt["productDetails"][i]["price"]+'" disabled></td><td class="text-center"><input name="billqty_'+i+'" id="billqty_'+i+'" class="form-control editable editable-click" value="'+receipt["productDetails"][i]["qty"]+'" onblur="billDiscount('+i+')"></td><td class="text-center"><input name="billdisc_'+i+'" id="billdisc_'+i+'" class="form-control editable editable-click" value="'+receipt["productDetails"][i]["discount"]+'" disabled></td><td class="text-center"><input name="billtotal_'+i+'" id="billtotal_'+i+'" class="form-control editable editable-click" value="'+productTotal+'" disabled></td><input type="hidden" name="existBillQuantity_'+i+'" id="existBillQuantity_'+i+'" value="'+receipt["productDetails"][i]["qty"]+'"><input type="hidden" name="existBillproduct_'+i+'" id="existBillproduct_'+i+'" value="'+receipt["productDetails"][i]["productId"]+'"></tr>';	
 			}
 			$("#recceiptDetails").html("<table class='table table-hover'><tr><td>Name</td><td>Price</td><td>QTY</td><td>Discount</td><td>Total</td></tr>"+tableData+"</table>");
 		});

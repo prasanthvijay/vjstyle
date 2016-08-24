@@ -58,10 +58,10 @@ class Sales extends CI_Controller {
 			for($i=0;$i<$insertValue['count'];$i++)
 			{
 				$j=$i+1;
-				$insertValue['product'][$i] = $this->input->post('product_'.$j);
-				$insertValue['price'][$i] = $this->input->post('price_'.$j);
-				$insertValue['qty'][$i] = $this->input->post('qty_'.$j);
-				$insertValue['disc'][$i] = $this->input->post('disc_'.$j);
+				$insertValue['product'][$i] = $this->input->post('product_'.$selectedProductExplode[$i]);
+				$insertValue['price'][$i] = $this->input->post('price_'.$selectedProductExplode[$i]);
+				$insertValue['qty'][$i] = $this->input->post('qty_'.$selectedProductExplode[$i]);
+				$insertValue['disc'][$i] = $this->input->post('disc_'.$selectedProductExplode[$i]);
 
 				$beforeTotal=$insertValue['qty'][$i]*$insertValue['price'][$i];
 
@@ -106,6 +106,8 @@ class Sales extends CI_Controller {
 		$condition="t.newReceipt='".$receiptId."' or t.oldReceipt='".$receiptId."'";
 
 		$returnDeatils = $this->pos_model->selectQueryList($tablename,$fieldname,$condition);
+		$receiptDetails['returnDetails']=array();
+		
 
 		if(count($returnDeatils)>0)
 		{
@@ -124,7 +126,7 @@ class Sales extends CI_Controller {
 
 				$tablename="tbl_customerreceiptproduct";
 				$fieldname=array('price','discount');
-				$condition="t.productId='".$returnDeatils[$i]['productId']."' and t.receiptId='".$receiptId."' ";
+				$condition="t.productId='".$returnDeatils[$i]['productId']."' and t.receiptId='".$returnDeatils[$i]['oldReceipt']."' ";
 
 				$retunProduct= $this->pos_model->selectQueryList($tablename,$fieldname,$condition);
 
@@ -176,10 +178,10 @@ class Sales extends CI_Controller {
 			for($i=0;$i<$insertValue['count'];$i++)
 			{
 				$j=$i+1;
-				$insertValue['product'][$i] = $this->input->post('product_'.$j);
-				$insertValue['price'][$i] = $this->input->post('price_'.$j);
-				$insertValue['qty'][$i] = $this->input->post('qty_'.$j);
-				$insertValue['disc'][$i] = $this->input->post('disc_'.$j);
+				$insertValue['product'][$i] = $this->input->post('product_'.$selectedProductExplode[$i]);
+				$insertValue['price'][$i] = $this->input->post('price_'.$selectedProductExplode[$i]);
+				$insertValue['qty'][$i] = $this->input->post('qty_'.$selectedProductExplode[$i]);
+				$insertValue['disc'][$i] = $this->input->post('disc_'.$selectedProductExplode[$i]);
 
 				$beforeTotal=$insertValue['qty'][$i]*$insertValue['price'][$i];
 

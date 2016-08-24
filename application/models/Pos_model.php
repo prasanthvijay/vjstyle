@@ -143,14 +143,17 @@ class Pos_model extends CI_Model
 
 		for($i=0;$i<count($insertReceiptValue['billProduct']);$i++)
 		{
-			$customerreturnreceiptproduct = array(
-			'oldReceipt'=>$insertReceiptValue['oldreceiptId'],
-			'newReceipt'=>$insertReceiptValue['newReceipt'],
-			'productId'=>$insertReceiptValue['billProduct'][$i],
-			'reduceCount'=>$insertReceiptValue['reduceCount'][$i]			
-			);
+			if($insertReceiptValue['reduceCount'][$i]!=0)
+			{
+				$customerreturnreceiptproduct = array(
+				'oldReceipt'=>$insertReceiptValue['oldreceiptId'],
+				'newReceipt'=>$insertReceiptValue['newReceipt'],
+				'productId'=>$insertReceiptValue['billProduct'][$i],
+				'reduceCount'=>$insertReceiptValue['reduceCount'][$i]			
+				);
 			
-			$this->db->insert('tbl_returnProduct',$customerreturnreceiptproduct);
+				$this->db->insert('tbl_returnProduct',$customerreturnreceiptproduct);
+			}
 		}
 	}
 	

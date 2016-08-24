@@ -48,7 +48,6 @@
                                         </div>
                                     </div>
                                 </div>
-<?php print_r($receiptDetails); ?>
                                 <div class="m-h-50"></div>
                                 <div class="row">
                                     <div class="col-md-12">
@@ -111,7 +110,8 @@
                                     </div>
                                     <div class="col-md-3 col-sm-6 col-md-offset-3 col-xs-6">
                                         <p class="text-right"><b>Sub-total:</b> <?php echo $total=$total-$reducetotal; ?></p>
-				<?php if($receiptDetails['returnDetails']['newReceipt']!=$receiptDetails['customerreceipt'][0]['id']) { ?>
+				<?php if(count($receiptDetails['returnDetails'])==0) { ?>
+				
                                         <p class="text-right">Discount: <?php echo $discount=$receiptDetails['customerreceipt'][0]['discount']; ?></p>
 				<?php } ?>
 					<p class="text-right">Round Off: <?php echo $roundoff=$receiptDetails['customerreceipt'][0]['roundoff']; ?></p>
