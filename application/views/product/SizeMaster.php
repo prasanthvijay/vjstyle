@@ -62,7 +62,7 @@ loadbrandlist(sizeList);
 function loadAddOrEditSizeModal()
 {
  $.ajax({
-        url : "Frontend/AddSize",
+        url : "Product/AddSize",
    	type : "POST",
         success : function (responseFromSite) {
 		

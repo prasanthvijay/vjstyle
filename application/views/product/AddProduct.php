@@ -16,17 +16,7 @@
                     <div class="col-sm-12">
                         <div class="card-box">
                             <form class="form-horizontal group-border-dashed" action="<?php echo $addProductMasterUrl; ?>" method="POST">
-					<div class="form-group">
-                                            <label class="col-sm-3 control-label">Select Showroom</label>
-                                            <div class="col-sm-6">
-                                                 <select class="select2 form-control" id="Showroomid" name="Showroomid">
-							<option value="">Select</option>
-						<?php for($i=0;$i<count($showroomArray);$i++){ ?>
-				                    <option value="<?php echo $showroomArray[$i]['ShowRoomId']; ?>"><?php echo $showroomArray[$i]['ShowRoomName']; ?></option>
-				             			<?php } ?>
-						 </select>
-                                            </div>
-                                        </div>
+					
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Product Name</label>
                                             <div class="col-sm-6">
@@ -73,43 +63,19 @@
                                                 <input type="text" id="price" name="price" class="form-control" required  placeholder="Product Price" />
                                             </div>
                                         </div>
-										 
-                                        <!--<div class="form-group">
-                                            <label class="col-sm-3 control-label">Min check</label>
-                                            <div class="col-sm-6">
-                                                <div class="checkbox checkbox-pink">
-                                                    <input id="checkbox1" type="checkbox" data-parsley-multiple="groups" data-parsley-mincheck="2">
-                                                    <label for="checkbox1"> And this </label>
-                                                </div>
-                                                <div class="checkbox checkbox-pink">
-                                                    <input id="checkbox2" type="checkbox" data-parsley-multiple="groups" data-parsley-mincheck="2">
-                                                    <label for="checkbox2"> Can't check this </label>
-                                                </div>
-                                                <div class="checkbox checkbox-pink">
-                                                    <input id="checkbox3" type="checkbox" data-parsley-multiple="groups" data-parsley-mincheck="2" required>
-                                                    <label for="checkbox3"> This too </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label">Max check</label>
-                                            <div class="col-sm-6">
-                                                <div class="checkbox checkbox-pink">
-                                                    <input id="checkbox4" type="checkbox" data-parsley-multiple="group1">
-                                                    <label for="checkbox4"> And this </label>
-                                                </div>
-                                                <div class="checkbox checkbox-pink">
-                                                    <input id="checkbox5" type="checkbox" data-parsley-multiple="group1">
-                                                    <label for="checkbox5"> Can't check this </label>
-                                                </div>
-                                                <div class="checkbox checkbox-pink">
-                                                    <input id="checkbox6" type="checkbox" data-parsley-multiple="group1" data-parsley-maxcheck="1">
-                                                    <label for="checkbox6"> This too </label>
-                                                </div>
-
-                                            </div>
-                                        </div>-->
-
+					<div class="form-group">
+                                            <label class="col-sm-3 control-label">Select Showroom</label>
+                                            <div class="col-sm-8">
+						<div class="checkbox checkbox-purple">
+						<?php for($i=0;$i<count($showroomArray);$i++){ ?>
+						<input value="<?php echo $showroomArray[$i]['userid']; ?>" id="showroom<?php echo $i; ?>"  class="showroom" type="checkbox" >
+						<label ><?php echo $showroomArray[$i]['name']; ?></label>
+                                       <div id="qytDiv"></div>
+						<?php } ?>
+						</div>
+	                                  </div>
+                                        </div>				 
+                                       <div id="qytDiv"></div>
                                         <div class="form-group m-b-0">
                                             <div class="col-sm-offset-3 col-sm-9 m-t-15">
                                                 <button type="submit" value="product" id="submit" name="submit" class="btn btn-primary waves-effect waves-light">
@@ -124,3 +90,16 @@
                         </div>
                     </div>
                 </div>
+
+<script>
+
+$(function() {
+	var i=0;
+        $('.showroom').click(function() {
+	var value=$('#showroom'+i).val();
+	$.get("getContent",{userid: value,type: "productQyt"},function(data){
+	$('#qytDiv'+i).html(data);
+    });
+        });
+    });
+</script>

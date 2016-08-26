@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 23, 2016 at 12:14 AM
+-- Generation Time: Aug 26, 2016 at 08:58 PM
 -- Server version: 5.6.31-0ubuntu0.14.04.2
 -- PHP Version: 5.5.9-1ubuntu4.19
 
@@ -137,27 +137,53 @@ CREATE TABLE IF NOT EXISTS `tbl_product` (
   `categorytypeid` bigint(20) NOT NULL DEFAULT '0',
   `brandid` bigint(20) NOT NULL DEFAULT '0',
   `adminid` bigint(20) NOT NULL DEFAULT '0',
+  `ShowRoomId` int(11) DEFAULT NULL,
   `active` varchar(255) NOT NULL DEFAULT 'active',
   `createdat` datetime DEFAULT NULL,
   PRIMARY KEY (`productid`),
   UNIQUE KEY `barcode` (`barcode`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `tbl_product`
 --
 
-INSERT INTO `tbl_product` (`productid`, `productname`, `productrate`, `productsize`, `availablequantity`, `barcode`, `categorytypeid`, `brandid`, `adminid`, `active`, `createdat`) VALUES
-(1, 'Test', '150', 'Xl', '50', 'BAR1234', 1, 1, 2, 'active', '2016-07-31 00:00:00'),
-(2, 'Jeans', '1234', 'XXL', '34', 'DSF23222', 1, 5, 2, 'active', '2016-08-05 00:44:53'),
-(3, 'paint', '450', 'M', '30', 'PAN001', 1, 5, 2, 'active', '2016-08-12 22:24:36'),
-(4, 'T-Shirt', '350', 'XL', '60', 'TSH001', 1, 4, 2, 'active', '2016-08-12 22:25:51'),
-(5, 'shirt-Mens', '450', 'L', '60', 'SH002', 1, 3, 2, 'active', '2016-08-12 22:27:44'),
-(6, 'Jeans-Shirt', '850', 'L', '88', 'JESH002', 1, 5, 2, 'active', '2016-08-12 22:29:07'),
-(7, 'Jeans-T-Shirt', '850', 'L', '100', 'JTSH002', 1, 5, 2, 'active', '2016-08-12 22:29:07'),
-(8, 'shirt', '450', '2', '40', 'HJAHS11', 1, 8, 2, 'active', '2016-08-19 00:35:43'),
-(9, 'bew_paint', '562', '3', '40', 'FDSF111', 1, 0, 2, 'active', '2016-08-19 00:38:24'),
-(11, 'test', '3245', '3', '33', 'qwqeqsa123', 1, 8, 2, 'active', '2016-08-22 23:47:39');
+INSERT INTO `tbl_product` (`productid`, `productname`, `productrate`, `productsize`, `availablequantity`, `barcode`, `categorytypeid`, `brandid`, `adminid`, `ShowRoomId`, `active`, `createdat`) VALUES
+(1, 'Test', '150', 'Xl', '50', 'BAR1234', 1, 1, 2, 1, 'active', '2016-07-31 00:00:00'),
+(2, 'Jeans', '1234', 'XXL', '34', 'DSF23222', 1, 5, 2, 1, 'active', '2016-08-05 00:44:53'),
+(3, 'paint', '450', 'M', '30', 'PAN001', 1, 5, 2, 1, 'active', '2016-08-12 22:24:36'),
+(4, 'T-Shirt', '350', 'XL', '60', 'TSH001', 1, 4, 2, 1, 'active', '2016-08-12 22:25:51'),
+(5, 'shirt-Mens', '450', 'L', '60', 'SH002', 1, 3, 2, 1, 'active', '2016-08-12 22:27:44'),
+(6, 'Jeans-Shirt', '850', 'L', '88', 'JESH002', 1, 5, 2, 1, 'active', '2016-08-12 22:29:07'),
+(7, 'Jeans-T-Shirt', '850', 'L', '100', 'JTSH002', 1, 5, 2, 1, 'active', '2016-08-12 22:29:07'),
+(8, 'shirt', '450', '2', '40', 'HJAHS11', 1, 8, 2, 1, 'active', '2016-08-19 00:35:43'),
+(9, 'bew_paint', '562', '3', '40', 'FDSF111', 1, 0, 2, 1, 'active', '2016-08-19 00:38:24'),
+(11, 'test', '3245', '3', '33', 'qwqeqsa123', 1, 8, 2, 1, 'active', '2016-08-22 23:47:39'),
+(12, 'tersa', '456', '2', '33', 'fdffdffaz', 1, 8, 2, 1, 'active', '2016-08-24 01:28:39');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_showroom`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_showroom` (
+  `ShowRoomId` int(11) NOT NULL AUTO_INCREMENT,
+  `ShowRoomName` varchar(200) DEFAULT NULL,
+  `Address` text,
+  `ShowRoomOpenDate` date DEFAULT NULL,
+  `adminId` int(11) DEFAULT NULL,
+  `active` varchar(200) DEFAULT 'active',
+  `ShowRoomImagePath` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`ShowRoomId`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `tbl_showroom`
+--
+
+INSERT INTO `tbl_showroom` (`ShowRoomId`, `ShowRoomName`, `Address`, `ShowRoomOpenDate`, `adminId`, `active`, `ShowRoomImagePath`) VALUES
+(1, 'MeShop', 'Chennai', '2014-08-20', 2, 'active', NULL);
 
 -- --------------------------------------------------------
 
@@ -172,7 +198,7 @@ CREATE TABLE IF NOT EXISTS `tbl_sizemaster` (
   `status` varchar(200) DEFAULT 'active',
   `createdAt` date DEFAULT NULL,
   PRIMARY KEY (`sizeid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `tbl_sizemaster`
@@ -181,7 +207,8 @@ CREATE TABLE IF NOT EXISTS `tbl_sizemaster` (
 INSERT INTO `tbl_sizemaster` (`sizeid`, `size`, `adminId`, `status`, `createdAt`) VALUES
 (1, 'XL', 2, 'active', '2016-08-18'),
 (2, 'XXL', 2, 'active', '2016-08-19'),
-(3, 'L', 2, 'active', '2016-08-19');
+(3, 'L', 2, 'active', '2016-08-19'),
+(4, '', 2, 'active', '2016-08-24');
 
 -- --------------------------------------------------------
 
@@ -214,11 +241,11 @@ CREATE TABLE IF NOT EXISTS `tbl_user` (
 INSERT INTO `tbl_user` (`userid`, `name`, `email`, `password`, `usertypeid`, `adminid`, `retailerShowRoomId`, `mobile`, `address`, `doj`, `dob`, `active`, `lastlogin`, `createdat`) VALUES
 (1, 'superadmin', 'superadmin@gmail.com', '1234', 1, 0, NULL, '8344798628', '107 west street, ammaiyappan, thiruvarur, Tamil Nadu', NULL, NULL, 'active', '2016-08-14 15:08:12', '2016-07-23 00:00:00'),
 (2, 'posadmin1', 'posadmin1@gmail.com', '1234', 2, 0, NULL, '8124356981', '102 chennai', NULL, NULL, 'active', '2016-08-15 07:08:16', '2016-07-23 19:21:27'),
-(3, 'Prasanth', 'prasanth@gmail.com', '1234', 2, 0, NULL, '8122334168', 'salem', '0000-00-00', '0000-00-00', 'active', '2016-08-22 23:08:24', '2016-08-03 02:25:22'),
+(3, 'Prasanth', 'prasanth@gmail.com', '1234', 2, 0, NULL, '8122334168', 'salem', '0000-00-00', '0000-00-00', 'active', '2016-08-25 22:08:56', '2016-08-03 02:25:22'),
 (32, 'kuru', 'yughgf@hjgdfh.in', '1234', 3, 2, 0, '67567576', 'hjdsff', '0000-00-00', '0000-00-00', 'active', NULL, '2016-08-14 09:26:53'),
 (33, 'praveen', 'praveen@dotcue.com', '1234', 5, 2, 32, '54564', 'ok', '2016-08-17', '2016-08-31', 'active', '2016-08-22 23:08:20', '2016-08-14 09:27:39'),
 (34, 'oko', 'oko@gmail.com', '1234', 4, 2, 32, '54546', 'dgsdfgdsfg', '2016-08-16', '2016-08-30', 'active', NULL, '2016-08-14 09:28:20'),
-(35, 'posaa', 'jhgjh', 'hhgh', 3, 3, 0, 'uyggg', 'hhgh', '0000-00-00', '0000-00-00', 'active', NULL, '2016-08-14 09:31:54');
+(35, 'posaa', 'jhgjh', 'hhgh', 3, 2, 0, 'uyggg', 'hhgh', '0000-00-00', '0000-00-00', 'active', NULL, '2016-08-14 09:31:54');
 
 -- --------------------------------------------------------
 

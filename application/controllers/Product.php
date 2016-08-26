@@ -37,12 +37,18 @@ class Product extends CI_Controller
     {
         $dataheader['title'] = "Add Product";
         $dataheader['addProductMasterUrl'] = "addProductMaster";
-
+        $adminid = $this->session->userdata('usertypeid');
+        $usertypeid = '3';
+	$retailerShowRoomId="";
+	$userid="";
+	$showroomArray = $this->users_model->getUsersList($usertypeid,$adminid,$retailerShowRoomId,$userid);
         $adminid = $this->session->userdata('usertypeid');
         $BrandArray = $this->users_model->getBrandList($adminid);
 	$SizeArray = $this->users_model->getSizeList($adminid);
-	$showroomArray = $this->users_model->getshowroomList($adminid);
 
+echo "<br></br><br></br><br></br><br></br>";
+	print_r($showroomArray);
+        $dataheader['showroomArray'] = $showroomArray;
         $dataheader['BrandArray'] = $BrandArray;
         $dataheader['SizeArray'] = $SizeArray;
         $dataheader['showroomArray'] = $showroomArray;
@@ -59,7 +65,7 @@ class Product extends CI_Controller
       
         $submit = $this->input->post('submit');
         $dataheader['addProductMasterUrl'] = "addProductMaster";
-print_r($_POST);
+
         if ($submit == 'product')
 		 {
 		    $Showroomid = $this->input->post('Showroomid');
@@ -224,9 +230,12 @@ public function getContent()
     {
         $adminid = $this->session->userdata('usertypeid');
         $dataheader['adminid'] = $adminid;
-	$productId = $this->input->get('productId');
+	$userid = $this->input->get('userid');
 	$type = $this->input->get('type');
-     	$Quantity = $this->users_model->getQuantity($adminid,$productId);
+     	$usertypeid = '3';
+	$retailerShowRoomId="";
+	$userid="";
+	$Quantity = $this->users_model->getUsersList($usertypeid,$adminid,$retailerShowRoomId,$userid);
 	$dataheader['Quantity'] = $Quantity;
 	$dataheader['type'] = $type;
         $this->load->view('product/getContent',$dataheader);
