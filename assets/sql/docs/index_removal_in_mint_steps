@@ -1,0 +1,38 @@
+Steps for removing index.php in linux mint : (URL --> https://www.formget.com/codeigniter-htaccess-remove-index-php/)
+
+Steps 1: Create .htaccess file and write below content
+
+    <IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php/$1 [L]
+    </IfModule>
+
+
+Steps 2 : In config file below line of changes must be update
+
+    //  Find the below code
+
+    $config['uri_protocol'] = "AUTO"
+
+    //  Replace it as
+
+    $config['uri_protocol'] = "REQUEST_URI"
+
+
+
+    //  Find the below code
+
+    $config['index_page'] = "index.php"
+
+    //  Remove index.php
+
+    $config['index_page'] = "http://localhost/pos"
+
+
+Steps 3 : if not working then run this command as root
+
+    $ sudo a2enmod rewrite
+
+    $ service apache2 restart
