@@ -23,7 +23,7 @@ if(count($editUsersList)>0){
         <h3 class="panel-title">Add/Edit <?php echo $masterName; ?></h3>
     </div>
     <div class="panel-body">
-        <form action="<?php echo base_url(); ?>/index.php/addUserMaster" method="POST" name="addOrEditUserDetailsForm" enctype="multipart/form-data" id="addOrEditUserDetailsForm" data-parsley-validate novalidate>
+        <form action="<?php echo base_url(); ?>Frontend/addUserMaster" method="POST" name="addOrEditUserDetailsForm" enctype="multipart/form-data" id="addOrEditUserDetailsForm"  data-parsley-validate novalidate>
             <input type="hidden" name="actionId" id="actionId" value="<?php echo $actionId; ?>">
             <input type="hidden" name="actionType" id="actionType" value="<?php echo $actionType; ?>">
             <?php if($sessionUserTypeId == 1){ ?>
@@ -45,7 +45,7 @@ if(count($editUsersList)>0){
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="name" class="control-label">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="<?php echo $name; ?>">
+                        <input type="text" class="form-control" id="name" name="name" parsley-trigger="change" required placeholder="Name" value="<?php echo $name; ?>">
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -53,14 +53,15 @@ if(count($editUsersList)>0){
                         <input type="hidden" value="<?php echo $usertypeid; ?>" name="usertypeid" id="usertypeid">
                         <?php if($usertypeid == 4 || $usertypeid == 5){ ?>
                             <label for="usertypeid" class="control-label">Retailer Show Room</label>
-                            <select name="retailershowroomid" id="retailershowroomid" class="form-control ">
+                            <select name="retailershowroomid" id="retailershowroomid" class="form-control" parsley-trigger="change" required>
+                                <option value="">Select</option>
                                 <?php for($k=0; $k<count($retailerShowRoomList); $k++) { ?>
                                     <option value="<?php echo $retailerShowRoomList[$k]['userid']; ?>" <?php if($retailershowroomid==$retailerShowRoomList[$k]['userid']){ echo "selected"; } ?>><?php echo $retailerShowRoomList[$k]['name']; ?></option>
                                 <?php } ?>
                             </select>
                         <?php } else if($usertypeid == 3){  ?>
                             <label for="field-4" class="control-label">Mobile</label>
-                            <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile" value="<?php echo $mobile; ?>">
+                            <input type="text" class="form-control" id="mobile" name="mobile" parsley-trigger="change" required placeholder="Mobile" value="<?php echo $mobile; ?>">
                         <?php } ?>
                     </div>
                 </div>
@@ -69,13 +70,13 @@ if(count($editUsersList)>0){
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="email" class="control-label">Email</label>
-                        <input type="text" class="form-control" id="email" name="email" placeholder="Email" value="<?php echo $email; ?>">
+                        <input type="text" class="form-control" id="email" name="email" parsley-trigger="change" required placeholder="Email" value="<?php echo $email; ?>">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="password" class="control-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" value="<?php echo $password; ?>">
+                        <input type="password" class="form-control" id="password" name="password" parsley-trigger="change" required placeholder="Password" value="<?php echo $password; ?>">
                     </div>
                 </div>
             </div>
@@ -84,8 +85,7 @@ if(count($editUsersList)>0){
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="field-4" class="control-label">Mobile</label>
-                            <input type="text" class="form-control" id="mobile" name="mobile"
-                                   placeholder="Mobile" value="<?php echo $mobile; ?>">
+                            <input type="text" class="form-control" id="mobile" name="mobile" parsley-trigger="change" required placeholder="Mobile" value="<?php echo $mobile; ?>">
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -122,9 +122,7 @@ if(count($editUsersList)>0){
                 <div class="col-md-6">
                     <div class="form-group no-margin">
                         <label for="address" class="control-label">Address</label>
-                        <textarea class="form-control autogrow" id="address" name="address" placeholder="Address" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;">
-                            <?php echo $address; ?>
-                        </textarea>
+                        <textarea class="form-control autogrow" id="address" name="address" parsley-trigger="change" required placeholder="Address" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"><?php echo $address; ?></textarea>
                     </div>
                 </div>
             </div>

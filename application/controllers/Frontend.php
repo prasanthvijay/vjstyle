@@ -98,24 +98,25 @@ class Frontend extends CI_Controller
             }
         }
 
-        $retailershowroomid = $this->input->post('retailershowroomid');
-        $name = $this->input->post('name');
-        $email = $this->input->post('email');
-        $password = $this->input->post('password');
-        $usertypeid = $this->input->post('usertypeid');
-        $mobile = $this->input->post('mobile');
-        $address = $this->input->post('address');
-        $doj = $this->input->post('doj');
-        $dob = $this->input->post('dob');
+        $retailershowroomid = $this->input->get_post('retailershowroomid');
+        $name = $this->input->get_post('name');
+        $email = $this->input->get_post('email');
+        $password = $this->input->get_post('password');
+        $usertypeid = $this->input->get_post('usertypeid');
+        $mobile = $this->input->get_post('mobile');
+        $address = $this->input->get_post('address');
+        $doj = $this->input->get_post('doj');
+        $dob = $this->input->get_post('dob');
         $active = "active";
         $createdAt = date("Y-m-d H:i:s");
-        $actionType = $this->input->post('actionType');
-        $actionId = $this->input->post('actionId');
-        if($actionType==""){
+        echo $actionType = $this->input->get_post('actionType');
+        $actionId = $this->input->get_post('actionId');
+        if($actionType=="" || $actionType=="Add"){
             $actionType = "Add";
         } else {
             $actionType = "Edit";
         }
+
         if($usertypeid == 2){
             $adminid = 0;
         }
@@ -135,6 +136,7 @@ class Frontend extends CI_Controller
 
         if ($validateSuccess == 0) {
             if($actionType=="Add"){
+
                 $this->users_model->createUserMaster($userDetailsArray); //For admin
             } else {
                 $this->users_model->updateUserMaster($userDetailsArray); //For admin
@@ -143,8 +145,7 @@ class Frontend extends CI_Controller
             $output = array('status' => "2", 'message' => $errorMsg);
             $this->session->set_flashdata('output', $output);
         }
-        echo "gjhgj";
-        redirect(base_url()."index.php/".$redirectUrl);
+        redirect(base_url().$redirectUrl);
     }
 
     public function adminMaster()

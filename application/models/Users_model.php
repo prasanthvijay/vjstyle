@@ -282,19 +282,22 @@ class Users_model extends CI_Model
         $redirectUrl = "";
         switch ($usertypeid){
             case 1 :
-                $redirectUrl = "adminMaster";
+                $redirectUrl = "Frontend/adminMaster";
                 break;
             case 2 :
-                $redirectUrl = "adminMaster";
+                $redirectUrl = "Frontend/adminMaster";
                 break;
             case 3 :
-                $redirectUrl = "sellerMaster";
+                $redirectUrl = "Frontend/retailerShowRoomMaster";
                 break;
             case 4 :
-                $redirectUrl = "retailerShowRoomMaster";
+                $redirectUrl = "Frontend/salesHeadMaster";
                 break;
             case 5 :
-                $redirectUrl = "salesExecutiveMaster";
+                $redirectUrl = "Frontend/salesExecutiveMaster";
+                break;
+            case 6 :
+                $redirectUrl = "Frontend/sellerMaster";
                 break;
         }
         return $redirectUrl;
