@@ -4,7 +4,7 @@
         <div id="navigation">
             <!-- Navigation Menu-->
 
-          <?php if($_SESSION['usertypeid']=="2"){ ?>
+          <?php if($_SESSION['usertypeid']=="2" || $_SESSION['usertypeid']=="1"){ ?>
                 <ul class="navigation-menu">
                     <li class="has-submenu active">
                         <a href="dashboard"><i class="md md-dashboard"></i>Dashboard</a>
@@ -12,27 +12,30 @@
                     <li class="has-submenu">
                         <a href="#"><i class="md md-pages"></i>Users </a>
                         <ul class="submenu">
-                            <li><a href="retailerShowRoomMaster">Retailer Show Room </a></li>
-                            <li><a href="salesHeadMaster">Sales Head </a></li>
-                            <li><a href="salesExecutiveMaster">Sales Executive </a></li>
+                            <?php if($_SESSION['usertypeid']=="1"){ ?>
+                            <li><a href="<?php echo base_url();?>Frontend/adminMaster">Admin </a></li>
+                            <?php } ?>
+                            <li><a href="<?php echo base_url();?>Frontend/retailerShowRoomMaster">Retailer Show Room </a></li>
+                            <li><a href="<?php echo base_url();?>Frontend/salesHeadMaster">Sales Head </a></li>
+                            <li><a href="<?php echo base_url();?>Frontend/salesExecutiveMaster">Sales Executive </a></li>
                         </ul>
                     </li>
                     <li class="has-submenu">
                         <a href="#"><i class="md md-pages"></i>Product </a>
                         <ul class="submenu">
-                            <li><a href="BrandMaster">Brand Master </a></li>
-                            <li><a href="SizeMaster">Size Master</a></li>
-                            <li><a href="AddProduct">Add Product </a></li>
-                            <li><a href="ProductList">Product List </a></li>
-                            <li><a href="MapProduct">Map Product </a></li>
+                            <li><a href="<?php echo base_url();?>Product/BrandMaster">Brand Master </a></li>
+                            <li><a href="<?php echo base_url();?>Product/SizeMaster">Size Master</a></li>
+                            <li><a href="<?php echo base_url();?>Product/AddProduct">Add Product </a></li>
+                            <li><a href="<?php echo base_url();?>Product/ProductList">Product List </a></li>
+                            <li><a href="<?php echo base_url();?>Product/MapProduct">Map Product </a></li>
                     </ul>
                     </li>
 
                  <li class="has-submenu">
                          <a href="#"><i class="md md-folder-special"></i>Sales </a>
                          <ul class="submenu">
-                             <li><a href="adminMaster"> Toady Report</a></li>
-                             <li><a href="sellerMaster">Month Report </a></li>
+                             <li><a href="<?php echo base_url();?>sales/adminMaster"> Toady Report</a></li>
+                             <li><a href="<?php echo base_url();?>sales/sellerMaster">Month Report </a></li>
                                                         
                 </ul>
                 </li>
@@ -41,17 +44,17 @@
 		
                 <ul class="navigation-menu">
                     <li class="has-submenu active">
-                        <a href="dashboard"><i class="md md-dashboard"></i>Dashboard</a>
+                        <a href="<?php echo base_url();?>dashboard"><i class="md md-dashboard"></i>Dashboard</a>
                     </li>
  			<li class="has-submenu">
-                        <a href="pos"><i class="md md-pages"></i>Point of Sales </a>
+                        <a href="<?php echo base_url();?>sales/pos"><i class="md md-pages"></i>Point of Sales </a>
                        
                     </li>
                     <li class="has-submenu">
                         <a href="#"><i class="md md-pages"></i>Return </a>
                         <ul class="submenu">
-                            <li><a href="returnpos">Return Product </a></li>
-                            <li><a href="retailerShowRoomMaster">Return List </a></li>
+                            <li><a href="<?php echo base_url();?>returnpos">Return Product </a></li>
+                            <li><a href="<?php echo base_url();?>retailerShowRoomMaster">Return List </a></li>
                           </ul>
                     </li>
                  
