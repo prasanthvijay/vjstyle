@@ -46,8 +46,8 @@ class Product extends CI_Controller
         $BrandArray = $this->users_model->getBrandList($adminid);
 	$SizeArray = $this->users_model->getSizeList($adminid);
 
-echo "<br></br><br></br><br></br><br></br>";
-	print_r($showroomArray);
+//echo "<br></br><br></br><br></br><br></br>";
+	//print_r($showroomArray);
         $dataheader['showroomArray'] = $showroomArray;
         $dataheader['BrandArray'] = $BrandArray;
         $dataheader['SizeArray'] = $SizeArray;
@@ -230,14 +230,15 @@ public function getContent()
     {
         $adminid = $this->session->userdata('usertypeid');
         $dataheader['adminid'] = $adminid;
-	$userid = $this->input->get('userid');
+	$count = $this->input->get('count');
 	$type = $this->input->get('type');
      	$usertypeid = '3';
 	$retailerShowRoomId="";
 	$userid="";
-	$Quantity = $this->users_model->getUsersList($usertypeid,$adminid,$retailerShowRoomId,$userid);
-	$dataheader['Quantity'] = $Quantity;
+	$showRoomArray = $this->users_model->getUsersList($usertypeid,$adminid,$retailerShowRoomId,$userid);
+	$dataheader['showRoomArray'] = $showRoomArray;
 	$dataheader['type'] = $type;
+	$dataheader['count'] = $count;
         $this->load->view('product/getContent',$dataheader);
         
     }
