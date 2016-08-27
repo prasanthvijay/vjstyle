@@ -59,16 +59,17 @@
 </div>
 <!-- End wrapper -->
 <script>
-    var postUrl = "Frontend/getUserListDetails";
+    var postUrl = "<?php echo base_url(); ?>Frontend/getUserListDetails";
     var postData = "usertypeid=3";
     var displayDiv = "usersListDiv";
     loadUsersListDetails(postUrl, postData, displayDiv);
     function deleteUsers(userid, adminid) {
         var approve = confirm("Are you sure to delete!");
+        var deleteUrl = "<?php echo base_url(); ?>Frontend/deleteUsersFromMaster";
         if(approve){
             var postDataDelete = "userid="+userid+"&adminid="+adminid;
             $.ajax({
-                url: "Frontend/deleteUsersFromMaster",
+                url: deleteUrl,
                 type: "POST",
                 data: postDataDelete,
                 success: function (responseFromSite) {
