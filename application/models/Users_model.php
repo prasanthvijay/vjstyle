@@ -126,7 +126,7 @@ class Users_model extends CI_Model
         return $userArray;
     }
 
-    public function getBrandList($adminid)
+    public function getBrandList($adminid, $actionId)
     {
 
         $BrandArray = array();
@@ -135,8 +135,12 @@ class Users_model extends CI_Model
             $sql .= " and adminid = '" . $adminid . "' ";
         }
 
+        if ($actionId != "" && $actionId != null && $actionId!="0" && $actionId!=0) {
+            $sql .= " and brandid = '" . $actionId . "' ";
+        }
         $sql = $sql . " order by brandid desc";
         $userQuery = $this->db->query($sql);
+
         $k = 0;
         foreach ($userQuery->result() as $row) {
             $BrandArray[$k]['brandid'] = $row->brandid;
@@ -224,6 +228,19 @@ class Users_model extends CI_Model
     {
         $sql = "INSERT INTO tbl_brand (brandname,adminid,createdat) " . "VALUES (" . $this->db->escape($BrandDetailsArray['brandname']) . "," . $this->db->escape($BrandDetailsArray['adminid']) . "," . $this->db->escape($BrandDetailsArray['createdAt']) . ")";
         $this->db->query($sql);
+    }
+
+    public function updateBrandMaster($BrandDetailsArray)
+    {
+        $sql = "UPDATE tbl_brand set brandname = " . $this->db->escape($BrandDetailsArray['brandname']) . " where brandid = ".$this->db->escape($BrandDetailsArray['brandid'])." and adminid = ". $this->db->escape($BrandDetailsArray['adminid']);
+        return $this->db->query($sql);
+    }
+
+    public function deleteBrandMaster($BrandDetailsArray)
+    {
+        $active = "deleted";
+        $sql = "UPDATE tbl_brand set active = " . $this->db->escape($active) . " where brandid = ".$this->db->escape($BrandDetailsArray['brandid'])." and adminid = ". $this->db->escape($BrandDetailsArray['adminid']);
+        return $this->db->query($sql);
     }
 
     public function createProductMaster($ProductDetailsArray)
