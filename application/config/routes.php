@@ -88,6 +88,9 @@ $route['posajax'] = 'sales/posajax';
 $route['receipt'] = 'sales/receipt/$1';
 $route['returnpos'] = 'sales/returnpos';
 $route['returnposajax'] = 'sales/returnposajax';
+$route['reports'] = 'sales/reports/$1';
+$route['reportsajax']='sales/reportsajax';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 $route['default_controller'] = 'Frontend';
