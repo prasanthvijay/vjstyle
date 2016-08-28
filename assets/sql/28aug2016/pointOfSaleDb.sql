@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 28, 2016 at 05:49 PM
--- Server version: 5.6.31-0ubuntu0.14.04.2
--- PHP Version: 5.5.9-1ubuntu4.19
+-- Generation Time: Aug 28, 2016 at 07:30 PM
+-- Server version: 5.5.49-0ubuntu0.14.04.1
+-- PHP Version: 5.5.9-1ubuntu4.17
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `tbl_brand` (
   `active` varchar(255) NOT NULL DEFAULT 'active',
   `createdat` datetime DEFAULT NULL,
   PRIMARY KEY (`brandid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `tbl_brand`
@@ -47,7 +47,8 @@ INSERT INTO `tbl_brand` (`brandid`, `brandname`, `adminid`, `active`, `createdat
 (5, 'jeans', 3, 'active', '2016-08-03 02:29:18'),
 (6, 'MArts', 3, 'active', '2016-08-05 00:07:27'),
 (7, 'Paint', 2, 'active', '2016-08-18 00:40:58'),
-(8, 'Modle', 2, 'active', '2016-08-18 00:53:32');
+(8, 'Modle', 2, 'active', '2016-08-18 00:53:32'),
+(9, 'sdsdg', 39, 'active', '2016-08-28 19:28:09');
 
 -- --------------------------------------------------------
 
@@ -223,20 +224,22 @@ CREATE TABLE IF NOT EXISTS `tbl_sizemaster` (
   `sizeid` int(11) NOT NULL AUTO_INCREMENT,
   `size` varchar(200) DEFAULT NULL,
   `adminId` int(11) DEFAULT NULL,
-  `status` varchar(200) DEFAULT 'active',
+  `active` varchar(200) DEFAULT 'active',
   `createdAt` date DEFAULT NULL,
   PRIMARY KEY (`sizeid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `tbl_sizemaster`
 --
 
-INSERT INTO `tbl_sizemaster` (`sizeid`, `size`, `adminId`, `status`, `createdAt`) VALUES
+INSERT INTO `tbl_sizemaster` (`sizeid`, `size`, `adminId`, `active`, `createdAt`) VALUES
 (1, 'XL', 2, 'active', '2016-08-18'),
 (2, 'XXL', 2, 'active', '2016-08-19'),
 (3, 'L', 2, 'active', '2016-08-19'),
-(4, '', 2, 'active', '2016-08-24');
+(4, '', 2, 'active', '2016-08-24'),
+(5, '3', 39, 'deleted', '2016-08-28'),
+(6, '5', 39, 'deleted', '2016-08-28');
 
 -- --------------------------------------------------------
 

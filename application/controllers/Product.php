@@ -56,7 +56,7 @@ class Product extends CI_Controller
         $adminid = $this->session->userdata('usertypeid');
         $actionId = "0";
         $BrandArray = $this->users_model->getBrandList($adminid,$actionId);
-        $SizeArray = $this->users_model->getSizeList($adminid);
+        $SizeArray = $this->users_model->getSizeList($adminid, $actionId);
 
 //echo "<br></br><br></br><br></br><br></br>";
         //print_r($showroomArray);
@@ -173,22 +173,36 @@ class Product extends CI_Controller
             redirect(base_url()."Product/BrandMaster");
         }
         if ($submit == "size") {
+
             $size = $this->input->post('size');
             $createdAt = date("Y-m-d H:i:s");
-            $SizeDetailsArray = array('size' => $size, 'adminid' => $adminid, 'createdAt' => $createdAt);
-            $validationArray = $this->users_model->validateUserMaster($SizeDetailsArray, 'Add');
-            $validateSuccess = $validationArray['validateSuccess'];
-            $errorMsg = $validationArray['errorMsg'];
-            if ($validateSuccess == 1) {
-                $userTypeArray = $this->users_model->createSizeMaster($SizeDetailsArray); //For admin
-                redirect("index.php/SizeMaster");
+            $SizeDetailsArray = array('size' => $size, 'sizeid' => $actionId, 'adminid' => $adminid, 'createdAt' => $createdAt);
 
-            } else {
-                $output = array('status' => "2", 'message' => "Invalid Login!!");
-                //print_r($output);
-                $this->session->set_flashdata('output', $output);
-                //            redirect("http://localhost/pos/".$fromUrl);
+            $output = array('status' => "3", 'message' => "Invalid Request");
+            if($actionType  == "Edit" && $actionId!="0" && $actionId!="" && $actionId!=null){
+                $insertSuccess = $userTypeArray = $this->users_model->updateSizeMaster($SizeDetailsArray); //For Create Brand
+                if($insertSuccess == 1){
+                    $output = array('status' => "1", 'message' => "Successfully updated");
+                } else {
+                    $output = array('status' => "2", 'message' => "Invalid update");
+                }
+            } else if($actionType  == "Delete" && $actionId!="0" && $actionId!="" && $actionId!=null){
+                $deletetSuccess = $userTypeArray = $this->users_model->deleteSizeMaster($SizeDetailsArray); //For Update Brand
+                if($deletetSuccess == 1){
+                    $output = array('status' => "1", 'message' => "Successfully deleted");
+                } else{
+                    $output = array('status' => "2", 'message' => "Please try again later");
+                }
+            } else if($actionType  == "Add" || $actionType  == ""){
+                $updateSuccess = $userTypeArray = $this->users_model->createSizeMaster($SizeDetailsArray); //For Update Brand
+                if($updateSuccess == 1){
+                    $output = array('status' => "1", 'message' => "Successfully created");
+                } else{
+                    $output = array('status' => "2", 'message' => "Please try again later");
+                }
             }
+            $this->session->set_flashdata('output', $output);
+            redirect(base_url()."Product/SizeMaster");
         }
     }
 
@@ -244,8 +258,15 @@ class Product extends CI_Controller
 
         $type = $this->input->get('type');
         $actionId = "0";
-        $BrandList = $this->users_model->getBrandList($adminid, $actionId);
-        $SizeList = $this->users_model->getSizeList($adminid);
+
+        $BrandList = array();
+        $SizeList = array();
+
+        if($type == "brandList"){
+            $BrandList = $this->users_model->getBrandList($adminid, $actionId);
+        } else if($type == "sizeList"){
+            $SizeList = $this->users_model->getSizeList($adminid, $actionId);
+        }
         $dataheader['typeList'] = $type;
         $dataheader['SizeList'] = $SizeList;
         $dataheader['BrandList'] = $BrandList;
@@ -294,12 +315,34 @@ class Product extends CI_Controller
 
     public function AddSize()
     {
-        $sessionUserTypeId = $this->session->userdata('usertypeid');
-        $dataheader['adminid'] = $sessionUserTypeId;
+        $dataheader = array();
+        $actionType = $this->input->get_post('actionType');
+        $actionId = $this->input->get_post('actionId');
+
+        $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
+        $adminid = "0";
+        $sessionUserTypeId = "0";
+        if($sessionUserTypeIdIsset == 1){
+            $sessionUserTypeId = $this->session->userdata('usertypeid');
+            if($sessionUserTypeId == 2){
+                $adminid = $this->session->userdata('userid');
+            } else {
+                $adminid = $this->input->get_post('adminid');
+            }
+        }
+
+        $singleSizeList = array();
+        if($actionType == "Edit"){
+            $singleSizeList = $this->users_model->getSizeList($adminid, $actionId);
+        }
+
+        $dataheader['adminid'] = $adminid;
         $dataheader['title'] = "Size";
+        $dataheader['actionType'] = $actionType;
+        $dataheader['actionId'] = $actionId;
+        $dataheader['singleSizeList'] = $singleSizeList;
         $dataheader['addProductMasterUrl'] = "addProductMaster";
         $this->load->view('product/AddSize', $dataheader);
-
     }
 
     public function MapProduct()

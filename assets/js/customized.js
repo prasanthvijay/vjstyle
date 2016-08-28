@@ -54,7 +54,7 @@ function loadbrandlist(typelist) {
     });
 
 }
-function deleteBrandMaster(postData, postUrl) {
+function deleteProductsMaster(masterType, postData, postUrl) {
     var isdelete = confirm("Are you sure to delete!");
     if(isdelete){
         $.ajax({
@@ -62,8 +62,30 @@ function deleteBrandMaster(postData, postUrl) {
             type: "GET",
             data: postData,
             success: function (data) {
-                loadbrandlist(brandList);
+                if(masterType == "brand"){
+                    loadbrandlist(brandList);
+                }
+                if(masterType == "size"){
+                    var sizeList = "sizeList";
+                    loadbrandlist(sizeList);
+                }
+
             }
         });
     }
+}
+
+function getAddOrEditModalContent(postBrandData, loadAddOrEditModalUrl) {
+    $.ajax({
+        url: loadAddOrEditModalUrl,
+        type: "get",
+        data : postBrandData,
+        success: function (responseFromSite) {
+
+            $("#modalContentArea").html(responseFromSite);
+            $("#addOrEditUserDetailsForm").parsley();
+            $("#panel-modal").modal('show');
+
+        }
+    });
 }
