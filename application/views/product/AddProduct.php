@@ -66,7 +66,7 @@
 					<div class="form-group">
                                             <label class="col-sm-3 control-label">Select Showroom</label>
                                             <div class="col-sm-2">
-						<select class="select2 form-control" id="size" name="size">
+						<select class="select2 form-control" id="ShowroomId[]" name="ShowroomId[]">
 							<option value="">Select ShowRoom</option>
 							<?php for($i=0;$i<count($showroomArray);$i++){ ?>
 				                    	<option value="<?php echo $showroomArray[$i]['userid']; ?>"><?php echo $showroomArray[$i]['name']; ?></option>
@@ -74,10 +74,10 @@
 						 </select>
 						</div> 
 						<div class="col-sm-2">
-							<input type="text" id="price" name="price" class="form-control" required  placeholder="Product Price" />
+							<input type="text" id="mappedprice[]" name="mappedprice[]" class="form-control" required  placeholder="Product Price" />
 						</div>
 						<div class="col-sm-2">             
-							<input type="text" id="price" name="price" class="form-control" required  placeholder="Product quntity" />
+							<input type="text" id="mappedqyt[]" name="mappedqyt[]" class="form-control" required  placeholder="Product quntity" />
 						</div>
 						<div class="col-sm-1">    
  						<button type="button" id="mapProduct" name="mapProduct" class="btn btn-primary waves-effect waves-light mapProduct">

@@ -109,7 +109,19 @@ class Product extends CI_Controller
             $createdAtdate = date("Y-m-d H:i:s");
 
             $fromUrl = $this->input->post('fromUrl');
+		$ShowroomId = $this->input->post('ShowroomId');
+		$mappedprice = $this->input->post('mappedprice');
+		$mappedqyt = $this->input->post('mappedqyt');
 
+				for($i=0;$i<count($ShowroomId);$i++)
+				{
+					
+			 $ProductMappingArray = array('ShowroomId' => $ShowroomId[$i], 'mappedprice' => $mappedprice[$i], 'mappedqyt' => $mappedqyt[$i],'adminid' => $adminid, 'productname' => $productname, 'createdAtdate' => $createdAtdate);
+
+ 				$productmapArray = $this->users_model->createProductmappingMaster($ProductMappingArray); 
+									
+			  
+				}
             $ProductDetailsArray = array('productname' => $productname, 'brandname' => $brandname, 'barcode' => $barcode, 'size' => $size,
                 'adminid' => $adminid, 'quantity' => $quantity, 'price' => $price, 'createdAtdate' => $createdAtdate, 'categorytypeid' => $categorytypeid, 'active' => $active, 'Showroomid' => $Showroomid);
 
@@ -118,7 +130,7 @@ class Product extends CI_Controller
             $errorMsg = $validationArray['errorMsg'];
             if ($validateSuccess == 1) {
                 $userTypeArray = $this->users_model->createProductMaster($ProductDetailsArray); //For admin
-                redirect("index.php/AddProduct");
+                redirect("AddProduct");
                 //print_r($ProductDetailsArray);
             } else {
                 $output = array('status' => "2", 'message' => "Invalid Login!!");

@@ -412,7 +412,11 @@ public function getshowroomList($adminid)
 
         return $showroomArray;
     }
-
+public function createProductmappingMaster($ProductMappingArray)
+    {
+        $sql = "INSERT INTO tbl_productMapping (productId,showroomId,price,quantity,adminId,createAt) " . "VALUES (" . $this->db->escape($ProductMappingArray['productname']) . "," . $this->db->escape($ProductMappingArray['ShowroomId']) . "," . $this->db->escape($ProductMappingArray['mappedprice']) . "," . $this->db->escape($ProductMappingArray['mappedqyt']) . "," . $this->db->escape($ProductMappingArray['adminid']) . "," . $this->db->escape($ProductMappingArray['createdAtdate']) . ")";
+        $this->db->query($sql);
+    }
 
 }
 
