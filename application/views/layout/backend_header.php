@@ -164,8 +164,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle waves-effect waves-light profile" data-toggle="dropdown" aria-expanded="true"><img src="http://localhost/pos/assets/images/users/avatar-1.jpg" alt="user-img" class="img-circle"> </a>
                         <ul class="dropdown-menu">
-                            <li><a href="javascript:void(0)"><i class="ti-user m-r-5"></i> Profile</a></li>
-                            <li><a href="javascript:void(0)"><i class="ti-lock m-r-5"></i> Lock screen</a></li>
+                            <li><a href="<?php echo base_url(); ?>Frontend/editProfile"><i class="ti-user m-r-5"></i> Profile</a></li>
+<!--                            <li><a href="javascript:void(0)"><i class="ti-lock m-r-5"></i> Lock screen</a></li>-->
                             <li><a href="logout"><i class="ti-power-off m-r-5"></i> Logout</a></li>
                         </ul>
                     </li>

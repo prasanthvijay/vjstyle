@@ -21,8 +21,10 @@
                             <p class="text-muted m-b-20 font-13">
                                 Add, Edit and Delete <?php echo $Brand; ?>
                             </p>
-                            <button class="btn btn-primary waves-effect waves-light m-t-10" onclick="loadAddOrEditModal()">Add Brand</button>
-                        </div> 
+                            <button class="btn btn-primary waves-effect waves-light m-t-10"
+                                    onclick="loadAddOrEditModal('actionType=Add&actionId=0')">Add Brand
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -57,21 +59,24 @@
 </div>
 <!-- End wrapper -->
 <script>
- var brandList="brandList";
-loadbrandlist(brandList);
-function loadAddOrEditModal()
-{
- $.ajax({
-        url : "AddBrand",
-   	type : "POST",
-        success : function (responseFromSite) {
-		
-            $("#modalContentArea").html(responseFromSite);
-            $("#panel-modal").modal('show');
-          
-          }
-        });
-}
+    var brandList = "brandList";
+    loadbrandlist(brandList);
+    var loadAddOrEditModalUrl = "<?php echo base_url(); ?>Product/AddBrand";
 
- 
+    function loadAddOrEditModal(postBrandData) {
+        $.ajax({
+            url: loadAddOrEditModalUrl,
+            type: "get",
+            data : postBrandData,
+            success: function (responseFromSite) {
+
+                $("#modalContentArea").html(responseFromSite);
+                $("#addOrEditUserDetailsForm").parsley();
+                $("#panel-modal").modal('show');
+
+            }
+        });
+    }
+
+
 </script>

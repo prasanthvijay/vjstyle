@@ -47,6 +47,30 @@ class Frontend extends CI_Controller
         $this->load->view('layout/frontend_footer');
     }
 
+
+    public function editProfile()
+    {
+        $output = $this->session->flashdata('output');
+        $succesMsg = $this->users_model->getSuccessMsg($output);
+
+        $dataheader['succesMsg'] = $succesMsg;
+        $dataheader['title'] = "Edit Profile";
+        $dataheader['loginPostUrl'] = "index.php/checkLogin";
+        $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
+        $sessionUserTypeId = 0;
+        $userid = 0;
+        if($sessionUserTypeIdIsset == 1) {
+            $sessionUserTypeId = $this->session->userdata('usertypeid');
+            $userid = $this->session->userdata('userid');
+        }
+        $dataheader['usertypeid'] = $sessionUserTypeId;
+        $dataheader['userid'] = $userid;
+        $this->load->view('layout/backend_header', $dataheader);
+        $this->load->view('layout/backend_menu');
+        $this->load->view('frontend/editProfile');
+        $this->load->view('layout/backend_footer');
+    }
+
     public function checkLogin()
     {
         $username = $this->input->post('userName');
@@ -94,28 +118,30 @@ class Frontend extends CI_Controller
             if($sessionUserTypeId == 2){
                 $adminid = $this->session->userdata('userid');
             } else {
-                $adminid = $this->input->post('adminid');
+                $adminid = $this->input->get_post('adminid');
             }
         }
 
-        $retailershowroomid = $this->input->post('retailershowroomid');
-        $name = $this->input->post('name');
-        $email = $this->input->post('email');
-        $password = $this->input->post('password');
-        $usertypeid = $this->input->post('usertypeid');
-        $mobile = $this->input->post('mobile');
-        $address = $this->input->post('address');
-        $doj = $this->input->post('doj');
-        $dob = $this->input->post('dob');
+        $retailershowroomid = $this->input->get_post('retailershowroomid');
+        $name = $this->input->get_post('name');
+        $titlename = $this->input->get_post('titlename');
+        $email = $this->input->get_post('email');
+        $password = $this->input->get_post('password');
+        $usertypeid = $this->input->get_post('usertypeid');
+        $mobile = $this->input->get_post('mobile');
+        $address = $this->input->get_post('address');
+        $doj = $this->input->get_post('doj');
+        $dob = $this->input->get_post('dob');
         $active = "active";
         $createdAt = date("Y-m-d H:i:s");
-        $actionType = $this->input->post('actionType');
-        $actionId = $this->input->post('actionId');
-        if($actionType==""){
+        $actionType = $this->input->get_post('actionType');
+        $actionId = $this->input->get_post('actionId');
+        if($actionType=="" || $actionType=="Add"){
             $actionType = "Add";
         } else {
             $actionType = "Edit";
         }
+
         if($usertypeid == 2){
             $adminid = 0;
         }
@@ -135,16 +161,20 @@ class Frontend extends CI_Controller
 
         if ($validateSuccess == 0) {
             if($actionType=="Add"){
+
                 $this->users_model->createUserMaster($userDetailsArray); //For admin
             } else {
+                print_r($userDetailsArray);
                 $this->users_model->updateUserMaster($userDetailsArray); //For admin
             }
         } else {
             $output = array('status' => "2", 'message' => $errorMsg);
             $this->session->set_flashdata('output', $output);
         }
-        echo "gjhgj";
-        redirect(base_url()."index.php/".$redirectUrl);
+        if($titlename == "Edit Profile"){
+            $redirectUrl = "Frontend/editProfile";
+        }
+        redirect(base_url().$redirectUrl);
     }
 
     public function adminMaster()
@@ -156,7 +186,7 @@ class Frontend extends CI_Controller
         $dataheader['fromUrl'] = "adminMaster";
         $this->load->view('layout/backend_header', $dataheader);
         $this->load->view('layout/backend_menu');
-        $this->load->view('frontend/frontend_adminMaster');
+        $this->load->view('frontend/adminMaster');
         $this->load->view('layout/backend_footer');
 
     }
@@ -258,9 +288,10 @@ class Frontend extends CI_Controller
 
     public function getAddOrEditUserMasterContent(){
 
-        $actionType = $this->input->post('actionType');
-        $actionId = $this->input->post('actionId');
-        $usertypeid = $this->input->post('usertypeid');
+        $actionType = $this->input->get_post('actionType');
+        $titlename = $this->input->get_post('titlename');
+        $actionId = $this->input->get_post('actionId');
+        $usertypeid = $this->input->get_post('usertypeid');
         $userTypeArray = $this->users_model->getUserTypeList($usertypeid); //For admin
         $usertype = $userTypeArray[0]['usertype'];
         $dataArray['userTypeArray'] = $userTypeArray;
@@ -272,12 +303,13 @@ class Frontend extends CI_Controller
         $retailershowroomid = "0";
         $adminList = array();
         if($sessionUserTypeIdIsset == 1){
+
             $sessionUserTypeId = $this->session->userdata('usertypeid');
             $dataArray['sessionUserTypeId'] = $sessionUserTypeId;
             if($sessionUserTypeId == 2){
                 $adminid = $this->session->userdata('userid');
             } else {
-                $adminid = $this->input->post('adminid');
+                $adminid = $this->input->get_post('adminid');
             }
 
             if($sessionUserTypeId == 1){
@@ -286,12 +318,16 @@ class Frontend extends CI_Controller
             }
 
             $dataArray['adminList'] = $adminList;
+            $dataArray['titlename'] = $titlename;
             $retailerShowRoomList = $this->users_model->getUsersList('3', $adminid, $retailershowroomid, null);
             $dataArray['retailerShowRoomList'] = $retailerShowRoomList;
 
             if($actionType =="Edit"){
                 $actionType = "Edit";
                 $actionId = $actionId;
+                if($titlename == "Edit Profile"){
+                    $adminid = "";
+                }
                 $editUsersList = $this->users_model->getUsersList(null, $adminid, null, $actionId);
             } else {
                 $actionType = "Add";

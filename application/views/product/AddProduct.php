@@ -65,17 +65,33 @@
                                         </div>
 					<div class="form-group">
                                             <label class="col-sm-3 control-label">Select Showroom</label>
-                                            <div class="col-sm-8">
-						<div class="checkbox checkbox-purple">
-						<?php for($i=0;$i<count($showroomArray);$i++){ ?>
-						<input value="<?php echo $showroomArray[$i]['userid']; ?>" id="showroom<?php echo $i; ?>"  class="showroom" type="checkbox" >
-						<label ><?php echo $showroomArray[$i]['name']; ?></label>
-                                       <div id="qytDiv"></div>
-						<?php } ?>
+                                            <div class="col-sm-2">
+						<select class="select2 form-control" id="ShowroomId[]" name="ShowroomId[]">
+							<option value="">Select ShowRoom</option>
+							<?php for($i=0;$i<count($showroomArray);$i++){ ?>
+				                    	<option value="<?php echo $showroomArray[$i]['userid']; ?>"><?php echo $showroomArray[$i]['name']; ?></option>
+				             			<?php } ?>
+						 </select>
+						</div> 
+						<div class="col-sm-2">
+							<input type="text" id="mappedprice[]" name="mappedprice[]" class="form-control" required  placeholder="Product Price" />
 						</div>
+						<div class="col-sm-2">             
+							<input type="text" id="mappedqyt[]" name="mappedqyt[]" class="form-control" required  placeholder="Product quntity" />
+						</div>
+						<div class="col-sm-1">    
+ 						<button type="button" id="mapProduct" name="mapProduct" class="btn btn-primary waves-effect waves-light mapProduct">
+                                                    Add 
+                                                </button> 
+						</div>
+					<div class="col-sm-2">  
+					<button type="button" id="removeRow" name="removeRow" class="btn btn-warning waves-effect waves-light" >
+                                                    Remove
+                                                </button>
 	                                  </div>
-                                        </div>				 
-                                       <div id="qytDiv"></div>
+				      </div>
+                                      
+                                     <div id="qytDiv1"></div>
                                         <div class="form-group m-b-0">
                                             <div class="col-sm-offset-3 col-sm-9 m-t-15">
                                                 <button type="submit" value="product" id="submit" name="submit" class="btn btn-primary waves-effect waves-light">
@@ -90,16 +106,35 @@
                         </div>
                     </div>
                 </div>
-
+		<input type="hid den" id="count" name="count" value="1">
 <script>
 
-$(function() {
-	var i=0;
-        $('.showroom').click(function() {
-	var value=$('#showroom'+i).val();
-	$.get("getContent",{userid: value,type: "productQyt"},function(data){
-	$('#qytDiv'+i).html(data);
+$( "#mapProduct" ).click(function() {
+var count=$('#count').val();
+	$.get("getContent",{count:count,type: "productQyt"},function(data){
+	$('#qytDiv'+count).html(data);
+	$("#ShowroomId"+count).select2();
+	    });
+	$('#count').val(parseInt(count)+1);
+	
     });
-        });
-    });
+
+$( "#removeRow" ).click(function() {
+	var count=$('#count').val();
+	var dec=parseInt(count)-1
+    $( "#qytDiv"+dec).remove();	
+	$('#count').val(dec);
+	
+    
+});
+
+
+
+
+   
+   
 </script>
+
+
+
+

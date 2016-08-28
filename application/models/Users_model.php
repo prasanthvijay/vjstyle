@@ -126,7 +126,7 @@ class Users_model extends CI_Model
         return $userArray;
     }
 
-    public function getBrandList($adminid)
+    public function getBrandList($adminid, $actionId)
     {
 
         $BrandArray = array();
@@ -135,8 +135,12 @@ class Users_model extends CI_Model
             $sql .= " and adminid = '" . $adminid . "' ";
         }
 
+        if ($actionId != "" && $actionId != null && $actionId!="0" && $actionId!=0) {
+            $sql .= " and brandid = '" . $actionId . "' ";
+        }
         $sql = $sql . " order by brandid desc";
         $userQuery = $this->db->query($sql);
+
         $k = 0;
         foreach ($userQuery->result() as $row) {
             $BrandArray[$k]['brandid'] = $row->brandid;
@@ -216,7 +220,7 @@ class Users_model extends CI_Model
             $retailershowroomid = 0;
         }
 
-        $sql = "Update tbl_user SET name = ".$this->db->escape($userDetailsArray['name']).", email = ".$this->db->escape($userDetailsArray['email']).", password = ".$this->db->escape($userDetailsArray['password']).", retailerShowRoomId = ".$this->db->escape($retailershowroomid) .", mobile = ".$this->db->escape($userDetailsArray['mobile']).", address = ".$this->db->escape($userDetailsArray['address']) .", doj = ".$this->db->escape($doj).", dob =".$this->db->escape($dob)." WHERE userid=".$userDetailsArray['userid'];
+       echo $sql = "Update tbl_user SET name = ".$this->db->escape($userDetailsArray['name']).", email = ".$this->db->escape($userDetailsArray['email']).", password = ".$this->db->escape($userDetailsArray['password']).", retailerShowRoomId = ".$this->db->escape($retailershowroomid) .", mobile = ".$this->db->escape($userDetailsArray['mobile']).", address = ".$this->db->escape($userDetailsArray['address']) .", doj = ".$this->db->escape($doj).", dob =".$this->db->escape($dob)." WHERE userid=".$userDetailsArray['userid'];
         $this->db->query($sql);
     }
 
@@ -224,6 +228,19 @@ class Users_model extends CI_Model
     {
         $sql = "INSERT INTO tbl_brand (brandname,adminid,createdat) " . "VALUES (" . $this->db->escape($BrandDetailsArray['brandname']) . "," . $this->db->escape($BrandDetailsArray['adminid']) . "," . $this->db->escape($BrandDetailsArray['createdAt']) . ")";
         $this->db->query($sql);
+    }
+
+    public function updateBrandMaster($BrandDetailsArray)
+    {
+        $sql = "UPDATE tbl_brand set brandname = " . $this->db->escape($BrandDetailsArray['brandname']) . " where brandid = ".$this->db->escape($BrandDetailsArray['brandid'])." and adminid = ". $this->db->escape($BrandDetailsArray['adminid']);
+        return $this->db->query($sql);
+    }
+
+    public function deleteBrandMaster($BrandDetailsArray)
+    {
+        $active = "deleted";
+        $sql = "UPDATE tbl_brand set active = " . $this->db->escape($active) . " where brandid = ".$this->db->escape($BrandDetailsArray['brandid'])." and adminid = ". $this->db->escape($BrandDetailsArray['adminid']);
+        return $this->db->query($sql);
     }
 
     public function createProductMaster($ProductDetailsArray)
@@ -282,19 +299,22 @@ class Users_model extends CI_Model
         $redirectUrl = "";
         switch ($usertypeid){
             case 1 :
-                $redirectUrl = "adminMaster";
+                $redirectUrl = "Frontend/adminMaster";
                 break;
             case 2 :
-                $redirectUrl = "adminMaster";
+                $redirectUrl = "Frontend/adminMaster";
                 break;
             case 3 :
-                $redirectUrl = "sellerMaster";
+                $redirectUrl = "Frontend/retailerShowRoomMaster";
                 break;
             case 4 :
-                $redirectUrl = "retailerShowRoomMaster";
+                $redirectUrl = "Frontend/salesHeadMaster";
                 break;
             case 5 :
-                $redirectUrl = "salesExecutiveMaster";
+                $redirectUrl = "Frontend/salesExecutiveMaster";
+                break;
+            case 6 :
+                $redirectUrl = "Frontend/sellerMaster";
                 break;
         }
         return $redirectUrl;
@@ -392,7 +412,11 @@ public function getshowroomList($adminid)
 
         return $showroomArray;
     }
-
+public function createProductmappingMaster($ProductMappingArray)
+    {
+        $sql = "INSERT INTO tbl_productMapping (productId,showroomId,price,quantity,adminId,createAt) " . "VALUES (" . $this->db->escape($ProductMappingArray['productname']) . "," . $this->db->escape($ProductMappingArray['ShowroomId']) . "," . $this->db->escape($ProductMappingArray['mappedprice']) . "," . $this->db->escape($ProductMappingArray['mappedqyt']) . "," . $this->db->escape($ProductMappingArray['adminid']) . "," . $this->db->escape($ProductMappingArray['createdAtdate']) . ")";
+        $this->db->query($sql);
+    }
 
 }
 
