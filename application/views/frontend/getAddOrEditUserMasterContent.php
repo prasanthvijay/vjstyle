@@ -6,6 +6,8 @@ $email = "";
 $address = "";
 $password = "";
 $retailershowroomid = "";
+$doj = "";
+$dob = "";
 if(count($editUsersList)>0){
     $name = $editUsersList[0]['name'];
     $mobile = $editUsersList[0]['mobile'];
@@ -13,6 +15,8 @@ if(count($editUsersList)>0){
     $address = $editUsersList[0]['address'];
     $password = $editUsersList[0]['password'];
     $retailershowroomid = $editUsersList[0]['retailerShowRoomId'];
+    $dob = $this->users_model->convertDDMMYYtoYYMMDD($editUsersList[0]['dob']);
+    $doj = $this->users_model->convertDDMMYYtoYYMMDD($editUsersList[0]['doj']);
 }
 
 ?>
@@ -20,18 +24,19 @@ if(count($editUsersList)>0){
 <div class="panel panel-color panel-primary">
     <div class="panel-heading">
         <button type="button" class="close m-t-5" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 class="panel-title">Add/Edit <?php echo $masterName; ?></h3>
+        <h3 class="panel-title"><?php if($titlename == "Edit Profile") { echo $titlename; } else { ?>Add/Edit <?php echo $masterName; } ?></h3>
     </div>
     <div class="panel-body">
         <form action="<?php echo base_url(); ?>Frontend/addUserMaster" method="POST" name="addOrEditUserDetailsForm" enctype="multipart/form-data" id="addOrEditUserDetailsForm"  data-parsley-validate novalidate>
             <input type="hidden" name="actionId" id="actionId" value="<?php echo $actionId; ?>">
             <input type="hidden" name="actionType" id="actionType" value="<?php echo $actionType; ?>">
-            <?php if($sessionUserTypeId == 1){ ?>
+            <input type="hidden" name="titlename" id="titlename" value="<?php echo $titlename; ?>">
+            <?php if($sessionUserTypeId == 1 && $usertypeid !=1){ ?>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="dob" class="control-label">Admin</label>
-                            <select name="adminid" id="adminid" class="form-control " onchange="getRetailerShowRooms();">
+                            <select name="adminid" id="adminid" parsley-trigger="change" required class="form-control " onchange="getRetailerShowRooms();">
                                 <option value="">Select</option>
                                 <?php for($k=0; $k<count($adminList); $k++) { ?>
                                     <option value="<?php echo $adminList[$k]['userid']; ?>"><?php echo $adminList[$k]['name']; ?></option>
@@ -92,17 +97,17 @@ if(count($editUsersList)>0){
                         <div class="form-group">
                             <label for="doj" class="control-label">Date of Joining</label>
                             <div class="input-group">
-                                <input type="text" class="form-control datepicker-autoclose" placeholder="DD-MM-YYYY" name="doj" id="doj">
-                            <span class="input-group-addon bg-primary b-0 text-white">
-                                <i class="ion-calendar"></i>
-                            </span>
+                                <input type="text" class="form-control datepicker-autoclose" value="<?php if($doj!='' && $doj!='00-00-0000' && $doj!='0000-00-00') { echo $doj; } ?>" placeholder="DD-MM-YYYY" name="doj" id="doj">
+                                <span class="input-group-addon bg-primary b-0 text-white">
+                                    <i class="ion-calendar"></i>
+                                </span>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="dob" class="control-label">Date of Birth</label>
-                            <div class="input-group"><input type="text" class="form-control datepicker-autoclose" placeholder="DD-MM-YYYY" name="dob" id="dob"><span class="input-group-addon bg-primary b-0 text-white"><i class="ion-calendar"></i></span></div>
+                            <div class="input-group"><input type="text" class="form-control datepicker-autoclose" value="<?php if($dob!='' && $dob!='00-00-0000' && $dob!='0000-00-00') { echo $dob; } ?>" placeholder="DD-MM-YYYY" name="dob" id="dob"><span class="input-group-addon bg-primary b-0 text-white"><i class="ion-calendar"></i></span></div>
                         </div>
                     </div>
                 </div>

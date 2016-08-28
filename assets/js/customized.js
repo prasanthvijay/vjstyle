@@ -14,7 +14,7 @@ function loadUsersListDetails(postUrl, postData, displayDiv){
 function loadAddOrEditContentWithModal(postUrl, postData, displayDiv){
         $.ajax({
         url : postUrl,
-        type : "POST",
+        type : "get",
         data : postData,
         success : function (responseFromSite) {
             $("#"+displayDiv).html(responseFromSite);

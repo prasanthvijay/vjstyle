@@ -155,7 +155,7 @@
 	</div>
 </div>
 <script>
-	var postUrl = "Frontend/getUserListDetails";
+	var postUrl = "<?php echo base_url(); ?>Frontend/getUserListDetails";
 	var postData = "usertypeid=2";
 	var displayDiv = "usersListDiv";
 	loadUsersListDetails(postUrl, postData, displayDiv);
