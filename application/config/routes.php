@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /*
 | -------------------------------------------------------------------------
 | URI ROUTING
@@ -56,7 +55,6 @@ $route['Product_controller'] = 'Product';
 $route['dashboard'] = 'Frontend/dashboard';
 $route['checkLogin'] = 'Frontend/checkLogin';
 $route['logout'] = 'Frontend/logout';
-
 //User Masters
 $route['adminMaster'] = 'Frontend/adminMaster';
 $route['retailerShowRoomMaster'] = 'Frontend/retailerShowRoomMaster';
@@ -68,7 +66,7 @@ $route['getUserListDetails'] = 'Frontend/getUserListDetails';
 $route['getRetailerShowRoomDetails'] = 'Frontend/getRetailerShowRoomDetails';
 $route['getAddOrEditUserMasterContent'] = 'Frontend/getAddOrEditUserMasterContent';
 $route['deleteUsersFromMaster'] = 'Frontend/deleteUsersFromMaster';
-
+$route['editProfile'] = 'Frontend/editProfile';
 //Product
 $route['AddProduct'] = 'Product/AddProduct';
 $route['addProductMaster'] = 'Product/addProductMaster';
@@ -80,15 +78,12 @@ $route['SizeMaster'] = 'Product/SizeMaster';
 $route['AddSize'] = 'Product/AddSize';
 $route['MapProduct'] = 'Product/MapProduct';
 $route['getContent'] = 'Product/getContent'; 
-
 //Sales
 $route['pos'] = 'sales/pos';
 $route['posajax'] = 'sales/posajax';
 $route['receipt'] = 'sales/receipt/$1';
 $route['returnpos'] = 'sales/returnpos';
 $route['returnposajax'] = 'sales/returnposajax';
-
-
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 $route['default_controller'] = 'Frontend';

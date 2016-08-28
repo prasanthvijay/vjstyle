@@ -62,7 +62,7 @@
                                                     <th>Total</th>
                                                 </tr></thead>
                                                 <tbody>
-					<?php $total=0;$reducetotal=0; for($i=0;$i<count($receiptDetails['productDetails']);$i++) { ?>
+					<?php $total=0;$reducetotal=0;$discountTOT=0; for($i=0;$i<count($receiptDetails['productDetails']);$i++) { ?>
                                                     <tr>
                                                         <td><?php echo $i+1; ?></td>
                                                         <td><?php echo $receiptDetails['product'][$i]['productname']."(".$receiptDetails['product'][$i]['barcode'].")"; ?></td>
@@ -112,12 +112,12 @@
                                         <p class="text-right"><b>Sub-total:</b> <?php echo $total=$total-$reducetotal; ?></p>
 				<?php if(count($receiptDetails['returnDetails'])==0) { ?>
 				
-                                        <p class="text-right">Discount: <?php echo $discount=$receiptDetails['customerreceipt'][0]['discount']; ?></p>
+                                        <p class="text-right">Discount: <?php echo $discountTOT=$receiptDetails['customerreceipt'][0]['discount']; ?></p>
 				<?php } ?>
 					<p class="text-right">Round Off: <?php echo $roundoff=$receiptDetails['customerreceipt'][0]['roundoff']; ?></p>
                                         <!--<p class="text-right">VAT: 12.9%</p>-->
                                         <hr>
-                                        <h3 class="text-right">INR <?php echo $total-($total*$discount/100)-$roundoff; ?></h3>
+                                        <h3 class="text-right">INR <?php echo $total-($total*$discountTOT/100)-$roundoff; ?></h3>
                                     </div>
                                 </div>
                                 <hr>

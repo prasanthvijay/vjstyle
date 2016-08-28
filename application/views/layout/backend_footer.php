@@ -122,6 +122,11 @@ $(document).ready(function() {
 
             } );
 
+	jQuery('#date-range').datepicker({
+			autoclose: true,
+                    toggleActive: true
+                });
+
 </script>
 <script>
 </script>

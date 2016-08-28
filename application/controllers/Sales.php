@@ -42,7 +42,7 @@ class Sales extends CI_Controller {
 
 		$tablename="tbl_product";
 		$fieldname=array('productid','productname');
-		$condition="t.adminid=1 and t.active=active";
+		$condition="t.adminid=2 and t.active=active";
 	
 		$productList = $this->pos_model->selectQueryList($tablename,$fieldname,$condition);
 		$dataheader['productList'] = $productList;
@@ -161,7 +161,7 @@ class Sales extends CI_Controller {
 
 		$tablename="tbl_product";
 		$fieldname=array('productid','productname');
-		$condition="t.adminid=1 and t.active=active";
+		$condition="t.adminid=2 and t.active=active";
 	
 		$productList = $this->pos_model->selectQueryList($tablename,$fieldname,$condition);
 		$dataheader['productList'] = $productList;
@@ -239,5 +239,95 @@ class Sales extends CI_Controller {
 			$receiptDetails = $this->pos_model->receiptDetails($receiptId);	
 			echo json_encode($receiptDetails);
 		}	
+	}
+	public function reports($reportsType)
+	{
+		
+		$dataheader['title'] = "Reports";
+		$dataheader['reportsType'] = $reportsType;
+
+		$this->load->view('layout/backend_header',$dataheader);
+		$this->load->view('layout/backend_menu');
+		$this->load->view('sales/reports');
+		$this->load->view('layout/backend_footer');
+
+	}
+	public function reportsajax()
+	{
+		
+	
+		
+			$fromDate=$this->input->get_post("fromDate");
+			$toDate=$this->input->get_post("toDate");
+			$stop_date = date('Y-m-d H:i:s', strtotime($toDate . ' +1 day'));
+		
+	
+		$tablename="tbl_customerreceipt";
+		$fieldname=array('*');
+		$condition='t.date BETWEEN "'. date('Y-m-d', strtotime($fromDate)). '" and "'. date('Y-m-d', strtotime($stop_date)).'"';	
+		$receiptList = $this->pos_model->selectQueryList($tablename,$fieldname,$condition);
+	$tableRow="";
+	
+			for($i=0;$i<count($receiptList);$i++)
+			{
+				$tablename="tbl_customerreceiptproduct";
+				$fieldname=array('*');
+				$condition='t.receiptId="'.$receiptList[$i]['id'].'"';	
+				$receiptProductList = $this->pos_model->selectQueryList($tablename,$fieldname,$condition);
+				$productAmountTotal=0;
+			
+				for($j=0;$j<count($receiptProductList);$j++)
+				{
+
+					$this->db->select('SUM(reduceCount) as reduceCount');
+					$this->db->where("oldReceipt='".$receiptList[$i]['id']."' and productId='".$receiptProductList[$j]['productId']."'");
+					$q = $this->db->get('tbl_returnProduct');
+					$returnDetailsProduct = $q->result_array();
+
+					if($returnDetailsProduct[0]['reduceCount']!="")
+					{
+						$qty=$receiptProductList[$j]['qty']-$returnDetailsProduct[0]['reduceCount'];
+					}
+					else
+					{
+						$qty=$receiptProductList[$j]['qty'];
+					}
+
+					$productAmount=$receiptProductList[$j]['price']*$qty;
+					$productAmountTotal+=$productAmount-($productAmount*$receiptProductList[$j]['discount']/100);
+				}
+		
+				/*$returnValue['productTotal'][$i]=$productAmountTotal;
+				$returnValue['id'][$i]=$receiptList[$i]['id'];
+				$returnValue['totDiscount'][$i]=$receiptList[$i]['discount'];
+				$returnValue['roundoff'][$i]=$receiptList[$i]['roundoff'];*/
+
+				$tablename="tbl_customer";
+				$fieldname=array('name','mobileno');
+				$condition='t.id="'.$receiptList[$i]['customerId'].'"';	
+				$customerDetail = $this->pos_model->selectQueryList($tablename,$fieldname,$condition);
+
+
+				$tablename="tbl_returnProduct";
+				$fieldname=array('newReceipt');
+				$condition="t.newReceipt='".$receiptList[$i]['id']."' ";
+				$returnDeatils = $this->pos_model->selectQueryList($tablename,$fieldname,$condition);
+
+				if(count($returnDeatils)==0)
+				{
+					$discount=$productAmountTotal*$receiptList[$i]['discount']/100;
+									}
+				else
+				{
+					$discount=$receiptList[$i]['discount'];					
+				}
+				$finalTotal=$productAmountTotal-$discount-$receiptList[$i]['roundoff'];
+				
+
+				$tableRow.="<tr><td>".($i+1)."</td><td><a href='../receipt/".$receiptList[$i]['id']."' target='_blank'>".($receiptList[$i]['id']+1000)."</a></td><td>".date('d-m-Y', strtotime($receiptList[$i]['date']))."</td><td>".$customerDetail[0]['name']."</td><td>".$customerDetail[0]['mobileno']."</td><td>".$productAmountTotal."</td><td>".$discount."</td><td>".$receiptList[$i]['roundoff']."</td><td>".$finalTotal."</td></tr>";
+			}
+
+		echo $tableRow;
+	
 	}
 }
