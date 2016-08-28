@@ -243,6 +243,19 @@ class Users_model extends CI_Model
         return $this->db->query($sql);
     }
 
+    public function updateSizeMaster($SizeDetailsArray)
+    {
+        $sql = "UPDATE tbl_sizemaster set size = " . $this->db->escape($SizeDetailsArray['size']) . " where sizeid = ".$this->db->escape($SizeDetailsArray['sizeid'])." and adminid = ". $this->db->escape($SizeDetailsArray['adminid']);
+        return $this->db->query($sql);
+    }
+
+    public function deleteSizeMaster($SizeDetailsArray)
+    {
+        $active = "deleted";
+        $sql = "UPDATE tbl_sizemaster set active = " . $this->db->escape($active) . " where sizeid = ".$this->db->escape($SizeDetailsArray['sizeid'])." and adminid = ". $this->db->escape($SizeDetailsArray['adminid']);
+        return $this->db->query($sql);
+    }
+
     public function createProductMaster($ProductDetailsArray)
     {
         $sql = "INSERT INTO tbl_product (productname,productrate,availablequantity,barcode,productsize,categorytypeid,brandid,adminid,ShowRoomId,active,createdat) " . "VALUES (" . $this->db->escape($ProductDetailsArray['productname']) . "," . $this->db->escape($ProductDetailsArray['price']) . "," . $this->db->escape($ProductDetailsArray['quantity']) . "," . $this->db->escape($ProductDetailsArray['barcode']) . "," . $this->db->escape($ProductDetailsArray['size']) . "," . $this->db->escape($ProductDetailsArray['categorytypeid']) . "," . $this->db->escape($ProductDetailsArray['brandname']) . "," . $this->db->escape($ProductDetailsArray['adminid']) . "," . $this->db->escape($ProductDetailsArray['Showroomid']) . "," . $this->db->escape($ProductDetailsArray['active']) . "," . $this->db->escape($ProductDetailsArray['createdAtdate']) . ")";
@@ -348,13 +361,17 @@ class Users_model extends CI_Model
         $this->db->query($sql);
     }
 
-    public function getSizeList($adminid)
+    public function getSizeList($adminid, $actionId)
     {
 
         $SizeArray = array();
-        $sql = "SELECT * FROM `tbl_sizemaster` t WHERE t.status = 'active' ";
+        $sql = "SELECT * FROM `tbl_sizemaster` t WHERE t.active = 'active' ";
         if ($adminid != "" && $adminid != null) {
             $sql .= " and adminId = '" . $adminid . "' ";
+        }
+
+        if ($actionId != "" && $actionId != null && $actionId!="0" && $actionId!=0) {
+            $sql .= " and sizeid = '" . $actionId . "' ";
         }
 
         $sql = $sql . " order by sizeid desc";
@@ -364,7 +381,7 @@ class Users_model extends CI_Model
             $SizeArray[$k]['sizeid'] = $row->sizeid;
             $SizeArray[$k]['size'] = $row->size;
             $SizeArray[$k]['adminId'] = $row->adminId;
-            $SizeArray[$k]['status'] = $row->status;
+            $SizeArray[$k]['active'] = $row->active;
             $SizeArray[$k]['createdAt'] = $row->createdAt;
             $k++;
         }
@@ -373,7 +390,7 @@ class Users_model extends CI_Model
     }
 
 
- public function getQuantity($adminid,$productId)
+    public function getQuantity($adminid, $productId)
     {
 
         $Quantity = array();
@@ -382,37 +399,39 @@ class Users_model extends CI_Model
             $sql .= " and adminid = '" . $adminid . "' ";
         }
 
-        $sql = $sql . "and productid='".$productId."'";
+        $sql = $sql . "and productid='" . $productId . "'";
         $userQuery = $this->db->query($sql);
         $k = 0;
         foreach ($userQuery->result() as $row) {
-           $Quantity[$k]['availablequantity'] = $row->availablequantity;
+            $Quantity[$k]['availablequantity'] = $row->availablequantity;
             $Quantity[$k]['productrate'] = $row->productrate;
             $k++;
         }
 
         return $Quantity;
     }
-public function getshowroomList($adminid)
+
+    public function getshowroomList($adminid)
     {
 
         $showroomArray = array();
         $sql = "SELECT  ShowRoomName,ShowRoomId FROM `tbl_showroom` t WHERE t.active = 'active' ";
         if ($adminid != "" && $adminid != null) {
-            $sql.= " and adminId = '" . $adminid . "' ";
+            $sql .= " and adminId = '" . $adminid . "' ";
         }
-        
+
         $userQuery = $this->db->query($sql);
         $k = 0;
         foreach ($userQuery->result() as $row) {
-           $showroomArray[$k]['ShowRoomName'] = $row->ShowRoomName;
+            $showroomArray[$k]['ShowRoomName'] = $row->ShowRoomName;
             $showroomArray[$k]['ShowRoomId'] = $row->ShowRoomId;
             $k++;
         }
 
         return $showroomArray;
     }
-public function createProductmappingMaster($ProductMappingArray)
+
+    public function createProductmappingMaster($ProductMappingArray)
     {
         $sql = "INSERT INTO tbl_productMapping (productId,showroomId,price,quantity,adminId,createAt) " . "VALUES (" . $this->db->escape($ProductMappingArray['productname']) . "," . $this->db->escape($ProductMappingArray['ShowroomId']) . "," . $this->db->escape($ProductMappingArray['mappedprice']) . "," . $this->db->escape($ProductMappingArray['mappedqyt']) . "," . $this->db->escape($ProductMappingArray['adminid']) . "," . $this->db->escape($ProductMappingArray['createdAtdate']) . ")";
         $this->db->query($sql);
