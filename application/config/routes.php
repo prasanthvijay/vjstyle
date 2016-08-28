@@ -67,10 +67,7 @@ $route['getRetailerShowRoomDetails'] = 'Frontend/getRetailerShowRoomDetails';
 $route['getAddOrEditUserMasterContent'] = 'Frontend/getAddOrEditUserMasterContent';
 $route['deleteUsersFromMaster'] = 'Frontend/deleteUsersFromMaster';
 $route['editProfile'] = 'Frontend/editProfile';
-<<<<<<< HEAD
-=======
 
->>>>>>> 29ca24f3b8fd2cd5f487e93f370c253a6ce5bffb
 //Product
 $route['AddProduct'] = 'Product/AddProduct';
 $route['addProductMaster'] = 'Product/addProductMaster';
