@@ -49,12 +49,9 @@ class Product extends CI_Controller
             }
         }
 
-        $usertypeid = '3';
-        $retailerShowRoomId = "";
-        $userid = "";
-        $showroomArray = $this->users_model->getUsersList($usertypeid, $adminid, $retailerShowRoomId, $userid);
-        $adminid = $this->session->userdata('usertypeid');
+        $retailerShowRoomId = "0";
         $actionId = "0";
+        $showroomArray = $this->users_model->getUsersList('3', $adminid, $retailerShowRoomId, null);
         $BrandArray = $this->users_model->getBrandList($adminid,$actionId);
         $SizeArray = $this->users_model->getSizeList($adminid, $actionId);
 
@@ -97,47 +94,30 @@ class Product extends CI_Controller
         $deletetSuccess = 0;
 
         if ($submit == 'product') {
-            $Showroomid = $this->input->post('Showroomid');
-            $productname = $this->input->post('productname');
-            $brandname = $this->input->post('brandname');
-            $barcode = $this->input->post('barcode');
-            $size = $this->input->post('size');
-            $quantity = $this->input->post('quantity');
-            $price = $this->input->post('price');
+            $Showroomid = $this->input->get_post('Showroomid');
+            $productname = $this->input->get_post('productname');
+            $brandname = $this->input->get_post('brandname');
+            $barcode = $this->input->get_post('barcode');
+            $size = $this->input->get_post('size');
+            $quantity = $this->input->get_post('quantity');
+            $price = $this->input->get_post('price');
             $categorytypeid = '1';
             $active = 'active';
             $createdAtdate = date("Y-m-d H:i:s");
 
-            $fromUrl = $this->input->post('fromUrl');
-		$ShowroomId = $this->input->post('ShowroomId');
-		$mappedprice = $this->input->post('mappedprice');
-		$mappedqyt = $this->input->post('mappedqyt');
+            $ShowroomId = $this->input->get_post('ShowroomId');
+            $mappedprice = $this->input->get_post('mappedprice');
+            $mappedqyt = $this->input->get_post('mappedqyt');
 
-				for($i=0;$i<count($ShowroomId);$i++)
-				{
-					
-			 $ProductMappingArray = array('ShowroomId' => $ShowroomId[$i], 'mappedprice' => $mappedprice[$i], 'mappedqyt' => $mappedqyt[$i],'adminid' => $adminid, 'productname' => $productname, 'createdAtdate' => $createdAtdate);
+            $ProductDetailsArray = array('productname' => $productname, 'price' => $price, 'size' => $size, 'barcode' => $barcode, 'categorytypeid' => $categorytypeid, 'brandname' => $brandname, 'adminid' => $adminid, 'createdAtdate' => $createdAtdate, 'active' => $active);
+            $productId = $this->users_model->createProductMaster($ProductDetailsArray); //For admin
 
- 				$productmapArray = $this->users_model->createProductmappingMaster($ProductMappingArray); 
-									
-			  
-				}
-            $ProductDetailsArray = array('productname' => $productname, 'brandname' => $brandname, 'barcode' => $barcode, 'size' => $size,
-                'adminid' => $adminid, 'quantity' => $quantity, 'price' => $price, 'createdAtdate' => $createdAtdate, 'categorytypeid' => $categorytypeid, 'active' => $active, 'Showroomid' => $Showroomid);
 
-            $validationArray = $this->users_model->validateUserMaster($ProductDetailsArray, 'Add');
-            $validateSuccess = $validationArray['validateSuccess'];
-            $errorMsg = $validationArray['errorMsg'];
-            if ($validateSuccess == 1) {
-                $userTypeArray = $this->users_model->createProductMaster($ProductDetailsArray); //For admin
-                redirect("AddProduct");
-                //print_r($ProductDetailsArray);
-            } else {
-                $output = array('status' => "2", 'message' => "Invalid Login!!");
-                //print_r($output);
-                $this->session->set_flashdata('output', $output);
-                //redirect("http://localhost/pos/".$fromUrl);
+            for ($i = 0; $i < count($ShowroomId); $i++) {
+                $ProductMappingArray = array('ShowroomId' => $ShowroomId[$i], 'mappedprice' => $mappedprice[$i], 'mappedqyt' => $mappedqyt[$i], 'adminid' => $adminid, 'productId' => $productId, 'createdAtdate' => $createdAtdate);
+                $this->users_model->createProductmappingMaster($ProductMappingArray);
             }
+            redirect(base_url()."Product/AddProduct");
         }
         if ($submit == "brand") {
 
