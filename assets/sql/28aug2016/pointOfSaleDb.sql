@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 28, 2016 at 07:30 PM
+-- Generation Time: Aug 29, 2016 at 09:39 PM
 -- Server version: 5.5.49-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.17
 
@@ -133,37 +133,38 @@ CREATE TABLE IF NOT EXISTS `tbl_product` (
   `productname` varchar(255) DEFAULT NULL,
   `productrate` varchar(255) NOT NULL DEFAULT '0',
   `productsize` varchar(255) DEFAULT NULL,
-  `availablequantity` varchar(255) NOT NULL DEFAULT '0',
   `barcode` varchar(255) DEFAULT NULL,
   `categorytypeid` bigint(20) NOT NULL DEFAULT '0',
   `brandid` bigint(20) NOT NULL DEFAULT '0',
   `adminid` bigint(20) NOT NULL DEFAULT '0',
-  `ShowRoomId` int(11) DEFAULT NULL,
   `active` varchar(255) NOT NULL DEFAULT 'active',
   `createdat` datetime DEFAULT NULL,
   PRIMARY KEY (`productid`),
   UNIQUE KEY `barcode` (`barcode`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 --
 -- Dumping data for table `tbl_product`
 --
 
-INSERT INTO `tbl_product` (`productid`, `productname`, `productrate`, `productsize`, `availablequantity`, `barcode`, `categorytypeid`, `brandid`, `adminid`, `ShowRoomId`, `active`, `createdat`) VALUES
-(1, 'Test', '150', 'Xl', '50', 'BAR1234', 1, 1, 2, 1, 'active', '2016-07-31 00:00:00'),
-(2, 'Jeans', '1234', 'XXL', '34', 'DSF23222', 1, 5, 2, 1, 'active', '2016-08-05 00:44:53'),
-(3, 'paint', '450', 'M', '30', 'PAN001', 1, 5, 2, 1, 'active', '2016-08-12 22:24:36'),
-(4, 'T-Shirt', '350', 'XL', '60', 'TSH001', 1, 4, 2, 1, 'active', '2016-08-12 22:25:51'),
-(5, 'shirt-Mens', '450', 'L', '60', 'SH002', 1, 3, 2, 1, 'active', '2016-08-12 22:27:44'),
-(6, 'Jeans-Shirt', '850', 'L', '88', 'JESH002', 1, 5, 2, 1, 'active', '2016-08-12 22:29:07'),
-(7, 'Jeans-T-Shirt', '850', 'L', '100', 'JTSH002', 1, 5, 2, 1, 'active', '2016-08-12 22:29:07'),
-(8, 'shirt', '450', '2', '40', 'HJAHS11', 1, 8, 2, 1, 'active', '2016-08-19 00:35:43'),
-(9, 'bew_paint', '562', '3', '40', 'FDSF111', 1, 0, 2, 1, 'active', '2016-08-19 00:38:24'),
-(11, 'test', '3245', '3', '33', 'qwqeqsa123', 1, 8, 2, 1, 'active', '2016-08-22 23:47:39'),
-(12, 'tersa', '456', '2', '33', 'fdffdffaz', 1, 8, 2, 1, 'active', '2016-08-24 01:28:39'),
-(13, 'sample', '20', '35', '55', 'ssdfdce', 1, 8, 2, NULL, 'active', '2016-08-28 16:17:08'),
-(14, 'samplegg', '10', '35', '88', 'fdgfdgfdgf', 1, 7, 2, NULL, 'active', '2016-08-28 16:18:27'),
-(15, 'sample', '2345', '2', '234', 'sdfsdf', 1, 7, 2, NULL, 'active', '2016-08-28 17:45:48');
+INSERT INTO `tbl_product` (`productid`, `productname`, `productrate`, `productsize`, `barcode`, `categorytypeid`, `brandid`, `adminid`, `active`, `createdat`) VALUES
+(1, 'Test', '150', 'Xl', 'BAR1234', 1, 1, 2, 'active', '2016-07-31 00:00:00'),
+(2, 'Jeans', '1234', 'XXL', 'DSF23222', 1, 5, 2, 'active', '2016-08-05 00:44:53'),
+(3, 'paint', '450', 'M', 'PAN001', 1, 5, 2, 'active', '2016-08-12 22:24:36'),
+(4, 'T-Shirt', '350', 'XL', 'TSH001', 1, 4, 2, 'active', '2016-08-12 22:25:51'),
+(5, 'shirt-Mens', '450', 'L', 'SH002', 1, 3, 2, 'active', '2016-08-12 22:27:44'),
+(6, 'Jeans-Shirt', '850', 'L', 'JESH002', 1, 5, 2, 'active', '2016-08-12 22:29:07'),
+(7, 'Jeans-T-Shirt', '850', 'L', 'JTSH002', 1, 5, 2, 'active', '2016-08-12 22:29:07'),
+(8, 'shirt', '450', '2', 'HJAHS11', 1, 8, 2, 'active', '2016-08-19 00:35:43'),
+(9, 'bew_paint', '562', '3', 'FDSF111', 1, 0, 2, 'active', '2016-08-19 00:38:24'),
+(11, 'test', '3245', '3', 'qwqeqsa123', 1, 8, 2, 'active', '2016-08-22 23:47:39'),
+(12, 'tersa', '456', '2', 'fdffdffaz', 1, 8, 2, 'active', '2016-08-24 01:28:39'),
+(13, 'sample', '20', '35', 'ssdfdce', 1, 8, 2, 'active', '2016-08-28 16:17:08'),
+(14, 'samplegg', '10', '35', 'fdgfdgfdgf', 1, 7, 2, 'active', '2016-08-28 16:18:27'),
+(15, 'sample', '2345', '2', 'sdfsdf', 1, 7, 2, 'active', '2016-08-28 17:45:48'),
+(16, 'hgdhg', '100', '3', 'gg101', 1, 8, 2, 'active', '2016-08-29 21:20:44'),
+(18, 'mkm', '100', '2', 'gghjk', 1, 8, 2, 'active', '2016-08-29 21:33:42'),
+(19, 'shirtss', '12039', '3', '1233445', 1, 8, 2, 'active', '2016-08-29 21:36:02');
 
 -- --------------------------------------------------------
 
@@ -187,8 +188,8 @@ CREATE TABLE IF NOT EXISTS `tbl_productMapping` (
 --
 
 INSERT INTO `tbl_productMapping` (`id`, `productId`, `showroomId`, `price`, `quantity`, `adminId`, `createAt`) VALUES
-(1, 'sample', 35, 233, 33, 2, '2016-08-28'),
-(2, 'sample', 32, 2333, 22, 2, '2016-08-28');
+(1, '19', 35, 12039, 10, 2, '2016-08-29'),
+(2, '19', 32, 12039, 20, 2, '2016-08-29');
 
 -- --------------------------------------------------------
 
@@ -227,7 +228,7 @@ CREATE TABLE IF NOT EXISTS `tbl_sizemaster` (
   `active` varchar(200) DEFAULT 'active',
   `createdAt` date DEFAULT NULL,
   PRIMARY KEY (`sizeid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `tbl_sizemaster`
@@ -237,9 +238,11 @@ INSERT INTO `tbl_sizemaster` (`sizeid`, `size`, `adminId`, `active`, `createdAt`
 (1, 'XL', 2, 'active', '2016-08-18'),
 (2, 'XXL', 2, 'active', '2016-08-19'),
 (3, 'L', 2, 'active', '2016-08-19'),
-(4, '', 2, 'active', '2016-08-24'),
+(4, '', 2, 'deleted', '2016-08-24'),
 (5, '3', 39, 'deleted', '2016-08-28'),
-(6, '5', 39, 'deleted', '2016-08-28');
+(6, '5', 39, 'deleted', '2016-08-28'),
+(7, '1234', 39, 'active', '2016-08-28'),
+(8, '545', 39, 'active', '2016-08-28');
 
 -- --------------------------------------------------------
 
@@ -271,7 +274,7 @@ CREATE TABLE IF NOT EXISTS `tbl_user` (
 
 INSERT INTO `tbl_user` (`userid`, `name`, `email`, `password`, `usertypeid`, `adminid`, `retailerShowRoomId`, `mobile`, `address`, `doj`, `dob`, `active`, `lastlogin`, `createdat`) VALUES
 (1, 'superadmin', 'superadmin@gmail.com', '1234', 1, 0, NULL, '8344798628', '107 west street, ammaiyappan, thiruvarur, Tamil Nadu', NULL, NULL, 'active', '2016-08-14 15:08:12', '2016-07-23 00:00:00'),
-(2, 'posadmin1', 'posadmin1@gmail.com', '1234', 2, 0, NULL, '8124356981', '102 chennai', NULL, NULL, 'active', '2016-08-15 07:08:16', '2016-07-23 19:21:27'),
+(2, 'posadmin1', 'posadmin1@gmail.com', '1234', 2, 0, NULL, '8124356981', '102 chennai', NULL, NULL, 'active', '2016-08-29 20:08:51', '2016-07-23 19:21:27'),
 (3, 'Prasanth', 'prasanth@gmail.com', '1234', 2, 0, NULL, '8122334168', 'salem', '0000-00-00', '0000-00-00', 'active', '2016-08-28 16:08:45', '2016-08-03 02:25:22'),
 (32, 'kuru', 'yughgf@hjgdfh.in', '1234', 3, 2, 0, '67567576', 'hjdsff', '0000-00-00', '0000-00-00', 'active', NULL, '2016-08-14 09:26:53'),
 (33, 'praveen', 'praveen@dotcue.com', '1234', 5, 2, 32, '54564', 'ok', '2016-08-17', '2016-08-31', 'active', '2016-08-22 23:08:20', '2016-08-14 09:27:39'),
