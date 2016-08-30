@@ -39,12 +39,16 @@ class Sales extends CI_Controller {
 	public function pos()
     	{
 		$dataheader['title'] = "POS";
+ 			$usertypeid = $this->session->userdata('usertypeid');
+	               $retailerShowRoomId = $this->session->userdata('retailerShowRoomId');
+	               $adminid = $this->session->userdata('adminid');
 
 		$tablename="tbl_product";
-		$fieldname=array('productid','productname');
-		$condition="t.adminid=2 and t.active=active";
-	
+		$fieldname=array('productid,productname');
+		$condition="t.productid IN(SELECT productid From tbl_productMapping where showroomId ='".$retailerShowRoomId."' and adminid ='".$adminid."') " ;
+	              
 		$productList = $this->pos_model->selectQueryList($tablename,$fieldname,$condition);
+
 		$dataheader['productList'] = $productList;
 
 		$selectedProduct = $this->input->post('selectedProduct');
@@ -89,7 +93,8 @@ class Sales extends CI_Controller {
 	public function posajax()
 	{
 		$productId=$this->input->get_post("productId");
-		$productDetails = $this->pos_model->productDetails($productId);
+		        $productIdArray = array('productId' => $productId);
+		$productDetails = $this->pos_model->productDetails($productIdArray);
 		echo json_encode($productDetails);
 	}
 

@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 29, 2016 at 09:39 PM
--- Server version: 5.5.49-0ubuntu0.14.04.1
--- PHP Version: 5.5.9-1ubuntu4.17
+-- Generation Time: Aug 31, 2016 at 01:32 AM
+-- Server version: 5.6.31-0ubuntu0.14.04.2
+-- PHP Version: 5.5.9-1ubuntu4.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -89,7 +89,14 @@ CREATE TABLE IF NOT EXISTS `tbl_customer` (
   `mobileno` text,
   `active` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `tbl_customer`
+--
+
+INSERT INTO `tbl_customer` (`id`, `name`, `mobileno`, `active`) VALUES
+(1, 'Praveen', '7418896961', 1);
 
 -- --------------------------------------------------------
 
@@ -103,8 +110,20 @@ CREATE TABLE IF NOT EXISTS `tbl_customerreceipt` (
   `roundoff` double DEFAULT NULL,
   `Total` double DEFAULT NULL,
   `customerId` int(11) DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+
+--
+-- Dumping data for table `tbl_customerreceipt`
+--
+
+INSERT INTO `tbl_customerreceipt` (`id`, `discount`, `roundoff`, `Total`, `customerId`, `date`) VALUES
+(5, 0, 0, 0, 1, '2016-08-27 19:50:27'),
+(6, 0, 0, 0, 1, '2016-08-27 19:51:45'),
+(7, 135, 15, 300, 1, '2016-08-27 19:53:36'),
+(8, 10, 0, 155, 1, '2016-08-28 19:02:07'),
+(9, 10, 8.72, 141.76, 1, '2016-08-30 22:28:40');
 
 -- --------------------------------------------------------
 
@@ -116,11 +135,26 @@ CREATE TABLE IF NOT EXISTS `tbl_customerreceiptproduct` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `receiptId` int(11) DEFAULT NULL,
   `productId` int(11) DEFAULT NULL,
+  `showroomId` int(11) DEFAULT NULL,
   `price` double DEFAULT NULL,
   `qty` int(11) DEFAULT NULL,
   `discount` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+
+--
+-- Dumping data for table `tbl_customerreceiptproduct`
+--
+
+INSERT INTO `tbl_customerreceiptproduct` (`id`, `receiptId`, `productId`, `showroomId`, `price`, `qty`, `discount`) VALUES
+(6, 5, 1, NULL, 150, 1, 10),
+(7, 5, 4, NULL, 350, 1, 10),
+(8, 6, 1, NULL, 150, 1, 0),
+(9, 7, 5, NULL, 450, 1, 0),
+(10, 8, 4, NULL, 350, 2, 0),
+(11, 8, 6, NULL, 850, 1, 0),
+(12, 9, 2, NULL, 1234, 1, 5),
+(13, 9, 4, NULL, 350, 1, 5);
 
 -- --------------------------------------------------------
 
@@ -190,6 +224,28 @@ CREATE TABLE IF NOT EXISTS `tbl_productMapping` (
 INSERT INTO `tbl_productMapping` (`id`, `productId`, `showroomId`, `price`, `quantity`, `adminId`, `createAt`) VALUES
 (1, '19', 35, 12039, 10, 2, '2016-08-29'),
 (2, '19', 32, 12039, 20, 2, '2016-08-29');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_returnProduct`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_returnProduct` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `oldReceipt` int(11) DEFAULT NULL,
+  `newReceipt` int(11) DEFAULT NULL,
+  `productId` int(11) DEFAULT NULL,
+  `reduceCount` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `tbl_returnProduct`
+--
+
+INSERT INTO `tbl_returnProduct` (`id`, `oldReceipt`, `newReceipt`, `productId`, `reduceCount`) VALUES
+(3, 5, 7, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -275,9 +331,9 @@ CREATE TABLE IF NOT EXISTS `tbl_user` (
 INSERT INTO `tbl_user` (`userid`, `name`, `email`, `password`, `usertypeid`, `adminid`, `retailerShowRoomId`, `mobile`, `address`, `doj`, `dob`, `active`, `lastlogin`, `createdat`) VALUES
 (1, 'superadmin', 'superadmin@gmail.com', '1234', 1, 0, NULL, '8344798628', '107 west street, ammaiyappan, thiruvarur, Tamil Nadu', NULL, NULL, 'active', '2016-08-14 15:08:12', '2016-07-23 00:00:00'),
 (2, 'posadmin1', 'posadmin1@gmail.com', '1234', 2, 0, NULL, '8124356981', '102 chennai', NULL, NULL, 'active', '2016-08-29 20:08:51', '2016-07-23 19:21:27'),
-(3, 'Prasanth', 'prasanth@gmail.com', '1234', 2, 0, NULL, '8122334168', 'salem', '0000-00-00', '0000-00-00', 'active', '2016-08-28 16:08:45', '2016-08-03 02:25:22'),
+(3, 'Prasanth', 'prasanth@gmail.com', '1234', 2, 0, NULL, '8122334168', 'salem', '0000-00-00', '0000-00-00', 'active', '2016-08-30 21:08:34', '2016-08-03 02:25:22'),
 (32, 'kuru', 'yughgf@hjgdfh.in', '1234', 3, 2, 0, '67567576', 'hjdsff', '0000-00-00', '0000-00-00', 'active', NULL, '2016-08-14 09:26:53'),
-(33, 'praveen', 'praveen@dotcue.com', '1234', 5, 2, 32, '54564', 'ok', '2016-08-17', '2016-08-31', 'active', '2016-08-22 23:08:20', '2016-08-14 09:27:39'),
+(33, 'praveen', 'praveen@dotcue.com', '1234', 5, 2, 32, '54564', 'ok', '2016-08-17', '2016-08-31', 'active', '2016-08-31 00:08:06', '2016-08-14 09:27:39'),
 (34, 'oko', 'oko@gmail.com', '1234', 4, 2, 32, '54546', 'dgsdfgdsfg', '2016-08-16', '2016-08-30', 'active', NULL, '2016-08-14 09:28:20'),
 (35, 'posaa', 'jhgjh', 'hhgh', 3, 2, 0, 'uyggg', 'hhgh', '0000-00-00', '0000-00-00', 'active', NULL, '2016-08-14 09:31:54');
 
