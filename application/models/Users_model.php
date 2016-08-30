@@ -260,12 +260,25 @@ class Users_model extends CI_Model
         return $this->db->query($sql);
     }
 
+    public function deleteProductMaster($ProductDetailsDeleteArray)
+    {
+        $active = "deleted";
+        $sql = "UPDATE tbl_product set active = " . $this->db->escape($active) . " where productid = ".$this->db->escape($ProductDetailsDeleteArray['productid'])." and adminid = ". $this->db->escape($ProductDetailsDeleteArray['adminid']);
+        return $this->db->query($sql);
+    }
+
     public function createProductMaster($ProductDetailsArray)
     {
         $sql = "INSERT INTO tbl_product (productname, productrate, productsize, barcode, categorytypeid, brandid, adminid, active, createdat) " . "VALUES (" . $this->db->escape($ProductDetailsArray['productname']) . "," . $this->db->escape($ProductDetailsArray['price']) . "," . $this->db->escape($ProductDetailsArray['size']) . "," . $this->db->escape($ProductDetailsArray['barcode']) . "," . $this->db->escape($ProductDetailsArray['categorytypeid']) . "," . $this->db->escape($ProductDetailsArray['brandname']) . "," . $this->db->escape($ProductDetailsArray['adminid']) . "," . $this->db->escape($ProductDetailsArray['active']) . "," . $this->db->escape($ProductDetailsArray['createdAtdate']) . ")";
         $this->db->query($sql);
         $insert_id = $this->db->insert_id();
         return $insert_id;
+    }
+
+    public function updateProductMaster($ProductDetailsArray)
+    {
+        $sql = "UPDATE tbl_product set productname = ".$this->db->escape($ProductDetailsArray['productname']).", productrate = ".$this->db->escape($ProductDetailsArray['price']).", productsize = ".$this->db->escape($ProductDetailsArray['size']).", barcode = ".$this->db->escape($ProductDetailsArray['barcode']).", categorytypeid = ".$this->db->escape($ProductDetailsArray['categorytypeid']).", brandid = ".$this->db->escape($ProductDetailsArray['brandname']). " where productid = ".$this->db->escape($ProductDetailsArray['productid'])." and adminid = ".$this->db->escape($ProductDetailsArray['adminid']);
+        $this->db->query($sql);
     }
 
     public function validateUserMaster($userDetailsArray, $action)

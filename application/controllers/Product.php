@@ -94,30 +94,36 @@ class Product extends CI_Controller
         $deletetSuccess = 0;
 
         if ($submit == 'product') {
-            $Showroomid = $this->input->get_post('Showroomid');
+            $output = array('status' => "3", 'message' => "Invalid Request");
             $productname = $this->input->get_post('productname');
             $brandname = $this->input->get_post('brandname');
             $barcode = $this->input->get_post('barcode');
             $size = $this->input->get_post('size');
-            $quantity = $this->input->get_post('quantity');
+//                $quantity = $this->input->get_post('quantity');
             $price = $this->input->get_post('price');
             $categorytypeid = '1';
             $active = 'active';
             $createdAtdate = date("Y-m-d H:i:s");
-
             $ShowroomId = $this->input->get_post('ShowroomId');
             $mappedprice = $this->input->get_post('mappedprice');
             $mappedqyt = $this->input->get_post('mappedqyt');
 
-            $ProductDetailsArray = array('productname' => $productname, 'price' => $price, 'size' => $size, 'barcode' => $barcode, 'categorytypeid' => $categorytypeid, 'brandname' => $brandname, 'adminid' => $adminid, 'createdAtdate' => $createdAtdate, 'active' => $active);
-            $productId = $this->users_model->createProductMaster($ProductDetailsArray); //For admin
-
-
-            for ($i = 0; $i < count($ShowroomId); $i++) {
-                $ProductMappingArray = array('ShowroomId' => $ShowroomId[$i], 'mappedprice' => $mappedprice[$i], 'mappedqyt' => $mappedqyt[$i], 'adminid' => $adminid, 'productId' => $productId, 'createdAtdate' => $createdAtdate);
-                $this->users_model->createProductmappingMaster($ProductMappingArray);
+            if($actionType  == "Edit" && $actionId!="0" && $actionId!="" && $actionId!=null){
+                $ProductDetailsArray = array('productid'=> $actionId, 'productname' => $productname, 'price' => $price, 'size' => $size, 'barcode' => $barcode, 'categorytypeid' => $categorytypeid, 'brandname' => $brandname, 'adminid' => $adminid);
+                $this->users_model->updateProductMaster($ProductDetailsArray); //For admin
+            } else if($actionType  == "Delete" && $actionId!="0" && $actionId!="" && $actionId!=null){
+                $ProductDetailsDeleteArray = array('productid'=>$actionId, 'adminid'=>$adminid);
+                $this->users_model->deleteProductMaster($ProductDetailsDeleteArray); //For admin
+                $output = array('status' => "1", 'message' => "Successfully deleted");
+            } else if($actionType  == "Add" || $actionType  == ""){
+                $ProductDetailsArray = array('productname' => $productname, 'price' => $price, 'size' => $size, 'barcode' => $barcode, 'categorytypeid' => $categorytypeid, 'brandname' => $brandname, 'adminid' => $adminid, 'createdAtdate' => $createdAtdate, 'active' => $active);
+                $productId = $this->users_model->createProductMaster($ProductDetailsArray); //For admin
+                for ($i = 0; $i < count($ShowroomId); $i++) {
+                    $ProductMappingArray = array('ShowroomId' => $ShowroomId[$i], 'mappedprice' => $mappedprice[$i], 'mappedqyt' => $mappedqyt[$i], 'adminid' => $adminid, 'productId' => $productId, 'createdAtdate' => $createdAtdate);
+                    $this->users_model->createProductmappingMaster($ProductMappingArray);
+                }
             }
-            redirect(base_url()."Product/AddProduct");
+            redirect(base_url()."Product/ProductList");
         }
         if ($submit == "brand") {
 
@@ -267,6 +273,8 @@ class Product extends CI_Controller
             } else {
                 $adminid = $this->input->get_post('adminid');
             }
+        } else {
+            redirect(base_url()."Frontend/logout");
         }
 //        $adminid = $this->session->userdata('usertypeid');
         $dataheader['title'] = "ProductList";
@@ -396,6 +404,7 @@ class Product extends CI_Controller
 
         $retailerShowRoomId = "0";
         $actionId = "0";
+        $actionType = $this->input->get_post('actionType');
         $productId = $this->input->get_post('actionId');
         $productArray = $this->users_model->getProductList($adminid, $productId);
         $BrandArray = $this->users_model->getBrandList($adminid,$actionId);
@@ -404,6 +413,8 @@ class Product extends CI_Controller
         $dataheader['productArray'] = $productArray;
         $dataheader['BrandArray'] = $BrandArray;
         $dataheader['SizeArray'] = $SizeArray;
+        $dataheader['actionType'] = $actionType;
+        $dataheader['actionId'] = $productId;
 //        $dataheader['showroomArray'] = $showroomArray;
 //        $this->load->view('layout/backend_header', $dataheader);
 //        $this->load->view('layout/backend_menu');

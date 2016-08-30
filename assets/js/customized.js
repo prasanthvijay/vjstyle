@@ -69,7 +69,10 @@ function deleteProductsMaster(masterType, postData, postUrl) {
                     var sizeList = "sizeList";
                     loadbrandlist(sizeList);
                 }
-
+                // if(masterType == "product"){
+                //     var sizeList = "sizeList";
+                //     loadbrandlist(sizeList);
+                // }
             }
         });
     }

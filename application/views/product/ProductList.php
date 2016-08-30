@@ -45,7 +45,7 @@
                                     </button>
                                 </td>
                                 <td>
-                                    <button class="btn btn-danger waves-effect waves-light" type="button" onclick="deleteProductsMaster('product','submit=brand&actionType=Delete&actionId=<?php echo $productId; ?>','<?php echo $deletUrl; ?>')">
+                                    <button class="btn btn-danger waves-effect waves-light" type="button" onclick="deleteProductsMaster('product','submit=product&actionType=Delete&actionId=<?php echo $productId; ?>','<?php echo $deletUrl; ?>')">
                                         Delete
                                     </button>
                                 </td>

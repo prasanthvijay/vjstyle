@@ -14,7 +14,8 @@
     </div>
     <div class="panel-body">
         <form class="form-horizontal group-border-dashed" action="<?php echo $addProductMasterUrl; ?>" method="POST" name="addOrEditUserDetailsForm" id="addOrEditUserDetailsForm" data-parsley-validate novalidate>
-
+            <input type="hidden" name="actionType" id="actionType" value="<?php echo $actionType; ?>">
+            <input type="hidden" name="actionId" id="actionId" value="<?php echo $actionId; ?>">
             <div class="form-group">
                 <label class="col-sm-3 control-label">Product Name</label>
                 <div class="col-sm-6">
