@@ -86,6 +86,9 @@ function getAddOrEditModalContent(postBrandData, loadAddOrEditModalUrl) {
             $("#addOrEditUserDetailsForm").parsley();
             $("#panel-modal").modal('show');
 
+            $("#brandname").select2();
+            $("#size").select2();
+
         }
     });
 }

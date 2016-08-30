@@ -154,13 +154,17 @@ class Users_model extends CI_Model
         return $BrandArray;
     }
 
-    public function getProductList($adminid)
+    public function getProductList($adminid, $productId)
     {
 
         $ProductList = array();
         $sql = "SELECT * FROM `tbl_product` t WHERE t.active = 'active' ";
         if ($adminid != "" && $adminid != null) {
             $sql .= " and adminid = '" . $adminid . "' ";
+        }
+
+        if($productId !="0" && $productId!="" && $productId!=null){
+            $sql .= " and productid = '" . $productId . "' ";
         }
 
         $sql = $sql . " order by productid desc";
@@ -170,7 +174,7 @@ class Users_model extends CI_Model
             $ProductList[$k]['productid'] = $row->productid;
             $ProductList[$k]['productname'] = $row->productname;
             $ProductList[$k]['productrate'] = $row->productrate;
-            $ProductList[$k]['availablequantity'] = $row->availablequantity;
+//            $ProductList[$k]['availablequantity'] = $row->availablequantity;
             $ProductList[$k]['barcode'] = $row->barcode;
             $ProductList[$k]['productsize'] = $row->productsize;
             $ProductList[$k]['categorytypeid'] = $row->categorytypeid;

@@ -70,6 +70,7 @@ $route['editProfile'] = 'Frontend/editProfile';
 
 //Product
 $route['AddProduct'] = 'Product/AddProduct';
+$route['EditProduct'] = 'Product/EditProduct';
 $route['addProductMaster'] = 'Product/addProductMaster';
 $route['AddBrand'] = 'Product/AddBrand';
 $route['BrandList'] = 'Product/BrandList';

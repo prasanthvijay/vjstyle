@@ -258,11 +258,20 @@ class Product extends CI_Controller
 
     public function ProductList()
     {
-
-        $adminid = $this->session->userdata('usertypeid');
+        $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
+        $adminid = "0";
+        if($sessionUserTypeIdIsset == 1){
+            $sessionUserTypeId = $this->session->userdata('usertypeid');
+            if($sessionUserTypeId == 2){
+                $adminid = $this->session->userdata('userid');
+            } else {
+                $adminid = $this->input->get_post('adminid');
+            }
+        }
+//        $adminid = $this->session->userdata('usertypeid');
         $dataheader['title'] = "ProductList";
-
-        $ProductList = $this->users_model->getProductList($adminid);
+        $productId = "0";
+        $ProductList = $this->users_model->getProductList($adminid, $productId);
 
         $dataheader['ProductList'] = $ProductList;
         $this->load->view('layout/backend_header', $dataheader);
@@ -330,8 +339,8 @@ class Product extends CI_Controller
         $adminid = $this->session->userdata('usertypeid');
         $dataheader['adminid'] = $adminid;
         $dataheader['title'] = "MapProduct";
-
-        $ProductList = $this->users_model->getProductList($adminid);
+        $productId = "0";
+        $ProductList = $this->users_model->getProductList($adminid, $productId);
         $dataheader['ProductList'] = $ProductList;
 
         $this->load->view('layout/backend_header', $dataheader);
@@ -367,6 +376,40 @@ class Product extends CI_Controller
         $dataheader['type'] = $type;
         $dataheader['count'] = $count;
         $this->load->view('product/getContent', $dataheader);
+
+    }
+
+    public function EditProduct()
+    {
+        $dataheader['title'] = "Edit Product";
+        $dataheader['addProductMasterUrl'] = "addProductMaster";
+        $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
+        $adminid = "0";
+        if($sessionUserTypeIdIsset == 1){
+            $sessionUserTypeId = $this->session->userdata('usertypeid');
+            if($sessionUserTypeId == 2){
+                $adminid = $this->session->userdata('userid');
+            } else {
+                $adminid = $this->input->get_post('adminid');
+            }
+        }
+
+        $retailerShowRoomId = "0";
+        $actionId = "0";
+        $productId = $this->input->get_post('actionId');
+        $productArray = $this->users_model->getProductList($adminid, $productId);
+        $BrandArray = $this->users_model->getBrandList($adminid,$actionId);
+        $SizeArray = $this->users_model->getSizeList($adminid, $actionId);
+
+        $dataheader['productArray'] = $productArray;
+        $dataheader['BrandArray'] = $BrandArray;
+        $dataheader['SizeArray'] = $SizeArray;
+//        $dataheader['showroomArray'] = $showroomArray;
+//        $this->load->view('layout/backend_header', $dataheader);
+//        $this->load->view('layout/backend_menu');
+        $this->load->view('product/EditProduct',$dataheader);
+//        $this->load->view('layout/backend_footer');
+
 
     }
 
