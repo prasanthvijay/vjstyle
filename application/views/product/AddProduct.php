@@ -102,7 +102,7 @@
                                 </button>
                             </div>
                         </div>
-
+                        <div id="ajaxDiv"></div>
                         <div id="qytDiv1"></div>
                         <div class="form-group m-b-0">
                             <div class="col-sm-offset-3 col-sm-9 m-t-15">
@@ -119,14 +119,14 @@
                 </div>
             </div>
         </div>
-        <input type="hid den" id="count" name="count" value="1">
+        <input type="hidden" id="count" name="count" value="1">
         <script>
 
             $("#mapProduct").click(function () {
                 var count = $('#count').val();
                 $.get("getContent", {count: count, type: "productQyt"}, function (data) {
-                    $('#qytDiv' + count).html(data);
-                    $("#ShowroomId" + count).select2();
+                    $("#ajaxDiv").append(data);
+                    $("#ShowroomId"+count).select2();
                 });
                 $('#count').val(parseInt(count) + 1);
 
@@ -134,11 +134,11 @@
 
             $("#removeRow").click(function () {
                 var count = $('#count').val();
-                var dec = parseInt(count) - 1
-                $("#qytDiv" + dec).remove();
-                $('#count').val(dec);
-
-
+                if(count>1){
+                    var dec = parseInt(count) - 1
+                    $("#ajaxDivInner"+dec).remove();
+                    $('#count').val(dec);
+                }
             });
 
 

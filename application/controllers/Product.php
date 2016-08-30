@@ -342,7 +342,20 @@ class Product extends CI_Controller
 
     public function getContent()
     {
-        $adminid = $this->session->userdata('usertypeid');
+//        $adminid = $this->session->userdata('usertypeid');
+        $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
+        $adminid = "0";
+        $sessionUserTypeId = "0";
+        if($sessionUserTypeIdIsset == 1){
+            $sessionUserTypeId = $this->session->userdata('usertypeid');
+            if($sessionUserTypeId == 2){
+                $adminid = $this->session->userdata('userid');
+            } else {
+                echo $adminid;
+                $adminid = $this->input->get_post('adminid');
+            }
+        }
+
         $dataheader['adminid'] = $adminid;
         $count = $this->input->get('count');
         $type = $this->input->get('type');
