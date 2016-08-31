@@ -125,6 +125,7 @@ class Product extends CI_Controller
             }
             redirect(base_url()."Product/ProductList");
         }
+
         if ($submit == "brand") {
 
             $brandname = $this->input->post('brandname');
@@ -158,6 +159,7 @@ class Product extends CI_Controller
 
             redirect(base_url()."Product/BrandMaster");
         }
+
         if ($submit == "size") {
 
             $size = $this->input->post('size');
@@ -189,6 +191,40 @@ class Product extends CI_Controller
             }
             $this->session->set_flashdata('output', $output);
             redirect(base_url()."Product/SizeMaster");
+        }
+
+        if($submit == "Category Type"){
+
+            $categoryType = $this->input->post('categoryType');
+            $createdAt = date("Y-m-d H:i:s");
+            $CategoryTypeDetailsArray = array('categoryType' => $categoryType, 'categorytypeid' => $actionId, 'adminid' => $adminid, 'createdAt' => $createdAt);
+
+            $output = array('status' => "3", 'message' => "Invalid Request");
+            if($actionType  == "Edit" && $actionId!="0" && $actionId!="" && $actionId!=null){
+                $insertSuccess = $userTypeArray = $this->users_model->updateCategoryTypeMaster($CategoryTypeDetailsArray); //For Create Brand
+                if($insertSuccess == 1){
+                    $output = array('status' => "1", 'message' => "Successfully updated");
+                } else {
+                    $output = array('status' => "2", 'message' => "Invalid update");
+                }
+            } else if($actionType  == "Delete" && $actionId!="0" && $actionId!="" && $actionId!=null){
+                $deletetSuccess = $userTypeArray = $this->users_model->deleteCategoryTypeMaster($CategoryTypeDetailsArray); //For Update Brand
+                if($deletetSuccess == 1){
+                    $output = array('status' => "1", 'message' => "Successfully deleted");
+                } else{
+                    $output = array('status' => "2", 'message' => "Please try again later");
+                }
+            } else if($actionType  == "Add" || $actionType  == ""){
+                $updateSuccess = $userTypeArray = $this->users_model->createCategoryTypeMaster($CategoryTypeDetailsArray); //For Update Brand
+                if($updateSuccess == 1){
+                    $output = array('status' => "1", 'message' => "Successfully created");
+                } else{
+                    $output = array('status' => "2", 'message' => "Please try again later");
+                }
+            }
+            $this->session->set_flashdata('output', $output);
+            redirect(base_url()."Product/CategoryTypeMaster");
+
         }
     }
 
@@ -247,15 +283,20 @@ class Product extends CI_Controller
 
         $BrandList = array();
         $SizeList = array();
+        $CategoryTypeList = array();
 
         if($type == "brandList"){
             $BrandList = $this->users_model->getBrandList($adminid, $actionId);
         } else if($type == "sizeList"){
             $SizeList = $this->users_model->getSizeList($adminid, $actionId);
+        } else if($type == "Category Type"){
+            $CategoryTypeList = $this->users_model->getCategoryTypeList($adminid, $actionId);
         }
-        $dataheader['typeList'] = $type;
+
+       $dataheader['typeList'] = $type;
         $dataheader['SizeList'] = $SizeList;
         $dataheader['BrandList'] = $BrandList;
+        $dataheader['CategoryTypeList'] = $CategoryTypeList;
         // $this->load->view('layout/backend_header');
         // $this->load->view('layout/backend_menu');
         $this->load->view('product/BrandList', $dataheader);
@@ -297,6 +338,31 @@ class Product extends CI_Controller
         $this->load->view('layout/backend_menu');
         $this->load->view('product/BrandMaster', $dataheader);
         $this->load->view('layout/backend_footer');
+    }
+
+    public function CategoryTypeMaster()
+    {
+        $dataheader['CategoryType'] = "CategoryType";
+        $dataheader['title'] = "Category Type";
+        //$adminid = $this->session->userdata('usertypeid');
+        $this->load->view('layout/backend_header', $dataheader);
+        $this->load->view('layout/backend_menu');
+        $this->load->view('product/CategoryTypeMaster', $dataheader);
+        $this->load->view('layout/backend_footer');
+    }
+
+    public function AddOrEditMasterContent()
+    {
+        $dataheader['title'] = "Category Type";
+        $actionType = $this->input->get_post('actionType');
+        $actionId = $this->input->get_post('actionId');
+        $masterName = $this->input->get_post('masterName');
+        $dataheader['actionType'] = $actionType;
+        $dataheader['actionId'] = $actionId;
+        $dataheader['masterName'] = $masterName;
+        $dataheader['addProductMasterUrl'] = "addProductMaster";
+
+        $this->load->view('product/AddOrEditMasterContent', $dataheader);
     }
 
     public function SizeMaster()

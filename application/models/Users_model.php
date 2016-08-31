@@ -260,6 +260,25 @@ class Users_model extends CI_Model
         return $this->db->query($sql);
     }
 
+    public function updateCategoryTypeMaster($SizeDetailsArray)
+    {
+        $sql = "UPDATE tbl_categorytype set categorytype = " . $this->db->escape($SizeDetailsArray['categoryType']) . " where categorytypeid = ".$this->db->escape($SizeDetailsArray['categorytypeid'])." and adminid = ". $this->db->escape($SizeDetailsArray['adminid']);
+        return $this->db->query($sql);
+    }
+
+    public function deleteCategoryTypeMaster($CategoryTypeDetailsArray)
+    {
+        $active = "deleted";
+        $sql = "UPDATE tbl_categorytype set active = " . $this->db->escape($active) . " where categorytypeid = ".$this->db->escape($CategoryTypeDetailsArray['categorytypeid'])." and adminid = ". $this->db->escape($CategoryTypeDetailsArray['adminid']);
+        return $this->db->query($sql);
+    }
+
+    public function createCategoryTypeMaster($BrandDetailsArray)
+    {
+        $sql = "INSERT INTO tbl_categorytype (categorytype,adminid,createdat) " . "VALUES (" . $this->db->escape($BrandDetailsArray['categoryType']) . "," . $this->db->escape($BrandDetailsArray['adminid']) . "," . $this->db->escape($BrandDetailsArray['createdAt']) . ")";
+        $this->db->query($sql);
+    }
+
     public function deleteProductMaster($ProductDetailsDeleteArray)
     {
         $active = "deleted";
@@ -399,6 +418,34 @@ class Users_model extends CI_Model
         foreach ($userQuery->result() as $row) {
             $SizeArray[$k]['sizeid'] = $row->sizeid;
             $SizeArray[$k]['size'] = $row->size;
+            $SizeArray[$k]['adminId'] = $row->adminId;
+            $SizeArray[$k]['active'] = $row->active;
+            $SizeArray[$k]['createdAt'] = $row->createdAt;
+            $k++;
+        }
+
+        return $SizeArray;
+    }
+
+    public function getCategoryTypeList($adminid, $actionId)
+    {
+
+        $SizeArray = array();
+        $sql = "SELECT * FROM `tbl_categorytype` t WHERE t.active = 'active' ";
+        if ($adminid != "" && $adminid != null) {
+            $sql .= " and adminId = '" . $adminid . "' ";
+        }
+
+        if ($actionId != "" && $actionId != null && $actionId!="0" && $actionId!=0) {
+            $sql .= " and categorytypeid = '" . $actionId . "' ";
+        }
+
+        $sql = $sql . " order by categorytypeid desc";
+        $userQuery = $this->db->query($sql);
+        $k = 0;
+        foreach ($userQuery->result() as $row) {
+            $SizeArray[$k]['categorytypeid'] = $row->categorytypeid;
+            $SizeArray[$k]['categorytype'] = $row->categorytype;
             $SizeArray[$k]['adminId'] = $row->adminId;
             $SizeArray[$k]['active'] = $row->active;
             $SizeArray[$k]['createdAt'] = $row->createdAt;
