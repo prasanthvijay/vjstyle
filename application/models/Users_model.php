@@ -21,7 +21,7 @@ class Users_model extends CI_Model
         $userList = array();
 
         //Select active list from both user and usertype table
-        $sql = "SELECT t.userid, t.name, t.email, t.usertypeid, t.adminid, t.mobile, t.address, t.lastlogin, u.redirecturl, u.usertype  FROM `tbl_usertype` u INNER JOIN tbl_user t ON u.usertypeid = t.usertypeid and u.active='active' WHERE t.email = '" . $username . "' and t.password = '" . $password . "' and t.active = 'active' ";
+        $sql = "SELECT t.userid, t.name, t.email, t.usertypeid, t.adminid, t.retailerShowRoomId, t.mobile, t.address, t.lastlogin, u.redirecturl, u.usertype  FROM `tbl_usertype` u INNER JOIN tbl_user t ON u.usertypeid = t.usertypeid and u.active='active' WHERE t.email = '" . $username . "' and t.password = '" . $password . "' and t.active = 'active' ";
         $query = $this->db->query($sql);
         foreach ($query->result() as $row) {
             $userList['userid'] = $row->userid;
@@ -30,7 +30,7 @@ class Users_model extends CI_Model
             $userList['usertypeid'] = $row->usertypeid;
             $userList['adminid'] = $row->adminid;
             $userList['mobile'] = $row->mobile;
-            $userList['address'] = $row->address;
+            $userList['retailerShowRoomId'] = $row->retailerShowRoomId;
             $userList['lastlogin'] = $row->lastlogin;
             $userList['redirecturl'] = $row->redirecturl;
             $userList['usertype'] = $row->usertype;
