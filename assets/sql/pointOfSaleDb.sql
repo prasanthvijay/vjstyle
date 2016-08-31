@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 31, 2016 at 01:32 AM
--- Server version: 5.6.31-0ubuntu0.14.04.2
--- PHP Version: 5.5.9-1ubuntu4.19
+-- Generation Time: Aug 31, 2016 at 11:24 PM
+-- Server version: 5.5.49-0ubuntu0.14.04.1
+-- PHP Version: 5.5.9-1ubuntu4.17
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -76,6 +76,38 @@ INSERT INTO `tbl_category` (`categorytypeid`, `categorytype`, `adminid`, `active
 (4, 'Retailer Show Room', 0, 'active', '2016-07-23 00:00:00'),
 (5, 'Sales Executive', 0, 'active', '2016-07-23 00:00:00'),
 (6, 'Delivery Person', 0, 'active', '2016-07-23 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_categorytype`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_categorytype` (
+  `categorytypeid` bigint(20) NOT NULL AUTO_INCREMENT,
+  `categorytype` varchar(255) DEFAULT NULL,
+  `adminId` int(11) DEFAULT NULL,
+  `active` varchar(200) DEFAULT 'active',
+  `createdAt` date DEFAULT NULL,
+  PRIMARY KEY (`categorytypeid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+
+--
+-- Dumping data for table `tbl_categorytype`
+--
+
+INSERT INTO `tbl_categorytype` (`categorytypeid`, `categorytype`, `adminId`, `active`, `createdAt`) VALUES
+(1, 'hghgf', 2, 'active', '2016-08-18'),
+(2, 'XXL', 2, 'active', '2016-08-19'),
+(3, 'L', 2, 'deleted', '2016-08-19'),
+(4, '', 2, 'deleted', '2016-08-24'),
+(5, '3', 39, 'deleted', '2016-08-28'),
+(6, 'ghfhgf', 39, 'deleted', '2016-08-28'),
+(7, '1234', 39, 'active', '2016-08-28'),
+(8, '545', 39, 'active', '2016-08-28'),
+(9, 'ttyyyuuuuu', 2, 'deleted', '2016-08-31'),
+(10, 'hffgfdssssssss', 2, 'deleted', '2016-08-31'),
+(11, 'css2', 2, 'deleted', '2016-08-31');
 
 -- --------------------------------------------------------
 
@@ -330,7 +362,7 @@ CREATE TABLE IF NOT EXISTS `tbl_user` (
 
 INSERT INTO `tbl_user` (`userid`, `name`, `email`, `password`, `usertypeid`, `adminid`, `retailerShowRoomId`, `mobile`, `address`, `doj`, `dob`, `active`, `lastlogin`, `createdat`) VALUES
 (1, 'superadmin', 'superadmin@gmail.com', '1234', 1, 0, NULL, '8344798628', '107 west street, ammaiyappan, thiruvarur, Tamil Nadu', NULL, NULL, 'active', '2016-08-14 15:08:12', '2016-07-23 00:00:00'),
-(2, 'posadmin1', 'posadmin1@gmail.com', '1234', 2, 0, NULL, '8124356981', '102 chennai', NULL, NULL, 'active', '2016-08-29 20:08:51', '2016-07-23 19:21:27'),
+(2, 'posadmin1', 'posadmin1@gmail.com', '1234', 2, 0, NULL, '8124356981', '102 chennai', NULL, NULL, 'active', '2016-08-31 21:08:24', '2016-07-23 19:21:27'),
 (3, 'Prasanth', 'prasanth@gmail.com', '1234', 2, 0, NULL, '8122334168', 'salem', '0000-00-00', '0000-00-00', 'active', '2016-08-30 21:08:34', '2016-08-03 02:25:22'),
 (32, 'kuru', 'yughgf@hjgdfh.in', '1234', 3, 2, 0, '67567576', 'hjdsff', '0000-00-00', '0000-00-00', 'active', NULL, '2016-08-14 09:26:53'),
 (33, 'praveen', 'praveen@dotcue.com', '1234', 5, 2, 32, '54564', 'ok', '2016-08-17', '2016-08-31', 'active', '2016-08-31 00:08:06', '2016-08-14 09:27:39'),
