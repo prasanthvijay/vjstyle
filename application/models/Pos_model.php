@@ -37,11 +37,13 @@ class Pos_model extends CI_Model
     public function productDetails($productId){
 
         
-	$this->db->select('productid,productname,productrate,availablequantity,barcode');
-	$this->db->where('productid', $productId);
-	$q = $this->db->get('tbl_product');
-	$returnValue = $q->result_array();
-
+	//$this->db->select('productid,productname,barcode');
+	//$this->db->where('productid', $productId);
+	//$q = $this->db->get('tbl_product');
+ 	echo $sql = "SELECT productid,productname,barcode FROM tbl_product t WHERE productid ='".$productId."' ";
+  	$executeQuery = $this->db->query($sql);
+	$returnValue = $executeQuery->result_array();
+	print_r($returnValue);
         return $returnValue;
     }
 

@@ -92,7 +92,7 @@ class Sales extends CI_Controller {
     	}
 	public function posajax()
 	{
-		$productId=$this->input->get_post("productId");
+		echo $productId=$this->input->get_post("productId");
 		        $productIdArray = array('productId' => $productId);
 		$productDetails = $this->pos_model->productDetails($productIdArray);
 		echo json_encode($productDetails);

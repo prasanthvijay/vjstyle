@@ -199,7 +199,7 @@
 <script>
 function getProduct(productId)
 {
-	$.post( "posajax", { productId: productId } ,function( data ) {
+	$.get( "posajax", { productId: productId } ,function( data ) {
 	  	var product=JSON.parse(data);
 		$(".cart_content_area_empty").remove();
 
