@@ -17,6 +17,18 @@
             <input type="hidden" name="actionType" id="actionType" value="<?php echo $actionType; ?>">
             <input type="hidden" name="actionId" id="actionId" value="<?php echo $actionId; ?>">
             <div class="form-group">
+                <label class="col-sm-3 control-label">Category Type</label>
+                <div class="col-sm-6">
+                    <select class="select2 form-control" id="categorytypeid" name="categorytypeid" required data-parsley-name="CategoryType">
+                        <option value="">Select Category Type</option>
+                        <?php for ($i = 0; $i < count($CategoryTypeArray); $i++) { ?>
+                            <option
+                                value="<?php echo $CategoryTypeArray[$i]['categorytypeid']; ?>"><?php echo $CategoryTypeArray[$i]['categorytype']; ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-sm-3 control-label">Product Name</label>
                 <div class="col-sm-6">
                     <input type="text" class="form-control" id="productname" name="productname" required

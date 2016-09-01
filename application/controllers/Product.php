@@ -54,13 +54,14 @@ class Product extends CI_Controller
         $showroomArray = $this->users_model->getUsersList('3', $adminid, $retailerShowRoomId, null);
         $BrandArray = $this->users_model->getBrandList($adminid,$actionId);
         $SizeArray = $this->users_model->getSizeList($adminid, $actionId);
+        $CategoryTypeArray = $this->users_model->getCategoryTypeList($adminid, $actionId);
 
 //echo "<br></br><br></br><br></br><br></br>";
         //print_r($showroomArray);
         $dataheader['showroomArray'] = $showroomArray;
         $dataheader['BrandArray'] = $BrandArray;
         $dataheader['SizeArray'] = $SizeArray;
-        $dataheader['showroomArray'] = $showroomArray;
+        $dataheader['CategoryTypeArray'] = $CategoryTypeArray;
         $this->load->view('layout/backend_header', $dataheader);
         $this->load->view('layout/backend_menu');
         $this->load->view('product/AddProduct');
@@ -99,9 +100,8 @@ class Product extends CI_Controller
             $brandname = $this->input->get_post('brandname');
             $barcode = $this->input->get_post('barcode');
             $size = $this->input->get_post('size');
-//                $quantity = $this->input->get_post('quantity');
+            $categorytypeid = $this->input->get_post('categorytypeid');
             $price = $this->input->get_post('price');
-            $categorytypeid = '1';
             $active = 'active';
             $createdAtdate = date("Y-m-d H:i:s");
             $ShowroomId = $this->input->get_post('ShowroomId');
@@ -475,10 +475,12 @@ class Product extends CI_Controller
         $productArray = $this->users_model->getProductList($adminid, $productId);
         $BrandArray = $this->users_model->getBrandList($adminid,$actionId);
         $SizeArray = $this->users_model->getSizeList($adminid, $actionId);
+        $CategoryTypeArray = $this->users_model->getCategoryTypeList($adminid, $actionId);
 
         $dataheader['productArray'] = $productArray;
         $dataheader['BrandArray'] = $BrandArray;
         $dataheader['SizeArray'] = $SizeArray;
+        $dataheader['CategoryTypeArray'] = $CategoryTypeArray;
         $dataheader['actionType'] = $actionType;
         $dataheader['actionId'] = $productId;
 //        $dataheader['showroomArray'] = $showroomArray;

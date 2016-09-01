@@ -94,7 +94,13 @@ function getAddOrEditModalContent(postBrandData, loadAddOrEditModalUrl) {
 
             $("#brandname").select2();
             $("#size").select2();
+            $("#categorytypeid").select2();
 
         }
     });
+}
+
+function gotoPage(url) {
+    window.location.href = url;
+
 }

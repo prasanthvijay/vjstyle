@@ -21,12 +21,13 @@
                         </ul>
                     </li>
                     <li class="has-submenu">
-                        <a href="#"><i class="md md-pages"></i>Product </a>
+                        <a href="#"><i class="md md-pages"></i>Masters </a>
                         <ul class="submenu">
-                            <li><a href="<?php echo base_url();?>Product/BrandMaster">Brand Master </a></li>
-                            <li><a href="<?php echo base_url();?>Product/SizeMaster">Size Master</a></li>
-                            <li><a href="<?php echo base_url();?>Product/AddProduct">Add Product </a></li>
-                            <li><a href="<?php echo base_url();?>Product/ProductList">Product List </a></li>
+                            <li><a href="<?php echo base_url();?>Product/CategoryTypeMaster">Category Type </a></li>
+                            <li><a href="<?php echo base_url();?>Product/ProductList">Product </a></li>
+<!--                            <li><a href="--><?php //echo base_url();?><!--Product/AddProduct">Product </a></li>-->
+                            <li><a href="<?php echo base_url();?>Product/BrandMaster">Brand </a></li>
+                            <li><a href="<?php echo base_url();?>Product/SizeMaster">Size </a></li>
                             <li><a href="<?php echo base_url();?>Product/MapProduct">Map Product </a></li>
                     </ul>
                     </li>

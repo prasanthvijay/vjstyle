@@ -2,17 +2,33 @@
     <div class="container">
 
         <!-- Page-Title -->
-        <div class="row">
-            <div class="col-sm-12">
-                <h4 class="page-title"><?php echo $title; ?></h4>
-            </div>
-        </div>
+<!--        <div class="row">-->
+<!--            <div class="col-sm-12">-->
+<!--                <h4 class="page-title">--><?php //echo $title; ?><!--</h4>-->
+<!--            </div>-->
+<!--        </div>-->
         <!-- Page-Title -->
 
 
         <div class="row">
             <div class="col-sm-12">
                 <div class="card-box table-responsive">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <p class="text-muted m-b-20 font-13">
+                                        Add, Edit and Delete Product
+                                    </p>
+                                    <?php $loadAddUrl = base_url()."Product/AddProduct"; ?>
+                                    <button class="btn btn-primary waves-effect waves-light" type="button" onclick="gotoPage('<?php echo $loadAddUrl; ?>')">
+                                        Add Product
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap"
                            cellspacing="0" width="100%">
                         <thead>
