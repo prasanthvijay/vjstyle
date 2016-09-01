@@ -4,13 +4,13 @@
     <tr>
         <th>S.No</th>
         <th><?php if($usertypeid == 3) { echo "Show Room"; } else { echo "Name";} ?></th>
-        <th>Mobile</th>
+        <th><?php if($usertypeid == 3) { echo "Show Room Contact"; } else { echo "Mobile";} ?></th>
         <th>Email</th>
         <th>Password</th>
         <th>Address</th>
-        <th>DOJ</th>
+        <?php if($usertypeid != 3) { ?><th>DOJ</th>
         <th>LastLogin</th>
-        <th>Created At</th>
+        <th>Created At</th><?php } ?>
 <!--        <th>DOB</th>-->
         <th>Edit</th>
         <th>Delete</th>
@@ -26,9 +26,9 @@
             <td><?php echo $userArray[$k]['email']; ?></td>
             <td><?php echo $userArray[$k]['password']; ?></td>
             <td><?php echo $userArray[$k]['address']; ?></td>
-            <td><?php echo $userArray[$k]['doj']; ?></td>
+             <?php if($usertypeid != 3) { ?><td><?php echo $userArray[$k]['doj']; ?></td>
             <td><?php echo $userArray[$k]['lastlogin']; ?></td>
-            <td><?php echo $userArray[$k]['createdat']; ?></td>
+            <td><?php echo $userArray[$k]['createdat']; ?></td><?php } ?>
 <!--            <td>--><?php //echo $userArray[$k]['dob']; ?><!--</td>-->
             <td><button class="btn btn-primary waves-effect waves-light" type="button" onclick="loadAddOrEditContentWithModal('getAddOrEditUserMasterContent','usertypeid=<?php echo $usertypeid; ?>&actionType=Edit&actionId=<?php echo $userid; ?>','modalContentArea')">
                     Edit

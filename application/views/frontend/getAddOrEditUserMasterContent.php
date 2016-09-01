@@ -49,8 +49,8 @@ if(count($editUsersList)>0){
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="name" class="control-label">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" parsley-trigger="change" required placeholder="Name" value="<?php echo $name; ?>">
+                        <label for="name" class="control-label"><?php if($usertypeid == 3){ ?>Show Room Name<?php } else echo "Name"; ?></label>
+                        <input type="text" class="form-control" id="name" name="name" parsley-trigger="change" required placeholder="<?php if($usertypeid == 3){ ?>Show Room Name<?php } else echo "Name"; ?>" value="<?php echo $name; ?>">
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -65,8 +65,8 @@ if(count($editUsersList)>0){
                                 <?php } ?>
                             </select>
                         <?php } else if($usertypeid == 3){  ?>
-                            <label for="field-4" class="control-label">Mobile</label>
-                            <input type="text" class="form-control" id="mobile" name="mobile" parsley-trigger="change" required placeholder="Mobile" value="<?php echo $mobile; ?>">
+                            <label for="field-4" class="control-label"><?php if($usertypeid == 3){ ?>Show Room Number<?php } else echo "Mobile"; ?></label>
+                            <input type="text" class="form-control" id="mobile" name="mobile" parsley-trigger="change" required placeholder="<?php if($usertypeid == 3){ ?>Show Room Number<?php } else echo "Mobile"; ?>" value="<?php echo $mobile; ?>">
                         <?php } ?>
                     </div>
                 </div>
@@ -74,10 +74,11 @@ if(count($editUsersList)>0){
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="email" class="control-label">Email</label>
-                        <input type="text" class="form-control" id="email" name="email" parsley-trigger="change" required placeholder="Email" value="<?php echo $email; ?>">
+                        <label for="email" class="control-label"><?php if($usertypeid == 3){ ?>Show Room ID<?php } else echo "Email"; ?></label>
+                        <input type="text" class="form-control" id="email" name="email" parsley-trigger="change" required placeholder="<?php if($usertypeid == 3){ ?>Show Room ID<?php } else echo "Email"; ?>" value="<?php echo $email; ?>">
                     </div>
                 </div>
+ <?php if($usertypeid != 3){ ?>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="password" class="control-label">Password</label>
@@ -85,7 +86,7 @@ if(count($editUsersList)>0){
                     </div>
                 </div>
             </div>
-            <?php if($usertypeid != 3){ ?>
+           
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
@@ -124,7 +125,7 @@ if(count($editUsersList)>0){
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-<?php if($usertypeid == 3){ ?>12<?php } else echo '6'; ?>">
                     <div class="form-group no-margin">
                         <label for="address" class="control-label">Address</label>
                         <textarea class="form-control autogrow" id="address" name="address" parsley-trigger="change" required placeholder="Address" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"><?php echo $address; ?></textarea>
@@ -139,7 +140,7 @@ if(count($editUsersList)>0){
                 </div>
                 <div class="col-md-6">
                     <div class="form-group text-right m-b-0">
-                        <button class="btn btn-primary waves-effect waves-light" type="submit">
+                        <button class="btn btn-primary waves-effect waves-light" type="submit" onclick="$.Notification.autoHideNotify('success', 'top right', 'Successfully inserted')">
                             Submit
                         </button>
                         <button type="reset" class="btn btn-default waves-effect waves-light m-l-5">
