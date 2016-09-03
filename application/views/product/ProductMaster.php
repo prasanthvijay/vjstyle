@@ -2,11 +2,11 @@
     <div class="container">
 
         <!-- Page-Title -->
-<!--        <div class="row">-->
-<!--            <div class="col-sm-12">-->
-<!--                <h4 class="page-title">--><?php //echo $title; ?><!--</h4>-->
-<!--            </div>-->
-<!--        </div>-->
+        <div class="row">
+            <div class="col-sm-12">
+                <h4 class="page-title"><?php echo $title; ?> Master</h4>
+            </div>
+        </div>
         <!-- Page-Title -->
 
 

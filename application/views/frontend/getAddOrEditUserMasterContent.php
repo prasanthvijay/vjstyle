@@ -65,8 +65,10 @@ if(count($editUsersList)>0){
                                 <?php } ?>
                             </select>
                         <?php } else if($usertypeid == 3){  ?>
-                            <label for="field-4" class="control-label"><?php if($usertypeid == 3){ ?>Show Room Number<?php } else echo "Mobile"; ?></label>
-                            <input type="text" class="form-control" id="mobile" name="mobile" parsley-trigger="change" required placeholder="<?php if($usertypeid == 3){ ?>Show Room Number<?php } else echo "Mobile"; ?>" value="<?php echo $mobile; ?>">
+                            <label for="field-4" class="control-label">Contact Number</label>
+<!--                            <label for="field-4" class="control-label">--><?php //if($usertypeid == 3){ ?><!--Show Room Number--><?php //} else echo "Mobile"; ?><!--</label>-->
+                            <input type="text" class="form-control" id="mobile" name="mobile" parsley-trigger="change" required placeholder="Contact Number" value="<?php echo $mobile; ?>">
+<!--                            <input type="text" class="form-control" id="mobile" name="mobile" parsley-trigger="change" required placeholder="--><?php //if($usertypeid == 3){ ?><!--Show Room Number--><?php //} else echo "Mobile"; ?><!--" value="--><?php //echo $mobile; ?><!--">-->
                         <?php } ?>
                     </div>
                 </div>
@@ -74,8 +76,10 @@ if(count($editUsersList)>0){
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="email" class="control-label"><?php if($usertypeid == 3){ ?>Show Room ID<?php } else echo "Email"; ?></label>
-                        <input type="text" class="form-control" id="email" name="email" parsley-trigger="change" required placeholder="<?php if($usertypeid == 3){ ?>Show Room ID<?php } else echo "Email"; ?>" value="<?php echo $email; ?>">
+<!--                        <label for="email" class="control-label">--><?php //if($usertypeid == 3){ ?><!--Show Room ID--><?php //} else echo "Email"; ?><!--</label>-->
+                        <label for="email" class="control-label">Email ID</label>
+<!--                        <input type="text" class="form-control" id="email" name="email" parsley-trigger="change" required placeholder="--><?php //if($usertypeid == 3){ ?><!--Show Room ID--><?php //} else echo "Email"; ?><!--" value="--><?php //echo $email; ?><!--">-->
+                        <input type="text" class="form-control" id="email" name="email" parsley-trigger="change" required placeholder="Email ID" value="<?php echo $email; ?>">
                     </div>
                 </div>
  <?php if($usertypeid != 3){ ?>
@@ -140,7 +144,7 @@ if(count($editUsersList)>0){
                 </div>
                 <div class="col-md-6">
                     <div class="form-group text-right m-b-0">
-                        <button class="btn btn-primary waves-effect waves-light" type="submit" onclick="$.Notification.autoHideNotify('success', 'top right', 'Successfully inserted')">
+                        <button class="btn btn-primary waves-effect waves-light" type="submit">
                             Submit
                         </button>
                         <button type="reset" class="btn btn-default waves-effect waves-light m-l-5">

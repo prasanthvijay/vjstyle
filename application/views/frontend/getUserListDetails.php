@@ -4,9 +4,9 @@
     <tr>
         <th>S.No</th>
         <th><?php if($usertypeid == 3) { echo "Show Room"; } else { echo "Name";} ?></th>
-        <th><?php if($usertypeid == 3) { echo "Show Room Contact"; } else { echo "Mobile";} ?></th>
+        <th><?php if($usertypeid == 3) { echo "Contact Number"; } else { echo "Mobile";} ?></th>
         <th>Email</th>
-        <th>Password</th>
+        <?php if($usertypeid != 3) { ?><th>Password</th><?php } ?>
         <th>Address</th>
         <?php if($usertypeid != 3) { ?><th>DOJ</th>
         <th>LastLogin</th>
@@ -24,7 +24,7 @@
             <td><?php echo $userArray[$k]['name']; ?></td>
             <td><?php echo $userArray[$k]['mobile']; ?></td>
             <td><?php echo $userArray[$k]['email']; ?></td>
-            <td><?php echo $userArray[$k]['password']; ?></td>
+            <?php if($usertypeid != 3) { ?><td><?php echo $userArray[$k]['password']; ?></td><?php } ?>
             <td><?php echo $userArray[$k]['address']; ?></td>
              <?php if($usertypeid != 3) { ?><td><?php echo $userArray[$k]['doj']; ?></td>
             <td><?php echo $userArray[$k]['lastlogin']; ?></td>
