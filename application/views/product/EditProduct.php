@@ -5,6 +5,7 @@
         $barcode = $productArray[0]['barcode'];
         $productsize = $productArray[0]['productsize'];
         $brandid = $productArray[0]['brandid'];
+        $categorytypeid = $productArray[0]['categorytypeid'];
     }
 ?>
 <div class="panel panel-color panel-primary">
@@ -23,7 +24,7 @@
                         <option value="">Select Category Type</option>
                         <?php for ($i = 0; $i < count($CategoryTypeArray); $i++) { ?>
                             <option
-                                value="<?php echo $CategoryTypeArray[$i]['categorytypeid']; ?>"><?php echo $CategoryTypeArray[$i]['categorytype']; ?></option>
+                                value="<?php echo $CategoryTypeArray[$i]['categorytypeid']; ?>" <?php if($categorytypeid == $CategoryTypeArray[$i]['categorytypeid']) { echo "selected"; } ?>><?php echo $CategoryTypeArray[$i]['categorytype']; ?></option>
                         <?php } ?>
                     </select>
                 </div>

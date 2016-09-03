@@ -69,12 +69,11 @@ $route['deleteUsersFromMaster'] = 'Frontend/deleteUsersFromMaster';
 $route['editProfile'] = 'Frontend/editProfile';
 
 //Product
-$route['AddProduct'] = 'Product/AddProduct';
 $route['EditProduct'] = 'Product/EditProduct';
 $route['addProductMaster'] = 'Product/addProductMaster';
 $route['AddBrand'] = 'Product/AddBrand';
 $route['BrandList'] = 'Product/BrandList';
-$route['ProductList'] = 'Product/ProductList';
+$route['ProductMaster'] = 'Product/ProductMaster';
 $route['BrandMaster'] = 'Product/BrandMaster';
 $route['CategoryTypeMaster'] = 'Product/CategoryTypeMaster';
 $route['AddOrEditMasterContent'] = 'Product/AddOrEditMasterContent';

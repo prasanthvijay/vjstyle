@@ -1,9 +1,9 @@
 <?php if ($type == 'productQyt') { ?>
 
     <div class="form-group" id="ajaxDivInner<?php echo $count; ?>">
-        <label class="col-sm-3 control-label">Select Showroom<?php echo $count; ?></label>
+        <label class="col-sm-3 control-label">Map Product <?php echo $count; ?></label>
 
-        <div class="col-sm-2">
+        <div class="col-sm-3">
 
             <select class="select2 form-control" id="ShowroomId<?php echo $count; ?>" name="ShowroomId[]">
                 <option value="">Select ShowRoom</option>
@@ -13,12 +13,12 @@
                 <?php } ?>
             </select>
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             <input type="text" id="mappedprice[]" name="mappedprice[]" class="form-control" required
-                   placeholder="Product Price"/></div>
-        <div class="col-sm-2">
+                   placeholder="Price"/></div>
+        <div class="col-sm-3">
             <input type="text" id="mappedqyt[]" name="mappedqyt[]" class="form-control" required
-                   placeholder="Product quntity"/></div>
+                   placeholder="Quntity"/></div>
 
     </div>
 

@@ -33,43 +33,6 @@ class Product extends CI_Controller
         $this->load->library('session');
     }
 
-    public function AddProduct()
-    {
-        $dataheader['title'] = "Add Product";
-        $dataheader['addProductMasterUrl'] = "addProductMaster";
-//        $adminid = $this->session->userdata('usertypeid');
-        $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
-        $adminid = "0";
-        if($sessionUserTypeIdIsset == 1){
-            $sessionUserTypeId = $this->session->userdata('usertypeid');
-            if($sessionUserTypeId == 2){
-                $adminid = $this->session->userdata('userid');
-            } else {
-                $adminid = $this->input->get_post('adminid');
-            }
-        }
-
-        $retailerShowRoomId = "0";
-        $actionId = "0";
-        $showroomArray = $this->users_model->getUsersList('3', $adminid, $retailerShowRoomId, null);
-        $BrandArray = $this->users_model->getBrandList($adminid,$actionId);
-        $SizeArray = $this->users_model->getSizeList($adminid, $actionId);
-        $CategoryTypeArray = $this->users_model->getCategoryTypeList($adminid, $actionId);
-
-//echo "<br></br><br></br><br></br><br></br>";
-        //print_r($showroomArray);
-        $dataheader['showroomArray'] = $showroomArray;
-        $dataheader['BrandArray'] = $BrandArray;
-        $dataheader['SizeArray'] = $SizeArray;
-        $dataheader['CategoryTypeArray'] = $CategoryTypeArray;
-        $this->load->view('layout/backend_header', $dataheader);
-        $this->load->view('layout/backend_menu');
-        $this->load->view('product/AddProduct');
-        $this->load->view('layout/backend_footer');
-
-
-    }
-
     public function addProductMaster()
     {
 
@@ -93,8 +56,7 @@ class Product extends CI_Controller
         $updateSuccess = 0;
         $insertSuccess = 0;
         $deletetSuccess = 0;
-
-        if ($submit == 'product') {
+        if ($submit == 'Product') {
             $output = array('status' => "3", 'message' => "Invalid Request");
             $productname = $this->input->get_post('productname');
             $brandname = $this->input->get_post('brandname');
@@ -123,7 +85,7 @@ class Product extends CI_Controller
                     $this->users_model->createProductmappingMaster($ProductMappingArray);
                 }
             }
-            redirect(base_url()."Product/ProductList");
+            redirect(base_url()."Product/ProductMaster");
         }
 
         if ($submit == "brand") {
@@ -303,7 +265,7 @@ class Product extends CI_Controller
 //        $this->load->view('layout/backend_footer');
     }
 
-    public function ProductList()
+    public function ProductMaster()
     {
         $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
         $adminid = "0";
@@ -318,14 +280,14 @@ class Product extends CI_Controller
             redirect(base_url()."Frontend/logout");
         }
 //        $adminid = $this->session->userdata('usertypeid');
-        $dataheader['title'] = "ProductList";
+        $dataheader['title'] = "Product";
         $productId = "0";
         $ProductList = $this->users_model->getProductList($adminid, $productId);
 
         $dataheader['ProductList'] = $ProductList;
         $this->load->view('layout/backend_header', $dataheader);
         $this->load->view('layout/backend_menu');
-        $this->load->view('product/ProductList');
+        $this->load->view('product/ProductMaster');
         $this->load->view('layout/backend_footer');
     }
 
@@ -357,6 +319,36 @@ class Product extends CI_Controller
         $actionType = $this->input->get_post('actionType');
         $actionId = $this->input->get_post('actionId');
         $masterName = $this->input->get_post('masterName');
+
+        $showroomArray = array();
+        $BrandArray = array();
+        $SizeArray = array();
+        $CategoryTypeArray = array();
+
+        $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
+        $adminid = "0";
+        if($sessionUserTypeIdIsset == 1){
+            $sessionUserTypeId = $this->session->userdata('usertypeid');
+            if($sessionUserTypeId == 2){
+                $adminid = $this->session->userdata('userid');
+            } else {
+                $adminid = $this->input->get_post('adminid');
+            }
+        }
+
+        if($masterName == "Product"){
+            $showroomArray = $this->users_model->getUsersList('3', $adminid, "0", null);
+            $BrandArray = $this->users_model->getBrandList($adminid,"0");
+            $SizeArray = $this->users_model->getSizeList($adminid, "0");
+            $CategoryTypeArray = $this->users_model->getCategoryTypeList($adminid, "0");
+        }
+
+
+        $dataheader['showroomArray'] = $showroomArray;
+        $dataheader['BrandArray'] = $BrandArray;
+        $dataheader['SizeArray'] = $SizeArray;
+        $dataheader['CategoryTypeArray'] = $CategoryTypeArray;
+
         $dataheader['actionType'] = $actionType;
         $dataheader['actionId'] = $actionId;
         $dataheader['masterName'] = $masterName;
