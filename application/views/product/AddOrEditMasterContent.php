@@ -22,6 +22,7 @@
             ?>
 
             <?php if($masterName == "Category Type") {  ?>
+                <?php if(count($CategoryTypeArray)>0) { $fieldValue = $CategoryTypeArray[0]['categorytype']; }?>
             <div class="form-group">
                 <label class="col-sm-3 control-label"><?php echo $masterName; ?></label>
                 <div class="col-sm-6">

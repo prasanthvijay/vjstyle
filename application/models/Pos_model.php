@@ -40,11 +40,10 @@ class Pos_model extends CI_Model
 	//$this->db->select('productid,productname,barcode');
 	//$this->db->where('productid', $productId);
 	//$q = $this->db->get('tbl_product');
- 	echo $sql = "SELECT productid,productname,barcode FROM tbl_product t WHERE productid ='".$productId."' ";
-  	$executeQuery = $this->db->query($sql);
-	$returnValue = $executeQuery->result_array();
-	print_r($returnValue);
-        return $returnValue;
+		$sql = "SELECT productid,productname,barcode FROM tbl_product t WHERE productid ='" . $productId . "' ";
+		$executeQuery = $this->db->query($sql);
+		$returnValue = $executeQuery->result_array();
+		return $returnValue;
     }
 
 	public function insertSellDetails($insertValue)

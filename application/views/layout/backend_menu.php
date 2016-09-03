@@ -24,10 +24,10 @@
                         <a href="#"><i class="md md-pages"></i>Masters </a>
                         <ul class="submenu">
                             <li><a href="<?php echo base_url();?>Product/CategoryTypeMaster">Category Type </a></li>
-                            <li><a href="<?php echo base_url();?>Product/ProductMaster">Product </a></li>
-<!--                            <li><a href="--><?php //echo base_url();?><!--Product/AddProduct">Product </a></li>-->
                             <li><a href="<?php echo base_url();?>Product/BrandMaster">Brand </a></li>
                             <li><a href="<?php echo base_url();?>Product/SizeMaster">Size </a></li>
+                            <li><a href="<?php echo base_url();?>Product/ProductMaster">Product </a></li>
+<!--                            <li><a href="--><?php //echo base_url();?><!--Product/AddProduct">Product </a></li>-->
                             <li><a href="<?php echo base_url();?>Product/MapProduct">Map Product </a></li>
                     </ul>
                     </li>

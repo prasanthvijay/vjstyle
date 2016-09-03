@@ -39,9 +39,9 @@ class Sales extends CI_Controller {
 	public function pos()
     	{
 		$dataheader['title'] = "POS";
- 			$usertypeid = $this->session->userdata('usertypeid');
-	               $retailerShowRoomId = $this->session->userdata('retailerShowRoomId');
-	               $adminid = $this->session->userdata('adminid');
+			$usertypeid = $this->session->userdata('usertypeid');
+			$retailerShowRoomId = $this->session->userdata('retailerShowRoomId');
+			$adminid = $this->session->userdata('adminid');
 
 		$tablename="tbl_product";
 		$fieldname=array('productid,productname');
@@ -92,9 +92,9 @@ class Sales extends CI_Controller {
     	}
 	public function posajax()
 	{
-		echo $productId=$this->input->get_post("productId");
-		        $productIdArray = array('productId' => $productId);
-		$productDetails = $this->pos_model->productDetails($productIdArray);
+		$productId = $this->input->get_post("productId");
+		$productIdArray = array('productId' => $productId);
+		$productDetails = $this->pos_model->productDetails($productId);
 		echo json_encode($productDetails);
 	}
 

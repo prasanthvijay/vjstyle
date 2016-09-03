@@ -341,8 +341,11 @@ class Product extends CI_Controller
             $BrandArray = $this->users_model->getBrandList($adminid,"0");
             $SizeArray = $this->users_model->getSizeList($adminid, "0");
             $CategoryTypeArray = $this->users_model->getCategoryTypeList($adminid, "0");
+        } else if($masterName == "Category Type" && $actionType == "Edit"){
+            $CategoryTypeArray = $this->users_model->getCategoryTypeList($adminid, $actionId);
         }
 
+//        echo $masterName;
 
         $dataheader['showroomArray'] = $showroomArray;
         $dataheader['BrandArray'] = $BrandArray;
@@ -402,7 +405,18 @@ class Product extends CI_Controller
 
     public function MapProduct()
     {
-        $adminid = $this->session->userdata('usertypeid');
+        $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
+        $adminid = "0";
+        $sessionUserTypeId = "0";
+        if($sessionUserTypeIdIsset == 1){
+            $sessionUserTypeId = $this->session->userdata('usertypeid');
+            if($sessionUserTypeId == 2){
+                $adminid = $this->session->userdata('userid');
+            } else {
+                echo $adminid;
+                $adminid = $this->input->get_post('adminid');
+            }
+        }
         $dataheader['adminid'] = $adminid;
         $dataheader['title'] = "MapProduct";
         $productId = "0";
