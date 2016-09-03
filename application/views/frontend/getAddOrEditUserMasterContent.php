@@ -8,8 +8,10 @@ $password = "";
 $retailershowroomid = "";
 $doj = "";
 $dob = "";
+$adminid = "";
 if(count($editUsersList)>0){
     $name = $editUsersList[0]['name'];
+    $adminid = $editUsersList[0]['adminid'];
     $mobile = $editUsersList[0]['mobile'];
     $email = $editUsersList[0]['email'];
     $address = $editUsersList[0]['address'];
@@ -31,7 +33,7 @@ if(count($editUsersList)>0){
             <input type="hidden" name="actionId" id="actionId" value="<?php echo $actionId; ?>">
             <input type="hidden" name="actionType" id="actionType" value="<?php echo $actionType; ?>">
             <input type="hidden" name="titlename" id="titlename" value="<?php echo $titlename; ?>">
-            <?php if($sessionUserTypeId == 1 && $usertypeid !=1){ ?>
+            <?php if($sessionUserTypeId == 1 && $usertypeid !=1 && $usertypeid !=2){ ?>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -39,7 +41,7 @@ if(count($editUsersList)>0){
                             <select name="adminid" id="adminid" parsley-trigger="change" required class="form-control " onchange="getRetailerShowRooms();">
                                 <option value="">Select</option>
                                 <?php for($k=0; $k<count($adminList); $k++) { ?>
-                                    <option value="<?php echo $adminList[$k]['userid']; ?>"><?php echo $adminList[$k]['name']; ?></option>
+                                    <option value="<?php echo $adminList[$k]['userid']; ?>" <?php if($adminid == $adminList[$k]['userid']){ echo "selected"; }?>><?php echo $adminList[$k]['name']; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -58,12 +60,13 @@ if(count($editUsersList)>0){
                         <input type="hidden" value="<?php echo $usertypeid; ?>" name="usertypeid" id="usertypeid">
                         <?php if($usertypeid == 4 || $usertypeid == 5){ ?>
                             <label for="usertypeid" class="control-label">Retailer Show Room</label>
-                            <select name="retailershowroomid" id="retailershowroomid" class="form-control" parsley-trigger="change" required>
+                            <div id="retailershowroomidDiv"><select name="retailershowroomid" id="retailershowroomid" class="form-control" parsley-trigger="change" required>
                                 <option value="">Select</option>
                                 <?php for($k=0; $k<count($retailerShowRoomList); $k++) { ?>
                                     <option value="<?php echo $retailerShowRoomList[$k]['userid']; ?>" <?php if($retailershowroomid==$retailerShowRoomList[$k]['userid']){ echo "selected"; } ?>><?php echo $retailerShowRoomList[$k]['name']; ?></option>
                                 <?php } ?>
                             </select>
+                                </div>
                         <?php } else if($usertypeid == 3){  ?>
                             <label for="field-4" class="control-label">Contact Number</label>
 <!--                            <label for="field-4" class="control-label">--><?php //if($usertypeid == 3){ ?><!--Show Room Number--><?php //} else echo "Mobile"; ?><!--</label>-->
@@ -156,3 +159,7 @@ if(count($editUsersList)>0){
         </form>
     </div>
 </div>
+<script>
+    $("#adminid").select2();
+    $("#retailershowroomid").select2();
+</script>

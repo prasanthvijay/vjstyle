@@ -79,4 +79,19 @@
 			});
 		}
 	}
+	function getRetailerShowRooms(){
+		var adminid = $("#adminid").val();
+		var usertypeid = "3";
+		var formData = "adminid="+adminid+"&usertypeid="+usertypeid;
+		$.ajax({
+			url : "getRetailerShowRoomDetails",
+			type : "get",
+			data : formData,
+			success : function(response){
+				$("#retailershowroomidDiv").html(response);
+				$("#retailershowroomid").select2();
+			}
+		});
+	}
+
 </script>

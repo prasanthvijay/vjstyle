@@ -233,7 +233,7 @@ class Frontend extends CI_Controller
         $usertypeid = $this->input->post('usertypeid');
         $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
         $adminid = "0";
-
+        $sessionUserTypeId = "0";
         if($sessionUserTypeIdIsset == 1) {
             $sessionUserTypeId = $this->session->userdata('usertypeid');
             $dataArray['sessionUserTypeId'] = $sessionUserTypeId;
@@ -249,6 +249,7 @@ class Frontend extends CI_Controller
 
         $dataheader['userArray'] = $userArray;
         $dataheader['usertypeid'] = $usertypeid;
+        $dataheader['sessionUserTypeId'] = $sessionUserTypeId;
         $this->load->view('frontend/getUserListDetails', $dataheader);
     }
 
@@ -276,9 +277,11 @@ class Frontend extends CI_Controller
         if($jsondata==1){
             echo json_encode($userArray);
         } else {
-            $selectBoxReturn = "<select name='' id='' class=''> <option value=''>Select</option></select>";
+            $selectBoxReturn = "<select name='retailershowroomid' id='retailershowroomid' class='form-control' parsley-trigger='change' required> <option value=''>Select</option>";
             for ($k=0;$k<count($userArray);$k++){
-                $selectBoxReturn = $selectBoxReturn . "<option value='".$userArray[$k]['userid']."'>".$userArray[$k]['name']."</option>";
+                $userId = $userArray[$k]['userid'];
+                $name = $userArray[$k]['name'];
+                $selectBoxReturn = $selectBoxReturn . "<option value='".$userId."'>".$name."</option>";
             }
             $selectBoxReturn = $selectBoxReturn . "</select>";
             echo $selectBoxReturn;
@@ -313,7 +316,6 @@ class Frontend extends CI_Controller
             }
 
             if($sessionUserTypeId == 1){
-                $adminid = $this->session->userdata('adminid');
                 $adminList = $this->users_model->getUsersList('2', null, null, null);
             }
 
@@ -337,6 +339,7 @@ class Frontend extends CI_Controller
             $dataArray['actionType'] = $actionType;
             $dataArray['actionId'] = $actionId;
             $dataArray['editUsersList'] = $editUsersList;
+            $dataArray['sessionUserTypeId'] = $sessionUserTypeId;
 
             $this->load->view('frontend/getAddOrEditUserMasterContent', $dataArray);
         }

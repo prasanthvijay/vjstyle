@@ -30,7 +30,12 @@
             <td><?php echo $userArray[$k]['lastlogin']; ?></td>
             <td><?php echo $userArray[$k]['createdat']; ?></td><?php } ?>
 <!--            <td>--><?php //echo $userArray[$k]['dob']; ?><!--</td>-->
-            <td><button class="btn btn-primary waves-effect waves-light" type="button" onclick="loadAddOrEditContentWithModal('getAddOrEditUserMasterContent','usertypeid=<?php echo $usertypeid; ?>&actionType=Edit&actionId=<?php echo $userid; ?>','modalContentArea')">
+            <?php $postData = "usertypeid=".$usertypeid."&actionType=Edit&actionId=".$userid;
+                if($sessionUserTypeId == "1"){
+                    $postData = $postData . "&adminid=".$adminid;
+                }
+            ?>
+            <td><button class="btn btn-primary waves-effect waves-light" type="button" onclick="loadAddOrEditContentWithModal('getAddOrEditUserMasterContent','<?php echo $postData; ?>','modalContentArea')">
                     Edit
                 </button></td>
             <td><button class="btn btn-danger waves-effect waves-light" type="button" onclick="deleteUsers('<?php echo $userid; ?>','<?php echo $adminid; ?>');">
