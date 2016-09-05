@@ -14,6 +14,73 @@ class Users_model extends CI_Model
         $this->load->database();
     }
 
+    public function insertAndReturnOTP($emailid){
+        $otp = "";
+        $userArray = array();
+        if ($emailid != "" && $emailid != null) {
+            $sql = "SELECT userid FROM `tbl_user` t WHERE t.active = 'active' ";
+            $sql .= " and email = '" . $emailid . "' ";
+            $userQuery = $this->db->query($sql);
+            $k = 0;
+            $userId  = "";
+            foreach ($userQuery->result() as $row) {
+                $userId = $row->userid;
+            }
+
+            if($userId !=""){
+                $otp  = rand(100000,999999);
+                $createdAt = Date("now");
+                $expiryDate = Date("now");
+                $active = "active";
+                $forgotSql = "INSERT INTO `tbl_forgotPasswordRequest`( `userid`, `otp`, `createdAt`, `expiryDate`, `active`) VALUES (".$this->db->escape($userId) .",".$this->db->escape($otp) .",".$this->db->escape($createdAt) .",".$this->db->escape($expiryDate) .",".$this->db->escape($active) .")";
+                $this->db->query($forgotSql);
+            }
+        }
+
+        return $otp;
+    }
+
+    public function getSuccessMsgOTPUpdated($email, $otptext){
+        $resultArray = array('successMsg'=>0, 'userid'=>null);
+        $userSql = "SELECT userid FROM `tbl_user` t WHERE t.active = 'active' and email = '" . $email . "' ";
+        $sql = "SELECT userid FROM `tbl_forgotPasswordRequest` t WHERE t.active = 'active' ";
+        $sql .= " and otp = '" . $otptext . "' ";
+        $sql .= " and userid in ($userSql) ";
+        $userQuery = $this->db->query($sql);
+        $returnValue = $userQuery->result_array();
+        if(count($returnValue)>0)
+            $resultArray = array('successMsg'=>1, 'userid'=>$returnValue[0]['userid']);
+
+        return $resultArray;
+    }
+
+    public function updateUsersPassword($userId, $newPassword){
+        if($userId!=null && $newPassword!=""){
+            $sql = "UPDATE tbl_user set password = ".$this->db->escape($newPassword) ." where userid = ".$this->db->escape($userId);
+            $this->db->query($sql);
+        }
+    }
+
+    public function sendEmail($fromMailId, $fromMailName, $tomailIdArray, $subject, $message){
+        if($fromMailId!="" && $fromMailId!=null){
+            $fromMailId = $fromMailId;
+            $fromMailName = $fromMailName;
+        } else {
+            $fromMailId = "mathan@mynap.in";
+            $fromMailName = "Mathan";
+        }
+
+//        print_r($tomailIdArray);
+        $ci=get_instance();
+        $ci->load->library('email');
+        $ci->email->from($fromMailId, $fromMailName);
+        $ci->email->to($tomailIdArray);
+        $ci->email->reply_to($fromMailId, $fromMailName);
+        $ci->email->subject($subject);
+        $ci->email->message($message);
+        return $ci->email->send();
+    }
+
     public function checkUserCredential($userCredentialArray)
     {
         $username = $userCredentialArray['username'];
@@ -48,19 +115,19 @@ class Users_model extends CI_Model
     public function getSuccessMsg($output)
     {
         $successMsg = "";
+        $responseMsg  = "";
+        $responseStatus  = "";
         if (isset($output)) {
-            if ($output['status'] == '1') {
-                $successMsg .= '<div class="alert alert-success">';
-            } elseif ($output['status'] == '2') {
-                $successMsg .= '<div class="alert alert-error">';
-            } else {
-                $successMsg .= '<div class="alert alert-error">';
-            }
-
-            $successMsg .= '<button type="button" class="close" data-dismiss="alert">&times;</button>';
-            $successMsg .= '<strong>' . $output['message'] . '</strong>';
-            $successMsg .= '</div>';
+            $responseStatus = $output['status'];
+            $responseMsg = $output['message'];
         }
+
+        if($responseStatus == 1) {
+            $successMsg = "<div class=\"alert alert-success alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>" . $responseMsg . "</div>";
+        } else if($responseStatus == 2) {
+            $successMsg = "<div class=\"alert alert-danger alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>" . $responseMsg . "</div>";
+        }
+
         return $successMsg;
     }
 

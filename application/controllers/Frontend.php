@@ -47,6 +47,63 @@ class Frontend extends CI_Controller
         $this->load->view('layout/frontend_footer');
     }
 
+    public function forgotPassword()
+    {
+        $dataheader['title'] = "Forgot Password";
+        $sendOTP = $this->input->get_post('sendOTP');
+        $otptext = $this->input->get_post('otptext');
+        $emailId = $this->input->get_post('emailId');
+        $newPassword = $this->input->get_post('newPassword');
+        $dataheader['sendOTP'] = $sendOTP;
+        if($sendOTP == 1 && $emailId!="") {
+            $tomailIdArray = array($emailId);
+            $otp = $this->users_model->insertAndReturnOTP($emailId);
+            if($otp!=""){
+                $message = "<b>Dear User</b>, <br><br>Your One Time Password (OTP) for resetting the password for your <a href='http://www.jonam.in'>jonam.in</a> profile is <b>".$otp."</b><br><br>";
+                $message = $message . "Please enter this code in the OTP code box listed on the page.<br><br>";
+                $message = $message . "<b>Note: </b> Please note that this will be valid for the next 2 hours only.<br><br>";
+                $message = $message . "Contact: support@jonam.in if you are unable to reset.<br><br><br>Regards,<br>jonam.in Team";
+                $subject = "Your OTP for resetting password";
+                $sendResponse = $this->users_model->sendEmail(null, null, $tomailIdArray, $subject, $message);
+//                $sendResponse  = 1;
+                if($sendResponse==1){
+                    $output = array("message"=>"Please check your mail for OTP", "status"=>"1");
+                    $sendResponseMessage = $this->users_model->getSuccessMsg($output);
+                } else {
+                    $output = array("message"=>"Please check your Internet connection", "status"=>"2");
+                    $sendResponseMessage = $this->users_model->getSuccessMsg($output);
+                }
+                $dataheader['sendResponseMessage'] = $sendResponseMessage;
+                $dataheader['emailId'] = $emailId;
+                $this->load->view('layout/frontend_header', $dataheader);
+                $this->load->view('frontend/forgotPassword');
+                $this->load->view('layout/frontend_footer');
+            }else {
+                $output = array("message"=>"Invalid login details", "status"=>"2");
+                $this->session->set_flashdata('output', $output);
+                redirect(base_url());
+            }
+        } else if($sendOTP == 2) {
+            if($otptext!="" && $newPassword!=""){
+                $email = $this->input->get_post('email');
+                $resultArray = $this->users_model->getSuccessMsgOTPUpdated($email, $otptext);
+                $successOTPUpdated = $resultArray['successMsg'];
+                $userId = $resultArray['userid'];
+                if($otptext!="" && $email!="" && $successOTPUpdated== "1"){
+                    $this->users_model->updateUsersPassword($userId, $newPassword);
+                    $output = array('status' => "1", 'message' => "Your Password Successfully updated! <br/>Please login again");
+                    $this->session->set_flashdata('output', $output);
+                } else {
+                    $output = array('status' => "2", 'message' => "Incorrect OTP Details");
+                    $this->session->set_flashdata('output', $output);
+                }
+                redirect(base_url());
+            }
+        } else {
+            $this->load->view('frontend/forgotPassword', $dataheader);
+        }
+    }
+
 
     public function editProfile()
     {
@@ -86,14 +143,18 @@ class Frontend extends CI_Controller
         } else {
             $output = array('status' => "2", 'message' => "Invalid Login!!");
             $this->session->set_flashdata('output', $output);
-            redirect("http://localhost/pos/");
+            redirect(base_url());
         }
     }
 
     public function logout()
     {
-        $this->session->sess_destroy();
-        redirect("/");
+//        $this->session->sess_destroy();
+        $userListArray  = array('userid', 'name', 'email', 'usertypeid', 'adminid', 'mobile', 'retailerShowRoomId', 'lastlogin', 'redirecturl', 'usertype');
+        $this->session->unset_userdata($userListArray);
+        $output = array('status' => "1", 'message' => "Successfully logout !!!");
+        $this->session->set_flashdata('output', $output);
+        redirect(base_url());
     }
 
     public function dashboard()
@@ -164,7 +225,7 @@ class Frontend extends CI_Controller
 
                 $this->users_model->createUserMaster($userDetailsArray); //For admin
             } else {
-                print_r($userDetailsArray);
+//                print_r($userDetailsArray);
                 $this->users_model->updateUserMaster($userDetailsArray); //For admin
             }
         } else {

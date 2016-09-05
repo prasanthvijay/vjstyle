@@ -41,7 +41,7 @@
 
 		<div class="form-group m-t-30">
 			<div class="col-sm-7">
-				<a href="pages-recoverpw.html" class="text-muted"><i class="fa fa-lock m-r-5"></i> Forgot your
+				<a href="javascript:void(0)" class="text-muted" onclick="loadAddOrEditContentWithModal('forgotPassword','sendOTP=0','modalContentArea')"><i class="fa fa-lock m-r-5"></i> Forgot your
 					password?</a>
 			</div>
 			<div class="col-sm-5 text-right">
@@ -50,4 +50,39 @@
 		</div>
 	</form>
 </div>
+<div id="panel-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	 aria-hidden="true" style="display: none;">
+	<div class="modal-dialog">
+		<div class="modal-content p-0 b-0" id="modalContentArea">
 
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<script>
+	function loadAddOrEditContentWithModal(postUrl, postData, displayDiv) {
+		$.ajax({
+			url: postUrl,
+			type: "get",
+			data: postData,
+			success: function (responseFromSite) {
+				$("#" + displayDiv).html(responseFromSite);
+				$("#panel-modal").modal('show');
+				$("#addOrEditUserDetailsForm").parsley();
+			}
+
+		});
+		/*$.ajax({
+		 url : postUrl,
+		 type : "POST",
+		 data : postData,
+		 success : function (responseFromSite) {
+		 // $("#"+displayDiv).html(responseFromSite);
+		 alert("successs")
+		 }
+
+		 });*/
+	}
+
+</script>

@@ -27,6 +27,10 @@
 
 <script type="text/javascript" src="assets/plugins/parsleyjs/dist/parsley.min.js"></script>
 
+
+<script src="<?php echo base_url(); ?>assets/plugins/notifyjs/dist/notify.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/notifications/notify-metro.js"></script>
+
 <!-- Custom main Js -->
 <script src="<?php echo base_url(); ?>assets/js/jquery.core.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.app.js"></script>
