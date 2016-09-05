@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 31, 2016 at 11:24 PM
+-- Generation Time: Sep 05, 2016 at 05:45 PM
 -- Server version: 5.5.49-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.17
 
@@ -33,49 +33,16 @@ CREATE TABLE IF NOT EXISTS `tbl_brand` (
   `active` varchar(255) NOT NULL DEFAULT 'active',
   `createdat` datetime DEFAULT NULL,
   PRIMARY KEY (`brandid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `tbl_brand`
 --
 
 INSERT INTO `tbl_brand` (`brandid`, `brandname`, `adminid`, `active`, `createdat`) VALUES
-(1, 'Test', 3, 'active', '2016-08-03 02:28:22'),
-(2, 'Sample', 3, 'active', '2016-08-03 02:28:48'),
-(3, 'Shirt', 3, 'active', '2016-08-03 02:28:58'),
-(4, 'tshirt', 3, 'active', '2016-08-03 02:29:09'),
-(5, 'jeans', 3, 'active', '2016-08-03 02:29:18'),
-(6, 'MArts', 3, 'active', '2016-08-05 00:07:27'),
-(7, 'Paint', 2, 'active', '2016-08-18 00:40:58'),
-(8, 'Modle', 2, 'active', '2016-08-18 00:53:32'),
-(9, 'sdsdg', 39, 'active', '2016-08-28 19:28:09');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_category`
---
-
-CREATE TABLE IF NOT EXISTS `tbl_category` (
-  `categorytypeid` bigint(20) NOT NULL AUTO_INCREMENT,
-  `categorytype` varchar(255) DEFAULT NULL,
-  `adminid` bigint(20) NOT NULL DEFAULT '0',
-  `active` varchar(255) NOT NULL DEFAULT 'active',
-  `createdat` datetime DEFAULT NULL,
-  PRIMARY KEY (`categorytypeid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
-
---
--- Dumping data for table `tbl_category`
---
-
-INSERT INTO `tbl_category` (`categorytypeid`, `categorytype`, `adminid`, `active`, `createdat`) VALUES
-(1, 'Super Admin', 0, 'active', '2016-07-23 00:00:00'),
-(2, 'Admin', 0, 'active', '2016-07-23 00:00:00'),
-(3, 'Seller', 0, 'active', '2016-07-23 00:00:00'),
-(4, 'Retailer Show Room', 0, 'active', '2016-07-23 00:00:00'),
-(5, 'Sales Executive', 0, 'active', '2016-07-23 00:00:00'),
-(6, 'Delivery Person', 0, 'active', '2016-07-23 00:00:00');
+(1, 'Jokey', 7, 'active', '2016-09-03 22:50:45'),
+(2, 'Ramraj', 7, 'active', '2016-09-03 22:50:56'),
+(3, 'testbrand', 7, 'deleted', '2016-09-03 22:51:08');
 
 -- --------------------------------------------------------
 
@@ -90,24 +57,17 @@ CREATE TABLE IF NOT EXISTS `tbl_categorytype` (
   `active` varchar(200) DEFAULT 'active',
   `createdAt` date DEFAULT NULL,
   PRIMARY KEY (`categorytypeid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `tbl_categorytype`
 --
 
 INSERT INTO `tbl_categorytype` (`categorytypeid`, `categorytype`, `adminId`, `active`, `createdAt`) VALUES
-(1, 'hghgf', 2, 'active', '2016-08-18'),
-(2, 'XXL', 2, 'active', '2016-08-19'),
-(3, 'L', 2, 'deleted', '2016-08-19'),
-(4, '', 2, 'deleted', '2016-08-24'),
-(5, '3', 39, 'deleted', '2016-08-28'),
-(6, 'ghfhgf', 39, 'deleted', '2016-08-28'),
-(7, '1234', 39, 'active', '2016-08-28'),
-(8, '545', 39, 'active', '2016-08-28'),
-(9, 'ttyyyuuuuu', 2, 'deleted', '2016-08-31'),
-(10, 'hffgfdssssssss', 2, 'deleted', '2016-08-31'),
-(11, 'css2', 2, 'deleted', '2016-08-31');
+(1, 'Pant', 7, 'active', '2016-09-03'),
+(2, 'Shirt', 7, 'active', '2016-09-03'),
+(3, 'underwear', 7, 'active', '2016-09-03'),
+(4, 'test', 7, 'deleted', '2016-09-03');
 
 -- --------------------------------------------------------
 
@@ -128,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `tbl_customer` (
 --
 
 INSERT INTO `tbl_customer` (`id`, `name`, `mobileno`, `active`) VALUES
-(1, 'Praveen', '7418896961', 1);
+(1, 'dfdfg', '54636345634', 1);
 
 -- --------------------------------------------------------
 
@@ -144,18 +104,14 @@ CREATE TABLE IF NOT EXISTS `tbl_customerreceipt` (
   `customerId` int(11) DEFAULT NULL,
   `date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `tbl_customerreceipt`
 --
 
 INSERT INTO `tbl_customerreceipt` (`id`, `discount`, `roundoff`, `Total`, `customerId`, `date`) VALUES
-(5, 0, 0, 0, 1, '2016-08-27 19:50:27'),
-(6, 0, 0, 0, 1, '2016-08-27 19:51:45'),
-(7, 135, 15, 300, 1, '2016-08-27 19:53:36'),
-(8, 10, 0, 155, 1, '2016-08-28 19:02:07'),
-(9, 10, 8.72, 141.76, 1, '2016-08-30 22:28:40');
+(1, 0, 0, 0, 1, '2016-09-03 23:42:10');
 
 -- --------------------------------------------------------
 
@@ -172,21 +128,43 @@ CREATE TABLE IF NOT EXISTS `tbl_customerreceiptproduct` (
   `qty` int(11) DEFAULT NULL,
   `discount` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `tbl_customerreceiptproduct`
 --
 
 INSERT INTO `tbl_customerreceiptproduct` (`id`, `receiptId`, `productId`, `showroomId`, `price`, `qty`, `discount`) VALUES
-(6, 5, 1, NULL, 150, 1, 10),
-(7, 5, 4, NULL, 350, 1, 10),
-(8, 6, 1, NULL, 150, 1, 0),
-(9, 7, 5, NULL, 450, 1, 0),
-(10, 8, 4, NULL, 350, 2, 0),
-(11, 8, 6, NULL, 850, 1, 0),
-(12, 9, 2, NULL, 1234, 1, 5),
-(13, 9, 4, NULL, 350, 1, 5);
+(1, 1, 1, NULL, 100, 2, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_forgotPasswordRequest`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_forgotPasswordRequest` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `userid` bigint(20) DEFAULT NULL,
+  `otp` int(11) NOT NULL,
+  `createdAt` datetime NOT NULL,
+  `expiryDate` datetime NOT NULL,
+  `active` varchar(255) DEFAULT 'active',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+--
+-- Dumping data for table `tbl_forgotPasswordRequest`
+--
+
+INSERT INTO `tbl_forgotPasswordRequest` (`id`, `userid`, `otp`, `createdAt`, `expiryDate`, `active`) VALUES
+(1, 7, 236400, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'active'),
+(2, 7, 268423, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'active'),
+(3, 7, 750337, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'active'),
+(4, 2, 404587, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'active'),
+(5, 2, 290938, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'active'),
+(6, 2, 101973, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'active'),
+(7, 2, 985443, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'active');
 
 -- --------------------------------------------------------
 
@@ -207,30 +185,14 @@ CREATE TABLE IF NOT EXISTS `tbl_product` (
   `createdat` datetime DEFAULT NULL,
   PRIMARY KEY (`productid`),
   UNIQUE KEY `barcode` (`barcode`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `tbl_product`
 --
 
 INSERT INTO `tbl_product` (`productid`, `productname`, `productrate`, `productsize`, `barcode`, `categorytypeid`, `brandid`, `adminid`, `active`, `createdat`) VALUES
-(1, 'Test', '150', 'Xl', 'BAR1234', 1, 1, 2, 'active', '2016-07-31 00:00:00'),
-(2, 'Jeans', '1234', 'XXL', 'DSF23222', 1, 5, 2, 'active', '2016-08-05 00:44:53'),
-(3, 'paint', '450', 'M', 'PAN001', 1, 5, 2, 'active', '2016-08-12 22:24:36'),
-(4, 'T-Shirt', '350', 'XL', 'TSH001', 1, 4, 2, 'active', '2016-08-12 22:25:51'),
-(5, 'shirt-Mens', '450', 'L', 'SH002', 1, 3, 2, 'active', '2016-08-12 22:27:44'),
-(6, 'Jeans-Shirt', '850', 'L', 'JESH002', 1, 5, 2, 'active', '2016-08-12 22:29:07'),
-(7, 'Jeans-T-Shirt', '850', 'L', 'JTSH002', 1, 5, 2, 'active', '2016-08-12 22:29:07'),
-(8, 'shirt', '450', '2', 'HJAHS11', 1, 8, 2, 'active', '2016-08-19 00:35:43'),
-(9, 'bew_paint', '562', '3', 'FDSF111', 1, 0, 2, 'active', '2016-08-19 00:38:24'),
-(11, 'test', '3245', '3', 'qwqeqsa123', 1, 8, 2, 'active', '2016-08-22 23:47:39'),
-(12, 'tersa', '456', '2', 'fdffdffaz', 1, 8, 2, 'active', '2016-08-24 01:28:39'),
-(13, 'sample', '20', '35', 'ssdfdce', 1, 8, 2, 'active', '2016-08-28 16:17:08'),
-(14, 'samplegg', '10', '35', 'fdgfdgfdgf', 1, 7, 2, 'active', '2016-08-28 16:18:27'),
-(15, 'sample', '2345', '2', 'sdfsdf', 1, 7, 2, 'active', '2016-08-28 17:45:48'),
-(16, 'hgdhg', '100', '3', 'gg101', 1, 8, 2, 'active', '2016-08-29 21:20:44'),
-(18, 'mkm', '100', '2', 'gghjk', 1, 8, 2, 'active', '2016-08-29 21:33:42'),
-(19, 'shirtss', '12039', '3', '1233445', 1, 8, 2, 'active', '2016-08-29 21:36:02');
+(1, 'full hand shirt', '120', '3', 'full1001', 2, 2, 7, 'active', '2016-09-03 23:06:47');
 
 -- --------------------------------------------------------
 
@@ -247,15 +209,14 @@ CREATE TABLE IF NOT EXISTS `tbl_productMapping` (
   `adminId` int(11) DEFAULT NULL,
   `createAt` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `tbl_productMapping`
 --
 
 INSERT INTO `tbl_productMapping` (`id`, `productId`, `showroomId`, `price`, `quantity`, `adminId`, `createAt`) VALUES
-(1, '19', 35, 12039, 10, 2, '2016-08-29'),
-(2, '19', 32, 12039, 20, 2, '2016-08-29');
+(1, '1', 8, 130, 10, 7, '2016-09-03');
 
 -- --------------------------------------------------------
 
@@ -270,38 +231,7 @@ CREATE TABLE IF NOT EXISTS `tbl_returnProduct` (
   `productId` int(11) DEFAULT NULL,
   `reduceCount` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
-
---
--- Dumping data for table `tbl_returnProduct`
---
-
-INSERT INTO `tbl_returnProduct` (`id`, `oldReceipt`, `newReceipt`, `productId`, `reduceCount`) VALUES
-(3, 5, 7, 1, 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_showroom`
---
-
-CREATE TABLE IF NOT EXISTS `tbl_showroom` (
-  `ShowRoomId` int(11) NOT NULL AUTO_INCREMENT,
-  `ShowRoomName` varchar(200) DEFAULT NULL,
-  `Address` text,
-  `ShowRoomOpenDate` date DEFAULT NULL,
-  `adminId` int(11) DEFAULT NULL,
-  `active` varchar(200) DEFAULT 'active',
-  `ShowRoomImagePath` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`ShowRoomId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `tbl_showroom`
---
-
-INSERT INTO `tbl_showroom` (`ShowRoomId`, `ShowRoomName`, `Address`, `ShowRoomOpenDate`, `adminId`, `active`, `ShowRoomImagePath`) VALUES
-(1, 'MeShop', 'Chennai', '2014-08-20', 2, 'active', NULL);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -316,21 +246,16 @@ CREATE TABLE IF NOT EXISTS `tbl_sizemaster` (
   `active` varchar(200) DEFAULT 'active',
   `createdAt` date DEFAULT NULL,
   PRIMARY KEY (`sizeid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `tbl_sizemaster`
 --
 
 INSERT INTO `tbl_sizemaster` (`sizeid`, `size`, `adminId`, `active`, `createdAt`) VALUES
-(1, 'XL', 2, 'active', '2016-08-18'),
-(2, 'XXL', 2, 'active', '2016-08-19'),
-(3, 'L', 2, 'active', '2016-08-19'),
-(4, '', 2, 'deleted', '2016-08-24'),
-(5, '3', 39, 'deleted', '2016-08-28'),
-(6, '5', 39, 'deleted', '2016-08-28'),
-(7, '1234', 39, 'active', '2016-08-28'),
-(8, '545', 39, 'active', '2016-08-28');
+(1, 'XL', 7, 'active', '2016-09-03'),
+(2, 'S', 7, 'active', '2016-09-03'),
+(3, 'L', 7, 'active', '2016-09-03');
 
 -- --------------------------------------------------------
 
@@ -354,20 +279,23 @@ CREATE TABLE IF NOT EXISTS `tbl_user` (
   `lastlogin` datetime DEFAULT NULL,
   `createdat` datetime DEFAULT NULL,
   PRIMARY KEY (`userid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=36 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `tbl_user`
 --
 
 INSERT INTO `tbl_user` (`userid`, `name`, `email`, `password`, `usertypeid`, `adminid`, `retailerShowRoomId`, `mobile`, `address`, `doj`, `dob`, `active`, `lastlogin`, `createdat`) VALUES
-(1, 'superadmin', 'superadmin@gmail.com', '1234', 1, 0, NULL, '8344798628', '107 west street, ammaiyappan, thiruvarur, Tamil Nadu', NULL, NULL, 'active', '2016-08-14 15:08:12', '2016-07-23 00:00:00'),
-(2, 'posadmin1', 'posadmin1@gmail.com', '1234', 2, 0, NULL, '8124356981', '102 chennai', NULL, NULL, 'active', '2016-08-31 21:08:24', '2016-07-23 19:21:27'),
-(3, 'Prasanth', 'prasanth@gmail.com', '1234', 2, 0, NULL, '8122334168', 'salem', '0000-00-00', '0000-00-00', 'active', '2016-08-30 21:08:34', '2016-08-03 02:25:22'),
-(32, 'kuru', 'yughgf@hjgdfh.in', '1234', 3, 2, 0, '67567576', 'hjdsff', '0000-00-00', '0000-00-00', 'active', NULL, '2016-08-14 09:26:53'),
-(33, 'praveen', 'praveen@dotcue.com', '1234', 5, 2, 32, '54564', 'ok', '2016-08-17', '2016-08-31', 'active', '2016-08-31 00:08:06', '2016-08-14 09:27:39'),
-(34, 'oko', 'oko@gmail.com', '1234', 4, 2, 32, '54546', 'dgsdfgdsfg', '2016-08-16', '2016-08-30', 'active', NULL, '2016-08-14 09:28:20'),
-(35, 'posaa', 'jhgjh', 'hhgh', 3, 2, 0, 'uyggg', 'hhgh', '0000-00-00', '0000-00-00', 'active', NULL, '2016-08-14 09:31:54');
+(1, 'superadmin', 'superadmin@gmail.com', '1234', 1, 0, 0, '8344798628', '107, west street, Ammaiyappan, Thiruvarur.', '0000-00-00', '0000-00-00', 'active', '2016-09-05 08:09:44', NULL),
+(2, 'mathan', 'mathanaiht@gmail.com', '1234', 2, 0, 0, '83446576575', 'ddsdsfsadfd ddf dsfsafasd', '0000-00-00', '0000-00-00', 'active', NULL, '2016-09-03 14:07:25'),
+(3, 'mathansr', 'mathansr@gmail.com', NULL, 3, 2, 0, '656575656575', 'dsihjdfh jhdfjhds hdsfdhj dfjhjdsfh', '0000-00-00', '0000-00-00', 'active', NULL, '2016-09-03 14:08:51'),
+(4, 'mathash', 'mathash@gmail.com', '1234', 4, 2, 3, '6576565765', 'dsfdsagdsgdsfg', '2016-09-08', '2016-09-10', 'active', NULL, '2016-09-03 20:08:45'),
+(5, 'mathanse', 'mathanse@gmail.com', '1234', 5, 2, 3, '6565656756', 'fgfgfgfhg fgfg gfgf tytytytyuyiyy', '2016-09-07', '2016-09-14', 'active', NULL, '2016-09-03 20:11:19'),
+(6, 'mathanse1', 'mathanse1@gmail.com', '12345', 5, 2, 3, '56454545456', 'ok', '2016-09-01', '2016-09-07', 'active', NULL, '2016-09-03 20:14:58'),
+(7, 'manoj', 'manoj@gmail.com', '1234', 2, 0, 0, '56756567', 'chennai', '2016-09-20', '2016-09-23', 'active', '2016-09-05 17:09:22', '2016-09-03 21:23:33'),
+(8, 'manojsr', 'manojsr@gmail.com', NULL, 3, 7, 0, '6567576', 'jkdhsfj jhgdj', '0000-00-00', '0000-00-00', 'active', NULL, '2016-09-03 21:25:45'),
+(9, 'manojsh', 'manojsh@gmail.com', '1234', 4, 7, 8, '656575656757', 'yes', '2016-09-09', '2016-09-10', 'active', '2016-09-03 23:09:44', '2016-09-03 21:27:36'),
+(10, 'manojse', 'manojse@gmail.com', '1234', 5, 7, 8, '6567565656567', 'success', '2016-09-15', '2016-09-16', 'active', NULL, '2016-09-03 21:28:52');
 
 -- --------------------------------------------------------
 
@@ -389,8 +317,8 @@ CREATE TABLE IF NOT EXISTS `tbl_usertype` (
 --
 
 INSERT INTO `tbl_usertype` (`usertypeid`, `usertype`, `redirecturl`, `active`, `createdat`) VALUES
-(1, 'Super Admin', 'dashboard', 'active', '2016-07-23 00:00:00'),
-(2, 'Admin', 'product/AddProduct', 'active', '2016-07-23 00:00:00'),
+(1, 'Super Admin', 'Frontend/adminMaster', 'active', '2016-07-23 00:00:00'),
+(2, 'Admin', 'Product/ProductMaster', 'active', '2016-07-23 00:00:00'),
 (3, 'Retailer Show Room', '0', 'active', '2016-07-23 00:00:00'),
 (4, 'Sales Head', 'sales/pos', 'active', '2016-07-23 00:00:00'),
 (5, 'Sales Executive', 'sales/pos', 'active', '2016-07-23 00:00:00'),
