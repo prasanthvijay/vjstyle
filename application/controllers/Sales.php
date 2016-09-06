@@ -40,12 +40,12 @@ class Sales extends CI_Controller {
     	{
 		$dataheader['title'] = "POS";
 			$usertypeid = $this->session->userdata('usertypeid');
-			$retailerShowRoomId = $this->session->userdata('retailerShowRoomId');
+			$showroomId = $this->session->userdata('retailerShowRoomId');
 			$adminid = $this->session->userdata('adminid');
 
 		$tablename="tbl_product";
 		$fieldname=array('productid,productname');
-		$condition="t.productid IN(SELECT productid From tbl_productMapping where showroomId ='".$retailerShowRoomId."' and adminid ='".$adminid."') " ;
+		$condition="t.productid IN(SELECT productid From tbl_productMapping where showroomId ='".$showroomId."' and adminid ='".$adminid."') " ;
 	              
 		$productList = $this->pos_model->selectQueryList($tablename,$fieldname,$condition);
 
@@ -80,7 +80,7 @@ class Sales extends CI_Controller {
 			$insertValue['FinalTotal']=($insertValue['TotalProductCost']*$insertValue['totdiscount']/100)-$insertValue['roundoff'];
 			$insertValue['Customer'] = $this->input->post('Customer');
 			$insertValue['mobile'] = $this->input->post('mobile');
-
+			echo $insertValue['showroomId'] = $showroomId;
 			$insertSellDetails = $this->pos_model->insertSellDetails($insertValue);		
 		}
 		
@@ -93,8 +93,10 @@ class Sales extends CI_Controller {
 	public function posajax()
 	{
 		$productId = $this->input->get_post("productId");
-		$productIdArray = array('productId' => $productId);
-		$productDetails = $this->pos_model->productDetails($productId);
+
+		$retailerShowRoomId = $this->session->userdata('retailerShowRoomId');
+		$productIdArray = array('productId' => $productId,'retailerShowRoomId' => $retailerShowRoomId);
+		$productDetails = $this->pos_model->productDetails($productId,$retailerShowRoomId);
 		echo json_encode($productDetails);
 	}
 
