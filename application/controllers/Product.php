@@ -411,17 +411,20 @@ class Product extends CI_Controller
         if($sessionUserTypeIdIsset == 1){
             $sessionUserTypeId = $this->session->userdata('usertypeid');
             if($sessionUserTypeId == 2){
-                $adminid = $this->session->userdata('userid');
+                echo $adminid = $this->session->userdata('userid');
             } else {
                 echo $adminid;
                 $adminid = $this->input->get_post('adminid');
+		
             }
         }
-        $dataheader['adminid'] = $adminid;
-        $dataheader['title'] = "MapProduct";
-        $productId = "0";
-        $ProductList = $this->users_model->getProductList($adminid, $productId);
-        $dataheader['ProductList'] = $ProductList;
+	$userType="3";
+	$showroomArray = $this->users_model->getshowroomList($userType);
+	 $dataheader['showroomArray'] = $showroomArray;
+	$dataheader['adminid'] = $adminid;
+	$dataheader['title'] = "MapProduct";
+     
+        $dataheader['showroomArray'] = $showroomArray;
 
         $this->load->view('layout/backend_header', $dataheader);
         $this->load->view('layout/backend_menu');
@@ -446,14 +449,22 @@ class Product extends CI_Controller
         }
 
         $dataheader['adminid'] = $adminid;
-        $count = $this->input->get('count');
         $type = $this->input->get('type');
-        $usertypeid = '3';
+	$count = $this->input->get('count');
+	if($type=='productQyt'){
+ 	$usertypeid = '3';
         $retailerShowRoomId = "";
         $userid = "";
         $showRoomArray = $this->users_model->getUsersList($usertypeid, $adminid, $retailerShowRoomId, $userid);
         $dataheader['showRoomArray'] = $showRoomArray;
-        $dataheader['type'] = $type;
+      	}
+	
+	if($type=='product'){
+ 	$showroomId = $this->input->get('showroomId');
+	$productListArray=$this->users_model->mappedProduct($showroomId);
+	$dataheader['productListArray'] = $productListArray;
+	}
+	$dataheader['type'] = $type;
         $dataheader['count'] = $count;
         $this->load->view('product/getContent', $dataheader);
 

@@ -544,20 +544,20 @@ class Users_model extends CI_Model
         return $Quantity;
     }
 
-    public function getshowroomList($adminid)
+    public function getshowroomList($userType)
     {
 
         $showroomArray = array();
-        $sql = "SELECT  ShowRoomName,ShowRoomId FROM `tbl_showroom` t WHERE t.active = 'active' ";
-        if ($adminid != "" && $adminid != null) {
-            $sql .= " and adminId = '" . $adminid . "' ";
+        $sql = "SELECT  name,userid FROM `tbl_user` t WHERE t.active = 'active' and usertypeid='".$userType."'";
+        /*if ($adminid != "" && $adminid != null) {
+            $sql .= "and usertypeid='".$userType."' ";
         }
-
+*/
         $userQuery = $this->db->query($sql);
         $k = 0;
         foreach ($userQuery->result() as $row) {
-            $showroomArray[$k]['ShowRoomName'] = $row->ShowRoomName;
-            $showroomArray[$k]['ShowRoomId'] = $row->ShowRoomId;
+            $showroomArray[$k]['name'] = $row->name;
+            $showroomArray[$k]['userid'] = $row->userid;
             $k++;
         }
 
@@ -570,6 +570,19 @@ class Users_model extends CI_Model
         $this->db->query($sql);
     }
 
+	public function mappedProduct($showroomId)
+    	{
+  	$productListArray = array();
+ 	$sql = "SELECT t.productid,t.productname FROM tbl_product t INNER JOIN tbl_productMapping a WHERE  a.showroomId ='" .$showroomId."'";
+  $userQuery = $this->db->query($sql);
+        $k = 0;
+        foreach ($userQuery->result() as $row) {
+	$productListArray[$k]['productid']= $row->productid;
+	$productListArray[$k]['productname']= $row->productname;
+	$k++;	
+	}
+    return $productListArray;
+	}
 }
 
 ?>

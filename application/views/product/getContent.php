@@ -23,4 +23,40 @@
     </div>
 
     <div id="qytDiv<?php echo $count + 1; ?>"></div>
-<?php } ?>
+<?php } if($type == 'product') { ?>
+					<div class="form-group">
+                                            <label class="col-sm-3 control-label">Select Product</label>
+                                            <div class="col-sm-6">
+                                              <select class="select2 form-control" id="brandname" name="brandname">
+							<option value="">Select Product</option>
+						<?php for($i=0;$i<count($productListArray);$i++){?>
+				                    <option value="<?php echo $productListArray[$i]['productid'] ?>"><?php echo $productListArray[$i]['productname'] ?></option>
+						<?php } ?>
+				             			
+						 </select>
+                                            </div>
+                                        </div>			
+<?php } if($type=='productQytInc') { ?>                                        
+
+ <div class="form-group">
+                                            <label class="col-sm-3 control-label">Avalable Quantity</label>
+                                            <div class="col-sm-6">
+					
+                                                <input type="text"  id="quantity" name="quantity" class="form-control" required readonly placeholder="Avalable Quantity" />
+                                            </div>
+                                        </div>
+                                         <div class="form-group">
+                                            <label class="col-sm-3 control-label">Increment Quantity</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" id="Incquantity" name="Incquantity" readonly class="form-control" required  placeholder="Increment Quantity" />
+                                            </div>
+                                        </div></div>
+							 
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Avalable Price</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" id="price" name="price" class="form-control" required  placeholder="Avalable Price" />
+                                            </div>
+                                        </div>
+
+<?php }?>
