@@ -48,11 +48,13 @@ class Product extends CI_Controller
             $sessionUserTypeId = $this->session->userdata('usertypeid');
             if($sessionUserTypeId == 2){
                 $adminid = $this->session->userdata('userid');
-            } else {
+            } else if($sessionUserTypeId == 1){
                 $adminid = $this->input->get_post('adminid');
+            } else if($sessionUserTypeId == 4){
+                $adminid = $this->session->userdata('adminid');
             }
         }
-
+        
         $updateSuccess = 0;
         $insertSuccess = 0;
         $deletetSuccess = 0;
@@ -203,8 +205,10 @@ class Product extends CI_Controller
             $sessionUserTypeId = $this->session->userdata('usertypeid');
             if($sessionUserTypeId == 2){
                 $adminid = $this->session->userdata('userid');
-            } else {
+            } else if($sessionUserTypeId == 1){
                 $adminid = $this->input->get_post('adminid');
+            } else if($sessionUserTypeId == 4){
+                $adminid = $this->session->userdata('adminid');
             }
         }
 
@@ -234,9 +238,11 @@ class Product extends CI_Controller
             $sessionUserTypeId = $this->session->userdata('usertypeid');
             if($sessionUserTypeId == 2){
                 $adminid = $this->session->userdata('userid');
-            } else {
-                echo $adminid;
+            } else if($sessionUserTypeId == 1){
                 $adminid = $this->input->get_post('adminid');
+            } else if($sessionUserTypeId == 4){
+                $adminid = $this->session->userdata('adminid');
+
             }
         }
 
@@ -273,8 +279,10 @@ class Product extends CI_Controller
             $sessionUserTypeId = $this->session->userdata('usertypeid');
             if($sessionUserTypeId == 2){
                 $adminid = $this->session->userdata('userid');
-            } else {
+            } else if($sessionUserTypeId == 1){
                 $adminid = $this->input->get_post('adminid');
+            } else if($sessionUserTypeId == 4){
+                $adminid = $this->session->userdata('adminid');
             }
         } else {
             redirect(base_url()."Frontend/logout");
@@ -331,8 +339,10 @@ class Product extends CI_Controller
             $sessionUserTypeId = $this->session->userdata('usertypeid');
             if($sessionUserTypeId == 2){
                 $adminid = $this->session->userdata('userid');
-            } else {
+            } else if($sessionUserTypeId == 1){
                 $adminid = $this->input->get_post('adminid');
+            } else if($sessionUserTypeId == 4){
+                $adminid = $this->session->userdata('adminid');
             }
         }
 
@@ -384,8 +394,10 @@ class Product extends CI_Controller
             $sessionUserTypeId = $this->session->userdata('usertypeid');
             if($sessionUserTypeId == 2){
                 $adminid = $this->session->userdata('userid');
-            } else {
+            } else if($sessionUserTypeId == 1){
                 $adminid = $this->input->get_post('adminid');
+            } else if($sessionUserTypeId == 4){
+                $adminid = $this->session->userdata('adminid');
             }
         }
 
@@ -411,11 +423,11 @@ class Product extends CI_Controller
         if($sessionUserTypeIdIsset == 1){
             $sessionUserTypeId = $this->session->userdata('usertypeid');
             if($sessionUserTypeId == 2){
-                echo $adminid = $this->session->userdata('userid');
-            } else {
-                echo $adminid;
+                $adminid = $this->session->userdata('userid');
+            } else if($sessionUserTypeId == 1){
                 $adminid = $this->input->get_post('adminid');
-		
+            } else if($sessionUserTypeId == 4){
+                $adminid = $this->session->userdata('adminid');
             }
         }
 	$userType="3";
@@ -442,9 +454,10 @@ class Product extends CI_Controller
             $sessionUserTypeId = $this->session->userdata('usertypeid');
             if($sessionUserTypeId == 2){
                 $adminid = $this->session->userdata('userid');
-            } else {
-                echo $adminid;
+            } else if($sessionUserTypeId == 1){
                 $adminid = $this->input->get_post('adminid');
+            } else if($sessionUserTypeId == 4){
+                $adminid = $this->session->userdata('adminid');
             }
         }
 
@@ -480,8 +493,10 @@ class Product extends CI_Controller
             $sessionUserTypeId = $this->session->userdata('usertypeid');
             if($sessionUserTypeId == 2){
                 $adminid = $this->session->userdata('userid');
-            } else {
+            } else if($sessionUserTypeId == 1){
                 $adminid = $this->input->get_post('adminid');
+            } else if($sessionUserTypeId == 4){
+                $adminid = $this->session->userdata('adminid');
             }
         }
 

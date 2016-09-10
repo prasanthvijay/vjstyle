@@ -81,7 +81,7 @@
             </div>
             <div class="form-group m-b-0">
                 <div class="col-sm-offset-3 col-sm-9 m-t-15">
-                    <button type="submit" value="product" id="submit" name="submit"
+                    <button type="submit" value="Product" id="submit" name="submit"
                             class="btn btn-primary waves-effect waves-light">
                         Submit
                     </button>
