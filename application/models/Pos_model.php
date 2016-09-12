@@ -40,7 +40,7 @@ class Pos_model extends CI_Model
 	//$this->db->select('productid,productname,barcode');
 	//$this->db->where('productid', $productId);
 	//$q = $this->db->get('tbl_product');
-		$sql = "SELECT t.productid,t.productname,t.barcode,a.price,a.quantity FROM tbl_product t INNER JOIN tbl_productMapping a WHERE t.productid ='" . $productId . "' and a.showroomId ='" .$retailerShowRoomId."'";
+		$sql = "SELECT t.productid,t.productname,t.barcode,a.price,a.quantity FROM tbl_product t INNER JOIN tbl_productMapping a WHERE t.productid ='" . $productId . "' and a.showroomId ='" .$retailerShowRoomId."' and a.productId ='" . $productId . "'";
 		$executeQuery = $this->db->query($sql);
 		$returnValue = $executeQuery->result_array();
 		return $returnValue;

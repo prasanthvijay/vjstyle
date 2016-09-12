@@ -38,7 +38,7 @@
 				             			
 						 </select>
                                             </div>
-                                        </div>			
+                                        </div>	  </div>			
                                         
                                        	<div id="qytDiv">
                                         <div class="form-group">
@@ -53,7 +53,7 @@
                                             <div class="col-sm-6">
                                                 <input type="text" id="Incquantity" name="Incquantity" readonly class="form-control" required  placeholder="Increment Quantity" />
                                             </div>
-                                        </div></div>
+                                        </div>
 							 
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Avalable Price</label>
@@ -61,6 +61,14 @@
                                                 <input type="text" id="price" name="price" class="form-control" required  placeholder="Avalable Price" />
                                             </div>
                                         </div>
+					</div>
+ <div class="form-group">
+                                            <label class="col-sm-3 control-label">Update Price</label>
+                                            <div class="col-sm-1">
+                                                <input type="checkbox" id="price" name="price" class="form-control" required   />
+                                            </div><div id="updatePriceDiv"></div>
+                                        </div>
+					</div>
 					</div>
                                         <div class="form-group m-b-0">
                                             <div class="col-sm-offset-3 col-sm-9 m-t-15">
@@ -85,5 +93,13 @@ $.get("getContent",{showroomId: val,type: "product"},function(data){
 $('#productDiv').html(data);
     });
 }
+function productQtyandPrice(val)
+{
+var showroomId=$('#showroomId').val();
+$.get("getContent",{showroomId:showroomId, productId: val,type: "productQtyandPrice"},function(data){
+$('#qytDiv').html(data);
+    });
+}
+
 </script>
 

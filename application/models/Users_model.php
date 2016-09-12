@@ -603,12 +603,11 @@ class Users_model extends CI_Model
 
         return $Quantity;
     }
-
-    public function getshowroomList($userType)
+ public function getshowroomList($userType,$retailerShowRoomId)
     {
 
         $showroomArray = array();
-        $sql = "SELECT  name,userid FROM `tbl_user` t WHERE t.active = 'active' and usertypeid='".$userType."'";
+        $sql = "SELECT  name,userid FROM `tbl_user` t WHERE t.active = 'active' and adminid='".$userType."'and usertypeid='".$retailerShowRoomId."'";
         /*if ($adminid != "" && $adminid != null) {
             $sql .= "and usertypeid='".$userType."' ";
         }
@@ -630,17 +629,37 @@ class Users_model extends CI_Model
         $this->db->query($sql);
     }
 
-	public function mappedProduct($showroomId)
+	public function mappedProduct($productId,$showroomId,$adminid)
     	{
+
   	$productListArray = array();
- 	$sql = "SELECT t.productid,t.productname FROM tbl_product t INNER JOIN tbl_productMapping a WHERE  a.showroomId ='" .$showroomId."'";
-  $userQuery = $this->db->query($sql);
-        $k = 0;
-        foreach ($userQuery->result() as $row) {
-	$productListArray[$k]['productid']= $row->productid;
-	$productListArray[$k]['productname']= $row->productname;
-	$k++;	
-	}
+	
+		if($productId==""){
+		 	$sql = "SELECT t.productid,t.productname FROM tbl_product t INNER JOIN tbl_productMapping a WHERE  a.showroomId ='" .$showroomId."' and t.adminid='".$adminid."'";
+		  $userQuery = $this->db->query($sql);
+			$k = 0;
+			foreach ($userQuery->result() as $row) {
+			$productListArray[$k]['productid']= $row->productid;
+			$productListArray[$k]['productname']= $row->productname;
+
+			$k++;	
+			}
+		}
+		else
+		{
+			$sql = "SELECT a.price,a.quantity, sum(b.qty) as qyt FROM tbl_productMapping a INNER JOIN tbl_customerreceiptproduct b  WHERE  a.showroomId ='" .$showroomId."' and a.adminid='".$adminid."' and b.productId='".$productId."' and a.productId='".$productId."' ";
+			
+		  $userQuery = $this->db->query($sql);
+			$k = 0;
+			foreach ($userQuery->result() as $row) {
+			$totalPQty=$productListArray[$k]['quantity']= $row->quantity;
+			$productListArray[$k]['price']= $row->price;
+			$salesQty=$productListArray[$k]['qyt']= $row->qyt;
+			$avalableQty=$totalPQty-$salesQty;
+			$productListArray[0]['avalableQty']=$avalableQty;
+			$k++;	
+			}
+		}	
     return $productListArray;
 	}
 }

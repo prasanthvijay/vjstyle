@@ -436,8 +436,10 @@ class Product extends CI_Controller
                 $adminid = $this->session->userdata('adminid');
             }
         }
-	$userType="3";
-	$showroomArray = $this->users_model->getshowroomList($userType);
+	$retailerShowRoomId="3";
+echo "<br><br><br><br><br><br><br>";
+	print_r($_SESSION);
+	$showroomArray = $this->users_model->getshowroomList($adminid,$retailerShowRoomId);
 	 $dataheader['showroomArray'] = $showroomArray;
 	$dataheader['adminid'] = $adminid;
 	$dataheader['title'] = "MapProduct";
@@ -480,8 +482,17 @@ class Product extends CI_Controller
 	
 	if($type=='product'){
  	$showroomId = $this->input->get('showroomId');
-	$productListArray=$this->users_model->mappedProduct($showroomId);
+	$productId="";
+	$productListArray=$this->users_model->mappedProduct($productId,$showroomId,$adminid);
+
 	$dataheader['productListArray'] = $productListArray;
+	$dataheader['showroomId'] = $showroomId;
+	}
+	if($type=='productQtyandPrice'){
+	$productId = $this->input->get('productId');
+	$showroomId = $this->input->get('showroomId');
+	$productQytArray=$this->users_model->mappedProduct($productId,$showroomId,$adminid);
+	$dataheader['productQytArray'] = $productQytArray;
 	}
 	$dataheader['type'] = $type;
         $dataheader['count'] = $count;
