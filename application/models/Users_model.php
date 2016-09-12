@@ -254,6 +254,66 @@ class Users_model extends CI_Model
         return $ProductList;
     }
 
+    public function getBrandIdAndNameArray($adminid, $actionId)
+    {
+        $BrandArray = array();
+        $sql = "SELECT * FROM `tbl_brand` t WHERE t.active = 'active' ";
+        if ($adminid != "" && $adminid != null) {
+            $sql .= " and adminid = '" . $adminid . "' ";
+        }
+
+        if ($actionId != "" && $actionId != null && $actionId!="0" && $actionId!=0) {
+            $sql .= " and brandid = '" . $actionId . "' ";
+        }
+        $sql = $sql . " order by brandid desc";
+        $userQuery = $this->db->query($sql);
+
+        $k = 0;
+        foreach ($userQuery->result() as $row) {
+            $BrandArray[$row->brandid] = $row->brandname;
+        }
+
+        return $BrandArray;
+    }
+
+    public function getSizeIdAndNameArray($adminid, $actionId)
+    {
+        $SizeArray = array();
+        $sql = "SELECT * FROM `tbl_sizemaster` t WHERE t.active = 'active'  and adminId = '" . $adminid . "' ";
+
+        if ($actionId != "" && $actionId != null && $actionId!="0" && $actionId!=0) {
+            $sql .= " and sizeid = '" . $actionId . "' ";
+        }
+
+        $sql = $sql . " order by sizeid desc";
+        $userQuery = $this->db->query($sql);
+
+        foreach ($userQuery->result() as $row) {
+            $SizeArray[$row->sizeid] = $row->size;
+        }
+
+        return $SizeArray;
+    }
+
+    public function getCategoryTypeIdAndNameArray($adminid, $actionId)
+    {
+        $CategoryTypeArray = array();
+        $sql = "SELECT * FROM `tbl_categorytype` t WHERE t.active = 'active'  and adminId = '" . $adminid . "' ";
+
+        if ($actionId != "" && $actionId != null && $actionId!="0" && $actionId!=0) {
+            $sql .= " and categorytypeid = '" . $actionId . "' ";
+        }
+
+        $sql = $sql . " order by categorytypeid desc";
+        $userQuery = $this->db->query($sql);
+        $k = 0;
+        foreach ($userQuery->result() as $row) {
+            $CategoryTypeArray[$row->categorytypeid] = $row->categorytype;
+        }
+
+        return $CategoryTypeArray;
+    }
+
     public function createUserMaster($userDetailsArray)
     {
         $doj = $userDetailsArray['doj'];

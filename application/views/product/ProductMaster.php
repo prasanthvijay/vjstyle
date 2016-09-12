@@ -36,6 +36,8 @@
                             <th>Product Rate</th>
 <!--                            <th>Quantity</th>-->
                             <th>Barcode</th>
+                            <th>Brand</th>
+                            <th>Category Type</th>
                             <th>Product Size</th>
                             <th>Edit</th>
                             <th>Delete</th>
@@ -52,7 +54,27 @@
                                 <td><?php echo $ProductList[$i]['productrate']; ?></td>
 <!--                                <td>--><?php //echo $ProductList[$i]['availablequantity']; ?><!--</td>-->
                                 <td><?php echo $ProductList[$i]['barcode']; ?></td>
-                                <td><?php echo $ProductList[$i]['productsize']; ?></td>
+                                <td>
+                                    <?php
+                                        if(array_key_exists($ProductList[$i]['brandid'], $BrandArray)){
+                                            echo $BrandArray[$ProductList[$i]['brandid']];
+                                        }
+                                    ?>
+                                </td>
+                                <td>
+                                    <?php
+                                    if(array_key_exists($ProductList[$i]['categorytypeid'], $CategoryTypeArray)){
+                                        echo $CategoryTypeArray[$ProductList[$i]['categorytypeid']];
+                                    }
+                                    ?>
+                                </td>
+                                <td>
+                                    <?php
+                                    if(array_key_exists($ProductList[$i]['productsize'], $SizeArray)){
+                                        echo $SizeArray[$ProductList[$i]['productsize']];
+                                    }
+                                    ?>
+                                </td>
                                 <td>
                                     <button class="btn btn-primary waves-effect waves-light" type="button" onclick="getAddOrEditModalContent('actionType=Edit&actionId=<?php echo $productId; ?>', '<?php echo $loadAddOrEditModalUrl; ?>')">
                                         Edit

@@ -291,6 +291,12 @@ class Product extends CI_Controller
         $dataheader['title'] = "Product";
         $productId = "0";
         $ProductList = $this->users_model->getProductList($adminid, $productId);
+        $BrandArray = $this->users_model->getBrandIdAndNameArray($adminid, "0");
+        $SizeArray = $this->users_model->getSizeIdAndNameArray($adminid, "0");
+        $CategoryTypeArray = $this->users_model->getCategoryTypeIdAndNameArray($adminid, "0");
+        $dataheader['BrandArray'] = $BrandArray;
+        $dataheader['SizeArray'] = $SizeArray;
+        $dataheader['CategoryTypeArray'] = $CategoryTypeArray;
 
         $dataheader['ProductList'] = $ProductList;
         $this->load->view('layout/backend_header', $dataheader);
