@@ -634,7 +634,7 @@ class Users_model extends CI_Model
 
   	$productListArray = array();
 	
-		if($productId==""){
+		/*if($productId==""){
 		 	$sql = "SELECT t.productid,t.productname FROM tbl_product t INNER JOIN tbl_productMapping a WHERE  a.showroomId ='" .$showroomId."' and t.adminid='".$adminid."'";
 		  $userQuery = $this->db->query($sql);
 			$k = 0;
@@ -642,13 +642,13 @@ class Users_model extends CI_Model
 			$productListArray[$k]['productid']= $row->productid;
 			$productListArray[$k]['productname']= $row->productname;
 
-			$k++;	
+			$k++;
 			}
 		}
 		else
 		{
 			$sql = "SELECT a.price,a.quantity, sum(b.qty) as qyt FROM tbl_productMapping a INNER JOIN tbl_customerreceiptproduct b  WHERE  a.showroomId ='" .$showroomId."' and a.adminid='".$adminid."' and b.productId='".$productId."' and a.productId='".$productId."' ";
-			
+
 		  $userQuery = $this->db->query($sql);
 			$k = 0;
 			foreach ($userQuery->result() as $row) {
@@ -657,9 +657,27 @@ class Users_model extends CI_Model
 			$salesQty=$productListArray[$k]['qyt']= $row->qyt;
 			$avalableQty=$totalPQty-$salesQty;
 			$productListArray[0]['avalableQty']=$avalableQty;
-			$k++;	
+			$k++;
 			}
-		}	
+		}*/
+
+            echo $sql = "SELECT t.productid, t.productname, a.price, a.quantity, sum(b.qty) as qty  FROM tbl_product t INNER JOIN tbl_productMapping a on t.productid = a.productid LEFT JOIN tbl_customerreceiptproduct b on t.productId = b.productid  WHERE  a.showroomId ='" . $showroomId . "' and t.adminid='" . $adminid . "' group by t.productId";
+            if($productId==""){
+                $sql = $sql . "and t.productid = '" . $productId . "'";
+            }
+            $userQuery = $this->db->query($sql);
+            $k = 0;
+            foreach ($userQuery->result() as $row) {
+                $productListArray[$k]['productid'] = $row->productid;
+                $productListArray[$k]['productname'] = $row->productname;
+                $productListArray[$k]['price']= $row->price;
+                $avalableQty = $row->quantity;
+                $productListArray[$k]['avalableQty']=$avalableQty;
+                $productListArray[$k]['qty'] = $row->qty;
+                $k++;
+            }
+
+            print_r($productListArray);
     return $productListArray;
 	}
 }
