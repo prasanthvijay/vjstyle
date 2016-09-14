@@ -14,7 +14,8 @@ class Users_model extends CI_Model
         $this->load->database();
     }
 
-    public function insertAndReturnOTP($emailid){
+    public function insertAndReturnOTP($emailid)
+    {
         $otp = "";
         $userArray = array();
         if ($emailid != "" && $emailid != null) {
@@ -22,17 +23,17 @@ class Users_model extends CI_Model
             $sql .= " and email = '" . $emailid . "' ";
             $userQuery = $this->db->query($sql);
             $k = 0;
-            $userId  = "";
+            $userId = "";
             foreach ($userQuery->result() as $row) {
                 $userId = $row->userid;
             }
 
-            if($userId !=""){
-                $otp  = rand(100000,999999);
+            if ($userId != "") {
+                $otp = rand(100000, 999999);
                 $createdAt = Date("now");
                 $expiryDate = Date("now");
                 $active = "active";
-                $forgotSql = "INSERT INTO `tbl_forgotPasswordRequest`( `userid`, `otp`, `createdAt`, `expiryDate`, `active`) VALUES (".$this->db->escape($userId) .",".$this->db->escape($otp) .",".$this->db->escape($createdAt) .",".$this->db->escape($expiryDate) .",".$this->db->escape($active) .")";
+                $forgotSql = "INSERT INTO `tbl_forgotPasswordRequest`( `userid`, `otp`, `createdAt`, `expiryDate`, `active`) VALUES (" . $this->db->escape($userId) . "," . $this->db->escape($otp) . "," . $this->db->escape($createdAt) . "," . $this->db->escape($expiryDate) . "," . $this->db->escape($active) . ")";
                 $this->db->query($forgotSql);
             }
         }
@@ -40,29 +41,32 @@ class Users_model extends CI_Model
         return $otp;
     }
 
-    public function getSuccessMsgOTPUpdated($email, $otptext){
-        $resultArray = array('successMsg'=>0, 'userid'=>null);
+    public function getSuccessMsgOTPUpdated($email, $otptext)
+    {
+        $resultArray = array('successMsg' => 0, 'userid' => null);
         $userSql = "SELECT userid FROM `tbl_user` t WHERE t.active = 'active' and email = '" . $email . "' ";
         $sql = "SELECT userid FROM `tbl_forgotPasswordRequest` t WHERE t.active = 'active' ";
         $sql .= " and otp = '" . $otptext . "' ";
         $sql .= " and userid in ($userSql) ";
         $userQuery = $this->db->query($sql);
         $returnValue = $userQuery->result_array();
-        if(count($returnValue)>0)
-            $resultArray = array('successMsg'=>1, 'userid'=>$returnValue[0]['userid']);
+        if (count($returnValue) > 0)
+            $resultArray = array('successMsg' => 1, 'userid' => $returnValue[0]['userid']);
 
         return $resultArray;
     }
 
-    public function updateUsersPassword($userId, $newPassword){
-        if($userId!=null && $newPassword!=""){
-            $sql = "UPDATE tbl_user set password = ".$this->db->escape($newPassword) ." where userid = ".$this->db->escape($userId);
+    public function updateUsersPassword($userId, $newPassword)
+    {
+        if ($userId != null && $newPassword != "") {
+            $sql = "UPDATE tbl_user set password = " . $this->db->escape($newPassword) . " where userid = " . $this->db->escape($userId);
             $this->db->query($sql);
         }
     }
 
-    public function sendEmail($fromMailId, $fromMailName, $tomailIdArray, $subject, $message){
-        if($fromMailId!="" && $fromMailId!=null){
+    public function sendEmail($fromMailId, $fromMailName, $tomailIdArray, $subject, $message)
+    {
+        if ($fromMailId != "" && $fromMailId != null) {
             $fromMailId = $fromMailId;
             $fromMailName = $fromMailName;
         } else {
@@ -71,7 +75,7 @@ class Users_model extends CI_Model
         }
 
 //        print_r($tomailIdArray);
-        $ci=get_instance();
+        $ci = get_instance();
         $ci->load->library('email');
         $ci->email->from($fromMailId, $fromMailName);
         $ci->email->to($tomailIdArray);
@@ -115,16 +119,16 @@ class Users_model extends CI_Model
     public function getSuccessMsg($output)
     {
         $successMsg = "";
-        $responseMsg  = "";
-        $responseStatus  = "";
+        $responseMsg = "";
+        $responseStatus = "";
         if (isset($output)) {
             $responseStatus = $output['status'];
             $responseMsg = $output['message'];
         }
 
-        if($responseStatus == 1) {
+        if ($responseStatus == 1) {
             $successMsg = "<div class=\"alert alert-success alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>" . $responseMsg . "</div>";
-        } else if($responseStatus == 2) {
+        } else if ($responseStatus == 2) {
             $successMsg = "<div class=\"alert alert-danger alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>" . $responseMsg . "</div>";
         }
 
@@ -162,7 +166,7 @@ class Users_model extends CI_Model
             $sql .= " and adminid = '" . $adminid . "' ";
         }
 
-        if($userid !="" && $userid!=null){
+        if ($userid != "" && $userid != null) {
             $sql .= " and userid = '" . $userid . "' ";
         }
 
@@ -202,7 +206,7 @@ class Users_model extends CI_Model
             $sql .= " and adminid = '" . $adminid . "' ";
         }
 
-        if ($actionId != "" && $actionId != null && $actionId!="0" && $actionId!=0) {
+        if ($actionId != "" && $actionId != null && $actionId != "0" && $actionId != 0) {
             $sql .= " and brandid = '" . $actionId . "' ";
         }
         $sql = $sql . " order by brandid desc";
@@ -230,7 +234,7 @@ class Users_model extends CI_Model
             $sql .= " and adminid = '" . $adminid . "' ";
         }
 
-        if($productId !="0" && $productId!="" && $productId!=null){
+        if ($productId != "0" && $productId != "" && $productId != null) {
             $sql .= " and productid = '" . $productId . "' ";
         }
 
@@ -262,7 +266,7 @@ class Users_model extends CI_Model
             $sql .= " and adminid = '" . $adminid . "' ";
         }
 
-        if ($actionId != "" && $actionId != null && $actionId!="0" && $actionId!=0) {
+        if ($actionId != "" && $actionId != null && $actionId != "0" && $actionId != 0) {
             $sql .= " and brandid = '" . $actionId . "' ";
         }
         $sql = $sql . " order by brandid desc";
@@ -281,7 +285,7 @@ class Users_model extends CI_Model
         $SizeArray = array();
         $sql = "SELECT * FROM `tbl_sizemaster` t WHERE t.active = 'active'  and adminId = '" . $adminid . "' ";
 
-        if ($actionId != "" && $actionId != null && $actionId!="0" && $actionId!=0) {
+        if ($actionId != "" && $actionId != null && $actionId != "0" && $actionId != 0) {
             $sql .= " and sizeid = '" . $actionId . "' ";
         }
 
@@ -300,7 +304,7 @@ class Users_model extends CI_Model
         $CategoryTypeArray = array();
         $sql = "SELECT * FROM `tbl_categorytype` t WHERE t.active = 'active'  and adminId = '" . $adminid . "' ";
 
-        if ($actionId != "" && $actionId != null && $actionId!="0" && $actionId!=0) {
+        if ($actionId != "" && $actionId != null && $actionId != "0" && $actionId != 0) {
             $sql .= " and categorytypeid = '" . $actionId . "' ";
         }
 
@@ -317,17 +321,17 @@ class Users_model extends CI_Model
     public function createUserMaster($userDetailsArray)
     {
         $doj = $userDetailsArray['doj'];
-        if($doj == NULL){
+        if ($doj == NULL) {
             $doj = "0000-00-00";
         }
 
         $dob = $userDetailsArray['dob'];
-        if($dob == NULL){
+        if ($dob == NULL) {
             $dob = "0000-00-00";
         }
 
         $retailershowroomid = $userDetailsArray['retailershowroomid'];
-        if($retailershowroomid == NULL){
+        if ($retailershowroomid == NULL) {
             $retailershowroomid = 0;
         }
 
@@ -335,23 +339,24 @@ class Users_model extends CI_Model
         $this->db->query($sql);
     }
 
-    public function updateUserMaster($userDetailsArray){
+    public function updateUserMaster($userDetailsArray)
+    {
         $doj = $userDetailsArray['doj'];
-        if($doj == NULL){
+        if ($doj == NULL) {
             $doj = "0000-00-00";
         }
 
         $dob = $userDetailsArray['dob'];
-        if($dob == NULL){
+        if ($dob == NULL) {
             $dob = "0000-00-00";
         }
 
         $retailershowroomid = $userDetailsArray['retailershowroomid'];
-        if($retailershowroomid == NULL){
+        if ($retailershowroomid == NULL) {
             $retailershowroomid = 0;
         }
 
-        $sql = "Update tbl_user SET name = ".$this->db->escape($userDetailsArray['name']).", email = ".$this->db->escape($userDetailsArray['email']).", password = ".$this->db->escape($userDetailsArray['password']).", mobile = ".$this->db->escape($userDetailsArray['mobile']).", address = ".$this->db->escape($userDetailsArray['address']) .", doj = ".$this->db->escape($doj).", dob =".$this->db->escape($dob)." WHERE userid=".$userDetailsArray['userid'];
+        $sql = "Update tbl_user SET name = " . $this->db->escape($userDetailsArray['name']) . ", email = " . $this->db->escape($userDetailsArray['email']) . ", password = " . $this->db->escape($userDetailsArray['password']) . ", mobile = " . $this->db->escape($userDetailsArray['mobile']) . ", address = " . $this->db->escape($userDetailsArray['address']) . ", doj = " . $this->db->escape($doj) . ", dob =" . $this->db->escape($dob) . " WHERE userid=" . $userDetailsArray['userid'];
         $this->db->query($sql);
     }
 
@@ -363,40 +368,40 @@ class Users_model extends CI_Model
 
     public function updateBrandMaster($BrandDetailsArray)
     {
-        $sql = "UPDATE tbl_brand set brandname = " . $this->db->escape($BrandDetailsArray['brandname']) . " where brandid = ".$this->db->escape($BrandDetailsArray['brandid'])." and adminid = ". $this->db->escape($BrandDetailsArray['adminid']);
+        $sql = "UPDATE tbl_brand set brandname = " . $this->db->escape($BrandDetailsArray['brandname']) . " where brandid = " . $this->db->escape($BrandDetailsArray['brandid']) . " and adminid = " . $this->db->escape($BrandDetailsArray['adminid']);
         return $this->db->query($sql);
     }
 
     public function deleteBrandMaster($BrandDetailsArray)
     {
         $active = "deleted";
-        $sql = "UPDATE tbl_brand set active = " . $this->db->escape($active) . " where brandid = ".$this->db->escape($BrandDetailsArray['brandid'])." and adminid = ". $this->db->escape($BrandDetailsArray['adminid']);
+        $sql = "UPDATE tbl_brand set active = " . $this->db->escape($active) . " where brandid = " . $this->db->escape($BrandDetailsArray['brandid']) . " and adminid = " . $this->db->escape($BrandDetailsArray['adminid']);
         return $this->db->query($sql);
     }
 
     public function updateSizeMaster($SizeDetailsArray)
     {
-        $sql = "UPDATE tbl_sizemaster set size = " . $this->db->escape($SizeDetailsArray['size']) . " where sizeid = ".$this->db->escape($SizeDetailsArray['sizeid'])." and adminid = ". $this->db->escape($SizeDetailsArray['adminid']);
+        $sql = "UPDATE tbl_sizemaster set size = " . $this->db->escape($SizeDetailsArray['size']) . " where sizeid = " . $this->db->escape($SizeDetailsArray['sizeid']) . " and adminid = " . $this->db->escape($SizeDetailsArray['adminid']);
         return $this->db->query($sql);
     }
 
     public function deleteSizeMaster($SizeDetailsArray)
     {
         $active = "deleted";
-        $sql = "UPDATE tbl_sizemaster set active = " . $this->db->escape($active) . " where sizeid = ".$this->db->escape($SizeDetailsArray['sizeid'])." and adminid = ". $this->db->escape($SizeDetailsArray['adminid']);
+        $sql = "UPDATE tbl_sizemaster set active = " . $this->db->escape($active) . " where sizeid = " . $this->db->escape($SizeDetailsArray['sizeid']) . " and adminid = " . $this->db->escape($SizeDetailsArray['adminid']);
         return $this->db->query($sql);
     }
 
     public function updateCategoryTypeMaster($SizeDetailsArray)
     {
-        $sql = "UPDATE tbl_categorytype set categorytype = " . $this->db->escape($SizeDetailsArray['categoryType']) . " where categorytypeid = ".$this->db->escape($SizeDetailsArray['categorytypeid'])." and adminid = ". $this->db->escape($SizeDetailsArray['adminid']);
+        $sql = "UPDATE tbl_categorytype set categorytype = " . $this->db->escape($SizeDetailsArray['categoryType']) . " where categorytypeid = " . $this->db->escape($SizeDetailsArray['categorytypeid']) . " and adminid = " . $this->db->escape($SizeDetailsArray['adminid']);
         return $this->db->query($sql);
     }
 
     public function deleteCategoryTypeMaster($CategoryTypeDetailsArray)
     {
         $active = "deleted";
-        $sql = "UPDATE tbl_categorytype set active = " . $this->db->escape($active) . " where categorytypeid = ".$this->db->escape($CategoryTypeDetailsArray['categorytypeid'])." and adminid = ". $this->db->escape($CategoryTypeDetailsArray['adminid']);
+        $sql = "UPDATE tbl_categorytype set active = " . $this->db->escape($active) . " where categorytypeid = " . $this->db->escape($CategoryTypeDetailsArray['categorytypeid']) . " and adminid = " . $this->db->escape($CategoryTypeDetailsArray['adminid']);
         return $this->db->query($sql);
     }
 
@@ -409,7 +414,7 @@ class Users_model extends CI_Model
     public function deleteProductMaster($ProductDetailsDeleteArray)
     {
         $active = "deleted";
-        $sql = "UPDATE tbl_product set active = " . $this->db->escape($active) . " where productid = ".$this->db->escape($ProductDetailsDeleteArray['productid'])." and adminid = ". $this->db->escape($ProductDetailsDeleteArray['adminid']);
+        $sql = "UPDATE tbl_product set active = " . $this->db->escape($active) . " where productid = " . $this->db->escape($ProductDetailsDeleteArray['productid']) . " and adminid = " . $this->db->escape($ProductDetailsDeleteArray['adminid']);
         return $this->db->query($sql);
     }
 
@@ -423,7 +428,7 @@ class Users_model extends CI_Model
 
     public function updateProductMaster($ProductDetailsArray)
     {
-        $sql = "UPDATE tbl_product set productname = ".$this->db->escape($ProductDetailsArray['productname']).", productrate = ".$this->db->escape($ProductDetailsArray['price']).", productsize = ".$this->db->escape($ProductDetailsArray['size']).", barcode = ".$this->db->escape($ProductDetailsArray['barcode']).", categorytypeid = ".$this->db->escape($ProductDetailsArray['categorytypeid']).", brandid = ".$this->db->escape($ProductDetailsArray['brandname']). " where productid = ".$this->db->escape($ProductDetailsArray['productid'])." and adminid = ".$this->db->escape($ProductDetailsArray['adminid']);
+        $sql = "UPDATE tbl_product set productname = " . $this->db->escape($ProductDetailsArray['productname']) . ", productrate = " . $this->db->escape($ProductDetailsArray['price']) . ", productsize = " . $this->db->escape($ProductDetailsArray['size']) . ", barcode = " . $this->db->escape($ProductDetailsArray['barcode']) . ", categorytypeid = " . $this->db->escape($ProductDetailsArray['categorytypeid']) . ", brandid = " . $this->db->escape($ProductDetailsArray['brandname']) . " where productid = " . $this->db->escape($ProductDetailsArray['productid']) . " and adminid = " . $this->db->escape($ProductDetailsArray['adminid']);
         $this->db->query($sql);
     }
 
@@ -437,7 +442,7 @@ class Users_model extends CI_Model
             $email = $userDetailsArray['email'];
             $alreadyExistList = self::getUsersExistList($email);
 
-            if((count($alreadyExistList) > 0 && $action =='Add') || count($alreadyExistList) > 1 && $action =='Edit' ){
+            if ((count($alreadyExistList) > 0 && $action == 'Add') || count($alreadyExistList) > 1 && $action == 'Edit') {
                 $validationArray['validateSuccess'] = 1;
                 $validationArray['errorMsg'] = "Emails Already Exist";
             } else {
@@ -472,10 +477,11 @@ class Users_model extends CI_Model
         return $userArray;
     }
 
-    public function getRedirectURLForMaster($usertypeid){
+    public function getRedirectURLForMaster($usertypeid)
+    {
 
         $redirectUrl = "";
-        switch ($usertypeid){
+        switch ($usertypeid) {
             case 1 :
                 $redirectUrl = "Frontend/adminMaster";
                 break;
@@ -498,10 +504,11 @@ class Users_model extends CI_Model
         return $redirectUrl;
     }
 
-    public function deleteUsersFromMaster($userid, $adminid){
+    public function deleteUsersFromMaster($userid, $adminid)
+    {
         $success = 0;
-        if($userid !="" && $adminid!=""){
-            $sql = "Update tbl_user set active = 'deleted' where active='active' and userid=".$userid." and adminid=".$adminid;
+        if ($userid != "" && $adminid != "") {
+            $sql = "Update tbl_user set active = 'deleted' where active='active' and userid=" . $userid . " and adminid=" . $adminid;
             $success = $this->db->query($sql);
         }
         return $success;
@@ -520,6 +527,7 @@ class Users_model extends CI_Model
         }
         return $returnBookingDate;
     }
+
     public function createSizeMaster($SizeDetailsArray)
     {
         $sql = "INSERT INTO tbl_sizemaster (size,adminid,createdat) " . "VALUES (" . $this->db->escape($SizeDetailsArray['size']) . "," . $this->db->escape($SizeDetailsArray['adminid']) . "," . $this->db->escape($SizeDetailsArray['createdAt']) . ")";
@@ -535,7 +543,7 @@ class Users_model extends CI_Model
             $sql .= " and adminId = '" . $adminid . "' ";
         }
 
-        if ($actionId != "" && $actionId != null && $actionId!="0" && $actionId!=0) {
+        if ($actionId != "" && $actionId != null && $actionId != "0" && $actionId != 0) {
             $sql .= " and sizeid = '" . $actionId . "' ";
         }
 
@@ -563,7 +571,7 @@ class Users_model extends CI_Model
             $sql .= " and adminId = '" . $adminid . "' ";
         }
 
-        if ($actionId != "" && $actionId != null && $actionId!="0" && $actionId!=0) {
+        if ($actionId != "" && $actionId != null && $actionId != "0" && $actionId != 0) {
             $sql .= " and categorytypeid = '" . $actionId . "' ";
         }
 
@@ -603,11 +611,12 @@ class Users_model extends CI_Model
 
         return $Quantity;
     }
- public function getshowroomList($userType,$retailerShowRoomId)
+
+    public function getshowroomList($userType, $retailerShowRoomId)
     {
 
         $showroomArray = array();
-        $sql = "SELECT  name,userid FROM `tbl_user` t WHERE t.active = 'active' and adminid='".$userType."'and usertypeid='".$retailerShowRoomId."'";
+        $sql = "SELECT  name,userid FROM `tbl_user` t WHERE t.active = 'active' and adminid='" . $userType . "'and usertypeid='" . $retailerShowRoomId . "'";
         /*if ($adminid != "" && $adminid != null) {
             $sql .= "and usertypeid='".$userType."' ";
         }
@@ -629,57 +638,59 @@ class Users_model extends CI_Model
         $this->db->query($sql);
     }
 
-	public function mappedProduct($productId,$showroomId,$adminid)
-    	{
+    public function mappedProduct($productId, $showroomId, $adminid, $type)
+    {
 
-  	$productListArray = array();
-	
-		/*if($productId==""){
-		 	$sql = "SELECT t.productid,t.productname FROM tbl_product t INNER JOIN tbl_productMapping a WHERE  a.showroomId ='" .$showroomId."' and t.adminid='".$adminid."'";
-		  $userQuery = $this->db->query($sql);
-			$k = 0;
-			foreach ($userQuery->result() as $row) {
-			$productListArray[$k]['productid']= $row->productid;
-			$productListArray[$k]['productname']= $row->productname;
+        $productListArray = array();
 
-			$k++;
-			}
-		}
-		else
-		{
-			$sql = "SELECT a.price,a.quantity, sum(b.qty) as qyt FROM tbl_productMapping a INNER JOIN tbl_customerreceiptproduct b  WHERE  a.showroomId ='" .$showroomId."' and a.adminid='".$adminid."' and b.productId='".$productId."' and a.productId='".$productId."' ";
-
-		  $userQuery = $this->db->query($sql);
-			$k = 0;
-			foreach ($userQuery->result() as $row) {
-			$totalPQty=$productListArray[$k]['quantity']= $row->quantity;
-			$productListArray[$k]['price']= $row->price;
-			$salesQty=$productListArray[$k]['qyt']= $row->qyt;
-			$avalableQty=$totalPQty-$salesQty;
-			$productListArray[0]['avalableQty']=$avalableQty;
-			$k++;
-			}
-		}*/
-
-            echo $sql = "SELECT t.productid, t.productname, a.price, a.quantity, sum(b.qty) as qty  FROM tbl_product t INNER JOIN tbl_productMapping a on t.productid = a.productid LEFT JOIN tbl_customerreceiptproduct b on t.productId = b.productid  WHERE  a.showroomId ='" . $showroomId . "' and t.adminid='" . $adminid . "' group by t.productId";
-            if($productId==""){
-                $sql = $sql . "and t.productid = '" . $productId . "'";
-            }
-            $userQuery = $this->db->query($sql);
+        /*if($productId==""){
+             $sql = "SELECT t.productid,t.productname FROM tbl_product t INNER JOIN tbl_productMapping a WHERE  a.showroomId ='" .$showroomId."' and t.adminid='".$adminid."'";
+          $userQuery = $this->db->query($sql);
             $k = 0;
             foreach ($userQuery->result() as $row) {
-                $productListArray[$k]['productid'] = $row->productid;
-                $productListArray[$k]['productname'] = $row->productname;
-                $productListArray[$k]['price']= $row->price;
-                $avalableQty = $row->quantity;
-                $productListArray[$k]['avalableQty']=$avalableQty;
-                $productListArray[$k]['qty'] = $row->qty;
-                $k++;
-            }
+            $productListArray[$k]['productid']= $row->productid;
+            $productListArray[$k]['productname']= $row->productname;
 
-            print_r($productListArray);
-    return $productListArray;
-	}
+            $k++;
+            }
+        }
+        else
+        {
+            $sql = "SELECT a.price,a.quantity, sum(b.qty) as qyt FROM tbl_productMapping a INNER JOIN tbl_customerreceiptproduct b  WHERE  a.showroomId ='" .$showroomId."' and a.adminid='".$adminid."' and b.productId='".$productId."' and a.productId='".$productId."' ";
+
+          $userQuery = $this->db->query($sql);
+            $k = 0;
+            foreach ($userQuery->result() as $row) {
+            $totalPQty=$productListArray[$k]['quantity']= $row->quantity;
+            $productListArray[$k]['price']= $row->price;
+            $salesQty=$productListArray[$k]['qyt']= $row->qyt;
+            $avalableQty=$totalPQty-$salesQty;
+            $productListArray[0]['avalableQty']=$avalableQty;
+            $k++;
+            }
+        }*/
+
+        $sql = "SELECT t.productid, t.productname, a.price, a.quantity, sum(b.qty) as qty  FROM tbl_product t INNER JOIN tbl_productMapping a on t.productid = a.productid LEFT JOIN tbl_customerreceiptproduct b on t.productId = b.productid  WHERE  a.showroomId ='" . $showroomId . "' and t.adminid='" . $adminid . "' ";
+        if ($productId != "") {
+            $sql = $sql . "and t.productid = '" . $productId . "'";
+        }
+        $sql = $sql . " group by t.productId";
+
+        $userQuery = $this->db->query($sql);
+        $k = 0;
+        foreach ($userQuery->result() as $row) {
+            $productListArray[$k]['productid'] = $row->productid;
+            $productListArray[$k]['productname'] = $row->productname;
+            $productListArray[$k]['price'] = $row->price;
+            $avalableQty = $row->quantity;
+            $productListArray[$k]['avalableQty'] = $avalableQty;
+            $productListArray[$k]['qty'] = $row->qty;
+            $k++;
+        }
+
+//            print_r($productListArray);
+        return $productListArray;
+    }
 }
 
 ?>

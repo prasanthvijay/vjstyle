@@ -44,17 +44,17 @@ class Product extends CI_Controller
 
         $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
         $adminid = "0";
-        if($sessionUserTypeIdIsset == 1){
+        if ($sessionUserTypeIdIsset == 1) {
             $sessionUserTypeId = $this->session->userdata('usertypeid');
-            if($sessionUserTypeId == 2){
+            if ($sessionUserTypeId == 2) {
                 $adminid = $this->session->userdata('userid');
-            } else if($sessionUserTypeId == 1){
+            } else if ($sessionUserTypeId == 1) {
                 $adminid = $this->input->get_post('adminid');
-            } else if($sessionUserTypeId == 4){
+            } else if ($sessionUserTypeId == 4) {
                 $adminid = $this->session->userdata('adminid');
             }
         }
-        
+
         $updateSuccess = 0;
         $insertSuccess = 0;
         $deletetSuccess = 0;
@@ -72,14 +72,14 @@ class Product extends CI_Controller
             $mappedprice = $this->input->get_post('mappedprice');
             $mappedqyt = $this->input->get_post('mappedqyt');
 
-            if($actionType  == "Edit" && $actionId!="0" && $actionId!="" && $actionId!=null){
-                $ProductDetailsArray = array('productid'=> $actionId, 'productname' => $productname, 'price' => $price, 'size' => $size, 'barcode' => $barcode, 'categorytypeid' => $categorytypeid, 'brandname' => $brandname, 'adminid' => $adminid);
+            if ($actionType == "Edit" && $actionId != "0" && $actionId != "" && $actionId != null) {
+                $ProductDetailsArray = array('productid' => $actionId, 'productname' => $productname, 'price' => $price, 'size' => $size, 'barcode' => $barcode, 'categorytypeid' => $categorytypeid, 'brandname' => $brandname, 'adminid' => $adminid);
                 $this->users_model->updateProductMaster($ProductDetailsArray); //For admin
-            } else if($actionType  == "Delete" && $actionId!="0" && $actionId!="" && $actionId!=null){
-                $ProductDetailsDeleteArray = array('productid'=>$actionId, 'adminid'=>$adminid);
+            } else if ($actionType == "Delete" && $actionId != "0" && $actionId != "" && $actionId != null) {
+                $ProductDetailsDeleteArray = array('productid' => $actionId, 'adminid' => $adminid);
                 $this->users_model->deleteProductMaster($ProductDetailsDeleteArray); //For admin
                 $output = array('status' => "1", 'message' => "Successfully deleted");
-            } else if($actionType  == "Add" || $actionType  == ""){
+            } else if ($actionType == "Add" || $actionType == "") {
                 $ProductDetailsArray = array('productname' => $productname, 'price' => $price, 'size' => $size, 'barcode' => $barcode, 'categorytypeid' => $categorytypeid, 'brandname' => $brandname, 'adminid' => $adminid, 'createdAtdate' => $createdAtdate, 'active' => $active);
                 $productId = $this->users_model->createProductMaster($ProductDetailsArray); //For admin
                 for ($i = 0; $i < count($ShowroomId); $i++) {
@@ -87,7 +87,7 @@ class Product extends CI_Controller
                     $this->users_model->createProductmappingMaster($ProductMappingArray);
                 }
             }
-            redirect(base_url()."Product/ProductMaster");
+            redirect(base_url() . "Product/ProductMaster");
         }
 
         if ($submit == "brand") {
@@ -97,31 +97,31 @@ class Product extends CI_Controller
             $BrandDetailsArray = array('brandname' => $brandname, 'brandid' => $actionId, 'adminid' => $adminid, 'createdAt' => $createdAt);
 
             $output = array('status' => "3", 'message' => "Invalid Request");
-            if($actionType  == "Edit" && $actionId!="0" && $actionId!="" && $actionId!=null){
+            if ($actionType == "Edit" && $actionId != "0" && $actionId != "" && $actionId != null) {
                 $insertSuccess = $userTypeArray = $this->users_model->updateBrandMaster($BrandDetailsArray); //For Create Brand
-                if($insertSuccess == 1){
+                if ($insertSuccess == 1) {
                     $output = array('status' => "1", 'message' => "Successfully updated");
                 } else {
                     $output = array('status' => "2", 'message' => "Invalid update");
                 }
-            } else if($actionType  == "Delete" && $actionId!="0" && $actionId!="" && $actionId!=null){
+            } else if ($actionType == "Delete" && $actionId != "0" && $actionId != "" && $actionId != null) {
                 $deletetSuccess = $userTypeArray = $this->users_model->deleteBrandMaster($BrandDetailsArray); //For Update Brand
-                if($deletetSuccess == 1){
+                if ($deletetSuccess == 1) {
                     $output = array('status' => "1", 'message' => "Successfully deleted");
-                } else{
+                } else {
                     $output = array('status' => "2", 'message' => "Please try again later");
                 }
-            } else if($actionType  == "Add" || $actionType  == ""){
+            } else if ($actionType == "Add" || $actionType == "") {
                 $updateSuccess = $userTypeArray = $this->users_model->createBrandMaster($BrandDetailsArray); //For Update Brand
-                if($updateSuccess == 1){
+                if ($updateSuccess == 1) {
                     $output = array('status' => "1", 'message' => "Successfully created");
-                } else{
+                } else {
                     $output = array('status' => "2", 'message' => "Please try again later");
                 }
             }
             $this->session->set_flashdata('output', $output);
 
-            redirect(base_url()."Product/BrandMaster");
+            redirect(base_url() . "Product/BrandMaster");
         }
 
         if ($submit == "size") {
@@ -131,63 +131,63 @@ class Product extends CI_Controller
             $SizeDetailsArray = array('size' => $size, 'sizeid' => $actionId, 'adminid' => $adminid, 'createdAt' => $createdAt);
 
             $output = array('status' => "3", 'message' => "Invalid Request");
-            if($actionType  == "Edit" && $actionId!="0" && $actionId!="" && $actionId!=null){
+            if ($actionType == "Edit" && $actionId != "0" && $actionId != "" && $actionId != null) {
                 $insertSuccess = $userTypeArray = $this->users_model->updateSizeMaster($SizeDetailsArray); //For Create Brand
-                if($insertSuccess == 1){
+                if ($insertSuccess == 1) {
                     $output = array('status' => "1", 'message' => "Successfully updated");
                 } else {
                     $output = array('status' => "2", 'message' => "Invalid update");
                 }
-            } else if($actionType  == "Delete" && $actionId!="0" && $actionId!="" && $actionId!=null){
+            } else if ($actionType == "Delete" && $actionId != "0" && $actionId != "" && $actionId != null) {
                 $deletetSuccess = $userTypeArray = $this->users_model->deleteSizeMaster($SizeDetailsArray); //For Update Brand
-                if($deletetSuccess == 1){
+                if ($deletetSuccess == 1) {
                     $output = array('status' => "1", 'message' => "Successfully deleted");
-                } else{
+                } else {
                     $output = array('status' => "2", 'message' => "Please try again later");
                 }
-            } else if($actionType  == "Add" || $actionType  == ""){
+            } else if ($actionType == "Add" || $actionType == "") {
                 $updateSuccess = $userTypeArray = $this->users_model->createSizeMaster($SizeDetailsArray); //For Update Brand
-                if($updateSuccess == 1){
+                if ($updateSuccess == 1) {
                     $output = array('status' => "1", 'message' => "Successfully created");
-                } else{
+                } else {
                     $output = array('status' => "2", 'message' => "Please try again later");
                 }
             }
             $this->session->set_flashdata('output', $output);
-            redirect(base_url()."Product/SizeMaster");
+            redirect(base_url() . "Product/SizeMaster");
         }
 
-        if($submit == "Category Type"){
+        if ($submit == "Category Type") {
 
             $categoryType = $this->input->post('categoryType');
             $createdAt = date("Y-m-d H:i:s");
             $CategoryTypeDetailsArray = array('categoryType' => $categoryType, 'categorytypeid' => $actionId, 'adminid' => $adminid, 'createdAt' => $createdAt);
 
             $output = array('status' => "3", 'message' => "Invalid Request");
-            if($actionType  == "Edit" && $actionId!="0" && $actionId!="" && $actionId!=null){
+            if ($actionType == "Edit" && $actionId != "0" && $actionId != "" && $actionId != null) {
                 $insertSuccess = $userTypeArray = $this->users_model->updateCategoryTypeMaster($CategoryTypeDetailsArray); //For Create Brand
-                if($insertSuccess == 1){
+                if ($insertSuccess == 1) {
                     $output = array('status' => "1", 'message' => "Successfully updated");
                 } else {
                     $output = array('status' => "2", 'message' => "Invalid update");
                 }
-            } else if($actionType  == "Delete" && $actionId!="0" && $actionId!="" && $actionId!=null){
+            } else if ($actionType == "Delete" && $actionId != "0" && $actionId != "" && $actionId != null) {
                 $deletetSuccess = $userTypeArray = $this->users_model->deleteCategoryTypeMaster($CategoryTypeDetailsArray); //For Update Brand
-                if($deletetSuccess == 1){
+                if ($deletetSuccess == 1) {
                     $output = array('status' => "1", 'message' => "Successfully deleted");
-                } else{
+                } else {
                     $output = array('status' => "2", 'message' => "Please try again later");
                 }
-            } else if($actionType  == "Add" || $actionType  == ""){
+            } else if ($actionType == "Add" || $actionType == "") {
                 $updateSuccess = $userTypeArray = $this->users_model->createCategoryTypeMaster($CategoryTypeDetailsArray); //For Update Brand
-                if($updateSuccess == 1){
+                if ($updateSuccess == 1) {
                     $output = array('status' => "1", 'message' => "Successfully created");
-                } else{
+                } else {
                     $output = array('status' => "2", 'message' => "Please try again later");
                 }
             }
             $this->session->set_flashdata('output', $output);
-            redirect(base_url()."Product/CategoryTypeMaster");
+            redirect(base_url() . "Product/CategoryTypeMaster");
 
         }
     }
@@ -201,19 +201,19 @@ class Product extends CI_Controller
         $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
         $adminid = "0";
         $sessionUserTypeId = "0";
-        if($sessionUserTypeIdIsset == 1){
+        if ($sessionUserTypeIdIsset == 1) {
             $sessionUserTypeId = $this->session->userdata('usertypeid');
-            if($sessionUserTypeId == 2){
+            if ($sessionUserTypeId == 2) {
                 $adminid = $this->session->userdata('userid');
-            } else if($sessionUserTypeId == 1){
+            } else if ($sessionUserTypeId == 1) {
                 $adminid = $this->input->get_post('adminid');
-            } else if($sessionUserTypeId == 4){
+            } else if ($sessionUserTypeId == 4) {
                 $adminid = $this->session->userdata('adminid');
             }
         }
 
         $singleBrandList = array();
-        if($actionType == "Edit"){
+        if ($actionType == "Edit") {
             $singleBrandList = $this->users_model->getBrandList($adminid, $actionId);
         }
 
@@ -234,13 +234,13 @@ class Product extends CI_Controller
         $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
         $adminid = "0";
         $sessionUserTypeId = "0";
-        if($sessionUserTypeIdIsset == 1){
+        if ($sessionUserTypeIdIsset == 1) {
             $sessionUserTypeId = $this->session->userdata('usertypeid');
-            if($sessionUserTypeId == 2){
+            if ($sessionUserTypeId == 2) {
                 $adminid = $this->session->userdata('userid');
-            } else if($sessionUserTypeId == 1){
+            } else if ($sessionUserTypeId == 1) {
                 $adminid = $this->input->get_post('adminid');
-            } else if($sessionUserTypeId == 4){
+            } else if ($sessionUserTypeId == 4) {
                 $adminid = $this->session->userdata('adminid');
 
             }
@@ -253,15 +253,15 @@ class Product extends CI_Controller
         $SizeList = array();
         $CategoryTypeList = array();
 
-        if($type == "brandList"){
+        if ($type == "brandList") {
             $BrandList = $this->users_model->getBrandList($adminid, $actionId);
-        } else if($type == "sizeList"){
+        } else if ($type == "sizeList") {
             $SizeList = $this->users_model->getSizeList($adminid, $actionId);
-        } else if($type == "Category Type"){
+        } else if ($type == "Category Type") {
             $CategoryTypeList = $this->users_model->getCategoryTypeList($adminid, $actionId);
         }
 
-       $dataheader['typeList'] = $type;
+        $dataheader['typeList'] = $type;
         $dataheader['SizeList'] = $SizeList;
         $dataheader['BrandList'] = $BrandList;
         $dataheader['CategoryTypeList'] = $CategoryTypeList;
@@ -275,17 +275,17 @@ class Product extends CI_Controller
     {
         $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
         $adminid = "0";
-        if($sessionUserTypeIdIsset == 1){
+        if ($sessionUserTypeIdIsset == 1) {
             $sessionUserTypeId = $this->session->userdata('usertypeid');
-            if($sessionUserTypeId == 2){
+            if ($sessionUserTypeId == 2) {
                 $adminid = $this->session->userdata('userid');
-            } else if($sessionUserTypeId == 1){
+            } else if ($sessionUserTypeId == 1) {
                 $adminid = $this->input->get_post('adminid');
-            } else if($sessionUserTypeId == 4){
+            } else if ($sessionUserTypeId == 4) {
                 $adminid = $this->session->userdata('adminid');
             }
         } else {
-            redirect(base_url()."Frontend/logout");
+            redirect(base_url() . "Frontend/logout");
         }
 //        $adminid = $this->session->userdata('usertypeid');
         $dataheader['title'] = "Product";
@@ -341,23 +341,23 @@ class Product extends CI_Controller
 
         $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
         $adminid = "0";
-        if($sessionUserTypeIdIsset == 1){
+        if ($sessionUserTypeIdIsset == 1) {
             $sessionUserTypeId = $this->session->userdata('usertypeid');
-            if($sessionUserTypeId == 2){
+            if ($sessionUserTypeId == 2) {
                 $adminid = $this->session->userdata('userid');
-            } else if($sessionUserTypeId == 1){
+            } else if ($sessionUserTypeId == 1) {
                 $adminid = $this->input->get_post('adminid');
-            } else if($sessionUserTypeId == 4){
+            } else if ($sessionUserTypeId == 4) {
                 $adminid = $this->session->userdata('adminid');
             }
         }
 
-        if($masterName == "Product"){
+        if ($masterName == "Product") {
             $showroomArray = $this->users_model->getUsersList('3', $adminid, "0", null);
-            $BrandArray = $this->users_model->getBrandList($adminid,"0");
+            $BrandArray = $this->users_model->getBrandList($adminid, "0");
             $SizeArray = $this->users_model->getSizeList($adminid, "0");
             $CategoryTypeArray = $this->users_model->getCategoryTypeList($adminid, "0");
-        } else if($masterName == "Category Type" && $actionType == "Edit"){
+        } else if ($masterName == "Category Type" && $actionType == "Edit") {
             $CategoryTypeArray = $this->users_model->getCategoryTypeList($adminid, $actionId);
         }
 
@@ -396,19 +396,19 @@ class Product extends CI_Controller
         $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
         $adminid = "0";
         $sessionUserTypeId = "0";
-        if($sessionUserTypeIdIsset == 1){
+        if ($sessionUserTypeIdIsset == 1) {
             $sessionUserTypeId = $this->session->userdata('usertypeid');
-            if($sessionUserTypeId == 2){
+            if ($sessionUserTypeId == 2) {
                 $adminid = $this->session->userdata('userid');
-            } else if($sessionUserTypeId == 1){
+            } else if ($sessionUserTypeId == 1) {
                 $adminid = $this->input->get_post('adminid');
-            } else if($sessionUserTypeId == 4){
+            } else if ($sessionUserTypeId == 4) {
                 $adminid = $this->session->userdata('adminid');
             }
         }
 
         $singleSizeList = array();
-        if($actionType == "Edit"){
+        if ($actionType == "Edit") {
             $singleSizeList = $this->users_model->getSizeList($adminid, $actionId);
         }
 
@@ -426,25 +426,26 @@ class Product extends CI_Controller
         $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
         $adminid = "0";
         $sessionUserTypeId = "0";
-        if($sessionUserTypeIdIsset == 1){
+        if ($sessionUserTypeIdIsset == 1) {
             $sessionUserTypeId = $this->session->userdata('usertypeid');
-            if($sessionUserTypeId == 2){
+            if ($sessionUserTypeId == 2) {
                 $adminid = $this->session->userdata('userid');
-            } else if($sessionUserTypeId == 1){
+            } else if ($sessionUserTypeId == 1) {
                 $adminid = $this->input->get_post('adminid');
-            } else if($sessionUserTypeId == 4){
+            } else if ($sessionUserTypeId == 4) {
                 $adminid = $this->session->userdata('adminid');
             }
         }
-	$retailerShowRoomId="3";
-echo "<br><br><br><br><br><br><br>";
-	print_r($_SESSION);
-	$showroomArray = $this->users_model->getshowroomList($adminid,$retailerShowRoomId);
-	 $dataheader['showroomArray'] = $showroomArray;
-	$dataheader['adminid'] = $adminid;
-	$dataheader['title'] = "MapProduct";
-     
+        $retailerShowRoomId = "3";
+//        echo "<br><br><br><br><br><br><br>";
+//        print_r($_SESSION);
+        $showroomArray = $this->users_model->getshowroomList($adminid, $retailerShowRoomId);
         $dataheader['showroomArray'] = $showroomArray;
+        $dataheader['adminid'] = $adminid;
+        $dataheader['title'] = "MapProduct";
+
+        $dataheader['showroomArray'] = $showroomArray;
+
 
         $this->load->view('layout/backend_header', $dataheader);
         $this->load->view('layout/backend_menu');
@@ -458,43 +459,43 @@ echo "<br><br><br><br><br><br><br>";
         $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
         $adminid = "0";
         $sessionUserTypeId = "0";
-        if($sessionUserTypeIdIsset == 1){
+        if ($sessionUserTypeIdIsset == 1) {
             $sessionUserTypeId = $this->session->userdata('usertypeid');
-            if($sessionUserTypeId == 2){
+            if ($sessionUserTypeId == 2) {
                 $adminid = $this->session->userdata('userid');
-            } else if($sessionUserTypeId == 1){
+            } else if ($sessionUserTypeId == 1) {
                 $adminid = $this->input->get_post('adminid');
-            } else if($sessionUserTypeId == 4){
+            } else if ($sessionUserTypeId == 4) {
                 $adminid = $this->session->userdata('adminid');
             }
         }
 
         $dataheader['adminid'] = $adminid;
         $type = $this->input->get('type');
-	$count = $this->input->get('count');
-	if($type=='productQyt'){
- 	$usertypeid = '3';
-        $retailerShowRoomId = "";
-        $userid = "";
-        $showRoomArray = $this->users_model->getUsersList($usertypeid, $adminid, $retailerShowRoomId, $userid);
-        $dataheader['showRoomArray'] = $showRoomArray;
-      	}
-	
-	if($type=='product'){
- 	$showroomId = $this->input->get('showroomId');
-	$productId="";
-	$productListArray=$this->users_model->mappedProduct($productId,$showroomId,$adminid);
+        $count = $this->input->get('count');
+        if ($type == 'productQyt') {
+            $usertypeid = '3';
+            $retailerShowRoomId = "";
+            $userid = "";
+            $showRoomArray = $this->users_model->getUsersList($usertypeid, $adminid, $retailerShowRoomId, $userid);
+            $dataheader['showRoomArray'] = $showRoomArray;
+        }
 
-	$dataheader['productListArray'] = $productListArray;
-	$dataheader['showroomId'] = $showroomId;
-	}
-	if($type=='productQtyandPrice'){
-	$productId = $this->input->get('productId');
-	$showroomId = $this->input->get('showroomId');
-	$productQytArray=$this->users_model->mappedProduct($productId,$showroomId,$adminid);
-	$dataheader['productQytArray'] = $productQytArray;
-	}
-	$dataheader['type'] = $type;
+        if ($type == 'product') {
+            $showroomId = $this->input->get('showroomId');
+            $productId = "";
+            $productListArray = $this->users_model->mappedProduct($productId, $showroomId, $adminid, $type);
+
+            $dataheader['productListArray'] = $productListArray;
+            $dataheader['showroomId'] = $showroomId;
+        }
+        if ($type == 'productQtyandPrice') {
+            $productId = $this->input->get('productId');
+            $showroomId = $this->input->get('showroomId');
+            $productQytArray = $this->users_model->mappedProduct($productId, $showroomId, $adminid, $type);
+            $dataheader['productQytArray'] = $productQytArray;
+        }
+        $dataheader['type'] = $type;
         $dataheader['count'] = $count;
         $this->load->view('product/getContent', $dataheader);
 
@@ -506,13 +507,13 @@ echo "<br><br><br><br><br><br><br>";
         $dataheader['addProductMasterUrl'] = "addProductMaster";
         $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
         $adminid = "0";
-        if($sessionUserTypeIdIsset == 1){
+        if ($sessionUserTypeIdIsset == 1) {
             $sessionUserTypeId = $this->session->userdata('usertypeid');
-            if($sessionUserTypeId == 2){
+            if ($sessionUserTypeId == 2) {
                 $adminid = $this->session->userdata('userid');
-            } else if($sessionUserTypeId == 1){
+            } else if ($sessionUserTypeId == 1) {
                 $adminid = $this->input->get_post('adminid');
-            } else if($sessionUserTypeId == 4){
+            } else if ($sessionUserTypeId == 4) {
                 $adminid = $this->session->userdata('adminid');
             }
         }
@@ -522,7 +523,7 @@ echo "<br><br><br><br><br><br><br>";
         $actionType = $this->input->get_post('actionType');
         $productId = $this->input->get_post('actionId');
         $productArray = $this->users_model->getProductList($adminid, $productId);
-        $BrandArray = $this->users_model->getBrandList($adminid,$actionId);
+        $BrandArray = $this->users_model->getBrandList($adminid, $actionId);
         $SizeArray = $this->users_model->getSizeList($adminid, $actionId);
         $CategoryTypeArray = $this->users_model->getCategoryTypeList($adminid, $actionId);
 
@@ -535,7 +536,7 @@ echo "<br><br><br><br><br><br><br>";
 //        $dataheader['showroomArray'] = $showroomArray;
 //        $this->load->view('layout/backend_header', $dataheader);
 //        $this->load->view('layout/backend_menu');
-        $this->load->view('product/EditProduct',$dataheader);
+        $this->load->view('product/EditProduct', $dataheader);
 //        $this->load->view('layout/backend_footer');
 
 
