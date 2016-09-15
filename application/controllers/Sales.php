@@ -251,7 +251,7 @@ class Sales extends CI_Controller {
 	{
 		
 		$dataheader['title'] = "Reports";
-		$dataheader['reportsType'] = $reportsType;
+		echo $dataheader['reportsType'] = $reportsType;
 
 		$this->load->view('layout/backend_header',$dataheader);
 		$this->load->view('layout/backend_menu');

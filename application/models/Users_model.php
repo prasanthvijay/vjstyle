@@ -682,13 +682,14 @@ class Users_model extends CI_Model
             $productListArray[$k]['productid'] = $row->productid;
             $productListArray[$k]['productname'] = $row->productname;
             $productListArray[$k]['price'] = $row->price;
-            $avalableQty = $row->quantity;
+   	    $salesQty=$productListArray[$k]['qty']= $row->qty;
+            $totalPQty=$productListArray[$k]['quantity']= $row->quantity;
+            $avalableQty=$totalPQty-$salesQty;
             $productListArray[$k]['avalableQty'] = $avalableQty;
-            $productListArray[$k]['qty'] = $row->qty;
             $k++;
         }
 
-//            print_r($productListArray);
+            //print_r($productListArray);
         return $productListArray;
     }
 }

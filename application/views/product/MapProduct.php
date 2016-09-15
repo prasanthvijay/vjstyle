@@ -20,7 +20,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Showroom</label>
                             <div class="col-sm-6">
-                                <select class="select2 form-control" id="productname" name="productname"
+                                <select class="select2 form-control" id="showroom" name="showroom"
                                         onchange="getProduct(this.value)">
                                     <option value="">Select Showroom</option>
                                     <?php for ($i = 0; $i < count($showroomArray); $i++) { ?>
@@ -50,7 +50,7 @@
                                 <div class="col-sm-6">
 
                                     <input type="text" id="quantity" name="quantity" class="form-control" required
-                                           readonly placeholder="Increment Quantity"/>
+                                           readonly placeholder="Avalable Quantity"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -71,15 +71,17 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Update Price</label>
                             <div class="col-sm-1">
-                                <input type="checkbox" id="price" name="price" class="form-control" required/>
+                                <input type="checkbox" id="price" name="price" class="form-control" onclick="ShowHideDiv(this)"/>
                             </div>
-                            <div id="updatePriceDiv"></div>
-                        </div>
-                </div>
-            </div>
+                            <div class="col-sm-5"><div id="updatePriceDiv" style="display: none">
+     							<input type="text" id="newPrice" class="form-control"  name="newPrice" placeholder="New Price"/>
+				</div></div>
+                       
+              
+
             <div class="form-group m-b-0">
-                <div class="col-sm-offset-  3 col-sm-9 m-t-15">
-                    <button type="submit" value="product" id="submit" name="submit"
+                <div class="col-sm-offset-3 col-sm-9 m-t-15">
+                    <button type="submit" value="MapProduct" id="submit" name="submit"
                             class="btn btn-primary waves-effect waves-light">
                         Submit
                     </button>
@@ -108,5 +110,15 @@
         });
     }
 
+
 </script>
+
+<script type="text/javascript">
+    function ShowHideDiv(price) {
+        var updatePriceDiv = document.getElementById("updatePriceDiv");
+        updatePriceDiv.style.display = price.checked ? "block" : "none";
+    }
+</script>
+
+
 

@@ -62,8 +62,6 @@
                             <li><a href="<?php echo base_url(); ?>Product/BrandMaster">Brand </a></li>
                             <li><a href="<?php echo base_url(); ?>Product/SizeMaster">Size </a></li>
                             <li><a href="<?php echo base_url(); ?>Product/ProductMaster">Product </a></li>
-                            <!--                            <li><a href="-->
-                            <?php //echo base_url();?><!--Product/AddProduct">Product </a></li>-->
                             <li><a href="<?php echo base_url(); ?>Product/MapProduct">Map Product </a></li>
                         </ul>
                     </li>
@@ -74,7 +72,13 @@
                             <li><a href="<?php echo base_url(); ?>retailerShowRoomMaster">Return List </a></li>
                         </ul>
                     </li>
-
+ 			<li class="has-submenu">
+                        <a href="#"><i class="md md-pages"></i>Sales Report </a>
+                        <ul class="submenu">
+                            <li><a href="<?php echo base_url(); ?>reports">Today Report </a></li>
+                            <li><a href="<?php echo base_url(); ?>lowstockReport">Low Stock Report</a></li>
+                        </ul>
+                    </li>
                 </ul>
             <?php } ?>
             <!-- End navigation menu -->

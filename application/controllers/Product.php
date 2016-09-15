@@ -437,8 +437,8 @@ class Product extends CI_Controller
             }
         }
         $retailerShowRoomId = "3";
-//        echo "<br><br><br><br><br><br><br>";
-//        print_r($_SESSION);
+      echo "<br><br><br><br><br><br><br>";
+    print_r($_POST);
         $showroomArray = $this->users_model->getshowroomList($adminid, $retailerShowRoomId);
         $dataheader['showroomArray'] = $showroomArray;
         $dataheader['adminid'] = $adminid;
