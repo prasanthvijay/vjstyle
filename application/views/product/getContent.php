@@ -37,7 +37,6 @@ if ($type == 'product') { ?>
                 <?php } ?>
 
             </select>
-            <input type="hidden" id="showroomId" name="showroomId" value="<?php echo $showroomId; ?>"
         </div>
     </div>
 <?php }

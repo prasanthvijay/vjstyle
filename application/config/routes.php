@@ -81,7 +81,8 @@ $route['AddOrEditMasterContent'] = 'Product/AddOrEditMasterContent';
 $route['SizeMaster'] = 'Product/SizeMaster';
 $route['AddSize'] = 'Product/AddSize';
 $route['MapProduct'] = 'Product/MapProduct';
-$route['getContent'] = 'Product/getContent'; 
+$route['assignMapProduct'] = 'Product/assignMapProduct';
+$route['getContent'] = 'Product/getContent';
 //Sales
 $route['pos'] = 'sales/pos';
 $route['posajax'] = 'sales/posajax';

@@ -15,21 +15,25 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card-box">
-                    <form class="form-horizontal group-border-dashed" action="" method="POST">
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Showroom</label>
-                            <div class="col-sm-6">
-                                <select class="select2 form-control" id="showroom" name="showroom"
-                                        onchange="getProduct(this.value)">
-                                    <option value="">Select Showroom</option>
-                                    <?php for ($i = 0; $i < count($showroomArray); $i++) { ?>
-                                        <option
-                                            value="<?php echo $showroomArray[$i]['userid'] ?>"><?php echo $showroomArray[$i]['name'] ?></option>
-                                    <?php } ?>
-                                </select>
+                    <form class="form-horizontal group-border-dashed" action="<?php echo base_url().'Product/assignMapProduct'; ?>" method="POST">
+                        <?php if($showroomId>0){ ?>
+                            <input type="hidden" id="showroomId" name="showroomId" value="<?php echo $showroomId; ?>">
+                        <?php } else { ?>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Showroom</label>
+                                <div class="col-sm-6">
+                                    <select class="select2 form-control" id="showroomId" name="showroomId"
+                                            onchange="getProduct(this.value)">
+                                        <option value="">Select Showroom</option>
+                                        <?php for ($i = 0; $i < count($showroomArray); $i++) { ?>
+                                            <option
+                                                value="<?php echo $showroomArray[$i]['userid'] ?>"><?php echo $showroomArray[$i]['name'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
+                        <?php } ?>
+
                         <div id="productDiv">
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Select Product</label>
@@ -120,5 +124,11 @@
     }
 </script>
 
+        <?php if($showroomId>0){ ?>
+
+        <script>
+            getProduct($("#showroomId").val());
+        </script>
 
 
+        <?php } ?>

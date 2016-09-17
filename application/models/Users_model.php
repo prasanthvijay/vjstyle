@@ -612,6 +612,63 @@ class Users_model extends CI_Model
         return $Quantity;
     }
 
+    public function assignMapProduct($ProductMappingArray){
+        $productid = $ProductMappingArray['productid'];
+        $quantity = $ProductMappingArray['quantity'];
+        $Incquantity = $ProductMappingArray['Incquantity'];
+        $price = $ProductMappingArray['price'];
+        $newPrice = $ProductMappingArray['newPrice'];
+        $showroomId = $ProductMappingArray['showroomId'];
+        $adminid = $ProductMappingArray['adminid'];
+        $createdAtdate = date("Y-m-d H:i:s");
+
+        $sql = "SELECT * FROM `tbl_productMapping` WHERE `productId`=".$this->db->escape($productid)." and `showroomId` = ".$this->db->escape($showroomId)." and `adminId`=".$this->db->escape($adminid);
+        $userQuery = $this->db->query($sql);
+        $existArrayResult = $userQuery->result_array();
+
+        if(count($existArrayResult)>0){
+
+            /*$deleted = "deleted";
+            $deleteId = $existArrayResult[0]['id'];
+            $deletesql = "UPDATE `tbl_productMapping` SET `active`=".$this->db->escape($deleted).",`deletedat`= ".$this->db->escape($createdAtdate)." WHERE id = ".$this->db->escape($deleteId);
+            $this->db->query($deletesql);
+
+            if($price!="on"){
+                $newPrice = $existArrayResult[0]['price'];
+            }
+
+            if($Incquantity>0 || $newPrice>0){
+                $active = "active";
+                $sql = "INSERT INTO tbl_productMapping (productId,showroomId,price,quantity,adminId,createAt,active) " . "VALUES (" . $this->db->escape($productid) . "," . $this->db->escape($showroomId) . "," . $this->db->escape($newPrice) . "," . $this->db->escape($Incquantity) . "," . $this->db->escape($adminid) . "," . $this->db->escape($createdAtdate) . "," . $this->db->escape($active) . ")";
+                $this->db->query($sql);
+            }*/
+
+            $updatedId = $existArrayResult[0]['id'];
+            if($price=="on" || $Incquantity>0){
+                $updateSql = "UPDATE `tbl_productMapping` SET ";
+
+                if($price=="on"){
+                    $updateSql = $updateSql . " price =".$this->db->escape($newPrice);
+                }
+                if($Incquantity>0){
+                    $Incquantity = $Incquantity + $existArrayResult[0]['quantity'];
+                    if($price=="on"){
+                        $updateSql = $updateSql . ", ";
+                    }
+
+                    $updateSql = $updateSql . " quantity =".$this->db->escape($Incquantity);
+                }
+                $updateSql = $updateSql ."  WHERE id = ".$this->db->escape($updatedId);
+                $this->db->query($updateSql);
+            }
+
+        } else {
+            $sql = "INSERT INTO tbl_productMapping (productId,showroomId,price,quantity,adminId,createAt) " . "VALUES (" . $this->db->escape($productid) . "," . $this->db->escape($showroomId) . "," . $this->db->escape($newPrice) . "," . $this->db->escape($Incquantity) . "," . $this->db->escape($adminid) . "," . $this->db->escape($createdAtdate) . ")";
+            $this->db->query($sql);
+        }
+
+    }
+
     public function getshowroomList($userType, $retailerShowRoomId)
     {
 
@@ -689,7 +746,7 @@ class Users_model extends CI_Model
             $k++;
         }
 
-            //print_r($productListArray);
+//            print_r($productListArray);
         return $productListArray;
     }
 }

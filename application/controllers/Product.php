@@ -426,6 +426,7 @@ class Product extends CI_Controller
         $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
         $adminid = "0";
         $sessionUserTypeId = "0";
+        $showroomId = "0";
         if ($sessionUserTypeIdIsset == 1) {
             $sessionUserTypeId = $this->session->userdata('usertypeid');
             if ($sessionUserTypeId == 2) {
@@ -434,14 +435,15 @@ class Product extends CI_Controller
                 $adminid = $this->input->get_post('adminid');
             } else if ($sessionUserTypeId == 4) {
                 $adminid = $this->session->userdata('adminid');
+                $showroomId = $this->session->userdata('retailerShowRoomId');
             }
         }
         $retailerShowRoomId = "3";
-      echo "<br><br><br><br><br><br><br>";
-    print_r($_POST);
+
         $showroomArray = $this->users_model->getshowroomList($adminid, $retailerShowRoomId);
         $dataheader['showroomArray'] = $showroomArray;
         $dataheader['adminid'] = $adminid;
+        $dataheader['showroomId'] = $showroomId;
         $dataheader['title'] = "MapProduct";
 
         $dataheader['showroomArray'] = $showroomArray;
@@ -451,6 +453,45 @@ class Product extends CI_Controller
         $this->load->view('layout/backend_menu');
         $this->load->view('product/MapProduct', $dataheader);
         $this->load->view('layout/backend_footer');
+    }
+
+    public function assignMapProduct(){
+        $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
+        $adminid = "0";
+        $sessionUserTypeId = "0";
+        $showroomId = $this->input->get_post('showroomId');
+        if ($sessionUserTypeIdIsset == 1) {
+            $sessionUserTypeId = $this->session->userdata('usertypeid');
+            if ($sessionUserTypeId == 2) {
+                $adminid = $this->session->userdata('userid');
+            } else if ($sessionUserTypeId == 1) {
+                $adminid = $this->input->get_post('adminid');
+            } else if ($sessionUserTypeId == 4) {
+                $adminid = $this->session->userdata('adminid');
+                $showroomId = $this->session->userdata('retailerShowRoomId');
+            }
+        }
+
+        $productid = $this->input->get_post('productid');
+        $quantity = $this->input->get_post('quantity');
+        $Incquantity = $this->input->get_post('Incquantity');
+        $price = $this->input->get_post('price');
+        $newPrice = $this->input->get_post('newPrice');
+        $submit = $this->input->get_post('submit');
+
+        $retrievalArray = array();
+        if($submit == "MapProduct"){
+            $retrievalArray['productid'] = $productid;
+            $retrievalArray['quantity'] = $quantity;
+            $retrievalArray['Incquantity'] = $Incquantity;
+            $retrievalArray['price'] = $price;
+            $retrievalArray['newPrice'] = $newPrice;
+            $retrievalArray['showroomId'] = $showroomId;
+            $retrievalArray['adminid'] = $adminid;
+            $showRoomArray = $this->users_model->assignMapProduct($retrievalArray);
+        }
+        redirect(base_url()."Product/MapProduct");
+        
     }
 
     public function getContent()
