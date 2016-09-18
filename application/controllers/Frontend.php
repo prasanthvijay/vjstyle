@@ -193,6 +193,9 @@ class Frontend extends CI_Controller
         $address = $this->input->get_post('address');
         $doj = $this->input->get_post('doj');
         $dob = $this->input->get_post('dob');
+        $tinnumber = $this->input->get_post('TINNumber');
+        $cinnumber = $this->input->get_post('CINNumber');
+        $creditdays = $this->input->get_post('CreditDays');
         $active = "active";
         $createdAt = date("Y-m-d H:i:s");
         $actionType = $this->input->get_post('actionType');
@@ -212,7 +215,8 @@ class Frontend extends CI_Controller
 
         $userDetailsArray = array('name' => $name, 'email' => $email, 'password' => $password, 'usertypeid' => $usertypeid,
             'adminid' => $adminid, 'retailershowroomid' => $retailershowroomid, 'mobile' => $mobile, 'address' => $address,
-            'doj' => $doj, 'dob' => $dob, 'active' => $active, 'createdAt' => $createdAt,'userid' => $actionId);
+            'doj' => $doj, 'dob' => $dob,'tinnumber' => $tinnumber,'cinnumber' => $cinnumber,'creditdays' => $creditdays,
+            'active' => $active, 'createdAt' => $createdAt,'userid' => $actionId);
 
 
         $validationArray = $this->users_model->validateUserMaster($userDetailsArray,$actionType);
@@ -252,12 +256,12 @@ class Frontend extends CI_Controller
 
     }
 
-    public function sellerMaster()
+    public function supplierMaster()
     {
-        $dataheader['title'] = "Seller Master";
+        $dataheader['title'] = "Supplier Master";
         $this->load->view('layout/backend_header', $dataheader);
         $this->load->view('layout/backend_menu');
-        $this->load->view('frontend/frontend_dashboard');
+        $this->load->view('frontend/supplierMaster');
         $this->load->view('layout/backend_footer');
     }
 

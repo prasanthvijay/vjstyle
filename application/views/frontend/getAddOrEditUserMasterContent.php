@@ -9,6 +9,9 @@ $retailershowroomid = "";
 $doj = "";
 $dob = "";
 $adminid = "";
+$CINNumber = "";
+$TINNumber = "";
+$CreditDays = "";
 if(count($editUsersList)>0){
     $name = $editUsersList[0]['name'];
     $adminid = $editUsersList[0]['adminid'];
@@ -19,6 +22,11 @@ if(count($editUsersList)>0){
     $retailershowroomid = $editUsersList[0]['retailerShowRoomId'];
     $dob = $this->users_model->convertDDMMYYtoYYMMDD($editUsersList[0]['dob']);
     $doj = $this->users_model->convertDDMMYYtoYYMMDD($editUsersList[0]['doj']);
+
+    $CINNumber = $editUsersList[0]['cinnumber'];
+    $TINNumber = $editUsersList[0]['tinnumber'];
+    $CreditDays = $editUsersList[0]['creditdays'];
+
 }
 
 ?>
@@ -67,7 +75,7 @@ if(count($editUsersList)>0){
                                 <?php } ?>
                             </select>
                                 </div>
-                        <?php } else if($usertypeid == 3){  ?>
+                        <?php } else if($usertypeid == 3 || $usertypeid == 6){  ?>
                             <label for="field-4" class="control-label">Contact Number</label>
 <!--                            <label for="field-4" class="control-label">--><?php //if($usertypeid == 3){ ?><!--Show Room Number--><?php //} else echo "Mobile"; ?><!--</label>-->
                             <input type="text" class="form-control" id="mobile" name="mobile" parsley-trigger="change" required placeholder="Contact Number" value="<?php echo $mobile; ?>">
@@ -76,6 +84,7 @@ if(count($editUsersList)>0){
                     </div>
                 </div>
             </div>
+            <?php if($usertypeid != 3 && $usertypeid != 6){ ?>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -85,7 +94,6 @@ if(count($editUsersList)>0){
                         <input type="text" class="form-control" id="email" name="email" parsley-trigger="change" required placeholder="Email ID" value="<?php echo $email; ?>">
                     </div>
                 </div>
- <?php if($usertypeid != 3){ ?>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="password" class="control-label">Password</label>
@@ -120,25 +128,75 @@ if(count($editUsersList)>0){
                     </div>
                 </div>
             <?php } ?>
-
+            <?php if($usertypeid == 3 || $usertypeid == 6){ ?>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="email" class="control-label">Email ID</label>
+                            <input type="text" class="form-control" id="email" name="email" parsley-trigger="change" required placeholder="Email ID" value="<?php echo $email; ?>">
+                        </div>
+                    </div>
+                    <?php if($usertypeid == 6) { ?>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="creditdays" class="control-label">Credit Days</label>
+                            <input type="text" class="form-control" id="CreditDays" name="CreditDays"  placeholder="Credit Days" value="<?php echo $CreditDays; ?>">
+                        </div>
+                    </div>
+                    <?php } else { ?>
+                        <div class="col-md-6">
+                            <div class="form-group fileupload">
+                                <label for=""></label>
+                                <!--                        <input type="file" class="form-control" id="profilephoto" name="profilephoto" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;">-->
+                                <div class=" btn btn-rounded btn-default waves-effect waves-light" style="width: 100%">
+                                    <span><i class="ion-upload m-r-5"></i> Upload Profile Photo</span>
+                                    <input type="file" class="upload" id="profilephoto" name="profilephoto" >
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="TINNumber" class="control-label">TIN Number</label>
+                            <input type="text" class="form-control" id="TINNumber" name="TINNumber" parsley-trigger="change" required placeholder="TIN Number" value="<?php echo $TINNumber; ?>">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="CINNumber" class="control-label">CIN Number</label>
+                            <input type="text" class="form-control" id="CINNumber" name="CINNumber" placeholder="CIN Number" value="<?php echo $CINNumber; ?>">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12'">
+                        <div class="form-group">
+                            <label for="address" class="control-label">Address</label>
+                            <textarea class="form-control" id="address" name="address" parsley-trigger="change" required placeholder="Address" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"><?php echo $address; ?></textarea>
+                        </div>
+                    </div>
+                </div>
+            <?php }  else { ?>
             <div class="row">
+                <div class="col-md-6'">
+                    <div class="form-group no-margin">
+                        <label for="address" class="control-label">Address</label>
+                        <textarea class="form-control autogrow" id="address" name="address" parsley-trigger="change" required placeholder="Address" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"><?php echo $address; ?></textarea>
+                    </div>
+                </div>
                 <div class="col-md-6">
                     <div class="form-group fileupload">
-                        <label for=""></label>
-                        <!--                        <input type="file" class="form-control" id="profilephoto" name="profilephoto" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;">-->
                         <div class=" btn btn-rounded btn-default waves-effect waves-light" style="width: 100%">
                             <span><i class="ion-upload m-r-5"></i> Upload Profile Photo</span>
                             <input type="file" class="upload" id="profilephoto" name="profilephoto" >
                         </div>
                     </div>
                 </div>
-                <div class="col-md-<?php if($usertypeid == 3){ ?>12<?php } else echo '6'; ?>">
-                    <div class="form-group no-margin">
-                        <label for="address" class="control-label">Address</label>
-                        <textarea class="form-control autogrow" id="address" name="address" parsley-trigger="change" required placeholder="Address" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"><?php echo $address; ?></textarea>
-                    </div>
-                </div>
             </div>
+            <?php } ?>
+
 
             <div class="row">
                 <div class="col-md-6">

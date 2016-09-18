@@ -18,8 +18,8 @@
                             <li><a href="<?php echo base_url(); ?>Frontend/retailerShowRoomMaster">Retailer Show
                                     Room </a></li>
                             <li><a href="<?php echo base_url(); ?>Frontend/salesHeadMaster">Sales Head </a></li>
-                            <li><a href="<?php echo base_url(); ?>Frontend/salesExecutiveMaster">Sales Executive </a>
-                            </li>
+                            <li><a href="<?php echo base_url(); ?>Frontend/salesExecutiveMaster">Sales Executive </a></li>
+                            <li><a href="<?php echo base_url(); ?>Frontend/supplierMaster">Supplier Master </a></li>
                         </ul>
                     </li>
                     <li class="has-submenu">
@@ -63,6 +63,7 @@
                             <li><a href="<?php echo base_url(); ?>Product/SizeMaster">Size </a></li>
                             <li><a href="<?php echo base_url(); ?>Product/ProductMaster">Product </a></li>
                             <li><a href="<?php echo base_url(); ?>Product/MapProduct">Map Product </a></li>
+                            <li><a href="<?php echo base_url(); ?>Frontend/supplierMaster">Supplier Master </a></li>
                         </ul>
                     </li>
                     <li class="has-submenu">
