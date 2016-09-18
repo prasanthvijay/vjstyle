@@ -68,7 +68,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Avalable Price</label>
                                 <div class="col-sm-6">
-                                    <input type="text" id="price" name="price" class="form-control" required placeholder="Avalable Price"/>
+                                    <input type="text" id="price" name="price" class="form-control" readonly placeholder="Avalable Price"/>
                                 </div>
                             </div>
                         </div>

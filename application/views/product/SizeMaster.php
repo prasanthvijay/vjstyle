@@ -53,13 +53,14 @@
         </div><!-- /.modal -->
 
         <!-- End Footer -->
-
+        <?php include_once "innerFooter.php"; ?>
     </div> <!-- end container -->
 </div>
 <!-- End wrapper -->
 <script>
-    var sizeList = "sizeList";
-    loadbrandlist(sizeList);
+    var postData = "type=sizeList";
+    loadMastersList(postData);
+    
     function loadAddOrEditSizeModal() {
         $.ajax({
             url: "Product/AddSize",

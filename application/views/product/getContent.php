@@ -41,13 +41,22 @@ if ($type == 'product') { ?>
     </div>
 <?php }
 if ($type == 'productQtyandPrice') { ?>
+    <?php
+    $avalableQty = "0";
+    $avalablePrice = "0";
+    if(count($productQytArray)>0){
+        $avalableQty = $productQytArray[0]['avalableQty'];
+        $avalablePrice = $productQytArray[0]['price'];
+    }
 
+
+    ?>
     <div class="form-group">
         <label class="col-sm-3 control-label">Avalable Quantity</label>
         <div class="col-sm-6">
 
             <input type="text" id="quantity" name="quantity" class="form-control" required readonly
-                   placeholder="Avalable Quantity" value="<?php echo $productQytArray[0]['avalableQty']; ?>"/>
+                   placeholder="Avalable Quantity" value="<?php echo $avalableQty; ?>"/>
         </div>
     </div>
     <div class="form-group">
@@ -62,7 +71,7 @@ if ($type == 'productQtyandPrice') { ?>
         <label class="col-sm-3 control-label">Avalable Price</label>
         <div class="col-sm-6">
             <input type="text" id="price" name="price" class="form-control"
-                   value="<?php echo $productQytArray[0]['price']; ?>" required  placeholder="Avalable Price"/>
+                   value="<?php echo $avalablePrice; ?>" readonly  placeholder="Avalable Price"/>
         </div>
     </div>
 

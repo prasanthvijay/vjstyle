@@ -253,22 +253,25 @@ class Product extends CI_Controller
         $SizeList = array();
         $CategoryTypeList = array();
 
+        $ProductList = array();
         if ($type == "brandList") {
             $BrandList = $this->users_model->getBrandList($adminid, $actionId);
         } else if ($type == "sizeList") {
             $SizeList = $this->users_model->getSizeList($adminid, $actionId);
         } else if ($type == "Category Type") {
             $CategoryTypeList = $this->users_model->getCategoryTypeList($adminid, $actionId);
+        } else if ($type == "ProductList") {
+            $ProductList = $this->users_model->getProductList($adminid, "0");
         }
 
         $dataheader['typeList'] = $type;
         $dataheader['SizeList'] = $SizeList;
         $dataheader['BrandList'] = $BrandList;
         $dataheader['CategoryTypeList'] = $CategoryTypeList;
-        // $this->load->view('layout/backend_header');
-        // $this->load->view('layout/backend_menu');
+        $dataheader['ProductList'] = $ProductList;
+        $dataheader['sessionUserTypeId'] = $sessionUserTypeId;
+
         $this->load->view('product/BrandList', $dataheader);
-//        $this->load->view('layout/backend_footer');
     }
 
     public function ProductMaster()
@@ -289,16 +292,6 @@ class Product extends CI_Controller
         }
 //        $adminid = $this->session->userdata('usertypeid');
         $dataheader['title'] = "Product";
-        $productId = "0";
-        $ProductList = $this->users_model->getProductList($adminid, $productId);
-        $BrandArray = $this->users_model->getBrandIdAndNameArray($adminid, "0");
-        $SizeArray = $this->users_model->getSizeIdAndNameArray($adminid, "0");
-        $CategoryTypeArray = $this->users_model->getCategoryTypeIdAndNameArray($adminid, "0");
-        $dataheader['BrandArray'] = $BrandArray;
-        $dataheader['SizeArray'] = $SizeArray;
-        $dataheader['CategoryTypeArray'] = $CategoryTypeArray;
-
-        $dataheader['ProductList'] = $ProductList;
         $this->load->view('layout/backend_header', $dataheader);
         $this->load->view('layout/backend_menu');
         $this->load->view('product/ProductMaster');

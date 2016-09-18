@@ -53,12 +53,12 @@
         </div><!-- /.modal -->
 
         <!-- End Footer -->
-
+        <?php include_once "innerFooter.php"; ?>
     </div> <!-- end container -->
 </div>
 <!-- End wrapper -->
 <script>
-    var brandList = "brandList";
-    loadbrandlist(brandList);
+    var postData = "type=brandList";
+    loadMastersList(postData);
     var loadAddOrEditModalUrl = "<?php echo base_url(); ?>Product/AddBrand";
 </script>

@@ -40,12 +40,12 @@ function loadAddOrEditContentWithModal(postUrl, postData, displayDiv) {
      });*/
 }
 
-function loadbrandlist(typelist) {
+function loadMastersList(postData) {
 
     $.ajax({
         url: "BrandList",
         type: "GET",
-        data: {type: typelist},
+        data: postData,
         success: function (data) {
 
             $("#usersListDiv").html(data);
@@ -63,18 +63,20 @@ function deleteProductsMaster(masterType, postData, postUrl) {
             data: postData,
             success: function (data) {
                 if(masterType == "brand"){
-                    loadbrandlist(brandList);
+                    var postData = "type=brandList";
+                    loadMastersList(postData);
                 }
                 if(masterType == "size"){
-                    var sizeList = "sizeList";
-                    loadbrandlist(sizeList);
+                    var postData = "type=sizeList";
+                    loadMastersList(postData);
                 }
                 if(masterType == "Category Type"){
-                    loadbrandlist("Category Type");
+                    var postData = "type=Category Type";
+                    loadMastersList(postData);
                 }
                 // if(masterType == "product"){
                 //     var sizeList = "sizeList";
-                //     loadbrandlist(sizeList);
+                //     loadMastersList(sizeList);
                 // }
             }
         });

@@ -104,3 +104,64 @@
     </table>
 
 <?php } ?>
+<?php if ($typeList == 'ProductList') { ?>
+
+    <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap"
+           cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th>Sno</th>
+            <th>Product Name</th>
+            <?php if($sessionUserTypeId == 1 || $sessionUserTypeId==2) { ?>
+            <th>Purchase Rate</th>
+            <?php } ?>
+            <th>Quantity</th>
+            <th>Retailer MRP</th>
+            <th>Barcode</th>
+            <th>Brand</th>
+            <th>Category Type</th>
+            <th>Product Size</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php $deletUrl = base_url()."Product/addProductMaster"; ?>
+        <?php $loadAddOrEditModalUrl = base_url()."Product/EditProduct"; ?>
+        <?php for ($i = 0; $i < count($ProductList); $i++) { ?>
+            <tr>
+
+                <td><?php echo $i + 1; $productId = $ProductList[$i]['productid']; ?></td>
+                <td><?php echo $ProductList[$i]['productname']; ?></td>
+                <?php if($sessionUserTypeId == 1 || $sessionUserTypeId==2) { ?>
+                <td><?php echo $ProductList[$i]['productrate']; ?></td>
+                <?php } ?>
+                <td><?php echo $ProductList[$i]['avalableQty']; ?></td>
+                <td><?php echo $ProductList[$i]['retailerMRP']; ?></td>
+                <!--                                <td>--><?php //echo $ProductList[$i]['availablequantity']; ?><!--</td>-->
+                <td><?php echo $ProductList[$i]['barcode']; ?></td>
+                <td>
+                    <?php echo $ProductList[$i]['brandname']; ?>
+                </td>
+                <td>
+                    <?php echo $ProductList[$i]['categorytype']; ?>
+                </td>
+                <td>
+                    <?php echo $ProductList[$i]['size']; ?>
+                </td>
+                <td>
+                    <button class="btn btn-primary waves-effect waves-light" type="button" onclick="getAddOrEditModalContent('actionType=Edit&actionId=<?php echo $productId; ?>', '<?php echo $loadAddOrEditModalUrl; ?>')">
+                        Edit
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-danger waves-effect waves-light" type="button" onclick="deleteProductsMaster('product','submit=Product&actionType=Delete&actionId=<?php echo $productId; ?>','<?php echo $deletUrl; ?>')">
+                        Delete
+                    </button>
+                </td>
+
+            </tr>
+        <?php } ?>
+        </tbody>
+    </table>
+<?php } ?>

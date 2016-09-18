@@ -53,10 +53,12 @@
         </div><!-- /.modal -->
 
         <!-- End Footer -->
-
+        <?php include_once "innerFooter.php"; ?>
     </div> <!-- end container -->
 </div>
 <!-- End wrapper -->
 <script>
-    loadbrandlist("Category Type");
+    var postData = "type=Category Type";
+
+    loadMastersList(postData);
 </script>

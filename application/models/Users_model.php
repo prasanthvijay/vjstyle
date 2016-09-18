@@ -232,7 +232,7 @@ class Users_model extends CI_Model
     {
 
         $ProductList = array();
-        $sql = "SELECT * FROM `tbl_product` t WHERE t.active = 'active' ";
+        /*$sql = "SELECT * FROM `tbl_product` t WHERE t.active = 'active' ";
         if ($adminid != "" && $adminid != null) {
             $sql .= " and adminid = '" . $adminid . "' ";
         }
@@ -241,6 +241,20 @@ class Users_model extends CI_Model
             $sql .= " and productid = '" . $productId . "' ";
         }
 
+        $sql = $sql . " order by productid desc";*/
+        $sql = "SELECT t.productid, t.productname, t.productrate, t.barcode, t.productsize, t.categorytypeid, t.active, t.adminid, t.brandid, a.showroomId, tb.brandname, ts.size, tc.categorytype, sum(a.price) as price, a.quantity, sum(b.qty) as qty  FROM tbl_product t INNER JOIN tbl_productMapping a on t.productid = a.productid LEFT JOIN tbl_customerreceiptproduct b on t.productId = b.productid LEFT JOIN tbl_brand tb on tb.brandid=t.brandid LEFT JOIN tbl_sizemaster ts on ts.sizeid=t.productsize LEFT JOIN tbl_categorytype tc on tc.categorytypeid = t.categorytypeid WHERE  t.active = 'active' ";
+        $showroomId = "0";
+        if ($showroomId != "0" && $showroomId != "" && $showroomId != null) {
+            $sql .= " and a.showroomId = '" . $showroomId . "' ";
+        }
+
+        if ($adminid != "0" && $adminid != "" && $adminid != null) {
+            $sql .= " and t.adminid = '" . $adminid . "' ";
+        }
+        if ($productId != "0" && $productId != "" && $productId != null) {
+            $sql .= " and t.productid = '" . $productId . "' ";
+        }
+        $sql = $sql . " group by t.productId";
         $sql = $sql . " order by productid desc";
         $userQuery = $this->db->query($sql);
         $k = 0;
@@ -248,13 +262,31 @@ class Users_model extends CI_Model
             $ProductList[$k]['productid'] = $row->productid;
             $ProductList[$k]['productname'] = $row->productname;
             $ProductList[$k]['productrate'] = $row->productrate;
-//            $ProductList[$k]['availablequantity'] = $row->availablequantity;
+            $ProductList[$k]['retailerMRP'] = $row->price;
+            $ProductList[$k]['retailerShowroomId'] = $row->showroomId;
+
             $ProductList[$k]['barcode'] = $row->barcode;
-            $ProductList[$k]['productsize'] = $row->productsize;
-            $ProductList[$k]['categorytypeid'] = $row->categorytypeid;
             $ProductList[$k]['active'] = $row->active;
             $ProductList[$k]['adminid'] = $row->adminid;
+
             $ProductList[$k]['brandid'] = $row->brandid;
+            $ProductList[$k]['productsize'] = $row->productsize;
+            $ProductList[$k]['categorytypeid'] = $row->categorytypeid;
+
+            $ProductList[$k]['brandname'] = $row->brandname;
+            $ProductList[$k]['size'] = $row->size;
+            $ProductList[$k]['categorytype'] = $row->categorytype;
+
+
+            $salesQty = $row->qty;
+            $totalPQty = $row->quantity;
+            $avalableQty = $totalPQty - $salesQty;
+
+            $ProductList[$k]['qty'] = $salesQty;
+            $ProductList[$k]['quantity'] = $totalPQty;
+            $ProductList[$k]['avalableQty'] = $avalableQty;
+
+
             $k++;
         }
 
@@ -729,9 +761,15 @@ class Users_model extends CI_Model
             }
         }*/
 
-        $sql = "SELECT t.productid, t.productname, a.price, a.quantity, sum(b.qty) as qty  FROM tbl_product t INNER JOIN tbl_productMapping a on t.productid = a.productid LEFT JOIN tbl_customerreceiptproduct b on t.productId = b.productid  WHERE  a.showroomId ='" . $showroomId . "' and t.adminid='" . $adminid . "' ";
+        $sql = "SELECT t.productid, t.productname, a.price, a.quantity, sum(b.qty) as qty  FROM tbl_product t LEFT JOIN tbl_productMapping a on t.productid = a.productid LEFT JOIN tbl_customerreceiptproduct b on t.productId = b.productid  WHERE  t.adminid='" . $adminid . "' ";
         if ($productId != "") {
             $sql = $sql . "and t.productid = '" . $productId . "'";
+        }
+
+        if($type=="productQtyandPrice"){
+            if ($showroomId != "") {
+                $sql = $sql . " and a.showroomId ='" . $showroomId . "' and a.showroomId is not NULL ";
+            }
         }
         $sql = $sql . " group by t.productId";
 
@@ -741,7 +779,7 @@ class Users_model extends CI_Model
             $productListArray[$k]['productid'] = $row->productid;
             $productListArray[$k]['productname'] = $row->productname;
             $productListArray[$k]['price'] = $row->price;
-   	    $salesQty=$productListArray[$k]['qty']= $row->qty;
+   	        $salesQty=$productListArray[$k]['qty']= $row->qty;
             $totalPQty=$productListArray[$k]['quantity']= $row->quantity;
             $avalableQty=$totalPQty-$salesQty;
             $productListArray[$k]['avalableQty'] = $avalableQty;

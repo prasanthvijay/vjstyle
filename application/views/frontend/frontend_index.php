@@ -1,4 +1,4 @@
-<div class="wrapper-page">
+<div class="wrapper-page card-box">
 
 	<div class="text-center">
 		<a href="index-2.html" class="logo logo-lg"><i class="md md-equalizer"></i> <span>Jonam</span> </a>
@@ -86,3 +86,8 @@
 	}
 
 </script>
+<style>
+	body {
+		padding-bottom: 0px !important;
+	}
+</style>

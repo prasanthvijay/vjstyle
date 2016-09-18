@@ -9,91 +9,39 @@
         </div>
         <!-- Page-Title -->
 
+        <div class="card-box">
 
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="card-box table-responsive">
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="table-responsive">
-                                    <p class="text-muted m-b-20 font-13">
-                                        Add, Edit and Delete Product
-                                    </p>
-                                    <?php $loadAddOrEditModalUrl = base_url()."Product/AddOrEditMasterContent"; ?>
-                                    <button class="btn btn-primary waves-effect waves-light m-t-10" onclick="getAddOrEditModalContent('actionType=Add&actionId=0&masterName=<?php echo $title; ?>', '<?php echo $loadAddOrEditModalUrl; ?>')">Add <?php echo $title; ?></button>
-                                </div>
-                            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <p class="text-muted m-b-20 font-13">
+                                Add, Edit and Delete Product
+                            </p>
+                            <?php $loadAddOrEditModalUrl = base_url() . "Product/AddOrEditMasterContent"; ?>
+                            <button class="btn btn-primary waves-effect waves-light m-t-10"
+                                    onclick="getAddOrEditModalContent('actionType=Add&actionId=0&masterName=<?php echo $title; ?>', '<?php echo $loadAddOrEditModalUrl; ?>')">
+                                Add <?php echo $title; ?></button>
                         </div>
                     </div>
+                </div>
+            </div>
 
-                    <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap"
-                           cellspacing="0" width="100%">
-                        <thead>
-                        <tr>
-                            <th>Sno</th>
-                            <th>Product Name</th>
-                            <th>Product Rate</th>
-<!--                            <th>Quantity</th>-->
-                            <th>Barcode</th>
-                            <th>Brand</th>
-                            <th>Category Type</th>
-                            <th>Product Size</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <?php $deletUrl = base_url()."Product/addProductMaster"; ?>
-                        <?php $loadAddOrEditModalUrl = base_url()."Product/EditProduct"; ?>
-                        <?php for ($i = 0; $i < count($ProductList); $i++) { ?>
-                            <tr>
-
-                                <td><?php echo $i + 1; $productId = $ProductList[$i]['productid']; ?></td>
-                                <td><?php echo $ProductList[$i]['productname']; ?></td>
-                                <td><?php echo $ProductList[$i]['productrate']; ?></td>
-<!--                                <td>--><?php //echo $ProductList[$i]['availablequantity']; ?><!--</td>-->
-                                <td><?php echo $ProductList[$i]['barcode']; ?></td>
-                                <td>
-                                    <?php
-                                        if(array_key_exists($ProductList[$i]['brandid'], $BrandArray)){
-                                            echo $BrandArray[$ProductList[$i]['brandid']];
-                                        }
-                                    ?>
-                                </td>
-                                <td>
-                                    <?php
-                                    if(array_key_exists($ProductList[$i]['categorytypeid'], $CategoryTypeArray)){
-                                        echo $CategoryTypeArray[$ProductList[$i]['categorytypeid']];
-                                    }
-                                    ?>
-                                </td>
-                                <td>
-                                    <?php
-                                    if(array_key_exists($ProductList[$i]['productsize'], $SizeArray)){
-                                        echo $SizeArray[$ProductList[$i]['productsize']];
-                                    }
-                                    ?>
-                                </td>
-                                <td>
-                                    <button class="btn btn-primary waves-effect waves-light" type="button" onclick="getAddOrEditModalContent('actionType=Edit&actionId=<?php echo $productId; ?>', '<?php echo $loadAddOrEditModalUrl; ?>')">
-                                        Edit
-                                    </button>
-                                </td>
-                                <td>
-                                    <button class="btn btn-danger waves-effect waves-light" type="button" onclick="deleteProductsMaster('product','submit=Product&actionType=Delete&actionId=<?php echo $productId; ?>','<?php echo $deletUrl; ?>')">
-                                        Delete
-                                    </button>
-                                </td>
-
-                            </tr>
-                        <?php } ?>
-                        </tbody>
-                    </table>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="msgDiv"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="usersListDiv"></div>
+                    </div>
                 </div>
             </div>
         </div>
-
         <div id="panel-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
              aria-hidden="true" style="display: none;">
             <div class="modal-dialog">
@@ -102,12 +50,14 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div>
-
+        <?php include_once "innerFooter.php"; ?>
     </div>
 </div>
 
 <input type="hidden" id="count" name="count" value="1">
+
 <script>
+    var postData = "type=ProductList";
 
-
+    loadMastersList(postData);
 </script>
