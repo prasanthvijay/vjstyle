@@ -34,13 +34,13 @@ class Pos_model extends CI_Model
         return $returnValue;
     }
 
-    public function productDetails($productId,$retailerShowRoomId){
+    public function productDetails($barcode,$retailerShowRoomId){
 
         
 	//$this->db->select('productid,productname,barcode');
 	//$this->db->where('productid', $productId);
 	//$q = $this->db->get('tbl_product');
-		$sql = "SELECT t.productid,t.productname,t.barcode,a.price,a.quantity FROM tbl_product t INNER JOIN tbl_productMapping a WHERE t.productid ='" . $productId . "' and a.showroomId ='" .$retailerShowRoomId."' and a.productId ='" . $productId . "'";
+		$sql = "SELECT t.productid,t.productname,t.barcode,a.price,a.quantity FROM tbl_product t INNER JOIN tbl_productMapping a WHERE t.barcode ='" . $barcode . "' and a.showroomId ='" .$retailerShowRoomId."' and a.productId =t.productid";
 		$executeQuery = $this->db->query($sql);
 		$returnValue = $executeQuery->result_array();
 		return $returnValue;

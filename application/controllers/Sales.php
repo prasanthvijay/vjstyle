@@ -92,11 +92,11 @@ class Sales extends CI_Controller {
     	}
 	public function posajax()
 	{
-		$productId = $this->input->get_post("productId");
+		$barcode = $this->input->get_post("barcode");
 
 		$retailerShowRoomId = $this->session->userdata('retailerShowRoomId');
-		$productIdArray = array('productId' => $productId,'retailerShowRoomId' => $retailerShowRoomId);
-		$productDetails = $this->pos_model->productDetails($productId,$retailerShowRoomId);
+		$productIdArray = array('barcode' => $barcode,'retailerShowRoomId' => $retailerShowRoomId);
+		$productDetails = $this->pos_model->productDetails($barcode,$retailerShowRoomId);
 		echo json_encode($productDetails);
 	}
 

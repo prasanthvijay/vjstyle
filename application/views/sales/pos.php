@@ -75,22 +75,29 @@
 				<div class="card-box table-responsive">
 					<p class="text-muted m-b-20 font-13">
 						Point Of Sales
-						<form action="" method="POST" data-parsley-validate novalidate>
+						<form action="" id="myForm" method="POST" data-parsley-validate novalidate>
 							<div class="row">
 							    <div class="col-lg-8">
 							
-								<div class="row col-lg-12">
-									<div class="card-box">
-										    <select class="form-control select2" onchange="getProduct(this.value);">
-											<option value="">Select</option>
-											<?php for($i=0;$i<count($productList);$i++) { ?>
-												<option value="<?php echo $productList[$i]['productid']; ?>"><?php echo $productList[$i]['productname']; ?></option>
-											<?php } ?>
-										    </select>
+					<!--<div class="row col-lg-12">
+						<div class="card-box">
+							    <select class="form-control select2" onchange="getProduct(this.value);">
+								<option value="">Select</option>
+								<?php for($i=0;$i<count($productList);$i++) { ?>
+									<option value="<?php echo $productList[$i]['productid']; ?>"><?php echo $productList[$i]['productname']; ?></option>
+								<?php } ?>
+							    </select>
 <input type="hidden" id="selectedProduct" name="selectedProduct">
-									</div>
-								</div>
-								<div class="row col-sm-12 register">
+						</div>
+					</div>-->
+<div class="row col-lg-12">
+						<div class="card-box">
+							    <input type="text" class="form-control" onblur="getProduct(this.value);" >
+								
+<input type="hidden" id="selectedProduct" name="selectedProduct">
+						</div>
+					</div>
+					<div class="row col-sm-12 register">
 									<div class="register-box register-items paper-cut">
 										<div class="register-items-holder">
 									
@@ -163,7 +170,7 @@
 								<div class="row form-group">
 									<div class="col-sm-3"></div>
 									<div class="col-sm-9">
-										<button class="btn btn-primary waves-effect waves-light m-t-10">Submit</button>
+										<input type="button" class="btn btn-primary " value="Submit" onclick="formSubmit();"></button>
 									</div>
 								</div>
 							</div>
@@ -197,39 +204,48 @@
 
 
 <script>
-function getProduct(productId)
+function getProduct(barcode)
 {
-	$.get( "posajax", { productId: productId } ,function( data ) {
+
+	$.get( "posajax", { barcode: barcode } ,function( data ) {
+
 	  	var product=JSON.parse(data);
 		$(".cart_content_area_empty").remove();
 
 		var selectedProduct=$("#selectedProduct").val().split('|');
-
 		
-		if ($.inArray(productId, selectedProduct) == -1)
+		
+		if ($.inArray(product[0]['productid'], selectedProduct) == -1)
 		{	
 
 		var j=parseInt(selectedProduct.length);
-			var productdata='<tr class="register-item-details" id="rowId'+productId+'"><td class="text-center"> <input type="button" class="btn btn-icon waves-effect waves-light btn-danger m-b-5" onclick="removeProduct('+productId+');" value="X"> </td><td>'+product[0]['productname']+" ("+product[0]['barcode']+')<input type="hidden" name="product_'+productId+'" value='+product[0]['productid']+'></td><td class="text-center"><input name="price_'+productId+'" id="price_'+productId+'" class="form-control editable editable-click" value="'+product[0]['price']+'" onblur="calculateTotal()"></td><td class="text-center"><input name="qty_'+productId+'" id="qty_'+productId+'" class="form-control editable editable-click" value="1" onblur="calculateTotal()"><input type="hidden" name="available_'+productId+'" id="available_'+productId+'" value="'+product[0]['quantity']+'"></td><td class="text-center"><input name="disc_'+productId+'" id="disc_'+productId+'" class="form-control editable editable-click" value="0" onblur="calculateTotal()"></td><td class="text-center" id="TDproduct_'+productId+'">'+product[0]['price']+'</td></tr>';
+			var productdata='<tr class="register-item-details" id="rowId'+product[0]['productid']+'"><td class="text-center"> <input type="button" class="btn btn-icon waves-effect waves-light btn-danger m-b-5" onclick="removeProduct('+product[0]['productid']+');" value="X"> </td><td>'+product[0]['productname']+" ("+product[0]['barcode']+')<input type="hidden" name="product_'+product[0]['productid']+'" value='+product[0]['productid']+'></td><td class="text-center" ><input name="price_'+product[0]['productid']+'" id="price_'+product[0]['productid']+'" class="form-control editable editable-click" value="'+product[0]['price']+'" onblur="calculateTotal()"></td><td class="text-center"><input name="qty_'+product[0]['productid']+'" id="qty_'+product[0]['productid']+'" class="form-control editable editable-click" value="1" onblur="calculateTotal()"><input type="hidden" name="available_'+product[0]['productid']+'" id="available_'+product[0]['productid']+'" value="'+product[0]['quantity']+'"></td><td class="text-center"><input name="disc_'+product[0]['productid']+'" id="disc_'+product[0]['productid']+'" class="form-control editable editable-click" value="0" onblur="calculateTotal()"></td><td class="text-center" id="TDproduct_'+product[0]['productid']+'">'+product[0]['price']+'</td></tr>';
 		
 			$('#salesTable tr:last').after(productdata);
 			var alreadyExist=$("#selectedProduct").val();
-			document.getElementById("selectedProduct").value=alreadyExist+productId+"|";
+			document.getElementById("selectedProduct").value=alreadyExist+product[0]['productid']+"|";
 			
 calculateTotal();
 		}
 		else
 		{	
-			$.Notification.notify('warning','top right','Already Added This Product', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae orci ut dolor scelerisque aliquam.');
-		}
+		
+		var qty=$('#qty_'+product[0]['productid']).val();
+		$('#qty_'+product[0]['productid']).val(parseInt(qty)+1);
+		calculateTotal();	
 
+			/*$.Notification.notify('warning','top right','Already Added This Product', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae orci ut dolor scelerisque aliquam.');*/
+		
+}
 
-	});	
+	});
+
 }
 
 
 function calculateTotal()
 {
+
 	var selectedProduct=$("#selectedProduct").val().split('|');
 
 	var j=0,productTotal=0,FinalTotal=0,beforeTotal=0;
@@ -267,5 +283,12 @@ function removeProduct(productId)
 	$("#rowId"+productId).remove();	
 	calculateTotal();
 }
+function formSubmit()
+{
+
+document.getElementById("myForm").submit();
+
+}
+
 </script>
 
