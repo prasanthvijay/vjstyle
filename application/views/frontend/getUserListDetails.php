@@ -35,11 +35,11 @@
                     $postData = $postData . "&adminid=".$adminid;
                 }
             ?>
-            <td><button class="btn btn-primary waves-effect waves-light" type="button" onclick="loadAddOrEditContentWithModal('getAddOrEditUserMasterContent','<?php echo $postData; ?>','modalContentArea')">
-                    Edit
+            <td><button class="btn btn-icon waves-effect waves-light btn-primary m-b-5" type="button" onclick="loadAddOrEditContentWithModal('getAddOrEditUserMasterContent','<?php echo $postData; ?>','modalContentArea')">
+                    <i class="fa fa-edit"></i>
                 </button></td>
-            <td><button class="btn btn-danger waves-effect waves-light" type="button" onclick="deleteUsers('<?php echo $userid; ?>','<?php echo $adminid; ?>');">
-                    Delete
+            <td><button class="btn btn-icon waves-effect waves-light btn-danger m-b-5" type="button" onclick="deleteUsers('<?php echo $userid; ?>','<?php echo $adminid; ?>');">
+                    <i class="fa fa-remove"></i>
                 </button></td>
         </tr>
     <?php } ?>

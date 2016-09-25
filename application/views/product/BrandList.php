@@ -157,14 +157,12 @@
                     <?php echo $ProductList[$i]['size']; ?>
                 </td>
                 <td>
-                    <button class="btn btn-primary waves-effect waves-light" type="button" onclick="getAddOrEditModalContent('actionType=Edit&actionId=<?php echo $productId; ?>', '<?php echo $loadAddOrEditModalUrl; ?>')">
-                        Edit
+                    <button class="btn btn-icon waves-effect waves-light btn-primary m-b-5" type="button" onclick="getAddOrEditModalContent('actionType=Edit&actionId=<?php echo $productId; ?>', '<?php echo $loadAddOrEditModalUrl; ?>')">
+                        <i class="fa fa-edit"></i>
                     </button>
                 </td>
                 <td>
-                    <button class="btn btn-danger waves-effect waves-light" type="button" onclick="deleteProductsMaster('product','submit=Product&actionType=Delete&actionId=<?php echo $productId; ?>','<?php echo $deletUrl; ?>')">
-                        Delete
-                    </button>
+                    <button class="btn btn-icon waves-effect waves-light btn-danger m-b-5" type="button" onclick="deleteProductsMaster('product','submit=Product&actionType=Delete&actionId=<?php echo $productId; ?>','<?php echo $deletUrl; ?>')">   <i class="fa fa-remove"></i>                 </button>
                 </td>
 
             </tr>

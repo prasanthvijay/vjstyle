@@ -71,28 +71,42 @@
 </div>
 
 <input type="hidden" id="count" name="count" value="1">
-<input type="text" name="ajaxPostUrl" id="ajaxPostUrl" value="<?php echo base_url().'Product/productSearch'?>">
+<input type="hidden" name="ajaxPostUrl" id="ajaxPostUrl" value="<?php echo base_url().'Product/productSearch'?>">
 <script>
     var postData = "type=ProductList";
 
     loadMastersList(postData);
     
     function loadSearchFunction() {
-        var loadSearchDiv = $("#loadSearchDiv").val();
-        var ajaxPostData = "";
-        var ajaxPostUrl = $("#ajaxPostUrl").val();
-        $.ajax({
-            url : ajaxPostUrl,
-            type : "get",
-            data : ajaxPostData,
-            success : function (response) {
-                $("#productSearchDiv").html(response);
-                $("#showroomId").select2();
-                $("#categorytypeid").select2();
-                $("#brandid").select2();
-                $("#sizeid").select2();
-            }
+        var loadSearchDiv = $("#checkbox-signup").is(":checked");
+        if(loadSearchDiv){
+            var ajaxPostData = "";
+            var ajaxPostUrl = $("#ajaxPostUrl").val();
+            $.ajax({
+                url : ajaxPostUrl,
+                type : "get",
+                data : ajaxPostData,
+                success : function (response) {
+                    $("#productSearchDiv").html(response);
 
-        });
+                    $("#categorytypeid").select2();
+                    $("#brandid").select2();
+                    $("#sizeid").select2();
+                    $("#showroomId").select2();
+                }
+
+            });
+        } else {
+            $("#productSearchDiv").html("");
+        }
+    }
+    
+    function searchProductList() {
+        var newSearchPostData = $("#productSearchForm").serialize() + "&"+postData ;
+        loadMastersList(newSearchPostData);
+    }
+    
+    function loadAllProducts() {
+        loadMastersList(postData);
     }
 </script>

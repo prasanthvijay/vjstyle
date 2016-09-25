@@ -246,7 +246,7 @@ class Users_model extends CI_Model
         return $BrandArray;
     }
 
-    public function getProductList($adminid, $productId, $showroomId)
+    public function getProductList($adminid, $productId, $showroomId, $categorytypeid, $brandid, $sizeid, $barcode)
     {
 
         $ProductList = array();
@@ -272,6 +272,21 @@ class Users_model extends CI_Model
         if ($productId != "0" && $productId != "" && $productId != null) {
             $sql .= " and t.productid = '" . $productId . "' ";
         }
+
+        //Search Product
+        if ($categorytypeid != "0" && $categorytypeid != "" && $categorytypeid != null) {
+            $sql .= " and t.categorytypeid = '" . $categorytypeid . "' ";
+        }
+        if ($brandid != "0" && $brandid != "" && $brandid != null) {
+            $sql .= " and t.brandid = '" . $brandid . "' ";
+        }
+        if ($sizeid != "0" && $sizeid != "" && $sizeid != null) {
+            $sql .= " and t.productsize = '" . $sizeid . "' ";
+        }
+        if ($barcode != "0" && $barcode != "" && $barcode != null) {
+            $sql .= " and t.barcode like '%" . $barcode . "%' ";
+        }
+
         $sql = $sql . " group by t.productId";
         $sql = $sql . " order by productid desc";
         $userQuery = $this->db->query($sql);

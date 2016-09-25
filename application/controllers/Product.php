@@ -239,6 +239,7 @@ class Product extends CI_Controller
             $sessionUserTypeId = $this->session->userdata('usertypeid');
             if ($sessionUserTypeId == 2) {
                 $adminid = $this->session->userdata('userid');
+                $showroomId = $this->input->get_post('showroomId');
             } else if ($sessionUserTypeId == 1) {
                 $adminid = $this->input->get_post('adminid');
                 $showroomId = $this->input->get_post('showroomId');
@@ -264,7 +265,12 @@ class Product extends CI_Controller
         } else if ($type == "Category Type") {
             $CategoryTypeList = $this->users_model->getCategoryTypeList($adminid, $actionId);
         } else if ($type == "ProductList") {
-            $ProductList = $this->users_model->getProductList($adminid, "0", $showroomId);
+            $categorytypeid = $this->input->get_post('categorytypeid');
+            $brandid = $this->input->get_post('brandid');
+            $sizeid = $this->input->get_post('sizeid');
+            $barcode = $this->input->get_post('barcode');
+
+            $ProductList = $this->users_model->getProductList($adminid, "0", $showroomId, $categorytypeid, $brandid, $sizeid, $barcode);
         }
 
         $dataheader['typeList'] = $type;
@@ -603,7 +609,7 @@ class Product extends CI_Controller
         $actionId = "0";
         $actionType = $this->input->get_post('actionType');
         $productId = $this->input->get_post('actionId');
-        $productArray = $this->users_model->getProductList($adminid, $productId, $retailerShowRoomId);
+        $productArray = $this->users_model->getProductList($adminid, $productId, $retailerShowRoomId , "0", "0", "0", null);
         $BrandArray = $this->users_model->getBrandList($adminid, $actionId);
         $SizeArray = $this->users_model->getSizeList($adminid, $actionId);
         $CategoryTypeArray = $this->users_model->getCategoryTypeList($adminid, $actionId);

@@ -25,7 +25,7 @@
             </div>
         </div>
     <?php } else { ?>
-        <input type="text" name="showroomId" id="showroomId" value="<?php echo $showroomId; ?>">
+        <input type="hidden" name="showroomId" id="showroomId" value="<?php echo $showroomId; ?>">
     <?php } ?>
 
     <div class="form-group">
@@ -91,7 +91,8 @@
             <div class="col-md-6">
             </div>
             <div class="col-md-6">
-                <input type="button" name="productSearchButton" id="productSearchButton" value="Product Search" class="btn btn-info waves-effect waves-light m-t-10">
+                <input type="button" name="productSearchButton" id="productSearchButton" value="Product Search" class="btn btn-info waves-effect waves-light m-t-10" onclick="searchProductList()">
+                <input type="button" name="loadAllProduct" id="loadAllProduct" value="Load All Product" class="btn btn-pink waves-effect waves-light m-t-10" onclick="loadAllProducts()">
             </div>
         </div>
     </div>
