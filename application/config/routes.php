@@ -68,6 +68,7 @@ $route['getAddOrEditUserMasterContent'] = 'Frontend/getAddOrEditUserMasterConten
 $route['deleteUsersFromMaster'] = 'Frontend/deleteUsersFromMaster';
 $route['editProfile'] = 'Frontend/editProfile';
 $route['forgotPassword'] = 'Frontend/forgotPassword';
+$route['productSearch'] = 'Product/productSearch';
 
 //Product
 $route['EditProduct'] = 'Product/EditProduct';

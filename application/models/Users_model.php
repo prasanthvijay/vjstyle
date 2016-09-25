@@ -246,7 +246,7 @@ class Users_model extends CI_Model
         return $BrandArray;
     }
 
-    public function getProductList($adminid, $productId)
+    public function getProductList($adminid, $productId, $showroomId)
     {
 
         $ProductList = array();
@@ -260,8 +260,8 @@ class Users_model extends CI_Model
         }
 
         $sql = $sql . " order by productid desc";*/
-        $sql = "SELECT t.productid, t.productname, t.productrate, t.barcode, t.productsize, t.categorytypeid, t.active, t.adminid, t.brandid, a.showroomId, tb.brandname, ts.size, tc.categorytype, sum(a.price) as price, a.quantity, sum(b.qty) as qty  FROM tbl_product t INNER JOIN tbl_productMapping a on t.productid = a.productid LEFT JOIN tbl_customerreceiptproduct b on t.productId = b.productid LEFT JOIN tbl_brand tb on tb.brandid=t.brandid LEFT JOIN tbl_sizemaster ts on ts.sizeid=t.productsize LEFT JOIN tbl_categorytype tc on tc.categorytypeid = t.categorytypeid WHERE  t.active = 'active' ";
-        $showroomId = "0";
+        $sql = "SELECT t.productid, t.productname, t.productrate, t.barcode, t.productsize, t.categorytypeid, t.active, t.adminid, t.brandid, a.showroomId, tb.brandname, ts.size, tc.categorytype, sum(a.price) as price, a.quantity, sum(b.qty) as qty  FROM tbl_product t Left JOIN tbl_productMapping a on t.productid = a.productid LEFT JOIN tbl_customerreceiptproduct b on t.productId = b.productid LEFT JOIN tbl_brand tb on tb.brandid=t.brandid LEFT JOIN tbl_sizemaster ts on ts.sizeid=t.productsize LEFT JOIN tbl_categorytype tc on tc.categorytypeid = t.categorytypeid WHERE  t.active = 'active' ";
+
         if ($showroomId != "0" && $showroomId != "" && $showroomId != null) {
             $sql .= " and a.showroomId = '" . $showroomId . "' ";
         }

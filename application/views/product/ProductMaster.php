@@ -26,11 +26,27 @@
                     </div>
                 </div>
             </div>
-
             <div class="form-group">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-3">
+                        <div class="checkbox checkbox-primary">
+                            <input id="checkbox-signup" type="checkbox" name="loadSearchDiv" id="loadSearchDiv" onclick="loadSearchFunction()">
+                            <label for="checkbox-signup">
+                                Product Search
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
                         <div id="msgDiv"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <div name="productSearchDiv" id="productSearchDiv"></div>
                     </div>
                 </div>
             </div>
@@ -55,9 +71,28 @@
 </div>
 
 <input type="hidden" id="count" name="count" value="1">
-
+<input type="text" name="ajaxPostUrl" id="ajaxPostUrl" value="<?php echo base_url().'Product/productSearch'?>">
 <script>
     var postData = "type=ProductList";
 
     loadMastersList(postData);
+    
+    function loadSearchFunction() {
+        var loadSearchDiv = $("#loadSearchDiv").val();
+        var ajaxPostData = "";
+        var ajaxPostUrl = $("#ajaxPostUrl").val();
+        $.ajax({
+            url : ajaxPostUrl,
+            type : "get",
+            data : ajaxPostData,
+            success : function (response) {
+                $("#productSearchDiv").html(response);
+                $("#showroomId").select2();
+                $("#categorytypeid").select2();
+                $("#brandid").select2();
+                $("#sizeid").select2();
+            }
+
+        });
+    }
 </script>

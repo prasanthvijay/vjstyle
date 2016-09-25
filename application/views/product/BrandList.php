@@ -137,7 +137,14 @@
                 <td><?php echo $ProductList[$i]['productrate']; ?></td>
                 <?php } ?>
                 <td><?php echo $ProductList[$i]['avalableQty']; ?></td>
-                <td><?php echo $ProductList[$i]['retailerMRP']; ?></td>
+                <td>
+                    <?php if($sessionUserTypeId != 1 && $sessionUserTypeId!=2) {
+                        echo $ProductList[$i]['retailerMRP'];
+                    } else {
+
+                        echo "<a href='#'>View Cost</a>";
+                    } ?>
+                </td>
                 <!--                                <td>--><?php //echo $ProductList[$i]['availablequantity']; ?><!--</td>-->
                 <td><?php echo $ProductList[$i]['barcode']; ?></td>
                 <td>

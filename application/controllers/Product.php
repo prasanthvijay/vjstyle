@@ -233,6 +233,7 @@ class Product extends CI_Controller
 
         $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
         $adminid = "0";
+        $showroomId = "0";
         $sessionUserTypeId = "0";
         if ($sessionUserTypeIdIsset == 1) {
             $sessionUserTypeId = $this->session->userdata('usertypeid');
@@ -240,7 +241,9 @@ class Product extends CI_Controller
                 $adminid = $this->session->userdata('userid');
             } else if ($sessionUserTypeId == 1) {
                 $adminid = $this->input->get_post('adminid');
+                $showroomId = $this->input->get_post('showroomId');
             } else if ($sessionUserTypeId == 4) {
+                $showroomId = $this->session->userdata("retailerShowRoomId");
                 $adminid = $this->session->userdata('adminid');
 
             }
@@ -261,7 +264,7 @@ class Product extends CI_Controller
         } else if ($type == "Category Type") {
             $CategoryTypeList = $this->users_model->getCategoryTypeList($adminid, $actionId);
         } else if ($type == "ProductList") {
-            $ProductList = $this->users_model->getProductList($adminid, "0");
+            $ProductList = $this->users_model->getProductList($adminid, "0", $showroomId);
         }
 
         $dataheader['typeList'] = $type;
@@ -272,6 +275,50 @@ class Product extends CI_Controller
         $dataheader['sessionUserTypeId'] = $sessionUserTypeId;
 
         $this->load->view('product/BrandList', $dataheader);
+    }
+
+    public function productSearch(){
+
+        $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
+        $adminid = "0";
+        $showroomId = "0";
+        $sessionUserTypeId = "0";
+        if ($sessionUserTypeIdIsset == 1) {
+            $sessionUserTypeId = $this->session->userdata('usertypeid');
+            if ($sessionUserTypeId == 2) {
+                $adminid = $this->session->userdata('userid');
+            } else if ($sessionUserTypeId == 1) {
+                $adminid = $this->input->get_post('adminid');
+                $showroomId = $this->input->get_post('showroomId');
+            } else if ($sessionUserTypeId == 4) {
+                $showroomId = $this->session->userdata("retailerShowRoomId");
+                $adminid = $this->session->userdata('adminid');
+            }
+        }
+
+        $dataheader = array();
+        $categorytypeid = $this->input->get_post('categorytypeid');
+        $brandid = $this->input->get_post('brandid');
+        $sizeid = $this->input->get_post('sizeid');
+        $barcode = $this->input->get_post('barcode');
+
+        $BrandArray = $this->users_model->getBrandList($adminid, null);
+        $SizeList = $this->users_model->getSizeList($adminid, null);
+        $CategoryTypeList = $this->users_model->getCategoryTypeList($adminid, null);
+        $showroomArray = $this->users_model->getUsersList("3", $adminid, null, null);
+
+        $dataheader['BrandArray'] = $BrandArray;
+        $dataheader['SizeList'] = $SizeList;
+        $dataheader['CategoryTypeList'] = $CategoryTypeList;
+        $dataheader['showroomArray'] = $showroomArray;
+
+        $dataheader['categorytypeid'] = $categorytypeid;
+        $dataheader['brandid'] = $brandid;
+        $dataheader['sizeid'] = $sizeid;
+        $dataheader['barcode'] = $barcode;
+        $dataheader['showroomId'] = $showroomId;
+
+        $this->load->view('product/productSearch', $dataheader);
     }
 
     public function ProductMaster()
@@ -556,7 +603,7 @@ class Product extends CI_Controller
         $actionId = "0";
         $actionType = $this->input->get_post('actionType');
         $productId = $this->input->get_post('actionId');
-        $productArray = $this->users_model->getProductList($adminid, $productId);
+        $productArray = $this->users_model->getProductList($adminid, $productId, $retailerShowRoomId);
         $BrandArray = $this->users_model->getBrandList($adminid, $actionId);
         $SizeArray = $this->users_model->getSizeList($adminid, $actionId);
         $CategoryTypeArray = $this->users_model->getCategoryTypeList($adminid, $actionId);
