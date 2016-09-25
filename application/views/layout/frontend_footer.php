@@ -40,6 +40,21 @@
         $('form').parsley();
     });
 </script>
+<script src="<?php echo base_url(); ?>assets/js/bootstrap-show-password.js"></script>
+<script>
+    $(function() {
+        $('#password').password().on('show.bs.password', function(e) {
+            $('#eventLog').text('On show event');
+            $('#methods').prop('checked', true);
+        }).on('hide.bs.password', function(e) {
+            $('#eventLog').text('On hide event');
+            $('#methods').prop('checked', false);
+        });
+        $('#methods').click(function() {
+            $('#password').password('toggle');
+        });
+    });
+</script>
 
 </body>
 
