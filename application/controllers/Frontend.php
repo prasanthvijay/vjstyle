@@ -67,7 +67,7 @@ class Frontend extends CI_Controller
                 $sendResponse = $this->users_model->sendEmail(null, null, $tomailIdArray, $subject, $message);
 //                $sendResponse  = 1;
                 if($sendResponse==1){
-                    $output = array("message"=>"Please check your mail for OTP", "status"=>"1");
+                    $output = array("message"=>"Please check your registered e-mail for OTP", "status"=>"1");
                     $sendResponseMessage = $this->users_model->getSuccessMsg($output);
                 } else {
                     $output = array("message"=>"Please check your Internet connection", "status"=>"2");

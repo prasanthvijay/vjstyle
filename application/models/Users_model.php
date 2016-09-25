@@ -27,14 +27,26 @@ class Users_model extends CI_Model
             foreach ($userQuery->result() as $row) {
                 $userId = $row->userid;
             }
-
             if ($userId != "") {
-                $otp = rand(100000, 999999);
-                $createdAt = Date("now");
-                $expiryDate = Date("now");
-                $active = "active";
-                $forgotSql = "INSERT INTO `tbl_forgotPasswordRequest`( `userid`, `otp`, `createdAt`, `expiryDate`, `active`) VALUES (" . $this->db->escape($userId) . "," . $this->db->escape($otp) . "," . $this->db->escape($createdAt) . "," . $this->db->escape($expiryDate) . "," . $this->db->escape($active) . ")";
-                $this->db->query($forgotSql);
+
+                $newdate = new DateTime("now");
+                $now = $createdAt = date_format($newdate,"Y-m-d H:i:s");
+                $interval = new DateInterval('PT12H0S');
+                $newdate->add($interval);
+
+                $expiryDate = date_format($newdate,"Y-m-d H:i:s");
+                $existSql = "Select * from `tbl_forgotPasswordRequest` where userid=" . $this->db->escape($userId)." and active='active' and createdAt <= " . $this->db->escape($now) ." and expiryDate >= " . $this->db->escape($now);
+                $executeQuery = $this->db->query($existSql);
+                $returnValueArray = $executeQuery->result_array();
+
+                if (count($returnValueArray) > 0) {
+                   $otp = $returnValueArray[0]['otp'];
+                } else {
+                    $otp = rand(100000, 999999);
+                    $active = "active";
+                    $forgotSql = "INSERT INTO `tbl_forgotPasswordRequest`( `userid`, `otp`, `createdAt`, `expiryDate`, `active`) VALUES (" . $this->db->escape($userId) . "," . $this->db->escape($otp) . "," . $this->db->escape($createdAt) . "," . $this->db->escape($expiryDate) . "," . $this->db->escape($active) . ")";
+                    $this->db->query($forgotSql);
+                }
             }
         }
 
@@ -50,8 +62,14 @@ class Users_model extends CI_Model
         $sql .= " and userid in ($userSql) ";
         $userQuery = $this->db->query($sql);
         $returnValue = $userQuery->result_array();
-        if (count($returnValue) > 0)
-            $resultArray = array('successMsg' => 1, 'userid' => $returnValue[0]['userid']);
+        if (count($returnValue) > 0){
+            $userid = $returnValue[0]['userid'];
+            $resultArray = array('successMsg' => 1, 'userid' => $userid);
+            $usedAt = date("Y-m-d H:i:s");
+            $forgotSql = "Update `tbl_forgotPasswordRequest` set active = 'used', usedAt = ".$this->db->escape($usedAt)."  where userid = ".$this->db->escape($userid)." and active='active' and otp = ".$this->db->escape($otptext);
+            $this->db->query($forgotSql);
+        }
+
 
         return $resultArray;
     }

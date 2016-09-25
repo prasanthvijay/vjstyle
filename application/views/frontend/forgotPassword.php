@@ -33,7 +33,7 @@
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control" id="otptext" name="otptext"
                                                        parsley-trigger="change" required placeholder="OTP">
-                                                <input type="hidd en" class="form-control" id="email" name="email"
+                                                <input type="hidden" class="form-control" id="email" name="email"
                                                        parsley-trigger="change" value="<?php echo $emailId; ?>" required placeholder="OTP">
                                             </div>
                                         </div>
