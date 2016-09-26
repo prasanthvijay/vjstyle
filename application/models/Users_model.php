@@ -260,7 +260,7 @@ class Users_model extends CI_Model
         }
 
         $sql = $sql . " order by productid desc";*/
-        $sql = "SELECT t.productid, t.productname, t.productrate, t.barcode, t.productsize, t.categorytypeid, t.active, t.adminid, t.brandid, a.showroomId, tb.brandname, ts.size, tc.categorytype, sum(a.price) as price, a.quantity, sum(b.qty) as qty  FROM tbl_product t Left JOIN tbl_productMapping a on t.productid = a.productid LEFT JOIN tbl_customerreceiptproduct b on t.productId = b.productid LEFT JOIN tbl_brand tb on tb.brandid=t.brandid LEFT JOIN tbl_sizemaster ts on ts.sizeid=t.productsize LEFT JOIN tbl_categorytype tc on tc.categorytypeid = t.categorytypeid WHERE  t.active = 'active' ";
+        $sql = "SELECT t.productid, t.productname, t.productrate, t.barcode, t.productsize, t.categorytypeid, t.active, t.adminid, t.brandid, a.showroomId, tb.brandname, ts.size, tc.categorytype, sum(a.price) as price, sum(a.quantity) as quantity, sum(b.qty) as qty  FROM tbl_product t Left JOIN tbl_productMapping a on t.productid = a.productid LEFT JOIN tbl_customerreceiptproduct b on t.productId = b.productid LEFT JOIN tbl_brand tb on tb.brandid=t.brandid LEFT JOIN tbl_sizemaster ts on ts.sizeid=t.productsize LEFT JOIN tbl_categorytype tc on tc.categorytypeid = t.categorytypeid WHERE  t.active = 'active' ";
 
         if ($showroomId != "0" && $showroomId != "" && $showroomId != null) {
             $sql .= " and a.showroomId = '" . $showroomId . "' ";
@@ -332,7 +332,7 @@ class Users_model extends CI_Model
         $RetailerProductList = array();
 
         $userType = "3";
-        $sql = "SELECT  u.name, u.userid, t.productid, t.productname,t.productrate, t.barcode,t.active, t.adminid, a.price as price ,a.quantity, b.qty FROM `tbl_user` u LEFT JOIN tbl_product t on t.adminid=u.adminid and t.productid =".$this->db->escape($productId)." LEFT Join  tbl_productMapping a on a.showroomId=u.userid and a.productId=t.productid LEFT JOIN tbl_customerreceiptproduct b on t.productId = b.productid and u.userid=b.showroomId WHERE u.active = 'active' and u.adminid=".$this->db->escape($adminid)." and u.usertypeid=" .$this->db->escape($userType);
+        $sql = "SELECT  u.name, u.userid, t.productid, t.productname,t.productrate, t.barcode,t.active, t.adminid, a.price as price ,a.quantity, b.qty, tb.brandname, ts.size, tc.categorytype FROM `tbl_user` u LEFT JOIN tbl_product t on t.adminid=u.adminid and t.productid =".$this->db->escape($productId)." LEFT Join  tbl_productMapping a on a.showroomId=u.userid and a.productId=t.productid LEFT JOIN tbl_customerreceiptproduct b on t.productId = b.productid and u.userid=b.showroomId LEFT JOIN tbl_brand tb on tb.brandid=t.brandid LEFT JOIN tbl_sizemaster ts on ts.sizeid=t.productsize LEFT JOIN tbl_categorytype tc on tc.categorytypeid = t.categorytypeid WHERE u.active = 'active' and u.adminid=".$this->db->escape($adminid)." and u.usertypeid=" .$this->db->escape($userType);
         $userQuery = $this->db->query($sql);
 //        $RetailerProductList = $userQuery->result_array();
 //        print_r($RetailerProductList);
@@ -375,6 +375,10 @@ class Users_model extends CI_Model
             $ProductList[$k]['retailerMRP'] = $row->price;
             $ProductList[$k]['active'] = $row->active;
             $ProductList[$k]['adminid'] = $row->adminid;
+
+            $ProductList[$k]['brandname'] = $row->brandname;
+            $ProductList[$k]['size'] = $row->size;
+            $ProductList[$k]['categorytype'] = $row->categorytype;
 
             $salesQty = $row->qty;
             $totalPQty = $row->quantity;

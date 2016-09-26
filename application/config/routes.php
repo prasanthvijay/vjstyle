@@ -70,6 +70,7 @@ $route['editProfile'] = 'Frontend/editProfile';
 $route['forgotPassword'] = 'Frontend/forgotPassword';
 $route['productSearch'] = 'Product/productSearch';
 $route['ViewRetailerCostDetails'] = 'Product/ViewRetailerCostDetails';
+$route['mapRetailerProductCostAndQuantityUrl'] = 'Product/mapRetailerProductCostAndQuantityUrl';
 
 //Product
 $route['EditProduct'] = 'Product/EditProduct';

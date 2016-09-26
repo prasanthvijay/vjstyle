@@ -213,9 +213,59 @@ class Product extends CI_Controller
 
         $productId = $this->input->get_post('productId');
         $RetailerProductList = $this->users_model->getRetailerProductList($adminid, $productId, $showroomId, null, null, null, null);
-
+        $viewCostUrl = base_url()."Product/ViewRetailerCostDetails";
+        $mapRetailerProductCostAndQuantityUrl =   base_url()."Product/mapRetailerProductCostAndQuantityUrl";
+        $dataheader['productId']= $productId;
+        $dataheader['viewCostUrl']= $viewCostUrl;
+        $dataheader['mapRetailerProductCostAndQuantityUrl']= $mapRetailerProductCostAndQuantityUrl;
         $dataheader['RetailerProductList']= $RetailerProductList;
         $this->load->view('product/ViewRetailerCostDetails', $dataheader);
+    }
+
+    public function mapRetailerProductCostAndQuantityUrl(){
+        $dataheader = array();
+        $dataheader['title'] = "Retailer cost";
+        $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
+        $adminid = "0";
+        $sessionUserTypeId = "0";
+        if ($sessionUserTypeIdIsset == 1) {
+            $sessionUserTypeId = $this->session->userdata('usertypeid');
+            if ($sessionUserTypeId == 2) {
+                $adminid = $this->session->userdata('userid');
+            } else if ($sessionUserTypeId == 1) {
+                $adminid = $this->input->get_post('adminid');
+            } else if ($sessionUserTypeId == 4) {
+                $adminid = $this->session->userdata('adminid');
+            }
+        }
+
+        $retailerIdArray = $this->input->get_post('retailerId');
+        $newMrpArray = $this->input->get_post('newMrp');
+        $incQtyArray = $this->input->get_post('incQty');
+
+        $productId = $this->input->get_post('productId');
+        $viewCostUrl = $this->input->get_post('viewCostUrl');
+
+
+        for($n=0; $n<count($retailerIdArray) && $n<count($newMrpArray) && $n<count($incQtyArray); $n++){
+
+            $retailerId = $retailerIdArray[$n];
+            $newMrp = $newMrpArray[$n];
+            $incQty = $incQtyArray[$n];
+
+            $updateQuery = "";
+            if($newMrp>0 && $newMrp!="" && $newMrp!=null){
+                $updateQuery = " ";
+            }
+
+            if($incQty>0 && $incQty!="" && $incQty!=null){
+
+            }
+            $createdAtdate = date("Y-m-d H:i:s");
+            $ProductMappingArray = array('ShowroomId' => $retailerId, 'mappedprice' => $newMrp, 'mappedqyt' => $incQty, 'adminid' => $adminid, 'productId' => $productId, 'createdAtdate' => $createdAtdate);
+//            $this->users_model->createProductmappingMaster($ProductMappingArray);
+            print_r($ProductMappingArray);
+        }
     }
 
     public function AddBrand()

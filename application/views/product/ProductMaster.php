@@ -130,4 +130,19 @@
         });
         
     }
+    
+    function  mapRetailerProductCostAndQuantity() {
+        var formDataPost = $("#mapRetailerProductCostForm").serialize();
+        var viewCostUrl = $("#viewCostUrl").val();
+        var mapRetailerProductCostAndQuantityUrl = $("#mapRetailerProductCostAndQuantityUrl").val();
+        alert(mapRetailerProductCostAndQuantityUrl);
+        $.ajax({
+            url : mapRetailerProductCostAndQuantityUrl,
+            type : "get",
+            data : formDataPost,
+            success : function (responseFromSite) {
+                
+            }
+        });
+    }
 </script>
