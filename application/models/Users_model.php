@@ -332,7 +332,7 @@ class Users_model extends CI_Model
         $RetailerProductList = array();
 
         $userType = "3";
-        $sql = "SELECT  u.name, u.userid, t.productid, t.productname,t.productrate, t.barcode,t.active, t.adminid, a.price as price ,a.quantity FROM `tbl_user` u LEFT JOIN tbl_product t on t.adminid=u.adminid and t.productid =".$this->db->escape($productId)." LEFT Join  tbl_productMapping a on a.showroomId=u.userid and a.productId=t.productid LEFT JOIN tbl_customerreceiptproduct b on t.productId = b.productid and u.userid=b.showroomId WHERE u.active = 'active' and u.adminid=".$this->db->escape($adminid)." and u.usertypeid=" .$this->db->escape($userType);
+        $sql = "SELECT  u.name, u.userid, t.productid, t.productname,t.productrate, t.barcode,t.active, t.adminid, a.price as price ,a.quantity, b.qty FROM `tbl_user` u LEFT JOIN tbl_product t on t.adminid=u.adminid and t.productid =".$this->db->escape($productId)." LEFT Join  tbl_productMapping a on a.showroomId=u.userid and a.productId=t.productid LEFT JOIN tbl_customerreceiptproduct b on t.productId = b.productid and u.userid=b.showroomId WHERE u.active = 'active' and u.adminid=".$this->db->escape($adminid)." and u.usertypeid=" .$this->db->escape($userType);
         $userQuery = $this->db->query($sql);
 //        $RetailerProductList = $userQuery->result_array();
 //        print_r($RetailerProductList);
@@ -376,14 +376,14 @@ class Users_model extends CI_Model
             $ProductList[$k]['active'] = $row->active;
             $ProductList[$k]['adminid'] = $row->adminid;
 
-//            $salesQty = $row->qty;
-//            $totalPQty = $row->quantity;
-//            $avalableQty = $totalPQty - $salesQty;
-//
-//            $ProductList[$k]['qty'] = $salesQty;
-//            $ProductList[$k]['quantity'] = $totalPQty;
-//            $ProductList[$k]['avalableQty'] = $avalableQty;
-//
+            $salesQty = $row->qty;
+            $totalPQty = $row->quantity;
+            $avalableQty = $totalPQty - $salesQty;
+
+            $ProductList[$k]['qty'] = $salesQty;
+            $ProductList[$k]['quantity'] = $totalPQty;
+            $ProductList[$k]['avalableQty'] = $avalableQty;
+
 
             $k++;
         }

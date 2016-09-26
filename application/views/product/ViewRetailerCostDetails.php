@@ -33,6 +33,7 @@
                 $retailerId = $RetailerProductList[$i]['retailerShowroomId'];
 //                $barcode = $RetailerProductList[$i]['barcode'];
                 $retailerMRP = $RetailerProductList[$i]['retailerMRP'];
+                $avalableQty = $RetailerProductList[$i]['avalableQty'];
                 ?>
                 <tr>
                     <td><?php echo $i + 1; ?></td>
@@ -40,7 +41,7 @@
 <!--                    <td>--><?php //echo $barcode; ?><!--</td>-->
                     <td><?php echo $retailerMRP; ?></td>
                     <td><input type="text" name="" id="" placeholder="New MRP" size="8" class="form-control"></td>
-                    <td><?php echo $retailerId; ?></td>
+                    <td><?php echo $avalableQty; ?></td>
                     <td><input type="text" name="" id="" placeholder="Inc Qty" size="8" class="form-control"></td>
                 </tr>
 
