@@ -128,6 +128,7 @@
         <tbody>
         <?php $deletUrl = base_url()."Product/addProductMaster"; ?>
         <?php $loadAddOrEditModalUrl = base_url()."Product/EditProduct"; ?>
+        <?php $viewCostUrl = base_url()."Product/ViewRetailerCostDetails"; ?>
         <?php for ($i = 0; $i < count($ProductList); $i++) { ?>
             <tr>
 
@@ -140,10 +141,10 @@
                 <td>
                     <?php if($sessionUserTypeId != 1 && $sessionUserTypeId!=2) {
                         echo $ProductList[$i]['retailerMRP'];
-                    } else {
+                    } else { ?>
 
-                        echo "<a href='#'>View Cost</a>";
-                    } ?>
+                        <a href='javascript:void(0)' onclick="getCostDetailsForRetailer('actionType=Edit&productId=<?php echo $productId; ?>', '<?php echo $viewCostUrl; ?>')">View Cost</a>
+                     <?php } ?>
                 </td>
                 <!--                                <td>--><?php //echo $ProductList[$i]['availablequantity']; ?><!--</td>-->
                 <td><?php echo $ProductList[$i]['barcode']; ?></td>

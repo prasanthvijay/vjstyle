@@ -109,4 +109,25 @@
     function loadAllProducts() {
         loadMastersList(postData);
     }
+    
+    function getCostDetailsForRetailer(postFormData, url) {
+
+        $.ajax({
+            url: url,
+            type: "get",
+            data : postFormData,
+            success: function (responseFromSite) {
+                $("#modalContentArea").html(responseFromSite);
+                var options = {
+                    "show" : true,
+                    "backdrop" : "static",
+                    "keyboard" : false
+                }
+                $("#panel-modal").modal(options);
+                $('#datatable-responsive-new').DataTable();
+
+            }
+        });
+        
+    }
 </script>

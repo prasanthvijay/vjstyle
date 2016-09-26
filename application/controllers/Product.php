@@ -192,6 +192,32 @@ class Product extends CI_Controller
         }
     }
 
+    public function ViewRetailerCostDetails(){
+        $dataheader = array();
+        $dataheader['title'] = "Retailer cost";
+        $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
+        $adminid = "0";
+        $sessionUserTypeId = "0";
+        $showroomId = $this->input->get_post('showroomId');
+        if ($sessionUserTypeIdIsset == 1) {
+            $sessionUserTypeId = $this->session->userdata('usertypeid');
+            if ($sessionUserTypeId == 2) {
+                $adminid = $this->session->userdata('userid');
+            } else if ($sessionUserTypeId == 1) {
+                $adminid = $this->input->get_post('adminid');
+            } else if ($sessionUserTypeId == 4) {
+                $adminid = $this->session->userdata('adminid');
+                $showroomId = $this->session->userdata('retailerShowRoomId');
+            }
+        }
+
+        $productId = $this->input->get_post('productId');
+        $RetailerProductList = $this->users_model->getRetailerProductList($adminid, $productId, $showroomId, null, null, null, null);
+
+        $dataheader['RetailerProductList']= $RetailerProductList;
+        $this->load->view('product/ViewRetailerCostDetails', $dataheader);
+    }
+
     public function AddBrand()
     {
         $dataheader = array();
