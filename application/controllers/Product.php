@@ -212,6 +212,7 @@ class Product extends CI_Controller
         }
 
         $productId = $this->input->get_post('productId');
+        $responseFromSite = $this->input->get_post('responseFromSite');
         $RetailerProductList = $this->users_model->getRetailerProductList($adminid, $productId, $showroomId, null, null, null, null);
         $viewCostUrl = base_url()."Product/ViewRetailerCostDetails";
         $mapRetailerProductCostAndQuantityUrl =   base_url()."Product/mapRetailerProductCostAndQuantityUrl";
@@ -219,6 +220,12 @@ class Product extends CI_Controller
         $dataheader['viewCostUrl']= $viewCostUrl;
         $dataheader['mapRetailerProductCostAndQuantityUrl']= $mapRetailerProductCostAndQuantityUrl;
         $dataheader['RetailerProductList']= $RetailerProductList;
+        $successMsg = "";
+        if($responseFromSite==1){
+            $output = array('status' => "1", 'message' => "Successfully updated");
+            $successMsg = $this->users_model->getSuccessMsg($output);
+        }
+        $dataheader['successMsg']= $successMsg;
         $this->load->view('product/ViewRetailerCostDetails', $dataheader);
     }
 
@@ -253,18 +260,15 @@ class Product extends CI_Controller
             $newMrp = $newMrpArray[$n];
             $incQty = $incQtyArray[$n];
 
-            $updateQuery = "";
-            if($newMrp>0 && $newMrp!="" && $newMrp!=null){
-                $updateQuery = " ";
+            $isUpdateprice = "";
+            if($newMrp!="" && $newMrp!=null && $newMrp>0){
+                $isUpdateprice = "on";
             }
 
-            if($incQty>0 && $incQty!="" && $incQty!=null){
-
+            if($newMrp!="" || $incQty!=""){
+                $ProductMappingArray = array('showroomId' => $retailerId, 'newPrice' => $newMrp, 'Incquantity' => $incQty, 'adminid' => $adminid, 'productid' => $productId, 'price'=>$isUpdateprice);
+                $this->users_model->assignMapProduct($ProductMappingArray);
             }
-            $createdAtdate = date("Y-m-d H:i:s");
-            $ProductMappingArray = array('ShowroomId' => $retailerId, 'mappedprice' => $newMrp, 'mappedqyt' => $incQty, 'adminid' => $adminid, 'productId' => $productId, 'createdAtdate' => $createdAtdate);
-//            $this->users_model->createProductmappingMaster($ProductMappingArray);
-            print_r($ProductMappingArray);
         }
     }
 

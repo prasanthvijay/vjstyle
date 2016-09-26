@@ -134,14 +134,15 @@
     function  mapRetailerProductCostAndQuantity() {
         var formDataPost = $("#mapRetailerProductCostForm").serialize();
         var viewCostUrl = $("#viewCostUrl").val();
+        var productId = $("#productId").val();
         var mapRetailerProductCostAndQuantityUrl = $("#mapRetailerProductCostAndQuantityUrl").val();
-        alert(mapRetailerProductCostAndQuantityUrl);
+
         $.ajax({
             url : mapRetailerProductCostAndQuantityUrl,
             type : "get",
             data : formDataPost,
             success : function (responseFromSite) {
-                
+                getCostDetailsForRetailer("productId="+productId+"&responseFromSite=1", viewCostUrl);
             }
         });
     }

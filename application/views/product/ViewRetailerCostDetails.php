@@ -13,7 +13,77 @@
         <h3 class="panel-title"><?php echo $title; ?></h3>
     </div>
     <div class="panel-body">
-        <?php
+        <form name="mapRetailerProductCostForm" id="mapRetailerProductCostForm">
+            <?php if($successMsg!="") { ?>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <?php echo $successMsg; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php  }  ?>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="datatable-responsive-new" class="table table-striped table-bordered dt-responsive"
+                               cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+                                <th>Sno</th>
+                                <th>Retailer Name</th>
+                                <!--                <th>Barcode</th>-->
+                                <th>MRP</th>
+                                <th>New MRP</th>
+                                <th>Qty</th>
+                                <th>Inc Qty</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <?php for ($i = 0; $i < count($RetailerProductList); $i++) {
+                                $retailerName = $RetailerProductList[$i]['name'];
+                                $retailerId = $RetailerProductList[$i]['retailerShowroomId'];
+//                $barcode = $RetailerProductList[$i]['barcode'];
+                                $retailerMRP = $RetailerProductList[$i]['retailerMRP'];
+                                $avalableQty = $RetailerProductList[$i]['avalableQty'];
+                                ?>
+                                <tr>
+                                    <td><?php echo $i + 1; ?></td>
+                                    <td><?php echo $retailerName; ?></td>
+                                    <!--                    <td>--><?php //echo $barcode; ?><!--</td>-->
+                                    <td><?php echo $retailerMRP; ?></td>
+                                    <td><input type="text" name="newMrp[]" placeholder="New MRP" size="6"
+                                               class="form-control"></td>
+                                    <td><?php echo $avalableQty; ?></td>
+                                    <td>
+                                        <input type="text" name="incQty[]" placeholder="Inc Qty" size="6"
+                                               class="form-control">
+                                        <input type="hidden" name="retailerId[]" class="form-control" size="6"
+                                               value="<?php echo $retailerId; ?>">
+                                    </td>
+
+                                </tr>
+
+                            <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <input type="hidden" name="productId" id="productId" value="<?php echo $productId; ?>">
+                        <input type="hidden" name="viewCostUrl" id="viewCostUrl" value="<?php echo $viewCostUrl; ?>">
+                        <input type="hidden" name="mapRetailerProductCostAndQuantityUrl" id="mapRetailerProductCostAndQuantityUrl" value="<?php echo $mapRetailerProductCostAndQuantityUrl; ?>">
+                        <input type="button" value="Update Product" class="btn btn-info waves-effect waves-light m-t-10"
+                               onclick="mapRetailerProductCostAndQuantity()">
+                    </div>
+                </div>
+            </div>
+            <?php
             if(count($RetailerProductList)>0){
                 $categorytypeOfProduct = $RetailerProductList[0]['categorytype'];
                 $nameOfProduct = $RetailerProductList[0]['productname'];
@@ -51,67 +121,8 @@
                         </div>
                     </div>
                 </div>
-        <?php } ?>
-        <form name="mapRetailerProductCostForm" id="mapRetailerProductCostForm">
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-md-12">
-                        <table id="datatable-responsive-new" class="table table-striped table-bordered dt-responsive"
-                               cellspacing="0" width="100%">
-                            <thead>
-                            <tr>
-                                <th>Sno</th>
-                                <th>Retailer Name</th>
-                                <!--                <th>Barcode</th>-->
-                                <th>MRP</th>
-                                <th>New MRP</th>
-                                <th>Qty</th>
-                                <th>Inc Qty</th>
-                            </tr>
-                            </thead>
-                            <tbody>
+            <?php } ?>
 
-                            <?php for ($i = 0; $i < count($RetailerProductList); $i++) {
-                                $retailerName = $RetailerProductList[$i]['name'];
-                                $retailerId = $RetailerProductList[$i]['retailerShowroomId'];
-//                $barcode = $RetailerProductList[$i]['barcode'];
-                                $retailerMRP = $RetailerProductList[$i]['retailerMRP'];
-                                $avalableQty = $RetailerProductList[$i]['avalableQty'];
-                                ?>
-                                <tr>
-                                    <td><?php echo $i + 1; ?></td>
-                                    <td><?php echo $retailerName; ?></td>
-                                    <!--                    <td>--><?php //echo $barcode; ?><!--</td>-->
-                                    <td><?php echo $retailerMRP; ?></td>
-                                    <td><input type="text" name="newMrp[]" placeholder="New MRP" size="6"
-                                               class="form-control"></td>
-                                    <td><?php echo $avalableQty; ?></td>
-                                    <td>
-                                        <input type="text" name="incQty[]" placeholder="Inc Qty" size="6"
-                                               class="form-control">
-                                        <input type="text" name="retailerId[]" class="form-control" size="6"
-                                               value="<?php echo $retailerId; ?>">
-                                    </td>
-
-                                </tr>
-
-                            <?php } ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-md-4">
-                        <input type="text" name="productId" id="productId" value="<?php echo $productId; ?>">
-                        <input type="text" name="viewCostUrl" id="viewCostUrl" value="<?php echo $viewCostUrl; ?>">
-                        <input type="text" name="mapRetailerProductCostAndQuantityUrl" id="mapRetailerProductCostAndQuantityUrl" value="<?php echo $mapRetailerProductCostAndQuantityUrl; ?>">
-                        <input type="button" value="Map Product" class="btn btn-info waves-effect waves-light m-t-10"
-                               onclick="mapRetailerProductCostAndQuantity()">
-                    </div>
-                </div>
-            </div>
         </form>
 
     </div>
