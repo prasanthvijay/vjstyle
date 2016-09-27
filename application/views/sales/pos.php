@@ -213,28 +213,31 @@ function getProduct(barcode)
 		$(".cart_content_area_empty").remove();
 
 		var selectedProduct=$("#selectedProduct").val().split('|');
-		
+		var qty=parseInt(product[0]['quantity'])-parseInt(product[0]['qty']);
 		
 		if ($.inArray(product[0]['productid'], selectedProduct) == -1)
 		{	
 
 		var j=parseInt(selectedProduct.length);
-			var productdata='<tr class="register-item-details" id="rowId'+product[0]['productid']+'"><td class="text-center"> <input type="button" class="btn btn-icon waves-effect waves-light btn-danger m-b-5" onclick="removeProduct('+product[0]['productid']+');" value="X"> </td><td>'+product[0]['productname']+" ("+product[0]['barcode']+')<input type="hidden" name="product_'+product[0]['productid']+'" value='+product[0]['productid']+'></td><td class="text-center" ><input name="price_'+product[0]['productid']+'" id="price_'+product[0]['productid']+'" class="form-control editable editable-click" value="'+product[0]['price']+'" onblur="calculateTotal()"></td><td class="text-center"><input name="qty_'+product[0]['productid']+'" id="qty_'+product[0]['productid']+'" class="form-control editable editable-click" value="1" onblur="calculateTotal()"><input type="hidden" name="available_'+product[0]['productid']+'" id="available_'+product[0]['productid']+'" value="'+product[0]['quantity']+'"></td><td class="text-center"><input name="disc_'+product[0]['productid']+'" id="disc_'+product[0]['productid']+'" class="form-control editable editable-click" value="0" onblur="calculateTotal()"></td><td class="text-center" id="TDproduct_'+product[0]['productid']+'">'+product[0]['price']+'</td></tr>';
+			var productdata='<tr class="register-item-details" id="rowId'+product[0]['productid']+'"><td class="text-center"> <input type="button" class="btn btn-icon waves-effect waves-light btn-danger m-b-5" onclick="removeProduct('+product[0]['productid']+');" value="X"> </td><td>'+product[0]['productname']+" ("+product[0]['barcode']+')<input type="hidden" name="product_'+product[0]['productid']+'" value='+product[0]['productid']+'></td><td class="text-center" ><input name="price_'+product[0]['productid']+'" id="price_'+product[0]['productid']+'" class="form-control editable editable-click" value="'+product[0]['price']+'" onblur="calculateTotal()"></td><td class="text-center"><input name="qty_'+product[0]['productid']+'" id="qty_'+product[0]['productid']+'" class="form-control editable editable-click" value="1" onblur="calculateTotal(this.value)"><input type="hidden" name="available_'+product[0]['productid']+'" id="available_'+product[0]['productid']+'" value="'+qty+'"></td><td class="text-center"><input name="disc_'+product[0]['productid']+'" id="disc_'+product[0]['productid']+'" class="form-control editable editable-click" value="0" onblur="calculateTotal()"></td><td class="text-center" id="TDproduct_'+product[0]['productid']+'">'+product[0]['price']+'</td></tr>';
 		
 			$('#salesTable tr:last').after(productdata);
 			var alreadyExist=$("#selectedProduct").val();
 			document.getElementById("selectedProduct").value=alreadyExist+product[0]['productid']+"|";
-			
-calculateTotal();
+			var newqty=$('#qty_'+product[0]['productid']).val();
+calculateTotal(newqty);
 		}
 		else
 		{	
-		
+			
+		var aval=$('#available_'+product[0]['productid']).val();
 		var qty=$('#qty_'+product[0]['productid']).val();
+		if(aval>qty){
 		$('#qty_'+product[0]['productid']).val(parseInt(qty)+1);
-		calculateTotal();	
-
-			/*$.Notification.notify('warning','top right','Already Added This Product', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae orci ut dolor scelerisque aliquam.');*/
+		calculateTotal(qty);
+			}else{
+			$.Notification.notify('warning','top right','Available Product Quantity is '+$('#available_'+product[0]['productid']).val());
+			}
 		
 }
 
@@ -243,10 +246,15 @@ calculateTotal();
 }
 
 
-function calculateTotal()
+function calculateTotal(qty)
 {
 
 	var selectedProduct=$("#selectedProduct").val().split('|');
+	var str=selectedProduct.slice(0,-1);
+	var aval=parseInt($('#available_'+str).val())+1;
+
+
+	if(aval>qty){
 
 	var j=0,productTotal=0,FinalTotal=0,beforeTotal=0;
 
@@ -275,6 +283,12 @@ function calculateTotal()
 
 
 		document.getElementById("finaltotal").value=parseFloat(FinalTotal)-parseFloat($("#roundoff").val())-(parseFloat(FinalTotal)*(parseFloat($("#totdiscount").val())/100));
+
+		}
+		else {
+		$.Notification.notify('warning','top right','Available Product Quantity is '+$('#available_'+str).val());
+		
+		}
 }
 function removeProduct(productId)
 {
@@ -282,6 +296,7 @@ function removeProduct(productId)
 	document.getElementById("selectedProduct").value=alreadyExist.replace(productId+"|","");
 	$("#rowId"+productId).remove();	
 	calculateTotal();
+	
 }
 function formSubmit()
 {

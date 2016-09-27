@@ -40,7 +40,8 @@ class Pos_model extends CI_Model
 	//$this->db->select('productid,productname,barcode');
 	//$this->db->where('productid', $productId);
 	//$q = $this->db->get('tbl_product');
-		$sql = "SELECT t.productid,t.productname,t.barcode,a.price,a.quantity FROM tbl_product t INNER JOIN tbl_productMapping a WHERE t.barcode ='" . $barcode . "' and a.showroomId ='" .$retailerShowRoomId."' and a.productId =t.productid";
+		$sql = "SELECT t.productid,t.productname,t.barcode,a.price,a.quantity, sum(b.qty)as qty FROM tbl_product t LEFT JOIN tbl_productMapping a on  t.productid = a.productid LEFT JOIN  tbl_customerreceiptproduct b on t.productId = b.productid WHERE t.barcode ='" . $barcode . "' and a.showroomId ='" .$retailerShowRoomId."' and a.productId =t.productid";
+
 		$executeQuery = $this->db->query($sql);
 		$returnValue = $executeQuery->result_array();
 		return $returnValue;

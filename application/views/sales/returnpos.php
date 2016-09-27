@@ -97,12 +97,13 @@
 							
 								<div class="row col-lg-12">
 									<div class="card-box">
-										    <select class="form-control select2" onchange="getProduct(this.value);">
+							    <input type="text" class="form-control" onblur="getProduct(this.value);" >
+										   <!-- <select class="form-control select2" onchange="getProduct(this.value);">
 											<option value="">Select</option>
 											<?php for($i=0;$i<count($productList);$i++) { ?>
 												<option value="<?php echo $productList[$i]['productid']; ?>"><?php echo $productList[$i]['productname']; ?></option>
 											<?php } ?>
-										    </select>
+										    </select>-->
 <input type="hidden" id="selectedProduct" name="selectedProduct">
 									</div>
 								</div>
@@ -126,7 +127,7 @@
 											<tbody class="register-item-content">
 												<tr class="cart_content_area_empty">
 													<td colspan="6">
-														<div class="text-center text-warning"> <h3>There are no items in the cart<span class="flatGreenc"> [Sales]</span></h3></div>
+									<div class="text-center text-warning"> <h3>There are no items in the cart<span class="flatGreenc"> [Sales]</span></h3></div>
 													</td>
 									
 												</tr>
@@ -211,30 +212,38 @@
 
 
 <script>
-function getProduct(productId)
+function getProduct(barcode)
 {
-	$.post( "posajax", { productId: productId } ,function( data ) {
+	$.get( "posajax", { barcode: barcode } ,function( data ) {
 	  	var product=JSON.parse(data);
 		$(".cart_content_area_empty").remove();
 
 		var selectedProduct=$("#selectedProduct").val().split('|');
-
+		var productId=product[0]['productid'];
 		
 		if ($.inArray(productId, selectedProduct) == -1)
 		{	
-
+		
 		var j=parseInt(selectedProduct.length);
-			var productdata='<tr class="register-item-details" id="rowId'+productId+'"><td class="text-center"> <input type="button" class="btn btn-icon waves-effect waves-light btn-danger m-b-5" onclick="removeProduct('+productId+');" value="X"> </td><td>'+product[0]['productname']+" ("+product[0]['barcode']+')<input type="hidden" name="product_'+productId+'" value='+product[0]['productid']+'></td><td class="text-center"><input name="price_'+productId+'" id="price_'+productId+'" class="form-control editable editable-click" value="'+product[0]['productrate']+'" onblur="calculateTotal()"></td><td class="text-center"><input name="qty_'+productId+'" id="qty_'+productId+'" class="form-control editable editable-click" value="1" onblur="calculateTotal()"><input type="hidden" name="available_'+productId+'" id="available_'+productId+'" value="'+product[0]['availablequantity']+'"></td><td class="text-center"><input name="disc_'+productId+'" id="disc_'+productId+'" class="form-control editable editable-click" value="0" onblur="calculateTotal()"></td><td class="text-center" id="TDproduct_'+productId+'">'+product[0]['productrate']+'</td></tr>';
+			var productdata='<tr class="register-item-details" id="rowId'+productId+'"><td class="text-center"> <input type="button" class="btn btn-icon waves-effect waves-light btn-danger m-b-5" onclick="removeProduct('+productId+');" value="X"> </td><td>'+product[0]['productname']+" ("+product[0]['barcode']+')<input type="hidden" name="product_'+productId+'" value='+product[0]['productid']+'></td><td class="text-center"><input name="price_'+productId+'" id="price_'+productId+'" class="form-control editable editable-click" value="'+product[0]['price']+'" onblur="calculateTotal()"></td><td class="text-center"><input name="qty_'+productId+'" id="qty_'+productId+'" class="form-control editable editable-click" value="1" onblur="calculateTotal()"><input type="hidden" name="available_'+productId+'" id="available_'+productId+'" value="'+product[0]['availablequantity']+'"></td><td class="text-center"><input name="disc_'+productId+'" id="disc_'+productId+'" class="form-control editable editable-click" value="0" onblur="calculateTotal()"></td><td class="text-center" id="TDproduct_'+productId+'">'+product[0]['price']+'</td></tr>';
 		
 			$('#salesTable tr:last').after(productdata);
 			var alreadyExist=$("#selectedProduct").val();
 			document.getElementById("selectedProduct").value=alreadyExist+productId+"|";
-			
-calculateTotal();
+			var newqty=$('#qty_'+product[0]['productid']).val();
+calculateTotal(newqty);
 		}
 		else
 		{	
-			$.Notification.notify('warning','top right','Already Added This Product', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae orci ut dolor scelerisque aliquam.');
+			var aval=$('#available_'+productId).val();
+		var qty=$('#qty_'+product[0]['productid']).val();
+		if(aval>qty){
+		$('#qty_'+productId).val(parseInt(qty)+1);
+		calculateTotal(qty);
+			}else{
+			$.Notification.notify('warning','top right','Available Product Quantity is '+$('#available_'+productId).val());
+			}
+		
 		}
 
 
@@ -242,9 +251,14 @@ calculateTotal();
 }
 
 
-function calculateTotal()
+function calculateTotal(qty)
 {
 	var selectedProduct=$("#selectedProduct").val().split('|');
+	var str=selectedProduct.slice(0,-1);
+	var aval=parseInt($('#available_'+str).val())+1;
+
+
+	if(aval>qty){
 
 	var j=0,productTotal=0,FinalTotal=0,beforeTotal=0;
 
@@ -270,6 +284,12 @@ function calculateTotal()
 
 
 		document.getElementById("finaltotal").value=parseFloat(FinalTotal)-parseFloat($("#roundoff").val())-parseFloat($("#totdiscount").val());
+
+		}
+		else {
+		$.Notification.notify('warning','top right','Available Product Quantity is '+$('#available_'+str).val());
+		
+		}
 }
 
 function removeProduct(productId)
