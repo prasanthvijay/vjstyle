@@ -18,7 +18,9 @@ pos.iml
 #-------------------------
 /nbproject/
 .idea/*
-
+.buildpath
+.project
+.settings/
 ## Sublime Text cache files
 *.tmlanguage.cache
 *.tmPreferences.cache

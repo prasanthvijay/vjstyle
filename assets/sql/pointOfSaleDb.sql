@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 25, 2016 at 06:11 PM
+-- Generation Time: Oct 01, 2016 at 09:59 PM
 -- Server version: 5.5.49-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.17
 
@@ -171,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `tbl_product` (
   `createdat` datetime DEFAULT NULL,
   PRIMARY KEY (`productid`),
   UNIQUE KEY `barcode` (`barcode`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `tbl_product`
@@ -181,8 +181,10 @@ INSERT INTO `tbl_product` (`productid`, `productname`, `productrate`, `productsi
 (1, 'full hand shirt', '140', '1', 'full1001', 2, 1, 7, 'active', '2016-09-03 23:06:47'),
 (2, 'tshirt', '167', '2', '123300', 3, 0, 7, 'active', '2016-09-07 21:30:55'),
 (3, 'j', '166', '4', '12233', 7, 4, 2, 'active', '2016-09-10 07:51:34'),
-(4, 'testpant1', '243', '', '6576655', 5, 0, 7, 'active', '2016-09-24 22:49:46'),
-(5, 'jutty', '179', '4', '10001', 7, 4, 2, 'active', '2016-09-25 08:41:05');
+(4, 'testpant1', '243', '', '65766551', 5, 0, 7, 'active', '2016-09-24 22:49:46'),
+(5, 'jutty', '179', '4', '10001', 7, 4, 2, 'active', '2016-09-25 08:41:05'),
+(6, 'skc jutty', '1236', '', '123456', 7, 0, 2, 'active', '2016-10-01 20:44:20'),
+(7, 'uk paniyan', '156', '4', '12244', 6, 4, 2, 'active', '2016-10-01 20:47:09');
 
 -- --------------------------------------------------------
 
@@ -192,15 +194,35 @@ INSERT INTO `tbl_product` (`productid`, `productname`, `productrate`, `productsi
 
 CREATE TABLE IF NOT EXISTS `tbl_productBatch` (
   `id` bigint(25) NOT NULL AUTO_INCREMENT,
-  `productId` bigint(25) NOT NULL,
+  `productid` bigint(25) NOT NULL,
   `showRoomId` bigint(25) NOT NULL,
   `supplierId` bigint(25) NOT NULL DEFAULT '0',
+  `adminId` bigint(25) NOT NULL,
   `quantity` bigint(20) NOT NULL DEFAULT '0',
   `batchNumber` varchar(255) DEFAULT NULL,
   `createdAt` timestamp NULL DEFAULT NULL,
   `active` varchar(255) NOT NULL DEFAULT 'active',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+
+--
+-- Dumping data for table `tbl_productBatch`
+--
+
+INSERT INTO `tbl_productBatch` (`id`, `productid`, `showRoomId`, `supplierId`, `adminId`, `quantity`, `batchNumber`, `createdAt`, `active`) VALUES
+(1, 5, 3, 0, 2, 5, NULL, '2016-10-01 15:03:57', 'active'),
+(2, 5, 18, 0, 2, 3, NULL, '2016-10-01 15:03:57', 'active'),
+(3, 5, 3, 0, 2, 6, NULL, '2016-10-01 15:05:35', 'active'),
+(4, 5, 18, 0, 2, 10, NULL, '2016-10-01 15:05:35', 'active'),
+(5, 3, 3, 0, 2, 3, NULL, '2016-10-01 15:06:57', 'active'),
+(6, 3, 18, 0, 2, 2, NULL, '2016-10-01 15:06:57', 'active'),
+(7, 6, 3, 0, 2, 1, NULL, '2016-10-01 15:16:07', 'active'),
+(8, 6, 18, 0, 2, 2, NULL, '2016-10-01 15:16:07', 'active'),
+(9, 7, 3, 0, 2, 4, NULL, '2016-10-01 15:17:09', 'active'),
+(10, 7, 18, 0, 2, 5, NULL, '2016-10-01 15:17:09', 'active'),
+(11, 6, 3, 0, 2, 3, NULL, '2016-10-01 15:18:00', 'active'),
+(12, 3, 3, 0, 2, 3, NULL, '2016-10-01 16:16:22', 'active'),
+(13, 3, 18, 0, 2, 4, NULL, '2016-10-01 16:16:22', 'active');
 
 -- --------------------------------------------------------
 
@@ -213,24 +235,29 @@ CREATE TABLE IF NOT EXISTS `tbl_productMapping` (
   `productId` varchar(200) DEFAULT NULL,
   `showroomId` int(11) DEFAULT NULL,
   `price` int(11) DEFAULT NULL,
-  `quantity` int(11) DEFAULT NULL,
   `adminId` int(11) DEFAULT NULL,
   `createAt` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 --
 -- Dumping data for table `tbl_productMapping`
 --
 
-INSERT INTO `tbl_productMapping` (`id`, `productId`, `showroomId`, `price`, `quantity`, `adminId`, `createAt`) VALUES
-(1, '1', 8, 170, 27, 7, '2016-09-03'),
-(2, '2', 8, 172, 12, 7, '2016-09-07'),
-(3, '1', 17, 55, 3, 7, '2016-09-18'),
-(4, '4', 17, 245, 10, 7, '2016-09-24'),
-(5, '4', 8, 244, 8, 7, '2016-09-24'),
-(6, '5', 3, 180, 9, 2, '2016-09-25'),
-(7, '5', 18, 163, 24, 2, '2016-09-25');
+INSERT INTO `tbl_productMapping` (`id`, `productId`, `showroomId`, `price`, `adminId`, `createAt`) VALUES
+(1, '1', 8, 170, 7, '2016-09-03'),
+(2, '2', 8, 172, 7, '2016-09-07'),
+(3, '1', 17, 55, 7, '2016-09-18'),
+(4, '4', 17, 245, 7, '2016-09-24'),
+(5, '4', 8, 244, 7, '2016-09-24'),
+(6, '5', 3, 183, 2, '2016-09-25'),
+(7, '5', 18, 185, 2, '2016-09-25'),
+(8, '3', 3, 167, 2, '2016-09-26'),
+(9, '3', 18, 169, 2, '2016-10-01'),
+(10, '6', 3, 1239, 2, '2016-10-01'),
+(11, '6', 18, 1238, 2, '2016-10-01'),
+(12, '7', 3, 157, 2, '2016-10-01'),
+(13, '7', 18, 158, 2, '2016-10-01');
 
 -- --------------------------------------------------------
 
@@ -305,14 +332,14 @@ CREATE TABLE IF NOT EXISTS `tbl_user` (
 
 INSERT INTO `tbl_user` (`userid`, `name`, `email`, `password`, `usertypeid`, `adminid`, `retailerShowRoomId`, `mobile`, `address`, `doj`, `dob`, `tinnumber`, `cinnumber`, `creditdays`, `active`, `lastlogin`, `createdat`) VALUES
 (1, 'superadmin', 'superadmin@gmail.com', '1234', 1, 0, 0, '8344798628', '107, west street, Ammaiyappan, Thiruvarur.', '0000-00-00', '0000-00-00', NULL, NULL, NULL, 'active', '2016-09-24 21:09:04', NULL),
-(2, 'mathan', 'mathanaiht@gmail.com', '12345678', 2, 0, 0, '83446576575', 'ddsdsfsadfd ddf dsfsafasd', '0000-00-00', '0000-00-00', NULL, NULL, NULL, 'active', '2016-09-25 18:09:04', '2016-09-03 14:07:25'),
-(3, 'mathansr', 'mathansr@gmail.com', NULL, 3, 2, 0, '656575656575', 'dsihjdfh jhdfjhds hdsfdhj dfjhjdsfh', '0000-00-00', '0000-00-00', NULL, NULL, NULL, 'active', NULL, '2016-09-03 14:08:51'),
-(4, 'mathash', 'mathash@gmail.com', '1234', 4, 2, 3, '6576565765', 'dsfdsagdsgdsfg', '2016-09-08', '2016-09-10', NULL, NULL, NULL, 'active', '2016-09-10 07:09:22', '2016-09-03 20:08:45'),
+(2, 'mathan', 'mathanaiht@gmail.com', '12345678', 2, 0, 0, '83446576575', 'ddsdsfsadfd ddf dsfsafasd', '0000-00-00', '0000-00-00', NULL, NULL, NULL, 'active', '2016-10-01 21:10:23', '2016-09-03 14:07:25'),
+(3, 'mathankumarsr', 'mathansr@gmail.com', NULL, 3, 2, 0, '656575656575', 'dsihjdfh jhdfjhds hdsfdhj dfjhjdsfh', '0000-00-00', '0000-00-00', NULL, NULL, NULL, 'active', NULL, '2016-09-03 14:08:51'),
+(4, 'mathash', 'mathash@gmail.com', '1234', 4, 2, 3, '6576565765', 'dsfdsagdsgdsfg', '2016-09-08', '2016-09-10', NULL, NULL, NULL, 'active', '2016-10-01 21:10:45', '2016-09-03 20:08:45'),
 (5, 'mathanse', 'mathanse@gmail.com', '1234', 5, 2, 3, '6565656756', 'fgfgfgfhg fgfg gfgf tytytytyuyiyy', '2016-09-07', '2016-09-14', NULL, NULL, NULL, 'active', NULL, '2016-09-03 20:11:19'),
 (6, 'mathanse1', 'mathanse1@gmail.com', '12345', 5, 2, 3, '56454545456', 'ok', '2016-09-01', '2016-09-07', NULL, NULL, NULL, 'active', NULL, '2016-09-03 20:14:58'),
 (7, 'manoj', 'manoj@gmail.com', '1234', 2, 0, 0, '56756567', 'chennai', '2016-09-20', '2016-09-23', NULL, NULL, NULL, 'active', '2016-09-25 13:09:33', '2016-09-03 21:23:33'),
 (8, 'manojsr', 'manojsr@gmail.com', NULL, 3, 7, 0, '6567576', 'jkdhsfj jhgdj', '0000-00-00', '0000-00-00', NULL, NULL, NULL, 'active', NULL, '2016-09-03 21:25:45'),
-(9, 'manojsh', 'manojsh@gmail.com', '1234', 4, 7, 8, '656575656757', 'yes', '2016-09-09', '2016-09-10', NULL, NULL, NULL, 'active', '2016-09-25 13:09:17', '2016-09-03 21:27:36'),
+(9, 'manojsh', 'manojsh@gmail.com', '1234', 4, 7, 8, '656575656757', 'yes', '2016-09-09', '2016-09-10', NULL, NULL, NULL, 'active', '2016-09-25 22:09:22', '2016-09-03 21:27:36'),
 (10, 'manojse', 'manojse@gmail.com', '1234', 5, 7, 8, '6567565656567', 'success', '2016-09-15', '2016-09-16', NULL, NULL, NULL, 'active', '2016-09-07 21:09:46', '2016-09-03 21:28:52'),
 (11, 'manojsupplier', 'manojsupplier@gmail.com', '1234', 6, 7, 0, '8681234567', 'chennai-98, testaddress', '0000-00-00', '0000-00-00', NULL, NULL, NULL, 'active', NULL, '2016-09-18 07:18:15'),
 (12, 'mathansupplier', 'mhghjjhh@gmail.com', NULL, 6, 7, 0, '86876656756', 'on, 7656, secnd strretet,', '0000-00-00', '0000-00-00', NULL, NULL, NULL, 'active', NULL, '2016-09-18 07:24:03'),

@@ -260,7 +260,7 @@ class Users_model extends CI_Model
         }
 
         $sql = $sql . " order by productid desc";*/
-        $sql = "SELECT t.productid, t.productname, t.productrate, t.barcode, t.productsize, t.categorytypeid, t.active, t.adminid, t.brandid, a.showroomId, tb.brandname, ts.size, tc.categorytype, sum(a.price) as price, sum(a.quantity) as quantity, sum(b.qty) as qty  FROM tbl_product t Left JOIN tbl_productMapping a on t.productid = a.productid LEFT JOIN tbl_customerreceiptproduct b on t.productId = b.productid LEFT JOIN tbl_brand tb on tb.brandid=t.brandid LEFT JOIN tbl_sizemaster ts on ts.sizeid=t.productsize LEFT JOIN tbl_categorytype tc on tc.categorytypeid = t.categorytypeid WHERE  t.active = 'active' ";
+        $sql = "SELECT t.productid, t.productname, t.productrate, t.barcode, t.productsize, t.categorytypeid, t.active, t.adminid, t.brandid, a.showroomId, tb.brandname, ts.size, tc.categorytype, sum(a.price) as price, sum(pb.quantity) as quantity, sum(b.qty) as qty  FROM tbl_product t Left JOIN tbl_productMapping a on t.productid = a.productid Left JOIN tbl_productBatch pb on a.productId = pb.productid AND a.showroomId=pb.showRoomId LEFT JOIN tbl_customerreceiptproduct b on t.productId = b.productid and b.showroomId=pb.showRoomId  LEFT JOIN tbl_brand tb on tb.brandid=t.brandid LEFT JOIN tbl_sizemaster ts on ts.sizeid=t.productsize LEFT JOIN tbl_categorytype tc on tc.categorytypeid = t.categorytypeid WHERE  t.active = 'active' ";
 
         if ($showroomId != "0" && $showroomId != "" && $showroomId != null) {
             $sql .= " and a.showroomId = '" . $showroomId . "' ";
@@ -332,7 +332,7 @@ class Users_model extends CI_Model
         $RetailerProductList = array();
 
         $userType = "3";
-        $sql = "SELECT  u.name, u.userid, t.productid, t.productname,t.productrate, t.barcode,t.active, t.adminid, a.price as price ,a.quantity, b.qty, tb.brandname, ts.size, tc.categorytype FROM `tbl_user` u LEFT JOIN tbl_product t on t.adminid=u.adminid and t.productid =".$this->db->escape($productId)." LEFT Join  tbl_productMapping a on a.showroomId=u.userid and a.productId=t.productid LEFT JOIN tbl_customerreceiptproduct b on t.productId = b.productid and u.userid=b.showroomId LEFT JOIN tbl_brand tb on tb.brandid=t.brandid LEFT JOIN tbl_sizemaster ts on ts.sizeid=t.productsize LEFT JOIN tbl_categorytype tc on tc.categorytypeid = t.categorytypeid WHERE u.active = 'active' and u.adminid=".$this->db->escape($adminid)." and u.usertypeid=" .$this->db->escape($userType);
+        $sql = "SELECT  u.name, u.userid, t.productid, t.productname,t.productrate, t.barcode,t.active, t.adminid, a.price as price , sum(pb.quantity) as quantity, b.qty, tb.brandname, ts.size, tc.categorytype FROM `tbl_user` u LEFT JOIN tbl_product t on t.adminid=u.adminid and t.productid =".$this->db->escape($productId)." LEFT Join  tbl_productMapping a on a.showroomId=u.userid and a.productId=t.productid  LEFT Join  tbl_productBatch pb on a.showroomId=pb.showRoomId and pb.productid=t.productid LEFT JOIN tbl_customerreceiptproduct b on t.productId = b.productid and u.userid=b.showroomId LEFT JOIN tbl_brand tb on tb.brandid=t.brandid LEFT JOIN tbl_sizemaster ts on ts.sizeid=t.productsize LEFT JOIN tbl_categorytype tc on tc.categorytypeid = t.categorytypeid WHERE u.active = 'active' and u.adminid=".$this->db->escape($adminid)." and u.usertypeid=" .$this->db->escape($userType)." group by u.userid";
         $userQuery = $this->db->query($sql);
 //        $RetailerProductList = $userQuery->result_array();
 //        print_r($RetailerProductList);
@@ -784,25 +784,34 @@ class Users_model extends CI_Model
 
             $updatedId = $existArrayResult[0]['id'];
             if($price=="on" || $Incquantity>0){
-                $updateSql = "UPDATE `tbl_productMapping` SET ";
+
 
                 if($price=="on"){
+                    $updateSql = "UPDATE `tbl_productMapping` SET ";
                     $updateSql = $updateSql . " price =".$this->db->escape($newPrice);
+                    $updateSql = $updateSql ."  WHERE id = ".$this->db->escape($updatedId);
+                    $this->db->query($updateSql);
                 }
-                if($Incquantity>0){
-                    $Incquantity = $Incquantity + $existArrayResult[0]['quantity'];
-                    if($price=="on"){
-                        $updateSql = $updateSql . ", ";
-                    }
 
-                    $updateSql = $updateSql . " quantity =".$this->db->escape($Incquantity);
+                if($Incquantity>0){
+                    $supplierId = "0";
+                    $sql = "INSERT INTO tbl_productBatch (productid,showRoomId,supplierId,quantity,adminId,createdAt) " . "VALUES (" . $this->db->escape($productid) . "," . $this->db->escape($showroomId) . "," . $this->db->escape($supplierId) . "," . $this->db->escape($Incquantity) . "," . $this->db->escape($adminid) . "," . $this->db->escape($createdAtdate) . ")";
+                    $this->db->query($sql);
+//                    $Incquantity = $Incquantity + $existArrayResult[0]['quantity'];
+//                    if($price=="on"){
+//                        $updateSql = $updateSql . ", ";
+//                    }
+//
+//                    $updateSql = $updateSql . " quantity =".$this->db->escape($Incquantity);
                 }
-                $updateSql = $updateSql ."  WHERE id = ".$this->db->escape($updatedId);
-                $this->db->query($updateSql);
             }
 
         } else {
-            $sql = "INSERT INTO tbl_productMapping (productId,showroomId,price,quantity,adminId,createAt) " . "VALUES (" . $this->db->escape($productid) . "," . $this->db->escape($showroomId) . "," . $this->db->escape($newPrice) . "," . $this->db->escape($Incquantity) . "," . $this->db->escape($adminid) . "," . $this->db->escape($createdAtdate) . ")";
+            $sql = "INSERT INTO tbl_productMapping (productId,showroomId,price,adminId,createAt) " . "VALUES (" . $this->db->escape($productid) . "," . $this->db->escape($showroomId) . "," . $this->db->escape($newPrice) . "," . $this->db->escape($adminid) . "," . $this->db->escape($createdAtdate) . ")";
+            $this->db->query($sql);
+
+            $supplierId = "0";
+            $sql = "INSERT INTO tbl_productBatch (productid,showRoomId,supplierId,quantity,adminId,createdAt) " . "VALUES (" . $this->db->escape($productid) . "," . $this->db->escape($showroomId) . "," . $this->db->escape($supplierId) . "," . $this->db->escape($Incquantity) . "," . $this->db->escape($adminid) . "," . $this->db->escape($createdAtdate) . ")";
             $this->db->query($sql);
         }
 
@@ -830,8 +839,13 @@ class Users_model extends CI_Model
 
     public function createProductmappingMaster($ProductMappingArray)
     {
-        $sql = "INSERT INTO tbl_productMapping (productId,showroomId,price,quantity,adminId,createAt) " . "VALUES (" . $this->db->escape($ProductMappingArray['productId']) . "," . $this->db->escape($ProductMappingArray['ShowroomId']) . "," . $this->db->escape($ProductMappingArray['mappedprice']) . "," . $this->db->escape($ProductMappingArray['mappedqyt']) . "," . $this->db->escape($ProductMappingArray['adminid']) . "," . $this->db->escape($ProductMappingArray['createdAtdate']) . ")";
+        $sql = "INSERT INTO tbl_productMapping (productId,showroomId,price,adminId,createAt) " . "VALUES (" . $this->db->escape($ProductMappingArray['productId']) . "," . $this->db->escape($ProductMappingArray['ShowroomId']) . "," . $this->db->escape($ProductMappingArray['mappedprice']) . "," . $this->db->escape($ProductMappingArray['adminid']) . "," . $this->db->escape($ProductMappingArray['createdAtdate']) . ")";
         $this->db->query($sql);
+
+        $supplierId = "0";
+        $sql = "INSERT INTO tbl_productBatch (productid,showRoomId,supplierId,quantity,adminId,createdAt) " . "VALUES (" . $this->db->escape($ProductMappingArray['productId']) . "," . $this->db->escape($ProductMappingArray['ShowroomId']) . "," . $this->db->escape($supplierId) . "," . $this->db->escape($ProductMappingArray['mappedqyt']) . "," . $this->db->escape($ProductMappingArray['adminid']) . "," . $this->db->escape($ProductMappingArray['createdAtdate']) . ")";
+        $this->db->query($sql);
+
     }
 
     public function mappedProduct($productId, $showroomId, $adminid, $type)
@@ -866,7 +880,7 @@ class Users_model extends CI_Model
             }
         }*/
 
-        $sql = "SELECT t.productid, t.productname, a.price, a.quantity, sum(b.qty) as qty  FROM tbl_product t LEFT JOIN tbl_productMapping a on t.productid = a.productid LEFT JOIN tbl_customerreceiptproduct b on t.productId = b.productid  WHERE  t.adminid='" . $adminid . "' ";
+        $sql = "SELECT t.productid, t.productname, a.price, sum(pb.quantity) as quantity, sum(b.qty) as qty  FROM tbl_product t LEFT JOIN tbl_productMapping a on t.productid = a.productid LEFT JOIN tbl_productBatch pb on pb.productid = a.productId LEFT JOIN tbl_customerreceiptproduct b on t.productId = b.productid  WHERE  t.adminid='" . $adminid . "' ";
         if ($productId != "") {
             $sql = $sql . "and t.productid = '" . $productId . "'";
         }
