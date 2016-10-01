@@ -424,6 +424,7 @@ class Product extends CI_Controller
             redirect(base_url() . "Frontend/logout");
         }
 //        $adminid = $this->session->userdata('usertypeid');
+        $dataheader['sessionUserTypeId'] = $sessionUserTypeId;
         $dataheader['title'] = "Product";
         $this->load->view('layout/backend_header', $dataheader);
         $this->load->view('layout/backend_menu');

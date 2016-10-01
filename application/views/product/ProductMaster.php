@@ -19,9 +19,11 @@
                                 Add, Edit and Delete Product
                             </p>
                             <?php $loadAddOrEditModalUrl = base_url() . "Product/AddOrEditMasterContent"; ?>
+                            <?php if($sessionUserTypeId == 1 || $sessionUserTypeId==2) { ?>
                             <button class="btn btn-primary waves-effect waves-light m-t-10"
                                     onclick="getAddOrEditModalContent('actionType=Add&actionId=0&masterName=<?php echo $title; ?>', '<?php echo $loadAddOrEditModalUrl; ?>')">
                                 Add <?php echo $title; ?></button>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>

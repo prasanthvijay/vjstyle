@@ -62,8 +62,8 @@
                             <li><a href="<?php echo base_url(); ?>Product/BrandMaster">Brand </a></li>
                             <li><a href="<?php echo base_url(); ?>Product/SizeMaster">Size </a></li>
                             <li><a href="<?php echo base_url(); ?>Product/ProductMaster">Product </a></li>
-                            <li><a href="<?php echo base_url(); ?>Product/MapProduct">Map Product </a></li>
-                            <li><a href="<?php echo base_url(); ?>Frontend/supplierMaster">Supplier Master </a></li>
+<!--                            <li><a href="--><?php //echo base_url(); ?><!--Product/MapProduct">Map Product </a></li>-->
+<!--                            <li><a href="--><?php //echo base_url(); ?><!--Frontend/supplierMaster">Supplier Master </a></li>-->
                         </ul>
                     </li>
                     <li class="has-submenu">
