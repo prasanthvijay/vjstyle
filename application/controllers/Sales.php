@@ -97,7 +97,28 @@ class Sales extends CI_Controller {
 		$retailerShowRoomId = $this->session->userdata('retailerShowRoomId');
 		$productIdArray = array('barcode' => $barcode,'retailerShowRoomId' => $retailerShowRoomId);
 		$productDetails = $this->pos_model->productDetails($barcode,$retailerShowRoomId);
-		echo json_encode($productDetails);
+		$productDetailsArray = array();
+		for($k=0; $k<count($productDetails); $k++){
+			$productDetailsArray[$k]['productid'] = $productDetails[$k]['productid'];
+			$productDetailsArray[$k]['productname'] = $productDetails[$k]['productname'];
+			$productDetailsArray[$k]['barcode'] = $productDetails[$k]['barcode'];
+			$productDetailsArray[$k]['price'] = $productDetails[$k]['price'];
+//			$productDetailsArray[$k]['quantity'] = $productDetails[$k]['quantity'];
+
+			$quantity = 0;
+			if($productDetails[$k]['quantity']>0 && $productDetails[$k]['quantity']!="" && $productDetails[$k]['quantity']!=null){
+				$quantity = $productDetails[$k]['quantity'];
+			}
+			$productDetailsArray[$k]['quantity'] = $quantity;
+
+			$qty = 0;
+			if($productDetails[$k]['qty']>0 && $productDetails[$k]['qty']!="" && $productDetails[$k]['qty']!=null){
+				$qty = $productDetails[$k]['qty'];
+			}
+			$productDetailsArray[$k]['qty'] = $qty;
+		}
+//		print_r($productDetails);
+		echo json_encode($productDetailsArray);
 	}
 
 	public function receipt($receiptId)
