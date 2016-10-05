@@ -260,7 +260,7 @@ class Users_model extends CI_Model
         }
 
         $sql = $sql . " order by productid desc";*/
-        $sql = "SELECT t.productid, t.productname, t.productrate, t.barcode, t.productsize, t.categorytypeid, t.active, t.adminid, t.brandid, a.showroomId, tb.brandname, ts.size, tc.categorytype, sum(a.price) as price, sum(pb.quantity) as quantity, sum(b.qty) as qty  FROM tbl_product t Left JOIN tbl_productMapping a on t.productid = a.productid Left JOIN tbl_productBatch pb on a.productId = pb.productid AND a.showroomId=pb.showRoomId LEFT JOIN tbl_customerreceiptproduct b on t.productId = b.productid and b.showroomId=pb.showRoomId  LEFT JOIN tbl_brand tb on tb.brandid=t.brandid LEFT JOIN tbl_sizemaster ts on ts.sizeid=t.productsize LEFT JOIN tbl_categorytype tc on tc.categorytypeid = t.categorytypeid WHERE  t.active = 'active' ";
+        $sql = "SELECT t.productid, t.productname, t.productrate, t.barcode, t.productsize, t.categorytypeid, t.active, t.adminid, t.brandid, a.showroomId, tb.brandname, ts.size, tc.categorytype, a.price as price, sum(pb.quantity) as quantity, sum(b.qty) as qty  FROM tbl_product t Left JOIN tbl_productMapping a on t.productid = a.productid Left JOIN tbl_productBatch pb on a.productId = pb.productid AND a.showroomId=pb.showRoomId LEFT JOIN tbl_customerreceiptproduct b on t.productId = b.productid and b.showroomId=pb.showRoomId  LEFT JOIN tbl_brand tb on tb.brandid=t.brandid LEFT JOIN tbl_sizemaster ts on ts.sizeid=t.productsize LEFT JOIN tbl_categorytype tc on tc.categorytypeid = t.categorytypeid WHERE  t.active = 'active' ";
 
         if ($showroomId != "0" && $showroomId != "" && $showroomId != null) {
             $sql .= " and a.showroomId = '" . $showroomId . "' ";
@@ -322,6 +322,9 @@ class Users_model extends CI_Model
 
             $k++;
         }
+//        echo "<pre>";
+//        print_r($ProductList);
+//        echo "</pre>";
 
         return $ProductList;
     }
