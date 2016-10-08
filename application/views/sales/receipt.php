@@ -20,7 +20,7 @@
                             <div class="panel-body">
                                 <div class="clearfix">
                                     <div class="pull-left">
-                                        <h1 class="text-right"><i class="md md-equalizer text-pink"></i> Minton</h1>
+                                        <h1 class="text-right"><i class="md md-equalizer text-primary"></i> Jonam</h1>
                                     </div>
                                     <div class="pull-right">
                                         <h4>Invoice # <br>

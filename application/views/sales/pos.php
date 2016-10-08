@@ -77,7 +77,8 @@
                 <div class="card-box table-responsive">
                     <p class="text-muted m-b-20 font-13">
                         Point Of Sales
-                    <form action="" id="myForm" method="POST" data-parsley-validate novalidate>
+                    <form action="posSubmitPage" id="myForm" method="POST" data-parsley-validate novalidate>
+                        <div class="row"><div class="col-sm-3"></div><div class="col-sm-6"><?php print_r($succesMsg); ?></div></div>
                         <div class="row">
                             <div class="col-lg-8">
 
@@ -85,9 +86,9 @@
 						<div class="card-box">
 							    <select class="form-control select2" onchange="getProduct(this.value);">
 								<option value="">Select</option>
-								<?php for ($i = 0; $i < count($productList); $i++) { ?>
-									<option value="<?php echo $productList[$i]['productid']; ?>"><?php echo $productList[$i]['productname']; ?></option>
-								<?php } ?>
+								<?php //for ($i = 0; $i < count($productList); $i++) { ?>
+									<option value="<?php //echo $productList[$i]['productid']; ?>"><?php //echo $productList[$i]['productname']; ?></option>
+								<?php //} ?>
 							    </select>
 <input type="hidden" id="selectedProduct" name="selectedProduct">
 						</div>
