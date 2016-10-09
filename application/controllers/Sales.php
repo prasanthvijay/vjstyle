@@ -114,7 +114,8 @@ class Sales extends CI_Controller
 
         $retailerShowRoomId = $this->session->userdata('retailerShowRoomId');
         $productIdArray = array('barcode' => $barcode, 'retailerShowRoomId' => $retailerShowRoomId);
-        $productDetails = $this->users_model->getProductList(0, 0, $retailerShowRoomId, 0, 0, 0, $barcode);
+        $noOfPage = "0";
+        $productDetails = $this->users_model->getProductList(0, 0, $retailerShowRoomId,0, 0, 0, 0, $barcode, $noOfPage);
         $productDetailsArray = array();
         for ($k = 0; $k < count($productDetails); $k++) {
             $productDetailsArray[$k]['productid'] = $productDetails[$k]['productid'];

@@ -33,6 +33,52 @@ class Product extends CI_Controller
         $this->load->library('session');
     }
 
+    public function migrationProduct(){
+         //Product Table Insertion
+        /*$selectQuery = "select * from SheetChild ";
+        $exeQuery = $this->db->query($selectQuery);
+        $sheetMenArray = $exeQuery->result_array();
+
+        $barcodeStarting = "7244";
+        $categorytypeid = "3";
+        $adminid = "2";
+        $createdAt = date("Y-m-d H:i:s");
+        $active = "active";
+//        echo count($sheetMenArray)."<br>";
+        for($sm=0; $sm<count($sheetMenArray); $sm++){
+            $barcodeStarting = $barcodeStarting+1;
+            $ProCode = $sheetMenArray[$sm]["ProCode"];
+            $ProductName = $sheetMenArray[$sm]["ProductName"];
+            $Qty = $sheetMenArray[$sm]["Qty"];
+            $MRP = $sheetMenArray[$sm]["MRP"];
+
+            $ProductName = str_replace( "'", " ", $ProductName);
+            echo $insertQuery = "INSERT INTO `tbl_product`(`productname`, `productrate`, `barcode`, `categorytypeid`, `existingProcode`, `existingQty`, `adminid`, `active`, `createdat`) VALUES ('".$ProductName."', '".$MRP."', '".$barcodeStarting."', '".$categorytypeid."', '".$ProCode."', '".$Qty."', '".$adminid."', '".$active."', '".$createdAt."'); <br>";
+        }*/
+
+        //ProductMapping table insertion
+        /*$selectQuery = "select * from tbl_product ";
+        $exeQuery = $this->db->query($selectQuery);
+        $showRoomId = "3";
+        $adminid = "2";
+        $createdAt = date("Y-m-d H:i:s");
+        $batchNumber = date("YmdHis");
+        $productArray = $exeQuery->result_array();
+        for($sm=0; $sm<count($productArray); $sm++){
+            $productid = $productArray[$sm]["productid"];
+            $existingQty = $productArray[$sm]["existingQty"];
+            $productrate = $productArray[$sm]["productrate"];
+
+            echo $insertMappingQuery = "INSERT INTO `tbl_productMapping`( `productId`, `showroomId`, `price`, `adminId`, `createAt`) VALUES ('".$productid."', '".$showRoomId."', '".$productrate."', '".$adminid."', '".$createdAt."'); <br>";
+            if($existingQty>0 && $existingQty!=""){
+                echo $insertBatchquery = "INSERT INTO `tbl_productBatch`( `productid`, `showRoomId`, `supplierId`, `adminId`, `quantity`, `batchNumber`, `createdAt`, `active`) VALUES ('".$productid."', '".$showRoomId."', '0','".$adminid."', '".$existingQty."', '".$batchNumber."','".$createdAt."','active'); <br>";
+            }
+        }*/
+
+
+//        echo count($productArray);
+    }
+
     public function addProductMaster()
     {
 
@@ -388,11 +434,12 @@ class Product extends CI_Controller
             $SubCategoryList = $this->users_model->getSubCategoryList($adminid, "0", $categorytypeid);
         } else if ($type == "ProductList") {
             $categorytypeid = $this->input->get_post('categorytypeid');
+            $subcategoryid = $this->input->get_post('subcategoryid');
             $brandid = $this->input->get_post('brandid');
             $sizeid = $this->input->get_post('sizeid');
             $barcode = $this->input->get_post('barcode');
-
-            $ProductList = $this->users_model->getProductList($adminid, "0", $showroomId, $categorytypeid, $brandid, $sizeid, $barcode);
+            $noOfPage = "0";
+            $ProductList = $this->users_model->getProductList($adminid, "0", $showroomId, $categorytypeid, $subcategoryid, $brandid, $sizeid, $barcode, $noOfPage);
         }
 
         $dataheader['typeList'] = $type;
@@ -784,7 +831,8 @@ class Product extends CI_Controller
         $actionId = "0";
         $actionType = $this->input->get_post('actionType');
         $productId = $this->input->get_post('actionId');
-        $productArray = $this->users_model->getProductList($adminid, $productId, $retailerShowRoomId , "0", "0", "0", null);
+        $noOfPage = "0";
+        $productArray = $this->users_model->getProductList($adminid, $productId, $retailerShowRoomId , "0", "0", "0", "0", null, $noOfPage);
         $BrandArray = $this->users_model->getBrandList($adminid, $actionId);
         $SizeArray = $this->users_model->getSizeList($adminid, $actionId);
         $CategoryTypeArray = $this->users_model->getCategoryTypeList($adminid, $actionId);

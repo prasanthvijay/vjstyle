@@ -246,7 +246,7 @@ class Users_model extends CI_Model
         return $BrandArray;
     }
 
-    public function getProductList($adminid, $productId, $showroomId, $categorytypeid, $brandid, $sizeid, $barcode)
+    public function getProductList($adminid, $productId, $showroomId, $categorytypeid,$subcategoryid, $brandid, $sizeid, $barcode , $noOfPage)
     {
 
         $ProductList = array();
@@ -277,6 +277,9 @@ class Users_model extends CI_Model
         if ($categorytypeid != "0" && $categorytypeid != "" && $categorytypeid != null) {
             $sql .= " and t.categorytypeid = '" . $categorytypeid . "' ";
         }
+        if ($subcategoryid != "0" && $subcategoryid != "" && $subcategoryid != null) {
+            $sql .= " and t.subcategoryid = '" . $subcategoryid . "' ";
+        }
         if ($brandid != "0" && $brandid != "" && $brandid != null) {
             $sql .= " and t.brandid = '" . $brandid . "' ";
         }
@@ -288,7 +291,9 @@ class Users_model extends CI_Model
         }
 
         $sql = $sql . " group by t.productId";
-        $sql = $sql . " order by productid desc";
+        $limitString = $noOfPage * 100;
+        $sql = $sql . " order by productid desc limit ".$limitString.", 100";
+
         $userQuery = $this->db->query($sql);
         $k = 0;
         foreach ($userQuery->result() as $row) {
