@@ -1,4 +1,5 @@
 <?php
+    $subcategoryid = "";
     if(count($productArray)>0){
         $productName = $productArray[0]['productname'];
         $productrate = $productArray[0]['productrate'];
@@ -6,6 +7,7 @@
         $productsize = $productArray[0]['productsize'];
         $brandid = $productArray[0]['brandid'];
         $categorytypeid = $productArray[0]['categorytypeid'];
+        $subcategoryid = $productArray[0]['subcategoryid'];
     }
 ?>
 <div class="panel panel-color panel-primary">
@@ -20,11 +22,25 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">Category Type</label>
                 <div class="col-sm-6">
-                    <select class="select2 form-control" id="categorytypeid" name="categorytypeid" required data-parsley-name="CategoryType">
+                    <select class="select2 form-control" id="categorytypeid" name="categorytypeid" required data-parsley-name="CategoryType" onchange="getSubCategoryList()">
                         <option value="">Select Category Type</option>
                         <?php for ($i = 0; $i < count($CategoryTypeArray); $i++) { ?>
                             <option
                                 value="<?php echo $CategoryTypeArray[$i]['categorytypeid']; ?>" <?php if($categorytypeid == $CategoryTypeArray[$i]['categorytypeid']) { echo "selected"; } ?>><?php echo $CategoryTypeArray[$i]['categorytype']; ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Sub Category</label>
+                <div class="col-sm-6" id="subcategorydiv">
+                    <select class="select2 form-control" id="subcategoryid" name="subcategoryid"
+                            required
+                            data-parsley-name="subCategory">
+                        <option value="">Select Sub Category</option>
+                        <?php for ($i = 0; $i < count($subCategoryArray); $i++) { ?>
+                            <option
+                                value="<?php echo $subCategoryArray[$i]['subcategoryid']; ?>" <?php if($subcategoryid == $subCategoryArray[$i]['subcategoryid']) { echo "selected"; } ?>><?php echo $subCategoryArray[$i]['subcategory']; ?></option>
                         <?php } ?>
                     </select>
                 </div>

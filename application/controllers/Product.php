@@ -65,6 +65,7 @@ class Product extends CI_Controller
             $barcode = $this->input->get_post('barcode');
             $size = $this->input->get_post('size');
             $categorytypeid = $this->input->get_post('categorytypeid');
+            $subcategoryid = $this->input->get_post('subcategoryid');
             $price = $this->input->get_post('price');
             $active = 'active';
             $createdAtdate = date("Y-m-d H:i:s");
@@ -73,14 +74,14 @@ class Product extends CI_Controller
             $mappedqyt = $this->input->get_post('mappedqyt');
 
             if ($actionType == "Edit" && $actionId != "0" && $actionId != "" && $actionId != null) {
-                $ProductDetailsArray = array('productid' => $actionId, 'productname' => $productname, 'price' => $price, 'size' => $size, 'barcode' => $barcode, 'categorytypeid' => $categorytypeid, 'brandname' => $brandname, 'adminid' => $adminid);
+                $ProductDetailsArray = array('productid' => $actionId, 'productname' => $productname, 'price' => $price, 'size' => $size, 'barcode' => $barcode, 'categorytypeid' => $categorytypeid, 'subcategoryid'=>$subcategoryid,'brandname' => $brandname, 'adminid' => $adminid);
                 $this->users_model->updateProductMaster($ProductDetailsArray); //For admin
             } else if ($actionType == "Delete" && $actionId != "0" && $actionId != "" && $actionId != null) {
                 $ProductDetailsDeleteArray = array('productid' => $actionId, 'adminid' => $adminid);
                 $this->users_model->deleteProductMaster($ProductDetailsDeleteArray); //For admin
                 $output = array('status' => "1", 'message' => "Successfully deleted");
             } else if ($actionType == "Add" || $actionType == "") {
-                $ProductDetailsArray = array('productname' => $productname, 'price' => $price, 'size' => $size, 'barcode' => $barcode, 'categorytypeid' => $categorytypeid, 'brandname' => $brandname, 'adminid' => $adminid, 'createdAtdate' => $createdAtdate, 'active' => $active);
+                $ProductDetailsArray = array('productname' => $productname, 'price' => $price, 'size' => $size, 'barcode' => $barcode, 'categorytypeid' => $categorytypeid, 'subcategoryid'=>$subcategoryid,'brandname' => $brandname, 'adminid' => $adminid, 'createdAtdate' => $createdAtdate, 'active' => $active);
                 $productId = $this->users_model->createProductMaster($ProductDetailsArray); //For admin
                 for ($i = 0; $i < count($ShowroomId); $i++) {
                     $ProductMappingArray = array('ShowroomId' => $ShowroomId[$i], 'mappedprice' => $mappedprice[$i], 'mappedqyt' => $mappedqyt[$i], 'adminid' => $adminid, 'productId' => $productId, 'createdAtdate' => $createdAtdate);
@@ -188,6 +189,41 @@ class Product extends CI_Controller
             }
             $this->session->set_flashdata('output', $output);
             redirect(base_url() . "Product/CategoryTypeMaster");
+
+        }
+
+        if ($submit == "Sub Category") {
+
+            $categorytypeid = $this->input->post('categorytypeid');
+            $subcategory = $this->input->post('subCategory');
+            $createdAt = date("Y-m-d H:i:s");
+            $subCategoryDetailsArray = array('subcategory' => $subcategory, 'categorytypeid' => $categorytypeid, 'subcategoryid' => $actionId, 'adminid' => $adminid, 'createdAt' => $createdAt);
+
+            $output = array('status' => "3", 'message' => "Invalid Request");
+            if ($actionType == "Edit" && $actionId != "0" && $actionId != "" && $actionId != null) {
+                $insertSuccess = $userTypeArray = $this->users_model->updateSubCategoryMaster($subCategoryDetailsArray); //For Create Brand
+                if ($insertSuccess == 1) {
+                    $output = array('status' => "1", 'message' => "Successfully updated");
+                } else {
+                    $output = array('status' => "2", 'message' => "Invalid update");
+                }
+            } else if ($actionType == "Delete" && $actionId != "0" && $actionId != "" && $actionId != null) {
+                $deletetSuccess = $userTypeArray = $this->users_model->deleteSubCategoryMaster($subCategoryDetailsArray); //For Update Brand
+                if ($deletetSuccess == 1) {
+                    $output = array('status' => "1", 'message' => "Successfully deleted");
+                } else {
+                    $output = array('status' => "2", 'message' => "Please try again later");
+                }
+            } else if ($actionType == "Add" || $actionType == "") {
+                $updateSuccess = $userTypeArray = $this->users_model->createSubCategoryMaster($subCategoryDetailsArray); //For Update Brand
+                if ($updateSuccess == 1) {
+                    $output = array('status' => "1", 'message' => "Successfully created");
+                } else {
+                    $output = array('status' => "2", 'message' => "Please try again later");
+                }
+            }
+            $this->session->set_flashdata('output', $output);
+            redirect(base_url() . "Product/SubCategoryMaster");
 
         }
     }
@@ -336,7 +372,7 @@ class Product extends CI_Controller
         $BrandList = array();
         $SizeList = array();
         $CategoryTypeList = array();
-
+        $SubCategoryList = array();
         $ProductList = array();
         if ($type == "brandList") {
             $BrandList = $this->users_model->getBrandList($adminid, $actionId);
@@ -344,6 +380,12 @@ class Product extends CI_Controller
             $SizeList = $this->users_model->getSizeList($adminid, $actionId);
         } else if ($type == "Category Type") {
             $CategoryTypeList = $this->users_model->getCategoryTypeList($adminid, $actionId);
+        } else if ($type == "Sub Category") {
+            $categorytypeid = "0";
+            $SubCategoryList = $this->users_model->getSubCategoryList($adminid, $actionId, $categorytypeid);
+        } else if ($type == "subCategoryJson") {
+            $categorytypeid = $this->input->get_post('categorytypeid');
+            $SubCategoryList = $this->users_model->getSubCategoryList($adminid, "0", $categorytypeid);
         } else if ($type == "ProductList") {
             $categorytypeid = $this->input->get_post('categorytypeid');
             $brandid = $this->input->get_post('brandid');
@@ -357,6 +399,7 @@ class Product extends CI_Controller
         $dataheader['SizeList'] = $SizeList;
         $dataheader['BrandList'] = $BrandList;
         $dataheader['CategoryTypeList'] = $CategoryTypeList;
+        $dataheader['SubCategoryList'] = $SubCategoryList;
         $dataheader['ProductList'] = $ProductList;
         $dataheader['sessionUserTypeId'] = $sessionUserTypeId;
 
@@ -454,6 +497,17 @@ class Product extends CI_Controller
         $this->load->view('layout/backend_footer');
     }
 
+    public function SubCategoryMaster()
+    {
+        $dataheader['SubCategory'] = "SubCategory";
+        $dataheader['title'] = "Sub Category";
+        //$adminid = $this->session->userdata('usertypeid');
+        $this->load->view('layout/backend_header', $dataheader);
+        $this->load->view('layout/backend_menu');
+        $this->load->view('product/SubCategoryMaster', $dataheader);
+        $this->load->view('layout/backend_footer');
+    }
+
     public function AddOrEditMasterContent()
     {
         $dataheader['title'] = "Category Type";
@@ -465,6 +519,7 @@ class Product extends CI_Controller
         $BrandArray = array();
         $SizeArray = array();
         $CategoryTypeArray = array();
+        $subCategoryArray = array();
 
         $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
         $adminid = "0";
@@ -484,6 +539,7 @@ class Product extends CI_Controller
             $BrandArray = $this->users_model->getBrandList($adminid, "0");
             $SizeArray = $this->users_model->getSizeList($adminid, "0");
             $CategoryTypeArray = $this->users_model->getCategoryTypeList($adminid, "0");
+            $subCategoryArray = $this->users_model->getSubCategoryList($adminid, "0", "0");
         } else if ($masterName == "Category Type" && $actionType == "Edit") {
             $CategoryTypeArray = $this->users_model->getCategoryTypeList($adminid, $actionId);
         }
@@ -494,6 +550,7 @@ class Product extends CI_Controller
         $dataheader['BrandArray'] = $BrandArray;
         $dataheader['SizeArray'] = $SizeArray;
         $dataheader['CategoryTypeArray'] = $CategoryTypeArray;
+        $dataheader['subCategoryArray'] = $subCategoryArray;
 
         $dataheader['actionType'] = $actionType;
         $dataheader['actionId'] = $actionId;
@@ -546,6 +603,43 @@ class Product extends CI_Controller
         $dataheader['singleSizeList'] = $singleSizeList;
         $dataheader['addProductMasterUrl'] = "addProductMaster";
         $this->load->view('product/AddSize', $dataheader);
+    }
+
+    public function AddOrEditSubCategory()
+    {
+        $dataheader = array();
+        $actionType = $this->input->get_post('actionType');
+        $actionId = $this->input->get_post('actionId');
+
+        $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
+        $adminid = "0";
+        $sessionUserTypeId = "0";
+        if ($sessionUserTypeIdIsset == 1) {
+            $sessionUserTypeId = $this->session->userdata('usertypeid');
+            if ($sessionUserTypeId == 2) {
+                $adminid = $this->session->userdata('userid');
+            } else if ($sessionUserTypeId == 1) {
+                $adminid = $this->input->get_post('adminid');
+            } else if ($sessionUserTypeId == 4) {
+                $adminid = $this->session->userdata('adminid');
+            }
+        }
+
+        $singleSubCategoryList = array();
+        $CategoryTypeArray = array();
+        $CategoryTypeArray = $this->users_model->getCategoryTypeList($adminid, "0");
+        if ($actionType == "Edit") {
+            $singleSubCategoryList = $this->users_model->getSubCategoryList($adminid, $actionId, '0');
+        }
+
+        $dataheader['adminid'] = $adminid;
+        $dataheader['title'] = "Sub Category";
+        $dataheader['actionType'] = $actionType;
+        $dataheader['actionId'] = $actionId;
+        $dataheader['singleSubCategoryList'] = $singleSubCategoryList;
+        $dataheader['CategoryTypeArray'] = $CategoryTypeArray;
+        $dataheader['addProductMasterUrl'] = base_url()."Product/addProductMaster";
+        $this->load->view('product/AddOrEditSubCategory', $dataheader);
     }
 
     public function MapProduct()
@@ -694,11 +788,13 @@ class Product extends CI_Controller
         $BrandArray = $this->users_model->getBrandList($adminid, $actionId);
         $SizeArray = $this->users_model->getSizeList($adminid, $actionId);
         $CategoryTypeArray = $this->users_model->getCategoryTypeList($adminid, $actionId);
+        $subCategoryArray = $this->users_model->getSubCategoryList($adminid, $actionId,"0");
 
         $dataheader['productArray'] = $productArray;
         $dataheader['BrandArray'] = $BrandArray;
         $dataheader['SizeArray'] = $SizeArray;
         $dataheader['CategoryTypeArray'] = $CategoryTypeArray;
+        $dataheader['subCategoryArray'] = $subCategoryArray;
         $dataheader['actionType'] = $actionType;
         $dataheader['actionId'] = $productId;
 //        $dataheader['showroomArray'] = $showroomArray;

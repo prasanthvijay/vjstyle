@@ -92,6 +92,7 @@
                     $("#productSearchDiv").html(response);
 
                     $("#categorytypeid").select2();
+                    $("#subcategoryid").select2();
                     $("#brandid").select2();
                     $("#sizeid").select2();
                     $("#showroomId").select2();
@@ -146,6 +147,18 @@
             success : function (responseFromSite) {
                 getCostDetailsForRetailer("productId="+productId+"&responseFromSite=1", viewCostUrl);
             }
+        });
+    }
+
+    function getSubCategoryList() {
+        var formData = "type=subCategoryJson&categorytypeid="+$("#categorytypeid").val();
+        $.ajax({
+            url : "BrandList",
+            type : "get",
+            data : formData,
+            success : function (responseFromSite) {
+                $("#subcategorydiv").html(responseFromSite);
+                $("#subcategoryid").select2();            }
         });
     }
 </script>

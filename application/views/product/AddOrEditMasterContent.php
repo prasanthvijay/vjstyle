@@ -36,7 +36,7 @@
                         <div class="col-sm-6">
                             <select class="select2 form-control" id="categorytypeid" name="categorytypeid"
                                     required
-                                    data-parsley-name="CategoryType">
+                                    data-parsley-name="CategoryType" onchange="getSubCategoryList()">
                                 <option value="">Select Category Type</option>
                                 <?php for ($i = 0; $i < count($CategoryTypeArray); $i++) { ?>
                                     <option
@@ -45,6 +45,20 @@
                             </select>
                         </div>
                     </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Sub Category</label>
+                    <div class="col-sm-6" id="subcategorydiv">
+                        <select class="select2 form-control" id="subcategoryid" name="subcategoryid"
+                                required
+                                data-parsley-name="subCategory">
+                            <option value="">Select Sub Category</option>
+                            <?php for ($i = 0; $i < count($subCategoryArray); $i++) { ?>
+                                <option
+                                    value="<?php echo $subCategoryArray[$i]['subcategoryid']; ?>"><?php echo $subCategoryArray[$i]['subcategory']; ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Product Name</label>
                         <div class="col-sm-6">

@@ -260,7 +260,7 @@ class Users_model extends CI_Model
         }
 
         $sql = $sql . " order by productid desc";*/
-        $sql = "SELECT t.productid, t.productname, t.productrate, t.barcode, t.productsize, t.categorytypeid, t.active, t.adminid, t.brandid, a.showroomId, tb.brandname, ts.size, tc.categorytype, a.price as price, sum(pb.quantity) as quantity FROM tbl_product t Left JOIN tbl_productMapping a on t.productid = a.productid Left JOIN tbl_productBatch pb on a.productId = pb.productid AND a.showroomId=pb.showRoomId LEFT JOIN tbl_brand tb on tb.brandid=t.brandid LEFT JOIN tbl_sizemaster ts on ts.sizeid=t.productsize LEFT JOIN tbl_categorytype tc on tc.categorytypeid = t.categorytypeid WHERE  t.active = 'active' ";
+        $sql = "SELECT t.productid, t.productname, t.productrate, t.barcode, t.productsize, t.categorytypeid,t.subcategoryid, t.active, t.adminid, t.brandid, a.showroomId, tb.brandname, ts.size, tc.categorytype, a.price as price, sum(pb.quantity) as quantity FROM tbl_product t Left JOIN tbl_productMapping a on t.productid = a.productid Left JOIN tbl_productBatch pb on a.productId = pb.productid AND a.showroomId=pb.showRoomId LEFT JOIN tbl_brand tb on tb.brandid=t.brandid LEFT JOIN tbl_sizemaster ts on ts.sizeid=t.productsize LEFT JOIN tbl_categorytype tc on tc.categorytypeid = t.categorytypeid WHERE  t.active = 'active' ";
 
         if ($showroomId != "0" && $showroomId != "" && $showroomId != null) {
             $sql .= " and a.showroomId = '" . $showroomId . "' ";
@@ -309,6 +309,7 @@ class Users_model extends CI_Model
             $ProductList[$k]['brandid'] = $row->brandid;
             $ProductList[$k]['productsize'] = $row->productsize;
             $ProductList[$k]['categorytypeid'] = $row->categorytypeid;
+            $ProductList[$k]['subcategoryid'] = $row->subcategoryid;
 
             $ProductList[$k]['brandname'] = $row->brandname;
             $ProductList[$k]['size'] = $row->size;
@@ -573,6 +574,25 @@ class Users_model extends CI_Model
         $this->db->query($sql);
     }
 
+    public function updateSubCategoryMaster($subCategoryDetailsArray)
+    {
+        $sql = "UPDATE tbl_subCategory set subcategory = " . $this->db->escape($subCategoryDetailsArray['subcategory']) . ", categorytypeid =".$this->db->escape($subCategoryDetailsArray['categorytypeid'])."  where subcategoryid = " . $this->db->escape($subCategoryDetailsArray['subcategoryid']) . " and adminid = " . $this->db->escape($subCategoryDetailsArray['adminid']);
+        return $this->db->query($sql);
+    }
+
+    public function deleteSubCategoryMaster($subCategoryDetailsArray)
+    {
+        $active = "deleted";
+        $sql = "UPDATE tbl_subCategory set active = " . $this->db->escape($active) . " where subcategoryid = " . $this->db->escape($subCategoryDetailsArray['subcategoryid']) . " and adminid = " . $this->db->escape($subCategoryDetailsArray['adminid']);
+        return $this->db->query($sql);
+    }
+
+    public function createSubCategoryMaster($subCategoryDetailsArray)
+    {
+        $sql = "INSERT INTO tbl_subCategory (subcategory, categorytypeid,adminid,createdat) " . "VALUES (" . $this->db->escape($subCategoryDetailsArray['subcategory']) . "," . $this->db->escape($subCategoryDetailsArray['categorytypeid']) . "," .$this->db->escape($subCategoryDetailsArray['adminid']) . "," . $this->db->escape($subCategoryDetailsArray['createdAt']) . ")";
+        $this->db->query($sql);
+    }
+
     public function deleteProductMaster($ProductDetailsDeleteArray)
     {
         $active = "deleted";
@@ -582,7 +602,7 @@ class Users_model extends CI_Model
 
     public function createProductMaster($ProductDetailsArray)
     {
-        $sql = "INSERT INTO tbl_product (productname, productrate, productsize, barcode, categorytypeid, brandid, adminid, active, createdat) " . "VALUES (" . $this->db->escape($ProductDetailsArray['productname']) . "," . $this->db->escape($ProductDetailsArray['price']) . "," . $this->db->escape($ProductDetailsArray['size']) . "," . $this->db->escape($ProductDetailsArray['barcode']) . "," . $this->db->escape($ProductDetailsArray['categorytypeid']) . "," . $this->db->escape($ProductDetailsArray['brandname']) . "," . $this->db->escape($ProductDetailsArray['adminid']) . "," . $this->db->escape($ProductDetailsArray['active']) . "," . $this->db->escape($ProductDetailsArray['createdAtdate']) . ")";
+        $sql = "INSERT INTO tbl_product (productname, productrate, productsize, barcode, categorytypeid,subcategoryid, brandid, adminid, active, createdat) " . "VALUES (" . $this->db->escape($ProductDetailsArray['productname']) . "," . $this->db->escape($ProductDetailsArray['price']) . "," . $this->db->escape($ProductDetailsArray['size']) . "," . $this->db->escape($ProductDetailsArray['barcode']) . "," . $this->db->escape($ProductDetailsArray['categorytypeid']) .",".$this->db->escape($ProductDetailsArray['subcategoryid']) .",". $this->db->escape($ProductDetailsArray['brandname']) . "," . $this->db->escape($ProductDetailsArray['adminid']) . "," . $this->db->escape($ProductDetailsArray['active']) . "," . $this->db->escape($ProductDetailsArray['createdAtdate']) . ")";
         $this->db->query($sql);
         $insert_id = $this->db->insert_id();
         return $insert_id;
@@ -590,7 +610,7 @@ class Users_model extends CI_Model
 
     public function updateProductMaster($ProductDetailsArray)
     {
-        $sql = "UPDATE tbl_product set productname = " . $this->db->escape($ProductDetailsArray['productname']) . ", productrate = " . $this->db->escape($ProductDetailsArray['price']) . ", productsize = " . $this->db->escape($ProductDetailsArray['size']) . ", barcode = " . $this->db->escape($ProductDetailsArray['barcode']) . ", categorytypeid = " . $this->db->escape($ProductDetailsArray['categorytypeid']) . ", brandid = " . $this->db->escape($ProductDetailsArray['brandname']) . " where productid = " . $this->db->escape($ProductDetailsArray['productid']) . " and adminid = " . $this->db->escape($ProductDetailsArray['adminid']);
+        $sql = "UPDATE tbl_product set productname = " . $this->db->escape($ProductDetailsArray['productname']) . ", productrate = " . $this->db->escape($ProductDetailsArray['price']) . ", productsize = " . $this->db->escape($ProductDetailsArray['size']) . ", barcode = " . $this->db->escape($ProductDetailsArray['barcode']) . ", categorytypeid = " . $this->db->escape($ProductDetailsArray['categorytypeid'])  . ", subcategoryid = " . $this->db->escape($ProductDetailsArray['subcategoryid']) . ", brandid = " . $this->db->escape($ProductDetailsArray['brandname']) . " where productid = " . $this->db->escape($ProductDetailsArray['productid']) . " and adminid = " . $this->db->escape($ProductDetailsArray['adminid']);
         $this->db->query($sql);
     }
 
@@ -744,6 +764,40 @@ class Users_model extends CI_Model
             $SizeArray[$k]['categorytypeid'] = $row->categorytypeid;
             $SizeArray[$k]['categorytype'] = $row->categorytype;
             $SizeArray[$k]['adminId'] = $row->adminId;
+            $SizeArray[$k]['active'] = $row->active;
+            $SizeArray[$k]['createdAt'] = $row->createdAt;
+            $k++;
+        }
+
+        return $SizeArray;
+    }
+
+    public function getSubCategoryList($adminid, $actionId, $categoryTypeId)
+    {
+
+        $SizeArray = array();
+        $sql = "SELECT s.subcategoryid, s.categorytypeid, s.subcategory, s.adminid, s.active, s.createdAt, c.categorytype FROM `tbl_subCategory` s LEFT JOIN tbl_categorytype c on c.categorytypeid=s.categorytypeid WHERE s.active = 'active' ";
+        if ($adminid != "" && $adminid != null) {
+            $sql .= " and s.adminid = '" . $adminid . "' ";
+        }
+
+        if ($actionId != "" && $actionId != null && $actionId != "0" && $actionId != 0) {
+            $sql .= " and s.subcategoryid = '" . $actionId . "' ";
+        }
+
+        if ($categoryTypeId != "" && $categoryTypeId != null && $categoryTypeId != "0" && $categoryTypeId != 0) {
+            $sql .= " and s.categorytypeid = '" . $categoryTypeId . "' ";
+        }
+
+        $sql = $sql . " order by categorytypeid desc";
+        $userQuery = $this->db->query($sql);
+        $k = 0;
+        foreach ($userQuery->result() as $row) {
+            $SizeArray[$k]['subcategoryid'] = $row->subcategoryid;
+            $SizeArray[$k]['categorytypeid'] = $row->categorytypeid;
+            $SizeArray[$k]['categorytype'] = $row->categorytype;
+            $SizeArray[$k]['subcategory'] = $row->subcategory;
+            $SizeArray[$k]['adminId'] = $row->adminid;
             $SizeArray[$k]['active'] = $row->active;
             $SizeArray[$k]['createdAt'] = $row->createdAt;
             $k++;
