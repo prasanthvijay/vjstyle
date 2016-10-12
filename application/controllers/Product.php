@@ -57,7 +57,7 @@ class Product extends CI_Controller
         }*/
 
         //ProductMapping table insertion
-        /*$selectQuery = "select * from tbl_product ";
+        $selectQuery = "select * from tbl_product ";
         $exeQuery = $this->db->query($selectQuery);
         $showRoomId = "3";
         $adminid = "2";
@@ -66,14 +66,26 @@ class Product extends CI_Controller
         $productArray = $exeQuery->result_array();
         for($sm=0; $sm<count($productArray); $sm++){
             $productid = $productArray[$sm]["productid"];
-            $existingQty = $productArray[$sm]["existingQty"];
-            $productrate = $productArray[$sm]["productrate"];
+            $barcode = $productArray[$sm]["barcode"];
+            $categorytypeid = $productArray[$sm]["categorytypeid"];
 
-            echo $insertMappingQuery = "INSERT INTO `tbl_productMapping`( `productId`, `showroomId`, `price`, `adminId`, `createAt`) VALUES ('".$productid."', '".$showRoomId."', '".$productrate."', '".$adminid."', '".$createdAt."'); <br>";
-            if($existingQty>0 && $existingQty!=""){
-                echo $insertBatchquery = "INSERT INTO `tbl_productBatch`( `productid`, `showRoomId`, `supplierId`, `adminId`, `quantity`, `batchNumber`, `createdAt`, `active`) VALUES ('".$productid."', '".$showRoomId."', '0','".$adminid."', '".$existingQty."', '".$batchNumber."','".$createdAt."','active'); <br>";
+            if($categorytypeid==1){
+                $barcodeString = "JRM".$barcode;
+            } else if($categorytypeid==2){
+                $barcodeString = "JRL".$barcode;
+            }  else if($categorytypeid==3){
+                $barcodeString = "JRC".$barcode;
             }
-        }*/
+            echo $runquery = "UPDATE `tbl_product` SET `barcode`='".$barcodeString."' WHERE productid='".$productid."' and barcode='".$barcode."'; <br> ";
+
+//            $existingQty = $productArray[$sm]["existingQty"];
+//            $productrate = $productArray[$sm]["productrate"];
+//
+//            //echo $insertMappingQuery = "INSERT INTO `tbl_productMapping`( `productId`, `showroomId`, `price`, `adminId`, `createAt`) VALUES ('".$productid."', '".$showRoomId."', '".$productrate."', '".$adminid."', '".$createdAt."'); <br>";
+//            if($existingQty>0 && $existingQty!=""){
+//              //  echo $insertBatchquery = "INSERT INTO `tbl_productBatch`( `productid`, `showRoomId`, `supplierId`, `adminId`, `quantity`, `batchNumber`, `createdAt`, `active`) VALUES ('".$productid."', '".$showRoomId."', '0','".$adminid."', '".$existingQty."', '".$batchNumber."','".$createdAt."','active'); <br>";
+//            }
+        }
 
 
 //        echo count($productArray);
