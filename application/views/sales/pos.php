@@ -77,7 +77,7 @@
                 <div class="card-box table-responsive">
                     <p class="text-muted m-b-20 font-13">
                         Point Of Sales
-                    <form action="posSubmitPage" id="myForm" method="POST" data-parsley-validate novalidate>
+                   
                         <div class="row"><div class="col-sm-3"></div><div class="col-sm-6"><?php print_r($succesMsg); ?></div></div>
                         <div class="row">
                             <div class="col-lg-8">
@@ -95,9 +95,13 @@
 					</div>-->
                                 <div class="row col-lg-12">
                                     <div class="card-box">
+				<form  onsubmit="return false; funtionNew();"  id="myform">
                                         <input type="text" class="form-control" onblur="getProduct(this.value);">
+					
 
-                                        <input type="hidden" id="selectedProduct" name="selectedProduct">
+				</form>
+
+ <form action="posSubmitPage" id="myForm" method="POST" data-parsley-validate novalidate>                                        <input type="hidden" id="selectedProduct" name="selectedProduct">
                                     </div>
                                 </div>
                                 <div class="row col-sm-12 register">
@@ -222,21 +226,22 @@
                 if ($.inArray(product[0]['productid'], selectedProduct) == -1) {
 
                     var j = parseInt(selectedProduct.length);
-                    var productdata = '<tr class="register-item-details" id="rowId' + product[0]['productid'] + '"><td class="text-center"> <input type="button" class="btn btn-icon waves-effect waves-light btn-danger m-b-5" onclick="removeProduct(' + product[0]['productid'] + ');" value="X"> </td><td>' + product[0]['productname'] + " (" + product[0]['barcode'] + ')<input type="hidden" name="product_' + product[0]['productid'] + '" value=' + product[0]['productid'] + '></td><td class="text-center" ><input name="price_' + product[0]['productid'] + '" id="price_' + product[0]['productid'] + '" class="form-control editable editable-click" value="' + product[0]['price'] + '" onblur="calculateTotal()"></td><td class="text-center"><input name="qty_' + product[0]['productid'] + '" id="qty_' + product[0]['productid'] + '" class="form-control editable editable-click" value="1" onblur="calculateTotal(this.value)"><input type="hidden" name="available_' + product[0]['productid'] + '" id="available_' + product[0]['productid'] + '" value="' + qty + '"></td><td class="text-center"><input name="disc_' + product[0]['productid'] + '" id="disc_' + product[0]['productid'] + '" class="form-control editable editable-click" value="0" onblur="calculateTotal()"></td><td class="text-center" id="TDproduct_' + product[0]['productid'] + '">' + product[0]['price'] + '</td></tr>';
+                    var productdata = '<tr class="register-item-details" id="rowId' + product[0]['productid'] + '"><td class="text-center"> <input type="button" class="btn btn-icon waves-effect waves-light btn-danger m-b-5" onclick="removeProduct(' + product[0]['productid'] + ');" value="X"> </td><td>' + product[0]['productname'] + " (" + product[0]['barcode'] + ')<input type="hidden" name="product_' + product[0]['productid'] + '" value=' + product[0]['productid'] + '></td><td class="text-center" ><input name="price_' + product[0]['productid'] + '" id="price_' + product[0]['productid'] + '" class="form-control editable editable-click" value="' + product[0]['price'] + '" onblur="calculateTotal()"></td><td class="text-center"><input name="qty_' + product[0]['productid'] + '" id="qty_' + product[0]['productid'] + '" class="form-control editable editable-click" value="1" onblur="QtyCheck(this.value)"><input type="hidden" name="available_' + product[0]['productid'] + '" id="available_' + product[0]['productid'] + '" value="' + qty + '"></td><td class="text-center"><input name="disc_' + product[0]['productid'] + '" id="disc_' + product[0]['productid'] + '" class="form-control editable editable-click" value="0" onblur="calculateTotal()"></td><td class="text-center" id="TDproduct_' + product[0]['productid'] + '">' + product[0]['price'] + '</td></tr>';
 
                     $('#salesTable tr:last').after(productdata);
                     var alreadyExist = $("#selectedProduct").val();
                     document.getElementById("selectedProduct").value = alreadyExist + product[0]['productid'] + "|";
                     var newqty = $('#qty_' + product[0]['productid']).val();
-                    calculateTotal(newqty);
+                    calculateTotal();
                 }
                 else {
 
                     var aval = $('#available_' + product[0]['productid']).val();
                     var qty = $('#qty_' + product[0]['productid']).val();
+
                     if (aval > qty) {
-                        $('#qty_' + product[0]['productid']).val(parseInt(qty) + 1);
-                        calculateTotal(qty);
+                        $('#qty_' + product[0]['productid']).val(parseInt(qty)+ 1);
+                        calculateTotal();
                     } else {
                         $.Notification.notify('warning', 'top right', 'Available Product Quantity is ' + $('#available_' + product[0]['productid']).val());
                     }
@@ -250,14 +255,11 @@
     }
 
 
-    function calculateTotal(qty) {
+    function calculateTotal() {
 
         var selectedProduct = $("#selectedProduct").val().split('|');
         var str = selectedProduct.slice(0, -1);
         var aval = parseInt($('#available_' + str).val()) + 1;
-
-
-        if (aval > qty) {
 
             var j = 0, productTotal = 0, FinalTotal = 0, beforeTotal = 0;
 
@@ -281,14 +283,11 @@
                 document.getElementById("roundoff").value = "0";
             }
 
+		var finaltotal=parseFloat(FinalTotal) - parseFloat($("#roundoff").val()) - (parseFloat(FinalTotal) * (parseFloat($("#totdiscount").val()) / 100));
 
-            document.getElementById("finaltotal").value = parseFloat(FinalTotal) - parseFloat($("#roundoff").val()) - (parseFloat(FinalTotal) * (parseFloat($("#totdiscount").val()) / 100));
+            document.getElementById("finaltotal").value = finaltotal.toFixed(2);
 
-        }
-        else {
-            $.Notification.notify('warning', 'top right', 'Available Product Quantity is ' + $('#available_' + str).val());
-
-        }
+       
     }
     function removeProduct(productId) {
         var alreadyExist = $("#selectedProduct").val();
@@ -303,5 +302,24 @@
 
     }
 
+function QtyCheck(qty){
+
+ 	var selectedProduct = $("#selectedProduct").val().split('|');
+        var str = selectedProduct.slice(0, -1);
+        var aval = parseInt($('#available_' + str).val()) + 1;
+        
+
+  	if (aval > qty) {
+calculateTotal();
+        }
+        else {
+            $.Notification.notify('warning', 'top right', 'Available Product Quantity is ' + $('#available_' + str).val());
+
+        }
+}
+
+function funtionNew(){
+$('#myform')[0].reset();
+}
 </script>
 
