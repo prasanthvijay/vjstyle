@@ -286,8 +286,8 @@ class Users_model extends CI_Model
         if ($sizeid != "0" && $sizeid != "" && $sizeid != null) {
             $sql .= " and t.productsize = '" . $sizeid . "' ";
         }
-        if ($barcode != "0" && $barcode != "" && $barcode != null) {
-            $sql .= " and t.barcode like '%" . $barcode . "%' ";
+        if (($barcode != "" && $barcode != null) || $barcode =="0" ) {
+            $sql .= " and t.barcode = '" . $barcode . "' ";
         }
 
         $sql = $sql . " group by t.productId";
