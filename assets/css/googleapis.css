@@ -2,11 +2,11 @@
   font-family: 'Noto Sans';
   font-style: normal;
   font-weight: 400;
-  src: local('Noto Sans'), local('NotoSans'), url(http://localhost/pos/assets/fonts/LeFlHvsZjXu2c3ZRgBq9nFtXRa8TVwTICgirnJhmVJw.woff2) format('woff2');
+  src: local('Noto Sans'), local('NotoSans'), url(../fonts/LeFlHvsZjXu2c3ZRgBq9nFtXRa8TVwTICgirnJhmVJw.woff2) format('woff2');
 }
 @font-face {
   font-family: 'Noto Sans';
   font-style: normal;
   font-weight: 700;
-  src: local('Noto Sans Bold'), local('NotoSans-Bold'), url(http://localhost/pos/assets/fonts/PIbvSEyHEdL91QLOQRnZ1-gdm0LZdjqr5-oayXSOefg.woff2) format('woff2');
+  src: local('Noto Sans Bold'), local('NotoSans-Bold'), url(../fonts/PIbvSEyHEdL91QLOQRnZ1-gdm0LZdjqr5-oayXSOefg.woff2) format('woff2');
 }
