@@ -89,3 +89,10 @@ File: Responsive
     width: 1170px;
   }
 }
+
+
+@media screen and (max-width:767px) {
+  .table-responsive {
+    border: none !important;
+  }
+}

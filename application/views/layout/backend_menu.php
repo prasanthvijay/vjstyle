@@ -10,7 +10,7 @@
                         <a href="dashboard"><i class="md md-dashboard"></i>Dashboard</a>
                     </li>
                     <li class="has-submenu">
-                        <a href="#"><i class="md md-pages"></i>Users </a>
+                        <a href="#"><i class="md md-account-box"></i>Users </a>
                         <ul class="submenu">
                             <?php if ($_SESSION['usertypeid'] == "1") { ?>
                                 <li><a href="<?php echo base_url(); ?>Frontend/adminMaster">Admin </a></li>
