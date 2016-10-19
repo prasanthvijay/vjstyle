@@ -62,30 +62,32 @@
 
 
 <div class="wrapper">
-    <div class="container">
+    <form action="posSubmitPage" id="myForm" method="POST" data-parsley-validate
+          novalidate>
+        <div class="container">
 
-        <!-- Page-Title -->
-        <div class="row">
-            <div class="col-sm-12">
-                <h4 class="page-title"><?php echo $title; ?></h4>
+            <!-- Page-Title -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <h4 class="page-title"><?php echo $title; ?></h4>
+                </div>
             </div>
-        </div>
-        <!-- Page-Title -->
-        <!-- Custom Modals -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card-box table-responsive">
-                    <p class="text-muted m-b-20 font-13">
-                        Point Of Sales
+            <!-- Page-Title -->
+            <!-- Custom Modals -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card-box table-responsive">
+                        <p class="text-muted m-b-20 font-13">
+                            Point Of Sales
 
-                    <div class="row">
-                        <div class="col-sm-3"></div>
-                        <div class="col-sm-6"><?php print_r($succesMsg); ?></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-8">
+                        <div class="row">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-6"><?php print_r($succesMsg); ?></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-8">
 
-                            <!--<div class="row col-lg-12">
+                                <!--<div class="row col-lg-12">
 						<div class="card-box">
 							    <select class="form-control select2" onchange="getProduct(this.value);">
 								<option value="">Select</option>
@@ -96,124 +98,109 @@
 <input type="hidden" id="selectedProduct" name="selectedProduct">
 						</div>
 					</div>-->
-                            <div class="row col-lg-12">
-                                <div class="card-box">
-                                    <form onsubmit="return false; funtionNew();" id="myform">
-                                        <input type="text" class="form-control posProductSelector" onblur="getProduct(this.value);" >
+                                <div class="row col-lg-12">
+                                    <div class="card-box">
+
+                                        <input type="text" class="form-control posProductSelector"
+                                               onblur="getProduct(this.value);">
+                                        <input type="hidden" id="selectedProduct" name="selectedProduct">
+                                    </div>
+                                </div>
+                                <div class="row col-sm-12 register">
+                                    <div class="register-box register-items paper-cut">
+                                        <div class="register-items-holder">
+
+                                            <table id="salesTable" class="table table-hover">
+
+                                                <thead>
+                                                <tr class="register-items-header">
+                                                    <th></th>
+                                                    <th class="item_name_heading">Item Name</th>
+                                                    <th class="sales_price">Price</th>
+                                                    <th class="sales_quantity">Qty.</th>
+                                                    <th class="sales_discount">Disc %</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                                </thead>
+
+                                                <tbody class="register-item-content">
+                                                <tr class="cart_content_area_empty">
+                                                    <td colspan="6">
+                                                        <div class="text-center text-warning"><h3>There are no items in
+                                                                the cart<span class="flatGreenc"> [Sales]</span></h3>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
 
 
-                                    </form>
-
-                                    <form action="posSubmitPage" id="myForm" method="POST" data-parsley-validate
-                                          novalidate><input type="hidden" id="selectedProduct" name="selectedProduct">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row col-sm-12 register">
-                                <div class="register-box register-items paper-cut">
-                                    <div class="register-items-holder">
-
-                                        <table id="salesTable" class="table table-hover">
-
-                                            <thead>
-                                            <tr class="register-items-header">
-                                                <th></th>
-                                                <th class="item_name_heading">Item Name</th>
-                                                <th class="sales_price">Price</th>
-                                                <th class="sales_quantity">Qty.</th>
-                                                <th class="sales_discount">Disc %</th>
-                                                <th>Total</th>
-                                            </tr>
-                                            </thead>
-
-                                            <tbody class="register-item-content">
-                                            <tr class="cart_content_area_empty">
-                                                <td colspan="6">
-                                                    <div class="text-center text-warning"><h3>There are no items in
-                                                            the cart<span class="flatGreenc"> [Sales]</span></h3>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-
-
-                                            </tbody>
-                                        </table>
+                            <div class="col-lg-4">
+                                <div class="row form-group">
+                                    <div class="col-sm-3">Total</div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="total" id="total" disabled>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-sm-3">Discount</div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="totdiscount" id="totdiscount"
+                                               onblur="calculateTotal()">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-sm-3">Round Off</div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="roundoff" id="roundoff"
+                                               onblur="calculateTotal()">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-sm-3">Final</div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="finaltotal" id="finaltotal"
+                                               disabled>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-sm-3">Customer</div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="Customer" id="Customer">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-sm-3">Mobile</div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="mobile" id="mobile">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-sm-3"></div>
+                                    <div class="col-sm-9">
+                                        <!--                                    <input type="button" class="btn btn-primary " value="Submit"-->
+                                        <!--                                           onclick="formSubmit();"></button>-->
+                                        <input type="submit" name="submit" value="submit" class="btn btn-primary ">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="row form-group">
-                                <div class="col-sm-3">Total</div>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="total" id="total" disabled>
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-sm-3">Discount</div>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="totdiscount" id="totdiscount"
-                                           onblur="calculateTotal()">
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-sm-3">Round Off</div>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="roundoff" id="roundoff"
-                                           onblur="calculateTotal()">
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-sm-3">Final</div>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="finaltotal" id="finaltotal"
-                                           disabled>
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-sm-3">Customer</div>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="Customer" id="Customer">
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-sm-3">Mobile</div>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="mobile" id="mobile">
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-sm-3"></div>
-                                <div class="col-sm-9">
-                                    <input type="button" class="btn btn-primary " value="Submit"
-                                           onclick="formSubmit();"></button>
-                                </div>
-                            </div>
-                        </div>
+
+
                     </div>
-
-
                 </div>
             </div>
+
+
         </div>
 
-
-    </div>
-
     </form>
-    </p>
-
 </div>
-</div>
-</div>
-<!-- End row -->
-
-
-</div> <!-- end container -->
-</div>
-<!-- End wrapper -->
-
-
 <script>
     function getProduct(barcode) {
 
@@ -326,24 +313,24 @@
         $('#myform')[0].reset();
     }
 
-//    $(".posProductSelector").scannerDetection(function(){
-//        alert("test scanned");
-//    }); // Initialize with a function that is onComplete callback
+    //    $(".posProductSelector").scannerDetection(function(){
+    //        alert("test scanned");
+    //    }); // Initialize with a function that is onComplete callback
 </script>
 <script type="text/javascript">
-    jQuery(document).ready(function($) {
+    jQuery(document).ready(function ($) {
         $(window).scannerDetection();
-        $(window).bind('scannerDetectionComplete',function(e,data){
-            var barcode = data.string;
-            if(barcode != "success"){
+        $(window).bind('scannerDetectionComplete', function (e, data) {
+                var barcode = data.string;
+                if (barcode != "success") {
 //                    alert('complete '+data.string);
                     getProduct(barcode);
                 }
             })
-            .bind('scannerDetectionError',function(e,data){
-                console.log('detection error '+data.string);
+            .bind('scannerDetectionError', function (e, data) {
+                console.log('detection error ' + data.string);
             })
-            .bind('scannerDetectionReceive',function(e,data){
+            .bind('scannerDetectionReceive', function (e, data) {
                 console.log(data);
             })
 
