@@ -190,8 +190,7 @@ class Sales extends CI_Controller
 
         $dataheader['receiptDetails'] = $receiptDetails;
 
-        $this->load->view('layout/backend_header', $dataheader);
-        $this->load->view('layout/backend_menu');
+        $this->load->view('layout/frontend_header', $dataheader);
         $this->load->view('sales/receipt');
         $this->load->view('layout/backend_footer');
     }

@@ -121,6 +121,15 @@ class Pos_model extends CI_Model
         $returnValue['productDetails'] = $q->result_array();
 
         if (count($returnValue['customerreceipt']) > 0) {
+
+            $showRoomId = $returnValue['customerreceipt'][0]['showRoomId'];
+            $adminid = $returnValue['customerreceipt'][0]['adminid'];
+
+            $this->db->select('name, email, mobile, address, tinnumber, cinnumber');
+            $this->db->where('userid', $showRoomId);
+            $q = $this->db->get('tbl_user');
+            $returnValue['showroomdetails'] = $q->result_array();
+
             $this->db->select('name,mobileno');
             $this->db->where('id', $returnValue['customerreceipt'][0]['customerId']);
             $q = $this->db->get('tbl_customer');
