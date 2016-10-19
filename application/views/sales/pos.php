@@ -77,12 +77,15 @@
                 <div class="card-box table-responsive">
                     <p class="text-muted m-b-20 font-13">
                         Point Of Sales
-                   
-                        <div class="row"><div class="col-sm-3"></div><div class="col-sm-6"><?php print_r($succesMsg); ?></div></div>
-                        <div class="row">
-                            <div class="col-lg-8">
 
-                                <!--<div class="row col-lg-12">
+                    <div class="row">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-6"><?php print_r($succesMsg); ?></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8">
+
+                            <!--<div class="row col-lg-12">
 						<div class="card-box">
 							    <select class="form-control select2" onchange="getProduct(this.value);">
 								<option value="">Select</option>
@@ -93,100 +96,101 @@
 <input type="hidden" id="selectedProduct" name="selectedProduct">
 						</div>
 					</div>-->
-                                <div class="row col-lg-12">
-                                    <div class="card-box">
-				<form  onsubmit="return false; funtionNew();"  id="myform">
-                                        <input type="text" class="form-control" onblur="getProduct(this.value);">
-					
-
-				</form>
-
- <form action="posSubmitPage" id="myForm" method="POST" data-parsley-validate novalidate>                                        <input type="hidden" id="selectedProduct" name="selectedProduct">
-                                    </div>
-                                </div>
-                                <div class="row col-sm-12 register">
-                                    <div class="register-box register-items paper-cut">
-                                        <div class="register-items-holder">
-
-                                            <table id="salesTable" class="table table-hover">
-
-                                                <thead>
-                                                <tr class="register-items-header">
-                                                    <th></th>
-                                                    <th class="item_name_heading">Item Name</th>
-                                                    <th class="sales_price">Price</th>
-                                                    <th class="sales_quantity">Qty.</th>
-                                                    <th class="sales_discount">Disc %</th>
-                                                    <th>Total</th>
-                                                </tr>
-                                                </thead>
-
-                                                <tbody class="register-item-content">
-                                                <tr class="cart_content_area_empty">
-                                                    <td colspan="6">
-                                                        <div class="text-center text-warning"><h3>There are no items in
-                                                                the cart<span class="flatGreenc"> [Sales]</span></h3>
-                                                        </div>
-                                                    </td>
-
-                                                </tr>
+                            <div class="row col-lg-12">
+                                <div class="card-box">
+                                    <form onsubmit="return false; funtionNew();" id="myform">
+                                        <input type="text" class="form-control posProductSelector" onblur="getProduct(this.value);" >
 
 
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+                                    </form>
+
+                                    <form action="posSubmitPage" id="myForm" method="POST" data-parsley-validate
+                                          novalidate><input type="hidden" id="selectedProduct" name="selectedProduct">
                                 </div>
                             </div>
-                            <div class="col-lg-4">
-                                <div class="row form-group">
-                                    <div class="col-sm-3">Total</div>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="total" id="total" disabled>
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col-sm-3">Discount</div>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="totdiscount" id="totdiscount"
-                                               onblur="calculateTotal()">
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col-sm-3">Round Off</div>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="roundoff" id="roundoff"
-                                               onblur="calculateTotal()">
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col-sm-3">Final</div>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="finaltotal" id="finaltotal"
-                                               disabled>
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col-sm-3">Customer</div>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="Customer" id="Customer">
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col-sm-3">Mobile</div>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="mobile" id="mobile">
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col-sm-3"></div>
-                                    <div class="col-sm-9">
-                                        <input type="button" class="btn btn-primary " value="Submit"
-                                               onclick="formSubmit();"></button>
+                            <div class="row col-sm-12 register">
+                                <div class="register-box register-items paper-cut">
+                                    <div class="register-items-holder">
+
+                                        <table id="salesTable" class="table table-hover">
+
+                                            <thead>
+                                            <tr class="register-items-header">
+                                                <th></th>
+                                                <th class="item_name_heading">Item Name</th>
+                                                <th class="sales_price">Price</th>
+                                                <th class="sales_quantity">Qty.</th>
+                                                <th class="sales_discount">Disc %</th>
+                                                <th>Total</th>
+                                            </tr>
+                                            </thead>
+
+                                            <tbody class="register-item-content">
+                                            <tr class="cart_content_area_empty">
+                                                <td colspan="6">
+                                                    <div class="text-center text-warning"><h3>There are no items in
+                                                            the cart<span class="flatGreenc"> [Sales]</span></h3>
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+
+
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="col-lg-4">
+                            <div class="row form-group">
+                                <div class="col-sm-3">Total</div>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="total" id="total" disabled>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-sm-3">Discount</div>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="totdiscount" id="totdiscount"
+                                           onblur="calculateTotal()">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-sm-3">Round Off</div>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="roundoff" id="roundoff"
+                                           onblur="calculateTotal()">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-sm-3">Final</div>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="finaltotal" id="finaltotal"
+                                           disabled>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-sm-3">Customer</div>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="Customer" id="Customer">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-sm-3">Mobile</div>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="mobile" id="mobile">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-sm-3"></div>
+                                <div class="col-sm-9">
+                                    <input type="button" class="btn btn-primary " value="Submit"
+                                           onclick="formSubmit();"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
                 </div>
@@ -217,7 +221,7 @@
 
             var product = JSON.parse(data);
             var productid = product[0]['productid'];
-            if(productid!=null){
+            if (productid != null) {
                 $(".cart_content_area_empty").remove();
 
                 var selectedProduct = $("#selectedProduct").val().split('|');
@@ -240,7 +244,7 @@
                     var qty = $('#qty_' + product[0]['productid']).val();
 
                     if (aval > qty) {
-                        $('#qty_' + product[0]['productid']).val(parseInt(qty)+ 1);
+                        $('#qty_' + product[0]['productid']).val(parseInt(qty) + 1);
                         calculateTotal();
                     } else {
                         $.Notification.notify('warning', 'top right', 'Available Product Quantity is ' + $('#available_' + product[0]['productid']).val());
@@ -261,33 +265,33 @@
         var str = selectedProduct.slice(0, -1);
         var aval = parseInt($('#available_' + str).val()) + 1;
 
-            var j = 0, productTotal = 0, FinalTotal = 0, beforeTotal = 0;
+        var j = 0, productTotal = 0, FinalTotal = 0, beforeTotal = 0;
 
-            for (var i = 0; i < (parseInt(selectedProduct.length) - 1); i++) {
-                j = parseInt(i) + 1;
-                beforeTotal = parseFloat($("#price_" + selectedProduct[i]).val()) * parseFloat($("#qty_" + selectedProduct[i]).val());
-                productTotal = (parseFloat(beforeTotal) - (parseFloat(beforeTotal) * (parseFloat($("#disc_" + selectedProduct[i]).val()) / 100)));
+        for (var i = 0; i < (parseInt(selectedProduct.length) - 1); i++) {
+            j = parseInt(i) + 1;
+            beforeTotal = parseFloat($("#price_" + selectedProduct[i]).val()) * parseFloat($("#qty_" + selectedProduct[i]).val());
+            productTotal = (parseFloat(beforeTotal) - (parseFloat(beforeTotal) * (parseFloat($("#disc_" + selectedProduct[i]).val()) / 100)));
 
-                FinalTotal = parseFloat(FinalTotal) + parseFloat(productTotal);
+            FinalTotal = parseFloat(FinalTotal) + parseFloat(productTotal);
 
-                document.getElementById("TDproduct_" + selectedProduct[i]).innerHTML = productTotal;
+            document.getElementById("TDproduct_" + selectedProduct[i]).innerHTML = productTotal;
 
-            }
+        }
 
-            document.getElementById("total").value = FinalTotal;
+        document.getElementById("total").value = FinalTotal;
 
-            if ($("#totdiscount").val() == "") {
-                document.getElementById("totdiscount").value = "0";
-            }
-            if ($("#roundoff").val() == "") {
-                document.getElementById("roundoff").value = "0";
-            }
+        if ($("#totdiscount").val() == "") {
+            document.getElementById("totdiscount").value = "0";
+        }
+        if ($("#roundoff").val() == "") {
+            document.getElementById("roundoff").value = "0";
+        }
 
-		var finaltotal=parseFloat(FinalTotal) - parseFloat($("#roundoff").val()) - (parseFloat(FinalTotal) * (parseFloat($("#totdiscount").val()) / 100));
+        var finaltotal = parseFloat(FinalTotal) - parseFloat($("#roundoff").val()) - (parseFloat(FinalTotal) * (parseFloat($("#totdiscount").val()) / 100));
 
-            document.getElementById("finaltotal").value = finaltotal.toFixed(2);
+        document.getElementById("finaltotal").value = finaltotal.toFixed(2);
 
-       
+
     }
     function removeProduct(productId) {
         var alreadyExist = $("#selectedProduct").val();
@@ -302,24 +306,49 @@
 
     }
 
-function QtyCheck(qty){
+    function QtyCheck(qty) {
 
- 	var selectedProduct = $("#selectedProduct").val().split('|');
+        var selectedProduct = $("#selectedProduct").val().split('|');
         var str = selectedProduct.slice(0, -1);
         var aval = parseInt($('#available_' + str).val()) + 1;
-        
 
-  	if (aval > qty) {
-calculateTotal();
+
+        if (aval > qty) {
+            calculateTotal();
         }
         else {
             $.Notification.notify('warning', 'top right', 'Available Product Quantity is ' + $('#available_' + str).val());
 
         }
-}
+    }
 
-function funtionNew(){
-$('#myform')[0].reset();
-}
+    function funtionNew() {
+        $('#myform')[0].reset();
+    }
+
+//    $(".posProductSelector").scannerDetection(function(){
+//        alert("test scanned");
+//    }); // Initialize with a function that is onComplete callback
+</script>
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $(window).scannerDetection();
+        $(window).bind('scannerDetectionComplete',function(e,data){
+            var barcode = data.string;
+            if(barcode != "success"){
+//                    alert('complete '+data.string);
+                    getProduct(barcode);
+                }
+            })
+            .bind('scannerDetectionError',function(e,data){
+                console.log('detection error '+data.string);
+            })
+            .bind('scannerDetectionReceive',function(e,data){
+                console.log(data);
+            })
+
+        $(window).scannerDetection('success');
+
+    });
 </script>
 

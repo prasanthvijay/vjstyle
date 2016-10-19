@@ -76,6 +76,9 @@
         <script src="<?php echo base_url(); ?>assets/plugins/notifyjs/dist/notify.min.js"></script>
         <script src="<?php echo base_url(); ?>assets/plugins/notifications/notify-metro.js"></script>
 
+<script src="<?php echo base_url(); ?>assets/js/jquery.scannerdetection.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/jquery.scannerdetection.compatibility.js"></script>
+
 <script type="text/javascript">
     /*jQuery(document).ready(function($) {
         $('.counter').counterUp({
