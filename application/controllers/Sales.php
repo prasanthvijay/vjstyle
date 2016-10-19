@@ -289,11 +289,23 @@ class Sales extends CI_Controller
     {
 
         $dataheader['title'] = "Reports";
-        echo $dataheader['reportsType'] = $reportsType;
+        $dataheader['reportsType'] = $reportsType;
 
         $this->load->view('layout/backend_header', $dataheader);
         $this->load->view('layout/backend_menu');
         $this->load->view('sales/reports');
+        $this->load->view('layout/backend_footer');
+
+    }
+
+    public function lowstockReport()
+    {
+
+        $dataheader['title'] = "Low Stock Report";
+
+        $this->load->view('layout/backend_header', $dataheader);
+        $this->load->view('layout/backend_menu');
+        $this->load->view('sales/lowstockReport');
         $this->load->view('layout/backend_footer');
 
     }

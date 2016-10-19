@@ -39,8 +39,9 @@
                     <li class="has-submenu">
                         <a href="#"><i class="md md-folder-special"></i>Sales </a>
                         <ul class="submenu">
-                            <li><a href="<?php echo base_url(); ?>sales/adminMaster"> Toady Report</a></li>
-                            <li><a href="<?php echo base_url(); ?>sales/sellerMaster">Month Report </a></li>
+                            <li><a href="<?php echo base_url(); ?>sales/reports/today">Today Report </a></li>
+                            <li><a href="<?php echo base_url(); ?>sales/reports/report">All Report </a></li>
+                            <li><a href="<?php echo base_url(); ?>lowstockReport">Low Stock Report</a></li>
 
                         </ul>
                     </li>
@@ -71,18 +72,19 @@
                     <li class="has-submenu">
                         <a href="#"><i class="md md-pages"></i>Return </a>
                         <ul class="submenu">
-                            <li><a href="<?php echo base_url(); ?>returnpos">Return Product </a></li>
+                            <li><a href="<?php echo base_url(); ?>/sales/returnpos">Return Product </a></li>
                             <li><a href="<?php echo base_url(); ?>retailerShowRoomMaster">Return List </a></li>
                         </ul>
                     </li>
- 			<li class="has-submenu">
-                        <a href="#"><i class="md md-pages"></i>Sales Report </a>
+                    <li class="has-submenu">
+                        <a href="#"><i class="md md-folder-special"></i>Sales </a>
                         <ul class="submenu">
-                            <li><a href="<?php echo base_url(); ?>reports">Today Report </a></li>
+                            <li><a href="<?php echo base_url(); ?>sales/reports/today">Today Report </a></li>
+                            <li><a href="<?php echo base_url(); ?>sales/reports/report">All Report </a></li>
                             <li><a href="<?php echo base_url(); ?>lowstockReport">Low Stock Report</a></li>
+
                         </ul>
-                    </li>
-                </ul>
+                    </li>                </ul>
             <?php } ?>
             <!-- End navigation menu -->
         </div>

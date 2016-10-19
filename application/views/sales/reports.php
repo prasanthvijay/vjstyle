@@ -23,7 +23,7 @@
 		            </div>
 			<div class="row form-group">
 				<div class="col-sm-5"></div>
-		                
+
 		                <div class="col-sm-4">
 		                   <a href="javascript:void(0)" class="btn btn-primary waves-effect waves-light m-t-10" onclick="getSalesReport();">Submit</a>
 		                </div>
@@ -43,11 +43,11 @@
 					<th>Discount</th>
 					<th>Round Off</th>
 					<th>Final Total</th>
-										
+
 				</tr>
 			</thead>
 			<tbody>
-				
+
 			</tbody>
 		</table>
 
