@@ -198,6 +198,7 @@ class Users_model extends CI_Model
         foreach ($userQuery->result() as $row) {
             $userArray[$k]['userid'] = $row->userid;
             $userArray[$k]['name'] = $row->name;
+            $userArray[$k]['aliasName'] = $row->aliasName;
             $userArray[$k]['email'] = $row->email;
             $userArray[$k]['password'] = $row->password;
             $userArray[$k]['usertypeid'] = $row->usertypeid;
@@ -615,7 +616,7 @@ class Users_model extends CI_Model
 
     public function updateProductMaster($ProductDetailsArray)
     {
-        $sql = "UPDATE tbl_product set productname = " . $this->db->escape($ProductDetailsArray['productname']) . ", productrate = " . $this->db->escape($ProductDetailsArray['price']) . ", productsize = " . $this->db->escape($ProductDetailsArray['size']) . ", barcode = " . $this->db->escape($ProductDetailsArray['barcode']) . ", categorytypeid = " . $this->db->escape($ProductDetailsArray['categorytypeid'])  . ", subcategoryid = " . $this->db->escape($ProductDetailsArray['subcategoryid']) . ", brandid = " . $this->db->escape($ProductDetailsArray['brandname']) . " where productid = " . $this->db->escape($ProductDetailsArray['productid']) . " and adminid = " . $this->db->escape($ProductDetailsArray['adminid']);
+        $sql = "UPDATE tbl_product set productname = " . $this->db->escape($ProductDetailsArray['productname']) . ", productrate = " . $this->db->escape($ProductDetailsArray['price']) . ", productsize = " . $this->db->escape($ProductDetailsArray['size']) . ", categorytypeid = " . $this->db->escape($ProductDetailsArray['categorytypeid'])  . ", subcategoryid = " . $this->db->escape($ProductDetailsArray['subcategoryid']) . ", brandid = " . $this->db->escape($ProductDetailsArray['brandname']) . " where productid = " . $this->db->escape($ProductDetailsArray['productid']) . " and adminid = " . $this->db->escape($ProductDetailsArray['adminid']);
         $this->db->query($sql);
     }
 
@@ -928,6 +929,49 @@ class Users_model extends CI_Model
         $sql = "INSERT INTO tbl_productBatch (productid,showRoomId,supplierId,quantity,adminId,createdAt) " . "VALUES (" . $this->db->escape($ProductMappingArray['productId']) . "," . $this->db->escape($ProductMappingArray['ShowroomId']) . "," . $this->db->escape($supplierId) . "," . $this->db->escape($ProductMappingArray['mappedqyt']) . "," . $this->db->escape($ProductMappingArray['adminid']) . "," . $this->db->escape($ProductMappingArray['createdAtdate']) . ")";
         $this->db->query($sql);
 
+    }
+
+    public function getCategoryLetters($categorytypeid){
+        $categoryLetter = "";
+        $sql = "SELECT categorytype FROM `tbl_categorytype` WHERE active='active' and categorytypeid='".$categorytypeid."' ";
+        $cateQuery = $this->db->query($sql);
+        $returnValue = $cateQuery->result_array();
+        if(count($returnValue)>0){
+            $categoryLetter = substr($returnValue[0]['categorytype'], 0, 1);
+        }
+        return $categoryLetter;
+    }
+
+    public function getCountOfProductByAdmin($adminid){
+        $countOfProduct = 0;
+        $sql = "SELECT count(*) as productCount FROM `tbl_product` WHERE adminid='".$adminid."' ";
+        $cateQuery = $this->db->query($sql);
+        $returnValue = $cateQuery->result_array();
+        if(count($returnValue)>0){
+            $countOfProduct = $returnValue[0]['productCount'];
+        }
+        $countOfProduct = $countOfProduct + 1;
+
+        return $countOfProduct;
+    }
+
+    public function getNewProductBarcde($adminid, $categorytypeid){
+
+        $aliasName = "";
+
+        $userArray = self::getUsersList("2", null, null, $adminid);
+
+        if(count($userArray)>0){
+            $aliasName = $userArray[0]['aliasName'];
+        }
+        $maxOfProductId = self::getCountOfProductByAdmin($adminid);
+        $categoryLetter = self::getCategoryLetters($categorytypeid);
+
+
+        $initialBarcode = 1000;
+        $barcodeNo = $maxOfProductId + $initialBarcode;
+        $barcode = $aliasName.$categoryLetter.$barcodeNo;
+        return $barcode;
     }
 
     public function mappedProduct($productId, $showroomId, $adminid, $type)

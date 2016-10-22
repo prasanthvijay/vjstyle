@@ -120,7 +120,6 @@ class Product extends CI_Controller
             $output = array('status' => "3", 'message' => "Invalid Request");
             $productname = $this->input->get_post('productname');
             $brandname = $this->input->get_post('brandname');
-            $barcode = $this->input->get_post('barcode');
             $size = $this->input->get_post('size');
             $categorytypeid = $this->input->get_post('categorytypeid');
             $subcategoryid = $this->input->get_post('subcategoryid');
@@ -139,6 +138,7 @@ class Product extends CI_Controller
                 $this->users_model->deleteProductMaster($ProductDetailsDeleteArray); //For admin
                 $output = array('status' => "1", 'message' => "Successfully deleted");
             } else if ($actionType == "Add" || $actionType == "") {
+                $barcode = $this->users_model->getNewProductBarcde($adminid, $categorytypeid);
                 $ProductDetailsArray = array('productname' => $productname, 'price' => $price, 'size' => $size, 'barcode' => $barcode, 'categorytypeid' => $categorytypeid, 'subcategoryid'=>$subcategoryid,'brandname' => $brandname, 'adminid' => $adminid, 'createdAtdate' => $createdAtdate, 'active' => $active);
                 $productId = $this->users_model->createProductMaster($ProductDetailsArray); //For admin
                 for ($i = 0; $i < count($ShowroomId); $i++) {
