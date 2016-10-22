@@ -78,14 +78,14 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <label class="col-sm-3 control-label">Bar Code</label>
                         <div class="col-sm-6">
                             <input type="text" class="form-control" id="barcode" name="barcode" required
                                    data-parsley-length="[5,10]"
                                    placeholder="Bar code between 5 - 10 chars length"/>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Size</label>
                         <div class="col-sm-6">
