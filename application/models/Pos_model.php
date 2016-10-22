@@ -87,6 +87,16 @@ class Pos_model extends CI_Model
         $this->db->insert('tbl_customerreceipt', $data);
         $receiptId = $this->db->insert_id();
 
+        $adminId = $insertValue['adminid'];
+        $showroomId = $insertValue['showroomId'];
+        $showRoomBillQueryString = "SELECT count(*) as noOfReceipt FROM `tbl_customerreceipt` WHERE showRoomId='".$showroomId."' and adminid='".$adminId."' ";
+        $showRoomBillQuery = $this->db->query($showRoomBillQueryString);
+        $showRoomBillArray = $showRoomBillQuery->result_array();
+        $noOfReceipt = $showRoomBillArray[0]['noOfReceipt'];
+
+        $billNo = 1000 + $noOfReceipt;
+        $bilNoUpdateQuery = "UPDATE `tbl_customerreceipt` SET `billNo`='".$billNo."' WHERE id='".$receiptId."' ";
+        $this->db->query($bilNoUpdateQuery);
 
         for ($i = 0; $i < $insertValue['count']; $i++) {
             $customerreceiptproduct = array(

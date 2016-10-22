@@ -371,8 +371,13 @@ class Sales extends CI_Controller
             }
             $finalTotal = $productAmountTotal - $discount - $receiptList[$i]['roundoff'];
 
-
-            $tableRow .= "<tr><td>" . ($i + 1) . "</td><td><a href='../receipt/" . $receiptList[$i]['id'] . "' target='_blank'>" . ($receiptList[$i]['id'] + 1000) . "</a></td><td>" . date('d-m-Y', strtotime($receiptList[$i]['date'])) . "</td><td>" . $customerDetail[0]['name'] . "</td><td>" . $customerDetail[0]['mobileno'] . "</td><td>" . $productAmountTotal . "</td><td>" . $discount . "</td><td>" . $receiptList[$i]['roundoff'] . "</td><td>" . $finalTotal . "</td></tr>";
+            $customerName = "-";
+            $customerMobileNo = "-";
+            if(count($customerDetail)>0){
+                $customerName = $customerDetail[0]['name'];
+                $customerMobileNo = $customerDetail[0]['mobileno'];
+            }
+            $tableRow .= "<tr><td>" . ($i + 1) . "</td><td><a href='../receipt/" . $receiptList[$i]['id'] . "' target='_blank'>" . ($receiptList[$i]['billNo']) . "</a></td><td>" . date('d-m-Y', strtotime($receiptList[$i]['date'])) . "</td><td>" . $customerName. "</td><td>" . $customerMobileNo . "</td><td>" . $productAmountTotal . "</td><td>" . $discount . "</td><td>" . $receiptList[$i]['roundoff'] . "</td><td>" . $finalTotal . "</td></tr>";
         }
 
         echo $tableRow;

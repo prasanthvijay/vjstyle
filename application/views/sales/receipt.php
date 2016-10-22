@@ -3,14 +3,14 @@
     $cusomerReceiptArray = $receiptDetails['customerreceipt'];
     $showroomdetails = $receiptDetails['showroomdetails'];
     if(count($cusomerReceiptArray)>0){
+        $billNo = $cusomerReceiptArray[0]['billNo'];
         $showRoomName = "";
         $showRoomEmail = "";
         $showRoomMobile = "";
         $showRoomAddress = "";
         $showRoomCin = "";
         $showRoomTin = "";
-
-        $billNo = "";
+        
         if(count($showroomdetails)>0){
             $showRoomName = $showroomdetails[0]['name'];
             $showRoomEmail = $showroomdetails[0]['email'];

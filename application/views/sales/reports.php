@@ -68,7 +68,7 @@ var fromDate=today.getDate()+"-"+(today.getMonth()+1)+"-"+today.getFullYear();
 var toDate=today.getDate()+"-"+(today.getMonth()+1)+"-"+today.getFullYear();
 
 <?php } ?>
-	$.post( "../reportsajax", { fromDate:fromDate,toDate:toDate } ,function( data ) {
+	$.get( "../reportsajax", { fromDate:fromDate,toDate:toDate } ,function( data ) {
 		$("#datatable-responsive tbody").empty();
 		$("#datatable-responsive tbody").append(data);
 		$('#datatable-responsive').DataTable();
