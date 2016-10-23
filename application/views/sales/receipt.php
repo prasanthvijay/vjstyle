@@ -27,18 +27,18 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="clearfix">
-                                <h3 class="text-center"><i class="md md-equalizer text-primary"></i> Retail Invoice</h3>
+                                <h5 class="text-center"><i class="md md-equalizer "></i> Retail Invoice</h5>
                                 <div class="text-center">
-                                    <p><?php echo $showRoomName; ?><br>
+                                    <p><h5><?php echo $showRoomName; ?><br>
                                     <?php echo $showRoomAddress; //echo str_replace(",", ",<br>", $showRoomAddress); ?><br>
                                     <?php echo $showRoomMobile." , ".$showRoomEmail; ?><br>
-                                    <?php if($showRoomCin!="" && $showRoomCin!=null){
+                                    <?php /*if($showRoomCin!="" && $showRoomCin!=null){
                                         echo "CIN : ".$showRoomCin."<br>";
                                     }
                                     if($showRoomTin!="" && $showRoomTin!=null){
                                         echo "TIN : ".$showRoomTin."<br>";
-                                    }
-                                    ?>
+                                    }*/
+                                    ?></h5>
                                     </p>
 
                                 </div>
@@ -47,8 +47,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="pull-left">
-                                        <strong>Bill No. : <?php echo $billNo; ?></strong><br>
-                                        <p>Bill Date : <?php echo date_format(new DateTime($cusomerReceiptArray[0]['date']), "d-m-Y H:i:s"); ?></p>
+                                       <h6> <strong>Bill No. : <?php echo $billNo; ?></strong></h6>
+                                        <p><h6>Bill Date : <?php echo date_format(new DateTime($cusomerReceiptArray[0]['date']), "d-m-Y H:i:s"); ?><h6></p>
                                 </div>
                             </div>
                         </div>
@@ -74,12 +74,12 @@
                                         for ($i = 0; $i < count($receiptDetails['productDetails']); $i++) { ?>
                                             <tr>
                                                 <td><?php echo $i + 1; ?></td>
-                                                <td><?php echo $receiptDetails['product'][$i]['productname'] . "(" . $receiptDetails['product'][$i]['barcode'] . ")"; ?></td>
-                                                <td><?php echo $price = $receiptDetails['productDetails'][$i]['price']; ?></td>
-                                                <td><?php echo $qty = $receiptDetails['productDetails'][$i]['qty']; ?></td>
-                                                <td><?php echo $discount = $receiptDetails['productDetails'][$i]['discount']; ?></td>
-                                                <td><?php echo $tdtotal = ($price - ($price * $discount / 100)) * $qty;
-                                                    $total += ($price - ($price * $discount / 100)) * $qty; ?></td>
+                                                <td><h6><?php echo $receiptDetails['product'][$i]['productname'] . "(" . $receiptDetails['product'][$i]['barcode'] . ")"; ?></h6></td>
+                                                <td><h6><?php echo $price = $receiptDetails['productDetails'][$i]['price']; ?></h6></td>
+                                                <td><h6><?php echo $qty = $receiptDetails['productDetails'][$i]['qty']; ?></h6></td>
+                                                <td><h6><?php echo $discount = $receiptDetails['productDetails'][$i]['discount']; ?></h6></td>
+                                                <td><h6><?php echo $tdtotal = ($price - ($price * $discount / 100)) * $qty;
+                                                    $total += ($price - ($price * $discount / 100)) * $qty; ?></h6></td>
                                             </tr>
                                         <?php } ?>
 
@@ -110,8 +110,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6 col-sm-6 col-xs-6">
-                                <div class="clearfix m-t-40">
-                                </div>
+                               
                             </div>
                             <div class="col-md-3 col-sm-6 col-md-offset-3 col-xs-6">
                                 <p class="text-right"><b>Sub-total:</b> <?php echo $total = $total - $reducetotal; ?>
@@ -130,8 +129,8 @@
                             </div>
                         </div>
                         <hr>
-                        <p class="text-center">Important: kindly keep a Photo/Photo copy of the Bill for Future Use</p>
-                        <p class="text-center">** Thank You for Shooping at showroom**</p>
+                        <h6 class="text-center">Important: kindly keep a Photo/Photo copy of the Bill for Future Use</h6>
+                        <h6 class="text-center">** Thank You for Shooping at showroom**</h6>
                         <div class="hidden-print">
                             <div class="pull-right">
                                 <a href="javascript:window.print()" class="btn btn-inverse waves-effect waves-light"><i

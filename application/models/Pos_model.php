@@ -100,7 +100,7 @@ class Pos_model extends CI_Model
 
         for ($i = 0; $i < $insertValue['count']; $i++) {
             $customerreceiptproduct = array(
-                'receiptId' => $receiptId, 'showroomId' => $insertValue['showroomId'][$i],
+                'receiptId' => $receiptId, 'showroomId' => $insertValue['showroomId'],
                 'productId' => $insertValue['product'][$i],
                 'price' => $insertValue['price'][$i],
                 'qty' => $insertValue['qty'][$i],

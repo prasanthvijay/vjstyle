@@ -174,6 +174,7 @@
             <?php if($sessionUserTypeId == 1 || $sessionUserTypeId==2) { ?>
                 <th>Purchase Rate</th>
             <?php } ?>
+ 	    <th>BarCode Text</th>
             <th>Edit</th>
             <th>Delete</th>
         </tr>
@@ -213,6 +214,7 @@
                     <td><?php echo $ProductList[$i]['productrate']; ?></td>
                 <?php } ?>
 
+		<td><?php echo $ProductList[$i]['brandname']."&nbsp;".$ProductList[$i]['productname']."&nbsp;".$ProductList[$i]['size']; ?></td>
                 <td>
                     <button class="btn btn-icon waves-effect waves-light btn-primary m-b-5" type="button" onclick="getAddOrEditModalContent('actionType=Edit&actionId=<?php echo $productId; ?>', '<?php echo $loadAddOrEditModalUrl; ?>')">
                         <i class="fa fa-edit"></i>
