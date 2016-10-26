@@ -170,8 +170,10 @@
                                 </div>
                                 <div class="row form-group">
                                     <div class="col-sm-3">Customer</div>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="Customer" id="Customer">
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" name="Customer" id="Customer"></div>
+<div class="col-sm-1">
+<input type="checkbox" class="form-control" name="checkbox1" id="checkbox1">
                                     </div>
                                 </div>
                                 <div class="row form-group">
@@ -337,5 +339,21 @@
         $(window).scannerDetection('success');
 
     });
+
+$(document).ready(function() {
+  
+$('#checkbox1').change(function() {
+   if($(this).is(":checked")) {
+       $('#Customer').val('defaultCustomer');
+        $('#mobile').val('0000000000');
+   }
+	else{
+
+    $('#Customer').val('');
+        $('#mobile').val('');
+	}
+});
+   
+});
 </script>
 

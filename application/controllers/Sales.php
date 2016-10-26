@@ -85,10 +85,10 @@ class Sales extends CI_Controller
             $insertValue['adminid'] = $adminid;
             $insertValue['showroomId'] = $showroomId;
 //            echo "<pre>";
-//            print_r($insertValue);
+//            print_r($insertReceiptValue);
 //            echo "</pre>";
             $insertSellDetails = $this->pos_model->insertSellDetails($insertValue);
-            $output = array('status' => "1", 'message' => " <b>Please take print...<a href='".base_url()."sales/receipt/".$insertSellDetails."'>Receipt No : ".$insertSellDetails."</a></b>");
+            $output = array('status' => "1", 'message' => " <b>Please take print...<a href='".base_url()."sales/receipt/".$insertSellDetails."' target='_blank' >Receipt No : ".$insertSellDetails."</a></b>");
             $this->session->set_flashdata('output', $output);
         }
 
@@ -197,10 +197,14 @@ class Sales extends CI_Controller
 
     public function returnpos()
     {
+
+$usertypeid = $this->session->userdata('usertypeid');
+        $showroomId = $this->session->userdata('retailerShowRoomId');
+        $adminid = $this->session->userdata('adminid');
         $dataheader['title'] = "Return POS";
 
         $tablename = "tbl_customerreceipt";
-        $fieldname = array('id');
+        $fieldname = array('id','billNo');
         $condition = "1";
 
         $receiptList = $this->pos_model->selectQueryList($tablename, $fieldname, $condition);
@@ -241,7 +245,8 @@ class Sales extends CI_Controller
             $insertValue['FinalTotal'] = $insertValue['TotalProductCost'] - $insertValue['totdiscount'] - $insertValue['roundoff'];
             $insertValue['Customer'] = $this->input->post('Customer');
             $insertValue['mobile'] = $this->input->post('mobile');
-
+		$insertValue['adminid'] = $adminid;
+            $insertValue['showroomId'] = $showroomId;
 
             $insertSellDetails = $this->pos_model->insertSellDetails($insertValue);
 
@@ -262,11 +267,13 @@ class Sales extends CI_Controller
                 $insertReceiptValue['reduceCount'][$i] = $this->input->post('existBillQuantity_' . $i) - $this->input->post('billqty_' . $i);
             }
 
-
             $insertSellDetails = $this->pos_model->insertReturnSellDetails($insertReceiptValue);
-
+		$output = array('status' => "1", 'message' => " <b>Please take print...<a href='".base_url()."sales/receipt/".$insertReceiptValue['newReceipt']."' target='_blank' >Receipt No : ".$insertReceiptValue['newReceipt']."</a></b>");
+            $this->session->set_flashdata('output', $output);
         }
-
+ 	$output = $this->session->flashdata('output');
+ 	$succesMsg = $this->users_model->getSuccessMsg($output);
+        $dataheader['succesMsg'] = $succesMsg;
         $this->load->view('layout/backend_header', $dataheader);
         $this->load->view('layout/backend_menu');
         $this->load->view('sales/returnpos');
