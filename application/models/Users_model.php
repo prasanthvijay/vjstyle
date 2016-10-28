@@ -247,6 +247,13 @@ class Users_model extends CI_Model
         return $BrandArray;
     }
 
+    public function getMyAdminProductList($adminid)
+    {
+        $sql = "SELECT t.productid, t.productname, t.barcode from tbl_product t WHERE t.active = 'active' and t.adminid=$adminid";
+        $productQuery = $this->db->query($sql);
+        $productDetailsArray = $productQuery->result_array();
+        return $productDetailsArray;
+    }
     public function getProductList($adminid, $productId, $showroomId, $categorytypeid,$subcategoryid, $brandid, $sizeid, $barcode , $noOfPage)
     {
 
@@ -292,8 +299,11 @@ class Users_model extends CI_Model
         }
 
         $sql = $sql . " group by t.productId";
-        $limitString = $noOfPage * 100;
-        $sql = $sql . " order by productid desc limit ".$limitString.", 100";
+
+        if($noOfPage!="All"){
+            $limitString = $noOfPage * 100;
+            $sql = $sql . " order by productid desc limit ".$limitString.", 100";
+        }
 
         $userQuery = $this->db->query($sql);
         $k = 0;

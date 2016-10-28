@@ -228,4 +228,13 @@
         <?php } ?>
         </tbody>
     </table>
+    <div class="form-control">
+        <div class="row">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4 text-center">
+
+            </div>
+            <div class="col-lg-4"></div>
+        </div>
+    </div>
 <?php } ?>

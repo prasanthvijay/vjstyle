@@ -40,98 +40,96 @@
 <!-- Datatables-->
 
 <script src="<?php echo base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.js"></script>
-        <script src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.buttons.min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/plugins/datatables/buttons.bootstrap.min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/plugins/datatables/jszip.min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/plugins/datatables/pdfmake.min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/plugins/datatables/vfs_fonts.js"></script>
-        <script src="<?php echo base_url(); ?>assets/plugins/datatables/buttons.html5.min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/plugins/datatables/buttons.print.min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.fixedHeader.min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.keyTable.min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.responsive.min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/plugins/datatables/responsive.bootstrap.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.js"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.buttons.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/datatables/buttons.bootstrap.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/datatables/jszip.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/datatables/pdfmake.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/datatables/vfs_fonts.js"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/datatables/buttons.html5.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/datatables/buttons.print.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.fixedHeader.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.keyTable.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.responsive.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/datatables/responsive.bootstrap.min.js"></script>
 
 
 <!-- Custom main Js -->
 <script src="<?php echo base_url(); ?>assets/js/jquery.core.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.app.js"></script>
- <script src="<?php echo base_url(); ?>assets/pages/datatables.init.js"></script>
+<script src="<?php echo base_url(); ?>assets/pages/datatables.init.js"></script>
 <script type="text/javascript" src=" <?php echo base_url(); ?>assets/plugins/parsleyjs/dist/parsley.min.js"></script>
 
- <!-- Notification js -->
-        <script src="<?php echo base_url(); ?>assets/plugins/notifyjs/dist/notify.min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/plugins/notifications/notify-metro.js"></script>
+<!-- Notification js -->
+<script src="<?php echo base_url(); ?>assets/plugins/notifyjs/dist/notify.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/notifications/notify-metro.js"></script>
 
 <!----Select2----------->
 <script src="<?php echo base_url(); ?>assets/plugins/select2/select2.min.js" type="text/javascript"></script>
-
-
-
-
+<script src="<?php echo base_url(); ?>assets/plugins/multiselect/js/jquery.multi-select.js" type="text/javascript"></script>
 
 
 <!-- Notification js -->
-        <script src="<?php echo base_url(); ?>assets/plugins/notifyjs/dist/notify.min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/plugins/notifications/notify-metro.js"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/notifyjs/dist/notify.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/notifications/notify-metro.js"></script>
 
 <script src="<?php echo base_url(); ?>assets/js/jquery.scannerdetection.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.scannerdetection.compatibility.js"></script>
 
 <script type="text/javascript">
     /*jQuery(document).ready(function($) {
-        $('.counter').counterUp({
-            delay: 100,
-            time: 1200
-        });
-        $('.circliful-chart').circliful();
+     $('.counter').counterUp({
+     delay: 100,
+     time: 1200
+     });
+     $('.circliful-chart').circliful();
+     });
+
+     /* BEGIN SVG WEATHER ICON */
+
+    $(document).ready(function () {
+
+        $('form').parsley();
+        $(".select2").select2();
     });
-
-    /* BEGIN SVG WEATHER ICON */
-
-	$(document).ready(function() {
-
-						$('form').parsley();
-						$(".select2").select2();
-			});
-    if (typeof Skycons !== 'undefined'){
+    if (typeof Skycons !== 'undefined') {
         var icons = new Skycons(
             {"color": "#00b19d"},
             {"resizeClear": true}
             ),
-            list  = [
+            list = [
                 "clear-day", "clear-night", "partly-cloudy-day",
                 "partly-cloudy-night", "cloudy", "rain", "sleet", "snow", "wind",
                 "fog"
             ],
             i;
 
-        for(i = list.length; i--; )
+        for (i = list.length; i--;)
             icons.set(list[i], list[i]);
         icons.play();
-    };
-// Date Picker
+    }
+    ;
+    // Date Picker
 
-                jQuery('.datepicker-autoclose').datepicker({
-                	autoclose: true,
-                	todayHighlight: true
-                });
+    jQuery('.datepicker-autoclose').datepicker({
+        autoclose: true,
+        todayHighlight: true
+    });
 
-		$(".select2").select2();
+    $(".select2").select2();
 
 
-$(document).ready(function() {
-                $('#datatable').dataTable();
+    $(document).ready(function () {
+        $('#datatable').dataTable();
 
-                $('#datatable-responsive').DataTable();
+        $('#datatable-responsive').DataTable();
 
-            } );
+    });
 
-	jQuery('#date-range').datepicker({
-			autoclose: true,
-                    toggleActive: true
-                });
+    jQuery('#date-range').datepicker({
+        autoclose: true,
+        toggleActive: true
+    });
 
 </script>
 <script>

@@ -100,7 +100,12 @@
                 <label class="control-label">Barcode</label>
             </div>
             <div class="col-md-6">
-                <input type="text" name="barcode" id="barcode" value="<?php echo $barcode; ?>" class="form-control">
+<!--                <input type="text" name="barcode" id="barcode" value="--><?php //echo $barcode; ?><!--" class="form-control">-->
+                <select multiple="multiple" class="multi-select" id="barcode" name="barcode" data-plugin="multiselect" data-placeholder="Choose ...">
+                    <?php for ($i = 0; $i < count($ProductArray); $i++) { ?>
+                        <option value="<?php echo $ProductArray[$i]['barcode']; ?>"><?php echo $ProductArray[$i]['barcode']; ?></option>
+                    <?php } ?>
+                </select>
             </div>
         </div>
     </div>
@@ -111,6 +116,18 @@
             <div class="col-md-6">
                 <input type="button" name="productSearchButton" id="productSearchButton" value="Product Search" class="btn btn-info waves-effect waves-light m-t-10" onclick="searchProductList()">
                 <input type="button" name="loadAllProduct" id="loadAllProduct" value="Load All Product" class="btn btn-pink waves-effect waves-light m-t-10" onclick="loadAllProducts()">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-6">
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-icon waves-effect waves-light btn-rounded m-b-5" type="button" onclick="generateProductList()">
+                    <i class="fa fa-download"></i>&nbsp;Generate Excel
+                </button>
             </div>
         </div>
     </div>

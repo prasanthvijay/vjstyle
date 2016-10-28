@@ -73,6 +73,7 @@
 </div>
 
 <input type="hidden" id="count" name="count" value="1">
+<input type="hidden" id="generateBarcdeExcelUrl" name="generateBarcdeExcelUrl" value="generateBarcdeExcel">
 <input type="hidden" name="ajaxPostUrl" id="ajaxPostUrl" value="<?php echo base_url().'Product/productSearch'?>">
 <script>
     var postData = "type=ProductList";
@@ -96,6 +97,7 @@
                     $("#brandid").select2();
                     $("#sizeid").select2();
                     $("#showroomId").select2();
+                    $("#barcode").select2();
                 }
 
             });
@@ -107,6 +109,17 @@
     function searchProductList() {
         var newSearchPostData = $("#productSearchForm").serialize() + "&"+postData ;
         loadMastersList(newSearchPostData);
+    }
+
+    function generateProductList() {
+        var postData = "type=generateBarCode";
+        var newSearchPostData = $("#productSearchForm").serialize() + "&"+postData ;
+        var generateBarcdeExcelUrl = $("#generateBarcdeExcelUrl").val();
+
+        var formname = document.getElementById('productSearchForm');
+        formname.method = "post";
+        formname.action = generateBarcdeExcelUrl;
+        formname.submit();
     }
     
     function loadAllProducts() {

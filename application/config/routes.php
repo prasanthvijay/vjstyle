@@ -89,6 +89,7 @@ $route['MapProduct'] = 'Product/MapProduct';
 $route['assignMapProduct'] = 'Product/assignMapProduct';
 $route['getContent'] = 'Product/getContent';
 $route['migrationProduct'] = 'Product/migrationProduct';
+$route['generateBarcdeExcel'] = 'Product/generateBarcdeExcel';
 //Sales
 $route['pos'] = 'sales/pos';
 $route['posajax'] = 'sales/posajax';
