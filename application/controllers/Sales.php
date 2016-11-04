@@ -198,7 +198,7 @@ class Sales extends CI_Controller
     public function returnpos()
     {
 
-$usertypeid = $this->session->userdata('usertypeid');
+	$usertypeid = $this->session->userdata('usertypeid');
         $showroomId = $this->session->userdata('retailerShowRoomId');
         $adminid = $this->session->userdata('adminid');
         $dataheader['title'] = "Return POS";
@@ -294,9 +294,19 @@ $usertypeid = $this->session->userdata('usertypeid');
     public function reports($reportsType)
     {
 
+        $showroomId = $this->session->userdata('retailerShowRoomId');
+	 $usertypeid = $this->session->userdata('usertypeid');
+		$tablename = "tbl_user";
+		$fieldname = array('userid,name,');
+		$condition = 't.usertypeid="3" and t.adminid="'.$usertypeid.'"';
+		$showRoomList = $this->pos_model->selectQueryList($tablename, $fieldname, $condition);
+
+
         $dataheader['title'] = "Reports";
         $dataheader['reportsType'] = $reportsType;
-
+        $dataheader['showRoomList'] = $showRoomList;
+        $dataheader['usertypeid'] = $usertypeid;
+	
         $this->load->view('layout/backend_header', $dataheader);
         $this->load->view('layout/backend_menu');
         $this->load->view('sales/reports');
