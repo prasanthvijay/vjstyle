@@ -13,9 +13,9 @@
 				<div class="col-sm-3"></div>
 				<label class="control-label col-sm-1">Showroom</label>
 		                <div class="col-sm-3">
-		                   <select class="select2 form-control" id="subcategoryid" name="subcategoryid"
+		                   <select class="select2 form-control" id="showroomId" name="showroomId"
                                 required
-                                data-parsley-name="subCategory">
+                                data-parsley-name="subCategory" <?php if($reportsType=="today") { ?>onchange="getSalesReport(this.value)"<?php } ?> >
                             <option value="">Select Showroom</option>
                             <?php for ($i = 0; $i < count($showRoomList); $i++) { ?>
                                 <option
@@ -71,15 +71,22 @@
 		</table>
 
 <script>
+
 <?php if($reportsType=="today") { ?>
-getSalesReport();
+getSalesReport(<?php echo $showroomId; ?>);
 <?php } ?>
 
-function getSalesReport()
+function getSalesReport(showroomid)
 {
 <?php if($reportsType=="report") { ?>
-var fromDate=$("#fromDate").val();
-var toDate=$("#toDate").val();
+	var showroomid="";
+	<?php  if($usertypeid!="2") {  ?>
+	showroomid=<?php echo $showroomId; ?>;
+	<?php } else { ?>
+	 showroomid=$("#showroomId").val();
+	<?php }?>
+	var fromDate=$("#fromDate").val();
+	var toDate=$("#toDate").val();
 
 <?php } else { ?>
 var today = new Date();
@@ -87,7 +94,7 @@ var fromDate=today.getDate()+"-"+(today.getMonth()+1)+"-"+today.getFullYear();
 var toDate=today.getDate()+"-"+(today.getMonth()+1)+"-"+today.getFullYear();
 
 <?php } ?>
-	$.get( "../reportsajax", { fromDate:fromDate,toDate:toDate } ,function( data ) {
+	$.get( "../reportsajax", { fromDate:fromDate,toDate:toDate,showroomid:showroomid } ,function( data ) {
 		$("#datatable-responsive tbody").empty();
 		$("#datatable-responsive tbody").append(data);
 		$('#datatable-responsive').DataTable();

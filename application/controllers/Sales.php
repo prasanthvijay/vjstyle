@@ -294,7 +294,7 @@ class Sales extends CI_Controller
     public function reports($reportsType)
     {
 
-        $showroomId = $this->session->userdata('retailerShowRoomId');
+       $showroomId = $this->session->userdata('retailerShowRoomId');
 	 $usertypeid = $this->session->userdata('usertypeid');
 		$tablename = "tbl_user";
 		$fieldname = array('userid,name,');
@@ -304,6 +304,7 @@ class Sales extends CI_Controller
 
         $dataheader['title'] = "Reports";
         $dataheader['reportsType'] = $reportsType;
+        $dataheader['showroomId'] = $showroomId;
         $dataheader['showRoomList'] = $showRoomList;
         $dataheader['usertypeid'] = $usertypeid;
 	
@@ -331,20 +332,21 @@ class Sales extends CI_Controller
 
 
         $fromDate = $this->input->get_post("fromDate");
+        $showroomid = $this->input->get_post("showroomid");
         $toDate = $this->input->get_post("toDate");
         $stop_date = date('Y-m-d H:i:s', strtotime($toDate . ' +1 day'));
 
 
         $tablename = "tbl_customerreceipt";
         $fieldname = array('*');
-        $condition = 't.date BETWEEN "' . date('Y-m-d', strtotime($fromDate)) . '" and "' . date('Y-m-d', strtotime($stop_date)) . '"';
+        $condition = 't.date BETWEEN "' . date('Y-m-d', strtotime($fromDate)) . '" and "' . date('Y-m-d', strtotime($stop_date)) . '" and t.showRoomId ="'.$showroomid.'" ';
         $receiptList = $this->pos_model->selectQueryList($tablename, $fieldname, $condition);
         $tableRow = "";
 
         for ($i = 0; $i < count($receiptList); $i++) {
             $tablename = "tbl_customerreceiptproduct";
             $fieldname = array('*');
-            $condition = 't.receiptId="' . $receiptList[$i]['id'] . '"';
+            $condition = 't.receiptId="' . $receiptList[$i]['id'] . '" and t.showroomId ="'.$showroomid.'"';
             $receiptProductList = $this->pos_model->selectQueryList($tablename, $fieldname, $condition);
             $productAmountTotal = 0;
 
