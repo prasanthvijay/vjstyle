@@ -327,7 +327,7 @@ class Sales extends CI_Controller
 
  	$dataheader['showRoomList'] = $showRoomList;
         $dataheader['title'] = "Low Stock Report";
-
+        $dataheader['usertypeid'] = $usertypeid;
         $this->load->view('layout/backend_header', $dataheader);
         $this->load->view('layout/backend_menu');
         $this->load->view('sales/lowstockReport');
@@ -339,11 +339,7 @@ class Sales extends CI_Controller
 
 		$showroomId = $this->session->userdata('retailerShowRoomId');
 	 	$usertypeid = $this->session->userdata('usertypeid');
-		$tablename = "tbl_user";
-		$fieldname = array('userid,name,');
-		$condition = 't.usertypeid="3" and t.adminid="'.$usertypeid.'"';
-		$showRoomList = $this->pos_model->selectQueryList($tablename, $fieldname, $condition);
-
+		
  	
         $this->load->view('sales/getReportInLowStock');
        

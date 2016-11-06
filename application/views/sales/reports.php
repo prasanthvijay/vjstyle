@@ -9,7 +9,7 @@
                 </div>
 		<form name="getReport" id="getReport" method="post" action="">
 <?php if($usertypeid=="2") { ?>
-<div class="row form-group">
+				<div class="row form-group">
 				<div class="col-sm-3"></div>
 				<label class="control-label col-sm-1">Showroom</label>
 		                <div class="col-sm-3">
