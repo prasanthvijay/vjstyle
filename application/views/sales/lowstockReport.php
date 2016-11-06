@@ -48,17 +48,29 @@ echo "echo lowstockReport";
             </div>
         </div>
         <!-- End row -->
-        <div id="panel-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true" style="display: none;">
-            <div class="modal-dialog">
-                <div class="modal-content p-0 b-0" id="modalContentArea">
-
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-
+        
         <!-- End Footer -->
         <?php include_once "innerFooter.php"; ?>
     </div> <!-- end container -->
 </div>
+
+<script>
+
+var postUrl = "<?php echo base_url(); ?>sales/getReportInLowStock";
+	var postData = "usertypeid=2";
+	var displayDiv = "usersListDiv";
+	loadUsersListDetails(postUrl, postData, displayDiv);
+	var postDataDelete = "userid="+userid+"&adminid="+adminid;
+			$.ajax({
+				url: deleteUrl,
+				type: "POST",
+				data: postDataDelete,
+				success: function (responseFromSite) {
+					$.Notification.notify('success','top right', 'Delete Admin', 'Admin was successfully Deleted ');
+					loadUsersListDetails(postUrl, postData, displayDiv);
+				}
+			});
+		
+	
+</script>
 

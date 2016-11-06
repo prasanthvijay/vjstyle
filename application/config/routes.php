@@ -99,6 +99,7 @@ $route['returnposajax'] = 'sales/returnposajax';
 $route['reports'] = 'sales/reports/$1';
 $route['reportsajax']='sales/reportsajax';
 $route['lowstockReport']='sales/lowstockReport';
+$route['getReportInLowStock']='sales/getReportInLowStock';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

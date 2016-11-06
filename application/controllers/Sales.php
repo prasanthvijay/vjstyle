@@ -318,6 +318,14 @@ class Sales extends CI_Controller
     public function lowstockReport()
     {
 
+		$showroomId = $this->session->userdata('retailerShowRoomId');
+	 	$usertypeid = $this->session->userdata('usertypeid');
+		$tablename = "tbl_user";
+		$fieldname = array('userid,name,');
+		$condition = 't.usertypeid="3" and t.adminid="'.$usertypeid.'"';
+		$showRoomList = $this->pos_model->selectQueryList($tablename, $fieldname, $condition);
+
+ 	$dataheader['showRoomList'] = $showRoomList;
         $dataheader['title'] = "Low Stock Report";
 
         $this->load->view('layout/backend_header', $dataheader);
@@ -326,7 +334,21 @@ class Sales extends CI_Controller
         $this->load->view('layout/backend_footer');
 
     }
+ public function getReportInLowStock()
+    {
 
+		$showroomId = $this->session->userdata('retailerShowRoomId');
+	 	$usertypeid = $this->session->userdata('usertypeid');
+		$tablename = "tbl_user";
+		$fieldname = array('userid,name,');
+		$condition = 't.usertypeid="3" and t.adminid="'.$usertypeid.'"';
+		$showRoomList = $this->pos_model->selectQueryList($tablename, $fieldname, $condition);
+
+ 	
+        $this->load->view('sales/getReportInLowStock');
+       
+
+    }
     public function reportsajax()
     {
 
