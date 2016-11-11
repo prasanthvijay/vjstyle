@@ -337,13 +337,12 @@ class Sales extends CI_Controller
  public function getReportInLowStock()
     {
 
-		$showroomId = $this->session->userdata('retailerShowRoomId');
 	 	$usertypeid = $this->session->userdata('usertypeid');
-		
- 	
-        $this->load->view('sales/getReportInLowStock');
-       
-
+            	$retailerShowRoomId = $this->input->get_post("showroomId");
+		$lowStockproductArray = $this->pos_model->getlowStockProductList($retailerShowRoomId);
+		//print_r($lowStockproductArray);
+		$dataheader['lowStockproductArray']= $lowStockproductArray;
+        $this->load->view('sales/getReportInLowStock',$dataheader);
     }
     public function reportsajax()
     {

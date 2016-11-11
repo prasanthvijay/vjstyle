@@ -258,16 +258,7 @@ class Users_model extends CI_Model
     {
 
         $ProductList = array();
-        /*$sql = "SELECT * FROM `tbl_product` t WHERE t.active = 'active' ";
-        if ($adminid != "" && $adminid != null) {
-            $sql .= " and adminid = '" . $adminid . "' ";
-        }
-
-        if ($productId != "0" && $productId != "" && $productId != null) {
-            $sql .= " and productid = '" . $productId . "' ";
-        }
-
-        $sql = $sql . " order by productid desc";*/
+        
         $sql = "SELECT t.productid, t.productname, t.productrate, t.barcode, t.productsize, t.categorytypeid,t.subcategoryid, t.active, t.adminid, t.brandid, a.showroomId, tb.brandname, ts.size, tc.categorytype, a.price as price, sum(pb.quantity) as quantity FROM tbl_product t Left JOIN tbl_productMapping a on t.productid = a.productid Left JOIN tbl_productBatch pb on a.productId = pb.productid AND a.showroomId=pb.showRoomId LEFT JOIN tbl_brand tb on tb.brandid=t.brandid LEFT JOIN tbl_sizemaster ts on ts.sizeid=t.productsize LEFT JOIN tbl_categorytype tc on tc.categorytypeid = t.categorytypeid WHERE  t.active = 'active' ";
 
         if ($showroomId != "0" && $showroomId != "" && $showroomId != null) {
@@ -374,35 +365,7 @@ class Users_model extends CI_Model
         $userType = "3";
         $sql = "SELECT  u.name, u.userid, t.productid, t.productname,t.productrate, t.barcode,t.active, t.adminid, a.price as price , sum(pb.quantity) as quantity, b.qty, tb.brandname, ts.size, tc.categorytype FROM `tbl_user` u LEFT JOIN tbl_product t on t.adminid=u.adminid and t.productid =".$this->db->escape($productId)." LEFT Join  tbl_productMapping a on a.showroomId=u.userid and a.productId=t.productid  LEFT Join  tbl_productBatch pb on a.showroomId=pb.showRoomId and pb.productid=t.productid LEFT JOIN tbl_customerreceiptproduct b on t.productId = b.productid and u.userid=b.showroomId LEFT JOIN tbl_brand tb on tb.brandid=t.brandid LEFT JOIN tbl_sizemaster ts on ts.sizeid=t.productsize LEFT JOIN tbl_categorytype tc on tc.categorytypeid = t.categorytypeid WHERE u.active = 'active' and u.adminid=".$this->db->escape($adminid)." and u.usertypeid=" .$this->db->escape($userType)." group by u.userid";
         $userQuery = $this->db->query($sql);
-//        $RetailerProductList = $userQuery->result_array();
-//        print_r($RetailerProductList);
 
-//        $sql = "SELECT t.productid, t.productname, t.productrate, t.barcode, t.productsize, t.categorytypeid, t.active, t.adminid, t.brandid, a.showroomId, tb.brandname, ts.size, tc.categorytype, sum(a.price) as price, a.quantity, sum(b.qty) as qty  FROM tbl_product t Left JOIN tbl_productMapping a on t.productid = a.productid LEFT JOIN tbl_customerreceiptproduct b on t.productId = b.productid LEFT JOIN tbl_brand tb on tb.brandid=t.brandid LEFT JOIN tbl_sizemaster ts on ts.sizeid=t.productsize LEFT JOIN tbl_categorytype tc on tc.categorytypeid = t.categorytypeid WHERE  t.active = 'active' ";
-//        if ($productId != "0" && $productId != "" && $productId != null) {
-//            $sql .= " and t.productid = '" . $productId . "' ";
-//        }
-//
-//        if ($showroomId != "0" && $showroomId != "" && $showroomId != null) {
-//            $sql .= " and a.showroomId = '" . $showroomId . "' ";
-//        }
-//
-//        //Search Product
-//        if ($categorytypeid != "0" && $categorytypeid != "" && $categorytypeid != null) {
-//            $sql .= " and t.categorytypeid = '" . $categorytypeid . "' ";
-//        }
-//        if ($brandid != "0" && $brandid != "" && $brandid != null) {
-//            $sql .= " and t.brandid = '" . $brandid . "' ";
-//        }
-//        if ($sizeid != "0" && $sizeid != "" && $sizeid != null) {
-//            $sql .= " and t.productsize = '" . $sizeid . "' ";
-//        }
-//        if ($barcode != "0" && $barcode != "" && $barcode != null) {
-//            $sql .= " and t.barcode like '%" . $barcode . "%' ";
-//        }
-//
-//        $sql = $sql . " group by t.productId";
-//        $sql = $sql . " order by productid desc";
-//        $userQuery = $this->db->query($sql);
         $k = 0;
         foreach ($userQuery->result() as $row) {
             $ProductList[$k]['name'] = $row->name;

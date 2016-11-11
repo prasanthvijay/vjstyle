@@ -172,8 +172,19 @@ class Pos_model extends CI_Model
             }
         }
     }
+ public function getlowStockProductList($retailerShowRoomId)
+    {
 
 
+    
+        $sql = "SELECT t.productid, t.productname, t.productrate, t.barcode, t.productsize, t.categorytypeid,t.subcategoryid, t.active, t.adminid, t.brandid, a.showroomId, tb.brandname, ts.size, tc.categorytype, a.price as price, pb.quantity FROM tbl_product t Left JOIN tbl_productMapping a on t.productid = a.productid Left JOIN tbl_productBatch pb on a.productId = pb.productid AND a.showroomId=pb.showRoomId LEFT JOIN tbl_brand tb on tb.brandid=t.brandid LEFT JOIN tbl_sizemaster ts on ts.sizeid=t.productsize LEFT JOIN tbl_categorytype tc on tc.categorytypeid = t.categorytypeid WHERE  t.active = 'active' and a.showroomId = '" . $retailerShowRoomId . "' LIMIT 0,100";
+
+		//echo "<br><br><br>";
+        $executeQuery = $this->db->query($sql);
+        $returnValue = $executeQuery->result_array();
+//print_r($returnValue);
+        return $returnValue;
+    }
 }
 
 ?>
