@@ -10,14 +10,15 @@
 			</thead>
 			<tbody>
 				 <?php for ($i = 0; $i < count($lowStockproductArray); $i++) { ?>
-				<tr>
+				<?php  if($lowStockproductArray[$i]['quantity']<5){ ?><tr>
+					
 					<td><?php echo $i+1; ?></td>
 					<td><?php echo $lowStockproductArray[$i]['productname']; ?></td>
 					<td><?php echo $lowStockproductArray[$i]['price']; ?></td>
 					<td><?php echo $lowStockproductArray[$i]['barcode']; ?></td>
 					<td><?php echo $lowStockproductArray[$i]['quantity']; ?></td>
-				
-				</tr>
+					
+				</tr><?php } ?>
 				<?php } ?>
 			</tbody>
 		</table>

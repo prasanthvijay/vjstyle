@@ -205,7 +205,7 @@ class Sales extends CI_Controller
 
         $tablename = "tbl_customerreceipt";
         $fieldname = array('id','billNo');
-        $condition = "1";
+        $condition = "t.showRoomId=$showroomId";
 
         $receiptList = $this->pos_model->selectQueryList($tablename, $fieldname, $condition);
         $dataheader['receiptList'] = $receiptList;
@@ -328,6 +328,7 @@ class Sales extends CI_Controller
  	$dataheader['showRoomList'] = $showRoomList;
         $dataheader['title'] = "Low Stock Report";
         $dataheader['usertypeid'] = $usertypeid;
+        $dataheader['showroomId'] = $showroomId;
         $this->load->view('layout/backend_header', $dataheader);
         $this->load->view('layout/backend_menu');
         $this->load->view('sales/lowstockReport');
@@ -419,4 +420,71 @@ class Sales extends CI_Controller
         echo $tableRow;
 
     }
+public function returnList()
+    {
+	$showroomId = $this->session->userdata('retailerShowRoomId');
+	$usertypeid = $this->session->userdata('usertypeid');
+        $dataheader['title'] = "Return Reports";
+        $dataheader['usertypeid'] = $usertypeid;
+  	$this->load->view('layout/backend_header', $dataheader);
+        $this->load->view('layout/backend_menu');
+        $this->load->view('sales/returnList');
+        $this->load->view('layout/backend_footer');
+
+    }
+	  public function generateLowstockReport(){
+
+        $categorytypeid = $this->input->get_post('categorytypeid');
+        $subcategoryid = $this->input->get_post('subcategoryid');
+        $brandid = $this->input->get_post('brandid');
+        $sizeid = $this->input->get_post('sizeid');
+        $barcode = $this->input->get_post('barcode');
+        $showroomId = $this->input->get_post('showroomId');
+        $noOfPage = "All";
+        $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
+        $adminid = "0";
+        if ($sessionUserTypeIdIsset == 1) {
+            $sessionUserTypeId = $this->session->userdata('usertypeid');
+            if ($sessionUserTypeId == 2) {
+                $adminid = $this->session->userdata('userid');
+            } else if ($sessionUserTypeId == 1) {
+                $adminid = $this->input->get_post('adminid');
+            } else if ($sessionUserTypeId == 4) {
+                $adminid = $this->session->userdata('adminid');
+            }
+        }
+        $ProductList = $this->users_model->getProductList($adminid, "0", $showroomId, $categorytypeid, $subcategoryid, $brandid, $sizeid, $barcode, $noOfPage);
+//        echo "<pre>";
+//        print_r($ProductList);
+//        echo "</pre>";
+        $stringOfRecord = "productid \t productname \t productrate \t retailerMRP \t retailerShowroomId \t  barcode \t brandid \t productsize \t categorytypeid \t subcategoryid \t brandname \t size \t categorytype \t avalableQty";
+        for($m=0; $m<count($ProductList);$m++){
+            $productid = $ProductList[$m]['productid'];
+            $productname = $ProductList[$m]['productname'];
+            $productrate = $ProductList[$m]['productrate'];
+            $retailerMRP = $ProductList[$m]['retailerMRP'];
+            $retailerShowroomId = $ProductList[$m]['retailerShowroomId'];
+            $barcode = $ProductList[$m]['barcode'];
+            $brandid = $ProductList[$m]['brandid'];
+            $productsize = $ProductList[$m]['productsize'];
+            $categorytypeid = $ProductList[$m]['categorytypeid'];
+            $subcategoryid = $ProductList[$m]['subcategoryid'];
+            $brandname = $ProductList[$m]['brandname'];
+            $size = $ProductList[$m]['size'];
+            $categorytype = $ProductList[$m]['categorytype'];
+            $avalableQty = $ProductList[$m]['avalableQty'];
+
+            $stringOfRecord = $stringOfRecord. "\n $productid \t $productname \t $productrate \t $retailerMRP \t $retailerShowroomId \t $barcode \t $brandid \t $productsize \t $categorytypeid \t $subcategoryid \t $brandname \t $size \t $categorytype \t $avalableQty";
+        }
+
+        $dateTime = date("YmdHis");
+        header("Content-Type: application/vnd.ms-excel; charset=utf-8");
+        header("Content-Disposition: attachement; filename=$dateTime.xls");
+        header("Express: 0");
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header("Cache-Control: private",false);
+
+        echo $stringOfRecord;
+    }
+
 }

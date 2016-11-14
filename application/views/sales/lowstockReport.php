@@ -50,6 +50,10 @@
 </div>
 
 <script>
+<?php if($usertypeid!="2") { ?>
+getLowStockReport(<?php echo $showroomId; ?>);
+<?php }?>
+
 function getLowStockReport(showroomId){
 
 		$.get( "<?php echo base_url().'Sales/getReportInLowStock'?>",{ showroomId : showroomId}, function( data ) {

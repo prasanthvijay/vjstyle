@@ -73,7 +73,7 @@
                         <a href="#"><i class="md md-pages"></i>Return </a>
                         <ul class="submenu">
                             <li><a href="<?php echo base_url(); ?>/sales/returnpos">Return Product </a></li>
-                            <li><a href="<?php echo base_url(); ?>retailerShowRoomMaster">Return List </a></li>
+                            <li><a href="<?php echo base_url(); ?>returnList">Return List </a></li>
                         </ul>
                     </li>
                     <li class="has-submenu">

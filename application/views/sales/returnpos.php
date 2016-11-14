@@ -91,10 +91,10 @@
 
                                         <select class="form-control select2" name="receiptId"
                                                 onchange="getReceiptProduct(this.value)">
-                                            <option value="">Select Receipt</option>
+                                            <option value="">Select Bill No</option>
                                             <?php for ($i = 0; $i < count($receiptList); $i++) { ?>
                                                 <option
-                                                    value="<?php echo $receiptList[$i]['id']; ?>"><?php echo $receiptList[$i]['billNo']; ?></option>
+                                                    value="<?php echo $receiptList[$i]['id']; ?>">Bill no- <?php echo $receiptList[$i]['billNo']; ?></option>
                                             <?php } ?>
                                         </select>
 
@@ -424,7 +424,7 @@ function getProduct(barcode) {
                 beforeTotal = parseFloat(receipt["productDetails"][i]["price"]) * parseFloat(receipt["productDetails"][i]["qty"]);
                 productTotal = (parseFloat(beforeTotal) - (parseFloat(beforeTotal) * (parseFloat(receipt["productDetails"][i]["discount"]) / 100)));
 
-                tableData += '<tr><td>' + receipt["product"][i]["productname"] + '</td><td class="text-center"><input name="billprice_' + i + '" id="billprice_' + i + '" class="form-control editable editable-click" value="' + receipt["productDetails"][i]["price"] + '" disabled></td><td class="text-center"><input name="billqty_' + i + '" id="billqty_' + i + '" class="form-control editable editable-click" value="' + receipt["productDetails"][i]["qty"] + '" onblur="billDiscount(' + i + ')"></td><td class="text-center"><input name="billdisc_' + i + '" id="billdisc_' + i + '" class="form-control editable editable-click" value="' + receipt["productDetails"][i]["discount"] + '" disabled></td><td class="text-center"><input name="billtotal_' + i + '" id="billtotal_' + i + '" class="form-control editable editable-click" value="' + productTotal + '" disabled></td><input type="hidden" name="existBillQuantity_' + i + '" id="existBillQuantity_' + i + '" value="' + receipt["productDetails"][i]["qty"] + '"><input type="hidden" name="existBillproduct_' + i + '" id="existBillproduct_' + i + '" value="' + receipt["productDetails"][i]["productId"] + '"></tr>';
+                tableData = '<tr><td>' + receipt["product"][i]["productname"] + '</td><td class="text-center"><input name="billprice_' + i + '" id="billprice_' + i + '" class="form-control editable editable-click" value="' + receipt["productDetails"][i]["price"] + '" disabled></td><td class="text-center"><input name="billqty_' + i + '" id="billqty_' + i + '" class="form-control editable editable-click" value="' + receipt["productDetails"][i]["qty"] + '" onblur="billDiscount(' + i + ')"></td><td class="text-center"><input name="billdisc_' + i + '" id="billdisc_' + i + '" class="form-control editable editable-click" value="' + receipt["productDetails"][i]["discount"] + '" disabled></td><td class="text-center"><input name="billtotal_' + i + '" id="billtotal_' + i + '" class="form-control editable editable-click" value="' + productTotal + '" disabled></td><input type="hidden" name="existBillQuantity_' + i + '" id="existBillQuantity_' + i + '" value="' + receipt["productDetails"][i]["qty"] + '"><input type="hidden" name="existBillproduct_' + i + '" id="existBillproduct_' + i + '" value="' + receipt["productDetails"][i]["productId"] + '"></tr>';
             }
             $("#recceiptDetails").html("<table class='table table-hover'><tr><td>Name</td><td>Price</td><td>QTY</td><td>Discount</td><td>Total</td></tr>" + tableData + "</table>");
         });
