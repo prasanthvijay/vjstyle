@@ -195,7 +195,9 @@ class Frontend extends CI_Controller
         $dob = $this->input->get_post('dob');
         $tinnumber = $this->input->get_post('TINNumber');
         $cinnumber = $this->input->get_post('CINNumber');
-        $creditdays = $this->input->get_post('CreditDays');
+        $bankname = $this->input->get_post('bankname');
+        $ifscode = $this->input->get_post('ifscode');
+        $accountno = $this->input->get_post('accountno');
         $active = "active";
         $createdAt = date("Y-m-d H:i:s");
         $actionType = $this->input->get_post('actionType');
@@ -215,7 +217,7 @@ class Frontend extends CI_Controller
 
         $userDetailsArray = array('name' => $name, 'email' => $email, 'password' => $password, 'usertypeid' => $usertypeid,
             'adminid' => $adminid, 'retailershowroomid' => $retailershowroomid, 'mobile' => $mobile, 'address' => $address,
-            'doj' => $doj, 'dob' => $dob,'tinnumber' => $tinnumber,'cinnumber' => $cinnumber,'creditdays' => $creditdays,
+            'doj' => $doj, 'dob' => $dob,'tinnumber' => $tinnumber,'cinnumber' => $cinnumber,'bankname' => $bankname,'accountno'=>$accountno,'ifscode'=>$ifscode,
             'active' => $active, 'createdAt' => $createdAt,'userid' => $actionId);
 
 

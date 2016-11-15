@@ -210,7 +210,9 @@ class Users_model extends CI_Model
             $userArray[$k]['dob'] = $row->dob;
             $userArray[$k]['cinnumber'] = $row->cinnumber;
             $userArray[$k]['tinnumber'] = $row->tinnumber;
-            $userArray[$k]['creditdays'] = $row->creditdays;
+            $userArray[$k]['BankName'] = $row->BankName;
+            $userArray[$k]['IFSCode'] = $row->IFSCode;
+            $userArray[$k]['AccountNumber'] = $row->AccountNumber;
             $userArray[$k]['lastlogin'] = $row->lastlogin;
             $userArray[$k]['createdat'] = $row->createdat;
             $k++;
@@ -478,7 +480,7 @@ class Users_model extends CI_Model
             $retailershowroomid = 0;
         }
 
-        $sql = "INSERT INTO tbl_user (name,email,password,usertypeid,adminid,retailerShowRoomId,mobile,address,doj,dob, tinnumber, cinnumber, creditdays,active,createdat) " . "VALUES (" . $this->db->escape($userDetailsArray['name']) . "," . $this->db->escape($userDetailsArray['email']) . "," . $this->db->escape($userDetailsArray['password']) . "," . $this->db->escape($userDetailsArray['usertypeid']) . "," . $this->db->escape($userDetailsArray['adminid']) . "," . $this->db->escape($retailershowroomid) . "," . $this->db->escape($userDetailsArray['mobile']) . "," . $this->db->escape($userDetailsArray['address']) . "," . $this->db->escape($doj) . "," . $this->db->escape($dob). "," . $this->db->escape($userDetailsArray['tinnumber']) . "," . $this->db->escape($userDetailsArray['cinnumber']) . "," . $this->db->escape($userDetailsArray['creditdays'])  . "," . $this->db->escape($userDetailsArray['active']) . "," . $this->db->escape($userDetailsArray['createdAt']) . ")";
+        $sql = "INSERT INTO tbl_user (name,email,password,usertypeid,adminid,retailerShowRoomId,mobile,address,doj,dob, tinnumber, cinnumber, BankName,IFSCode,AccountNumber,active,createdat) " . "VALUES (" . $this->db->escape($userDetailsArray['name']) . "," . $this->db->escape($userDetailsArray['email']) . "," . $this->db->escape($userDetailsArray['password']) . "," . $this->db->escape($userDetailsArray['usertypeid']) . "," . $this->db->escape($userDetailsArray['adminid']) . "," . $this->db->escape($retailershowroomid) . "," . $this->db->escape($userDetailsArray['mobile']) . "," . $this->db->escape($userDetailsArray['address']) . "," . $this->db->escape($doj) . "," . $this->db->escape($dob). "," . $this->db->escape($userDetailsArray['tinnumber']) . "," . $this->db->escape($userDetailsArray['cinnumber']) . "," . $this->db->escape($userDetailsArray['bankname'])  . "," . $this->db->escape($userDetailsArray['ifscode'])  . "," . $this->db->escape($userDetailsArray['accountno'])  . "," . $this->db->escape($userDetailsArray['active']) . "," . $this->db->escape($userDetailsArray['createdAt']) . ")";
         $this->db->query($sql);
     }
 
@@ -498,7 +500,7 @@ class Users_model extends CI_Model
         if ($retailershowroomid == NULL) {
             $retailershowroomid = 0;
         }
-        $sql = "Update tbl_user SET name = " . $this->db->escape($userDetailsArray['name']) . ", email = " . $this->db->escape($userDetailsArray['email']) . ", password = " . $this->db->escape($userDetailsArray['password']) . ", mobile = " . $this->db->escape($userDetailsArray['mobile']) . ", address = " . $this->db->escape($userDetailsArray['address']) . ", doj = " . $this->db->escape($doj) . ", dob =" . $this->db->escape($dob). ", tinnumber =" . $this->db->escape($userDetailsArray['tinnumber']). ", cinnumber =" . $this->db->escape($userDetailsArray['cinnumber']). ", creditdays =" . $this->db->escape($userDetailsArray['creditdays'])  . " WHERE userid=" . $userDetailsArray['userid'];
+        $sql = "Update tbl_user SET name = " . $this->db->escape($userDetailsArray['name']) . ", email = " . $this->db->escape($userDetailsArray['email']) . ", password = " . $this->db->escape($userDetailsArray['password']) . ", mobile = " . $this->db->escape($userDetailsArray['mobile']) . ", address = " . $this->db->escape($userDetailsArray['address']) . ", doj = " . $this->db->escape($doj) . ", dob =" . $this->db->escape($dob). ", tinnumber =" . $this->db->escape($userDetailsArray['tinnumber']). ", cinnumber =" . $this->db->escape($userDetailsArray['cinnumber']). ", BankName =" . $this->db->escape($userDetailsArray['bankname'])  . ", IFSCode =" . $this->db->escape($userDetailsArray['ifscode'])  . ", AccountNumber =" . $this->db->escape($userDetailsArray['accountno'])  . " WHERE userid=" . $userDetailsArray['userid'];
         $this->db->query($sql);
     }
 

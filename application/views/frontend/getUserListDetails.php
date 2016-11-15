@@ -8,6 +8,10 @@
         <th>Email</th>
         <?php if($usertypeid != 3 && $usertypeid != 6) { ?><th>Password</th><?php } ?>
         <th>Address</th>
+        <th>Bank Name</th>
+        <th>IFS Code</th>
+        <th>Account No</th>
+
         <?php if($usertypeid != 3 && $usertypeid != 6) { ?><th>DOJ</th>
         <th>LastLogin</th>
         <th>Created At</th><?php } ?>
@@ -26,6 +30,9 @@
             <td><?php echo $userArray[$k]['email']; ?></td>
             <?php if($usertypeid != 3 && $usertypeid != 6) { ?><td><?php echo $userArray[$k]['password']; ?></td><?php } ?>
             <td><?php echo $userArray[$k]['address']; ?></td>
+            <td><?php echo $userArray[$k]['BankName']; ?></td>
+            <td><?php echo $userArray[$k]['IFSCode']; ?></td>
+            <td><?php echo $userArray[$k]['AccountNumber']; ?></td>
              <?php if($usertypeid != 3 && $usertypeid != 6) { ?><td><?php echo $userArray[$k]['doj']; ?></td>
             <td><?php echo $userArray[$k]['lastlogin']; ?></td>
             <td><?php echo $userArray[$k]['createdat']; ?></td><?php } ?>

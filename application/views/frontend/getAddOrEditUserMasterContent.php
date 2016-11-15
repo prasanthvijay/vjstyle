@@ -11,7 +11,9 @@ $dob = "";
 $adminid = "";
 $CINNumber = "";
 $TINNumber = "";
-$CreditDays = "";
+$BankName = "";
+$IFSCode = "";
+$AccountNumber = "";
 if(count($editUsersList)>0){
     $name = $editUsersList[0]['name'];
     $adminid = $editUsersList[0]['adminid'];
@@ -25,7 +27,9 @@ if(count($editUsersList)>0){
 
     $CINNumber = $editUsersList[0]['cinnumber'];
     $TINNumber = $editUsersList[0]['tinnumber'];
-    $CreditDays = $editUsersList[0]['creditdays'];
+    $BankName = $editUsersList[0]['BankName'];
+    $IFSCode = $editUsersList[0]['IFSCode'];
+    $AccountNumber = $editUsersList[0]['AccountNumber'];
 
 }
 
@@ -139,11 +143,23 @@ if(count($editUsersList)>0){
                     <?php if($usertypeid == 6) { ?>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="creditdays" class="control-label">Credit Days</label>
-                            <input type="text" class="form-control" id="CreditDays" name="CreditDays"  placeholder="Credit Days" value="<?php echo $CreditDays; ?>">
+                            <label for="BankName" class="control-label">Supplier Bank Name</label>
+                            <input type="text" class="form-control" id="bankname" name="bankname"  placeholder="Bank Name" value="<?php echo $BankName; ?>">
                         </div>
                     </div>
-                    <?php } else { ?>
+<div class="col-md-6">
+                        <div class="form-group">
+                            <label for="IFSCode" class="control-label">IFS Code</label>
+                            <input type="text" class="form-control" id="ifscode" name="ifscode"  placeholder="IFS Code" value="<?php echo $IFSCode; ?>">
+                        </div>
+                    </div>
+<div class="col-md-6">
+                        <div class="form-group">
+                            <label for="AccountNumber" class="control-label">Account No</label>
+                            <input type="text" class="form-control" id="accountno" name="accountno"  placeholder="Account No" value="<?php echo $AccountNumber; ?>">
+                        </div>
+                    </div>
+                    <?php } else { ?>	
                         <div class="col-md-6">
                             <div class="form-group fileupload">
                                 <label for=""></label>
