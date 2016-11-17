@@ -90,6 +90,10 @@ $route['assignMapProduct'] = 'Product/assignMapProduct';
 $route['getContent'] = 'Product/getContent';
 $route['migrationProduct'] = 'Product/migrationProduct';
 $route['generateBarcdeExcel'] = 'Product/generateBarcdeExcel';
+$route['Attendance'] = 'Product/Attendance';
+$route['dailyexpenses'] = 'Product/dailyexpenses';
+$route['AddExpenses'] = 'Product/AddExpenses';
+
 //Sales
 $route['pos'] = 'sales/pos';
 $route['posajax'] = 'sales/posajax';

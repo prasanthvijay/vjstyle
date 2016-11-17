@@ -284,6 +284,26 @@ class Product extends CI_Controller
             redirect(base_url() . "Product/SubCategoryMaster");
 
         }
+ 	if ($submit == "Expenses") {
+
+            $Reasons = $this->input->post('Reasons');
+            $Amount = $this->input->post('Amount');
+            $createdAt = date("Y-m-d H:i:s");
+            $ExpensesDetailsArray = array('Reasons' => $Reasons, 'Amount' => $Amount, 'adminid' => $adminid, 'createdAt' => $createdAt);
+
+            $output = array('status' => "3", 'message' => "Invalid Request");
+          if ($actionType == "Add" || $actionType == "") {
+              $userTypeArray = $this->users_model->createExpenses($ExpensesDetailsArray); //For Update Brand
+                if ($updateSuccess == 1) {
+                    $output = array('status' => "1", 'message' => "Successfully created");
+                } else {
+                    $output = array('status' => "2", 'message' => "Please try again later");
+                }
+            }
+            $this->session->set_flashdata('output', $output);
+            redirect(base_url() . "Product/dailyexpenses");
+
+        }
     }
 
     public function ViewRetailerCostDetails(){
@@ -426,7 +446,7 @@ class Product extends CI_Controller
 
         $type = $this->input->get('type');
         $actionId = "0";
-
+        $ExpensesList = array();
         $BrandList = array();
         $SizeList = array();
         $CategoryTypeList = array();
@@ -452,11 +472,14 @@ class Product extends CI_Controller
             $barcode = $this->input->get_post('barcode');
             $noOfPage = "0";
             $ProductList = $this->users_model->getProductList($adminid, "0", $showroomId, $categorytypeid, $subcategoryid, $brandid, $sizeid, $barcode, $noOfPage);
-        }
-
+        }else if ($type == "ExpensesList") {
+	$ExpensesList = $this->users_model->getExpensesList($adminid, $actionId);
+		}			
+	
         $dataheader['typeList'] = $type;
         $dataheader['SizeList'] = $SizeList;
         $dataheader['BrandList'] = $BrandList;
+        $dataheader['ExpensesList'] = $ExpensesList;
         $dataheader['CategoryTypeList'] = $CategoryTypeList;
         $dataheader['SubCategoryList'] = $SubCategoryList;
         $dataheader['ProductList'] = $ProductList;
@@ -922,7 +945,52 @@ class Product extends CI_Controller
 
         echo $stringOfRecord;
     }
+    public function Attendance(){
+        	$dataheader['title'] = "Attendance";
+		$this->load->view('layout/backend_header', $dataheader);
+        	$this->load->view('layout/backend_menu');
+		$this->load->view('product/Attendance');
+        	$this->load->view('layout/backend_footer');
 
+	}
+public function dailyexpenses(){
+        	$dataheader['title'] = "Daily Expenses";
+		$this->load->view('layout/backend_header', $dataheader);
+        	$this->load->view('layout/backend_menu');
+		$this->load->view('product/dailyexpenses');
+        	$this->load->view('layout/backend_footer');
+
+	}
+public function AddExpenses(){
+        	
+ 	$dataheader = array();
+        $actionType = $this->input->get_post('actionType');
+        $actionId = $this->input->get_post('actionId');
+
+        $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
+        $adminid = "0";
+        $sessionUserTypeId = "0";
+        if ($sessionUserTypeIdIsset == 1) {
+            $sessionUserTypeId = $this->session->userdata('usertypeid');
+            if ($sessionUserTypeId == 2) {
+                $adminid = $this->session->userdata('userid');
+            } else if ($sessionUserTypeId == 1) {
+                $adminid = $this->input->get_post('adminid');
+            } else if ($sessionUserTypeId == 4) {
+                $adminid = $this->session->userdata('adminid');
+            }
+        }
+
+        $singleBrandList = array();
+        if ($actionType == "Edit") {
+            $singleBrandList = $this->users_model->getBrandList($adminid, $actionId);
+        }
+        	$dataheader['addProductMasterUrl'] = "addProductMaster";
+	$this->load->view('product/AddExpenses',$dataheader);
+        	
+
+	}
+ 
 }
 
 ?>

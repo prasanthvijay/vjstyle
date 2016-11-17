@@ -33,6 +33,34 @@
     </table>
 
 <?php } ?>
+
+
+<?php if ($typeList == 'ExpensesList') { ?>
+  
+    <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap example"
+           cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th>Sno</th>
+            <th>Reason</th>
+            <th>Amount</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php for ($i = 0; $i < count($ExpensesList); $i++) { ?>
+            <tr>
+
+                <td><?php echo $i + 1; ?></td>
+                <td><?php echo $ExpensesList[$i]['Reasons']; ?></td>
+                <td><?php echo $ExpensesList[$i]['Amount']; ?></td>
+                
+            </tr>
+        <?php } ?>
+        </tbody>
+    </table>
+
+<?php } ?>
+
     <?php $loadAddOrEditModalUrl = base_url()."Product/AddSize"; ?>
 <?php if ($typeList == 'sizeList') { ?>
 

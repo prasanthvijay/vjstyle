@@ -248,7 +248,33 @@ class Users_model extends CI_Model
 
         return $BrandArray;
     }
+	public function getExpensesList($adminid, $actionId)
+    {
 
+        $ExpensesArray = array();
+        $sql = "SELECT * FROM `tbl_Expenses` t WHERE 1 ";
+        if ($adminid != "" && $adminid != null) {
+            $sql .= " and adminId = '" . $adminid . "' ";
+        }
+
+        if ($actionId != "" && $actionId != null && $actionId != "0" && $actionId != 0) {
+            $sql .= " and ExId = '" . $actionId . "' ";
+        }
+        $sql = $sql . " order by ExId desc";
+        $userQuery = $this->db->query($sql);
+
+        $k = 0;
+        foreach ($userQuery->result() as $row) {
+            $ExpensesArray[$k]['ExId'] = $row->ExId;
+            $ExpensesArray[$k]['Reasons'] = $row->Reasons;
+            $ExpensesArray[$k]['Amount'] = $row->Amount;
+            $ExpensesArray[$k]['adminId'] = $row->adminId;
+
+            $k++;
+        }
+
+        return $ExpensesArray;
+    }
     public function getMyAdminProductList($adminid)
     {
         $sql = "SELECT t.productid, t.productname, t.barcode from tbl_product t WHERE t.active = 'active' and t.adminid=$adminid";
@@ -507,6 +533,11 @@ class Users_model extends CI_Model
     public function createBrandMaster($BrandDetailsArray)
     {
         $sql = "INSERT INTO tbl_brand (brandname,adminid,createdat) " . "VALUES (" . $this->db->escape($BrandDetailsArray['brandname']) . "," . $this->db->escape($BrandDetailsArray['adminid']) . "," . $this->db->escape($BrandDetailsArray['createdAt']) . ")";
+        $this->db->query($sql);
+    }
+public function createExpenses($ExpensesDetailsArray)
+    {
+        $sql = "INSERT INTO tbl_Expenses (Reasons,Amount,adminId,createdAt) " . "VALUES (" . $this->db->escape($ExpensesDetailsArray['Reasons']) . ",". $this->db->escape($ExpensesDetailsArray['Amount']) ."," . $this->db->escape($ExpensesDetailsArray['adminid']) . "," . $this->db->escape($ExpensesDetailsArray['createdAt']) . ")";
         $this->db->query($sql);
     }
 
