@@ -99,7 +99,7 @@ class Product extends CI_Controller
         $actionId = $this->input->get_post('actionId');
 
         $dataheader['addProductMasterUrl'] = "addProductMaster";
-
+                $showroomId = $this->session->userdata('retailerShowRoomId');
         $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
         $adminid = "0";
         if ($sessionUserTypeIdIsset == 1) {
@@ -289,7 +289,7 @@ class Product extends CI_Controller
             $Reasons = $this->input->post('Reasons');
             $Amount = $this->input->post('Amount');
             $createdAt = date("Y-m-d H:i:s");
-            $ExpensesDetailsArray = array('Reasons' => $Reasons, 'Amount' => $Amount, 'adminid' => $adminid, 'createdAt' => $createdAt);
+            $ExpensesDetailsArray = array('Reasons' => $Reasons, 'Amount' => $Amount, 'adminid' => $adminid,'showroomId'  => $showroomId, 'createdAt' => $createdAt);
 
             $output = array('status' => "3", 'message' => "Invalid Request");
           if ($actionType == "Add" || $actionType == "") {

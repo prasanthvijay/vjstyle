@@ -537,7 +537,7 @@ class Users_model extends CI_Model
     }
 public function createExpenses($ExpensesDetailsArray)
     {
-        $sql = "INSERT INTO tbl_Expenses (Reasons,Amount,adminId,createdAt) " . "VALUES (" . $this->db->escape($ExpensesDetailsArray['Reasons']) . ",". $this->db->escape($ExpensesDetailsArray['Amount']) ."," . $this->db->escape($ExpensesDetailsArray['adminid']) . "," . $this->db->escape($ExpensesDetailsArray['createdAt']) . ")";
+        $sql = "INSERT INTO tbl_Expenses (Reasons,Amount,showroomId,adminId,createdAt) " . "VALUES (" . $this->db->escape($ExpensesDetailsArray['Reasons']) . ",". $this->db->escape($ExpensesDetailsArray['Amount']) ."," . $this->db->escape($ExpensesDetailsArray['showroomId']) . "," . $this->db->escape($ExpensesDetailsArray['adminid']) . "," . $this->db->escape($ExpensesDetailsArray['createdAt']) . ")";
         $this->db->query($sql);
     }
 
