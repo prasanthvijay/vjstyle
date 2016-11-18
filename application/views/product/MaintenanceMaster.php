@@ -19,10 +19,10 @@
                     <div class="col-md-12">
                         <div class="table-responsive">
                             <p class="text-muted m-b-20 font-13">
-                                Add, Edit and Delete <?php echo $Size; ?>
-                                <?php $loadAddOrEditModalUrl = base_url() . "Product/AddSize"; ?>
+                                Add, Edit and Delete <?php echo $title; ?>
+                                <?php $loadAddOrEditModalUrl = base_url() . "Product/Maintenance"; ?>
                             </p>
-                            <button class="btn btn-primary waves-effect waves-light m-t-10" onclick="getAddOrEditModalContent('actionType=Add&actionId=0', '<?php echo $loadAddOrEditModalUrl; ?>')">Add <?php echo $Size; ?></button>
+                            <button class="btn btn-primary waves-effect waves-light m-t-10" onclick="getAddOrEditModalContent('actionType=Add&actionId=0', '<?php echo $loadAddOrEditModalUrl; ?>')">Add <?php echo $title; ?></button>
                         </div>
                     </div>
                 </div>
@@ -58,12 +58,12 @@
 </div>
 <!-- End wrapper -->
 <script>
-    var postData = "type=sizeList";
+    var postData = "type=Maintenance";
     loadMastersList(postData);
     
     function loadAddOrEditSizeModal() {
         $.ajax({
-            url: "Product/AddSize",
+            url: "Product/Maintenance",
             type: "POST",
             success: function (responseFromSite) {
 

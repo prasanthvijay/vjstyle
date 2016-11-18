@@ -981,16 +981,53 @@ public function AddExpenses(){
             }
         }
 
-        $singleBrandList = array();
-        if ($actionType == "Edit") {
-            $singleBrandList = $this->users_model->getBrandList($adminid, $actionId);
-        }
-        	$dataheader['addProductMasterUrl'] = "addProductMaster";
+        $dataheader['addProductMasterUrl'] = "addProductMaster";
 	$this->load->view('product/AddExpenses',$dataheader);
         	
 
 	}
- 
+ public function MaintenanceMaster(){
+        	$dataheader['title'] = "Maintenance";
+		$this->load->view('layout/backend_header', $dataheader);
+        	$this->load->view('layout/backend_menu');
+		$this->load->view('product/MaintenanceMaster');
+        	$this->load->view('layout/backend_footer');
+
+	}
+public function Maintenance(){
+        	
+ 	$dataheader = array();
+        $actionType = $this->input->get_post('actionType');
+        $actionId = $this->input->get_post('actionId');
+
+        $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
+        $adminid = "0";
+        $sessionUserTypeId = "0";
+        if ($sessionUserTypeIdIsset == 1) {
+            $sessionUserTypeId = $this->session->userdata('usertypeid');
+            if ($sessionUserTypeId == 2) {
+                $adminid = $this->session->userdata('userid');
+            } else if ($sessionUserTypeId == 1) {
+                $adminid = $this->input->get_post('adminid');
+            } else if ($sessionUserTypeId == 4) {
+                $adminid = $this->session->userdata('adminid');
+            }
+        }
+
+        $singleMaintenancList = array();
+        if ($actionType == "Edit") {
+            $singleMaintenancList = $this->users_model->getBrandList($adminid, $actionId);
+        }
+        
+         $dataheader['adminid'] = $adminid;
+        $dataheader['title'] = "Maintenance";
+        $dataheader['actionType'] = $actionType;
+        $dataheader['actionId'] = $actionId;
+        $dataheader['singleMaintenancList'] = $singleMaintenancList;
+        $dataheader['addProductMasterUrl'] = "addProductMaster";
+        $this->load->view('product/Maintenance', $dataheader);	
+
+	}
 }
 
 ?>

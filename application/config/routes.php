@@ -93,6 +93,8 @@ $route['generateBarcdeExcel'] = 'Product/generateBarcdeExcel';
 $route['Attendance'] = 'Product/Attendance';
 $route['dailyexpenses'] = 'Product/dailyexpenses';
 $route['AddExpenses'] = 'Product/AddExpenses';
+$route['Maintenance'] = 'Product/Maintenance';
+$route['MaintenanceMaster'] = 'Product/MaintenanceMaster';
 
 //Sales
 $route['pos'] = 'sales/pos';
