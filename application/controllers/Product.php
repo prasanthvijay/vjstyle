@@ -304,6 +304,27 @@ class Product extends CI_Controller
             redirect(base_url() . "Product/dailyexpenses");
 
         }
+	if ($submit == "Maintenance") {
+
+            $Reasons = $this->input->post('Reason');
+            $Amount = $this->input->post('Amount');
+            $Date = $this->input->post('Date');
+            $createdAt = date("Y-m-d H:i:s");
+            $MaintenanceArray = array('Reasons' => $Reasons, 'Amount' => $Amount,'Date' => $Date, 'adminid' => $adminid,'showroomId'  => $showroomId, 'createdAt' => $createdAt);
+
+            $output = array('status' => "3", 'message' => "Invalid Request");
+          if ($actionType == "Add" || $actionType == "") {
+              $userTypeArray = $this->users_model->createMaintenance($MaintenanceArray); //For Update Brand
+                if ($updateSuccess == 1) {
+                    $output = array('status' => "1", 'message' => "Successfully created");
+                } else {
+                    $output = array('status' => "2", 'message' => "Please try again later");
+                }
+            }
+            $this->session->set_flashdata('output', $output);
+            redirect(base_url() . "Product/MaintenanceMaster");
+
+        }
     }
 
     public function ViewRetailerCostDetails(){

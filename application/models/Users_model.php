@@ -540,6 +540,11 @@ public function createExpenses($ExpensesDetailsArray)
         $sql = "INSERT INTO tbl_Expenses (Reasons,Amount,showroomId,adminId,createdAt) " . "VALUES (" . $this->db->escape($ExpensesDetailsArray['Reasons']) . ",". $this->db->escape($ExpensesDetailsArray['Amount']) ."," . $this->db->escape($ExpensesDetailsArray['showroomId']) . "," . $this->db->escape($ExpensesDetailsArray['adminid']) . "," . $this->db->escape($ExpensesDetailsArray['createdAt']) . ")";
         $this->db->query($sql);
     }
+public function createMaintenance($MaintenanceArray)
+    {
+        $sql = "INSERT INTO tbl_Maintenance (Reasons,Amount,paidDate,showroomId,adminId,createdAt) " . "VALUES (" . $this->db->escape($MaintenanceArray['Reasons']) . ",". $this->db->escape($MaintenanceArray['Amount']) .",".$this->db->escape($MaintenanceArray['Date']) ."," . $this->db->escape($MaintenanceArray['showroomId']) . "," . $this->db->escape($MaintenanceArray['adminid']) . "," . $this->db->escape($MaintenanceArray['createdAt']) . ")";
+        $this->db->query($sql);
+    }
 
     public function updateBrandMaster($BrandDetailsArray)
     {
