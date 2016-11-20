@@ -1,5 +1,5 @@
 
-<?php if ($typeList == 'Maintenance') { ?>
+<?php if ($typeList == 'MaintenanceList') { ?>
     <?php $loadAddOrEditModalUrl = base_url()."Product/AddBrand"; ?>
     <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap example"
            cellspacing="0" width="100%">

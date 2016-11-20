@@ -58,7 +58,7 @@
 </div>
 <!-- End wrapper -->
 <script>
-    var postData = "type=Maintenance";
+    var postData = "type=MaintenanceList";
     loadMastersList(postData);
     
     function loadAddOrEditSizeModal() {

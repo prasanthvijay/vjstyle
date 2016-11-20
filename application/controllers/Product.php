@@ -468,6 +468,7 @@ class Product extends CI_Controller
         $type = $this->input->get('type');
         $actionId = "0";
         $ExpensesList = array();
+        $MaintenanceList = array();
         $BrandList = array();
         $SizeList = array();
         $CategoryTypeList = array();
@@ -496,18 +497,18 @@ class Product extends CI_Controller
         }else if ($type == "ExpensesList") {
 	$ExpensesList = $this->users_model->getExpensesList($adminid, $actionId);
 		}			
-	else if ($type == "Maintenance") {
-	$MaintenanceList = $this->users_model->getMaintenanceList($adminid, $actionId);
+	else if ($type == "MaintenanceList") {
+			$MaintenanceList = $this->users_model->getMaintenanceList($adminid, $actionId);
 		}
         $dataheader['typeList'] = $type;
         $dataheader['SizeList'] = $SizeList;
         $dataheader['BrandList'] = $BrandList;
-        $dataheader['MaintenanceList'] = $MaintenanceList;
         $dataheader['ExpensesList'] = $ExpensesList;
         $dataheader['CategoryTypeList'] = $CategoryTypeList;
         $dataheader['SubCategoryList'] = $SubCategoryList;
         $dataheader['ProductList'] = $ProductList;
         $dataheader['sessionUserTypeId'] = $sessionUserTypeId;
+        $dataheader['MaintenanceList'] = $MaintenanceList;	
 
         $this->load->view('product/BrandList', $dataheader);
     }
