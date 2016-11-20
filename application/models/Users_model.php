@@ -275,6 +275,37 @@ class Users_model extends CI_Model
 
         return $ExpensesArray;
     }
+
+	public function getMaintenanceList($adminid, $actionId)
+    {
+
+        $MaintenanceArray = array();
+        $sql = "SELECT * FROM `tbl_Maintenance` t WHERE 1 ";
+        if ($adminid != "" && $adminid != null) {
+            $sql .= " and adminId = '" . $adminid . "' ";
+        }
+
+        if ($actionId != "" && $actionId != null && $actionId != "0" && $actionId != 0) {
+            $sql .= " and MtId = '" . $actionId . "' ";
+        }
+        $sql = $sql . " order by MtId desc";
+        $userQuery = $this->db->query($sql);
+
+        $k = 0;
+        foreach ($userQuery->result() as $row) {
+            $MaintenanceArray[$k]['MtId'] = $row->MtId;
+            $MaintenanceArray[$k]['Reasons'] = $row->Reasons;
+            $MaintenanceArray[$k]['Amount'] = $row->Amount;
+            $MaintenanceArray[$k]['Date'] = $row->paidDate;
+            $MaintenanceArray[$k]['adminId'] = $row->adminId;
+
+            $k++;
+        }
+
+        return $MaintenanceArray;
+    }
+
+
     public function getMyAdminProductList($adminid)
     {
         $sql = "SELECT t.productid, t.productname, t.barcode from tbl_product t WHERE t.active = 'active' and t.adminid=$adminid";

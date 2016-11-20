@@ -496,10 +496,13 @@ class Product extends CI_Controller
         }else if ($type == "ExpensesList") {
 	$ExpensesList = $this->users_model->getExpensesList($adminid, $actionId);
 		}			
-	
+	else if ($type == "Maintenance") {
+	$MaintenanceList = $this->users_model->getMaintenanceList($adminid, $actionId);
+		}
         $dataheader['typeList'] = $type;
         $dataheader['SizeList'] = $SizeList;
         $dataheader['BrandList'] = $BrandList;
+        $dataheader['MaintenanceList'] = $MaintenanceList;
         $dataheader['ExpensesList'] = $ExpensesList;
         $dataheader['CategoryTypeList'] = $CategoryTypeList;
         $dataheader['SubCategoryList'] = $SubCategoryList;

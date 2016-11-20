@@ -1,4 +1,4 @@
-<?php $deletUrl = base_url()."Product/	"; ?>
+
 <?php if ($typeList == 'Maintenance') { ?>
     <?php $loadAddOrEditModalUrl = base_url()."Product/AddBrand"; ?>
     <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap example"
@@ -8,26 +8,16 @@
             <th>Sno</th>
             <th>Reason</th>
             <th>Amount</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th>Date</th>
         </tr>
         </thead>
         <tbody>
-        <?php for ($i = 0; $i < count($BrandList); $i++) { ?>
+        <?php for ($i = 0; $i < count($MaintenanceList); $i++) { ?>
             <tr>
-                <?php $brandid = $BrandList[$i]['brandid']; ?>
                 <td><?php echo $i + 1; ?></td>
-                <td><?php echo $BrandList[$i]['brandname']; ?></td>
-                <td>
-                    <button class="btn btn-primary waves-effect waves-light" type="button" onclick="getAddOrEditModalContent('actionType=Edit&actionId=<?php echo $brandid; ?>', '<?php echo $loadAddOrEditModalUrl; ?>')">
-                        Edit
-                    </button>
-                </td>
-                <td>
-                    <button class="btn btn-danger waves-effect waves-light" type="button" onclick="deleteProductsMaster('brand','submit=brand&actionType=Delete&actionId=<?php echo $brandid; ?>','<?php echo $deletUrl; ?>')">
-                        Delete
-                    </button>
-                </td>
+                <td><?php echo $MaintenanceList[$i]['Reasons']; ?></td>
+                <td><?php echo $MaintenanceList[$i]['Amount']; ?></td>
+                <td><?php echo $MaintenanceList[$i]['Date']; ?></td>
             </tr>
         <?php } ?>
         </tbody>
