@@ -60,4 +60,12 @@ if($actionType == "Edit"){
         </form>
     </div>
 </div>
+<script>
+
+                jQuery('#Date').datepicker({
+                	autoclose: true,
+                	todayHighlight: true,
+			dateFormat: 'dd-mm-yy'
+                });
+</script>
 

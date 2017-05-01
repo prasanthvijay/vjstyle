@@ -175,6 +175,7 @@
                                     <div class="col-sm-3">Return Amount</div>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" name="returnamount" id="returnamount" value="0" readonly>
+                                        <input type="hidden" class="form-control" name="returnamountnew" id="returnamountnew" value="0" readonly>
                                     </div>
                                 </div>
 	
@@ -418,15 +419,18 @@ function getProduct(barcode) {
             var receipt = JSON.parse(data);
           document.getElementById("Customer").value = receipt['customer'][0]['name'];
             document.getElementById("mobile").value = receipt['customer'][0]['mobileno'];
-            var tableData, beforeTotal = 0, productTotal = 0;
+            var beforeTotal = 0, productTotal = 0;
+
+		var tableData = "<table class='table table-hover'><tr><td>Name</td><td>Price</td><td>QTY</td><td>Discount</td><td>Total</td></tr>";
             for (var i = 0; i < receipt['productDetails'].length; i++) {
 
                 beforeTotal = parseFloat(receipt["productDetails"][i]["price"]) * parseFloat(receipt["productDetails"][i]["qty"]);
                 productTotal = (parseFloat(beforeTotal) - (parseFloat(beforeTotal) * (parseFloat(receipt["productDetails"][i]["discount"]) / 100)));
 
-                tableData = '<tr><td>' + receipt["product"][i]["productname"] + '</td><td class="text-center"><input name="billprice_' + i + '" id="billprice_' + i + '" class="form-control editable editable-click" value="' + receipt["productDetails"][i]["price"] + '" disabled></td><td class="text-center"><input name="billqty_' + i + '" id="billqty_' + i + '" class="form-control editable editable-click" value="' + receipt["productDetails"][i]["qty"] + '" onblur="billDiscount(' + i + ')"></td><td class="text-center"><input name="billdisc_' + i + '" id="billdisc_' + i + '" class="form-control editable editable-click" value="' + receipt["productDetails"][i]["discount"] + '" disabled></td><td class="text-center"><input name="billtotal_' + i + '" id="billtotal_' + i + '" class="form-control editable editable-click" value="' + productTotal + '" disabled></td><input type="hidden" name="existBillQuantity_' + i + '" id="existBillQuantity_' + i + '" value="' + receipt["productDetails"][i]["qty"] + '"><input type="hidden" name="existBillproduct_' + i + '" id="existBillproduct_' + i + '" value="' + receipt["productDetails"][i]["productId"] + '"></tr>';
+                tableData += '<tr><td>' + receipt["product"][i]["productname"] + '</td><td class="text-center"><input name="billprice_' + i + '" id="billprice_' + i + '" class="form-control editable editable-click" value="' + receipt["productDetails"][i]["price"] + '" disabled></td><td class="text-center"><input name="billqty_' + i + '" id="billqty_' + i + '" class="form-control editable editable-click" value="' + receipt["productDetails"][i]["qty"] + '" onblur="billDiscount(' + i + ')"></td><td class="text-center"><input name="billdisc_' + i + '" id="billdisc_' + i + '" class="form-control editable editable-click" value="' + receipt["productDetails"][i]["discount"] + '" disabled></td><td class="text-center"><input name="billtotal_' + i + '" id="billtotal_' + i + '" class="form-control editable editable-click" value="' + productTotal + '" disabled></td><input type="hidden" name="existBillQuantity_' + i + '" id="existBillQuantity_' + i + '" value="' + receipt["productDetails"][i]["qty"] + '"><input type="hidden" name="existBillproduct_' + i + '" id="existBillproduct_' + i + '" value="' + receipt["productDetails"][i]["productId"] + '"></tr>';
             }
-            $("#recceiptDetails").html("<table class='table table-hover'><tr><td>Name</td><td>Price</td><td>QTY</td><td>Discount</td><td>Total</td></tr>" + tableData + "</table>");
+			tableData +="</table>";
+            $("#recceiptDetails").html(tableData);
         });
 
     }
@@ -441,8 +445,10 @@ function getProduct(barcode) {
 
             originalbeforeTotal = parseFloat($("#billprice_" + rowId).val()) * parseFloat($("#existBillQuantity_" + rowId).val());
             originalproductTotal = (parseFloat(originalbeforeTotal) - (parseFloat(originalbeforeTotal) * (parseFloat($("#billdisc_" + rowId).val()) / 100)));
+		
+		document.getElementById("returnamountnew").value=originalproductTotal+parseFloat($('#returnamount').val());
 
-            document.getElementById("returnamount").value =  (parseFloat(originalproductTotal) - parseFloat(productTotal));
+            document.getElementById("returnamount").value =  (parseFloat($('#returnamountnew').val()) - parseFloat(productTotal));
 
         }
         else {

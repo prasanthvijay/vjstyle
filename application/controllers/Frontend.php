@@ -30,6 +30,7 @@ class Frontend extends CI_Controller
         parent::__construct();
         $this->load->helper(array('form', 'url'));
         $this->load->model('users_model');
+        $this->load->model('pos_model');
         $this->load->library('session');
     }
 
@@ -130,21 +131,37 @@ class Frontend extends CI_Controller
 
     public function checkLogin()
     {
-        $username = $this->input->post('userName');
-        $userpassword = $this->input->post('password');
+        
+       	$fromApp = $this->input->get_post('fromApp');
+	if($fromApp=='appLogin'){
+		 $username = $this->input->get_post('username');
+		 $userpassword = $this->input->get_post('password');	
 
-        $userCredentialArray = array('username' => $username, 'userpassword' => $userpassword);
-        $userCredential = $this->users_model->checkUserCredential($userCredentialArray);
-        if (count($userCredential) > 0) {
+		$userCredentialArray = array('username' => $username, 'userpassword' => $userpassword);
+		$userCredential = $this->users_model->checkUserCredential($userCredentialArray);
+		if (count($userCredential) > 0) {
+			header('Access-Control-Allow-Origin: https://not-example.com');
+			header('Access-Control-Allow-Credentials: true');
+			header("Content-type: application/json");
+            		echo json_encode($userCredential);
+		} 
+	}
+	else{
+		$username = $this->input->post('userName');
+		$userpassword = $this->input->post('password');
+		$userCredentialArray = array('username' => $username, 'userpassword' => $userpassword);
+		$userCredential = $this->users_model->checkUserCredential($userCredentialArray);
+		if (count($userCredential) > 0) {
 
-            $this->session->set_userdata($userCredential);
-            $this->users_model->updateLastlogin($userCredential['userid']);
-            redirect($userCredential['redirecturl']);
-        } else {
-            $output = array('status' => "2", 'message' => "Invalid Login!!");
-            $this->session->set_flashdata('output', $output);
-            redirect(base_url());
-        }
+			$this->session->set_userdata($userCredential);
+			$this->users_model->updateLastlogin($userCredential['userid']);
+			redirect($userCredential['redirecturl']);
+		} else {
+			$output = array('status' => "2", 'message' => "Invalid Login!!");
+			$this->session->set_flashdata('output', $output);
+			redirect(base_url());
+		}
+	}
     }
 
     public function logout()
@@ -159,7 +176,15 @@ class Frontend extends CI_Controller
 
     public function dashboard()
     {
-        $dataheader['title'] = "Login";
+	$fromDate = date('Y-m-d H:i:s');
+	 $retailerShowRoomId = $this->session->userdata('retailerShowRoomId');
+	 $tablename = "tbl_customerreceipt";
+        $fieldname = array('sum(t.Total)as total');
+        $condition = 't.date BETWEEN "' . date('Y-m-d', strtotime($fromDate)) . ' 00:00:00" and "' . $fromDate. '" and t.showRoomId ="'.$retailerShowRoomId.'" ';
+        $receiptList = $this->pos_model->sumofQuantity($tablename, $fieldname, $condition);
+        $tableRow = "";
+        $dataheader['receiptList'] = $receiptList;
+        $dataheader['title'] = "Dashboard";
         $this->load->view('layout/backend_header', $dataheader);
         $this->load->view('layout/backend_menu');
         $this->load->view('frontend/frontend_dashboard');

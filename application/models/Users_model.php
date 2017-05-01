@@ -145,9 +145,9 @@ class Users_model extends CI_Model
         }
 
         if ($responseStatus == 1) {
-            $successMsg = "<div class=\"alert alert-success alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>" . $responseMsg . "</div>";
+            $successMsg = "<div class=\"alert alert-success alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">Ã—</button>" . $responseMsg . "</div>";
         } else if ($responseStatus == 2) {
-            $successMsg = "<div class=\"alert alert-danger alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>" . $responseMsg . "</div>";
+            $successMsg = "<div class=\"alert alert-danger alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">Ã—</button>" . $responseMsg . "</div>";
         }
 
         return $successMsg;
@@ -313,7 +313,146 @@ class Users_model extends CI_Model
         $productDetailsArray = $productQuery->result_array();
         return $productDetailsArray;
     }
-    public function getProductList($adminid, $productId, $showroomId, $categorytypeid,$subcategoryid, $brandid, $sizeid, $barcode , $noOfPage)
+    public function getProductList($adminid, $productId, $showroomId, $categorytypeid,$subcategoryid, $brandid, $sizeid, $barcode , $rec_limit, $page)
+    {
+
+        $ProductList = array();
+        
+//        $sql = "SELECT t.productid, t.productname, t.productrate, t.barcode, t.productsize, t.categorytypeid,t.subcategoryid, t.active, t.adminid, t.brandid, a.showroomId, tb.brandname, ts.size, tc.categorytype, a.price as price, sum(pb.quantity) as quantity FROM tbl_product t Left JOIN tbl_productMapping a on t.productid = a.productid Left JOIN tbl_productBatch pb on a.productId = pb.productid AND a.showroomId=pb.showRoomId LEFT JOIN tbl_brand tb on tb.brandid=t.brandid LEFT JOIN tbl_sizemaster ts on ts.sizeid=t.productsize LEFT JOIN tbl_categorytype tc on tc.categorytypeid = t.categorytypeid WHERE  t.active = 'active' ";
+        $beforeSql = "SELECT t.productid, t.productname, t.productrate, t.barcode, t.productsize, t.categorytypeid,t.subcategoryid, t.active, t.adminid, t.brandid, a.showroomId, tb.brandname, ts.size, tc.categorytype, a.price as price, sum(pb.quantity) as quantity FROM tbl_product t Left JOIN tbl_productMapping a on t.productid = a.productid Left JOIN tbl_productBatch pb on a.productId = pb.productid AND a.showroomId=pb.showRoomId LEFT JOIN tbl_brand tb on tb.brandid=t.brandid LEFT JOIN tbl_sizemaster ts on ts.sizeid=t.productsize LEFT JOIN tbl_categorytype tc on tc.categorytypeid = t.categorytypeid";
+
+        $sql = " WHERE  t.active = 'active' ";
+
+        if ($adminid != "0" && $adminid != "" && $adminid != null) {
+            $sql .= " and t.adminid = '" . $adminid . "' ";
+        }
+        if ($productId != "0" && $productId != "" && $productId != null) {
+            $sql .= " and t.productid = '" . $productId . "' ";
+        }
+
+        //Search Product
+        if ($categorytypeid != "0" && $categorytypeid != "" && $categorytypeid != null) {
+            $sql .= " and t.categorytypeid = '" . $categorytypeid . "' ";
+        }
+        if ($subcategoryid != "0" && $subcategoryid != "" && $subcategoryid != null) {
+            $sql .= " and t.subcategoryid = '" . $subcategoryid . "' ";
+        }
+        if ($brandid != "0" && $brandid != "" && $brandid != null) {
+            $sql .= " and t.brandid = '" . $brandid . "' ";
+        }
+        if ($sizeid != "0" && $sizeid != "" && $sizeid != null) {
+            $sql .= " and t.productsize = '" . $sizeid . "' ";
+        }
+        if (($barcode != "" && $barcode != null) || $barcode =="0" ) {
+            $sql .= " and t.barcode = '" . $barcode . "' ";
+        }
+
+
+//        if($noOfPage!="All"){
+//            $limitString = $noOfPage * 100;
+//            $sql = $sql . " order by productid desc limit ".$limitString.", 100";
+//        }
+        $left_rec = 0;
+        if ($rec_limit != "All" && is_numeric($rec_limit)) {
+            $countquery = "select COUNT(t.productid) as count from tbl_product t " . $sql;
+            $paginationDataArray = self::paginationFunction($rec_limit, $page, $countquery);
+
+            $left_rec = $paginationDataArray['left_rec'];
+            $paginationLimit = $paginationDataArray['paginationLimit'];
+            $page = $paginationDataArray['page'];
+            $rec_limit = $paginationDataArray['rec_limit'];
+
+            $paginationSql = " order by productid desc ".$paginationLimit;
+        }
+	else{
+	 $paginationSql = " order by productid desc ";		
+	}
+        if ($showroomId != "0" && $showroomId != "" && $showroomId != null) {
+       //     $sql .= " and a.showroomId = '" . $showroomId . "' ";
+        }
+
+        $sql = $sql ." group by t.productId". $paginationSql;
+
+        $userQuery = $this->db->query($beforeSql.$sql);
+        $k = 0;
+        foreach ($userQuery->result() as $row) {
+            $productIdFromQuery = $row->productid;
+            $showroomIdFromQuery = $row->showroomId;
+            $adminidFromQuery = $row->adminid;
+
+            $ProductList[$k]['productid'] = $productIdFromQuery;
+            $ProductList[$k]['productname'] = $row->productname;
+            $ProductList[$k]['productrate'] = $row->productrate;
+            $ProductList[$k]['retailerMRP'] = $row->price;
+            $ProductList[$k]['retailerShowroomId'] = $showroomIdFromQuery;
+
+            $ProductList[$k]['barcode'] = $row->barcode;
+            $ProductList[$k]['active'] = $row->active;
+            $ProductList[$k]['adminid'] = $adminidFromQuery;
+
+            $ProductList[$k]['brandid'] = $row->brandid;
+            $ProductList[$k]['productsize'] = $row->productsize;
+            $ProductList[$k]['categorytypeid'] = $row->categorytypeid;
+            $ProductList[$k]['subcategoryid'] = $row->subcategoryid;
+
+            $ProductList[$k]['brandname'] = $row->brandname;
+            $ProductList[$k]['size'] = $row->size;
+            $ProductList[$k]['categorytype'] = $row->categorytype;
+
+		$brandQuery= "SELECT t.brandname FROM `tbl_brand` t WHERE  t.brandid='".$ProductList[$k]['brandid']."' and t.active = 'active'  and adminId = '" . $adminid . "' ";
+		$brandDetails = $this->db->query($brandQuery);
+		$brandArray = $brandDetails->result_array();
+		$brandname=0;
+            if(count($brandArray)>0){
+               $brandname = $brandArray[0]['brandname'];
+		}
+		$subcategorQuery= "SELECT t.subcategory FROM `tbl_subCategory` t WHERE  t.subcategoryid='".$ProductList[$k]['subcategoryid']."' and t.active = 'active'  and adminId = '" . $adminid . "' ";
+		$subcategoryDetails = $this->db->query($subcategorQuery);
+		$subcategoryArray = $subcategoryDetails->result_array();
+		$subcategory=0;
+            if(count($subcategoryArray)>0){
+               $subcategory = $subcategoryArray[0]['subcategory'];
+		}
+            $salesCountQuery = " SELECT sum(`qty`) as qty,productId, adminid  FROM `tbl_customerreceiptproduct` WHERE adminid='".$adminidFromQuery."' " ;
+            if($productIdFromQuery>0 && $productIdFromQuery!="" && $productIdFromQuery!=null){
+                $salesCountQuery .=  " and productId = '".$productIdFromQuery."' ";
+            }
+
+            if($showroomIdFromQuery>0 && $showroomIdFromQuery!="" && $showroomIdFromQuery!=null){
+                $salesCountQuery .=  " and showroomId = '".$showroomIdFromQuery . "' ";
+            }
+//            echo $salesCountQuery."<br>";
+            $salesCountDetails = $this->db->query($salesCountQuery);
+            $salesCountDetailsArray = $salesCountDetails->result_array();
+            $salesQty = 0;
+            if(count($salesCountDetailsArray)>0){
+                $salesQty = $salesCountDetailsArray[0]['qty'];
+            }
+
+            $totalPQty = $row->quantity;
+            $avalableQty = $totalPQty - $salesQty;
+
+            $ProductList[$k]['qty'] = $salesQty;
+            $ProductList[$k]['quantity'] = $totalPQty;
+            $ProductList[$k]['avalableQty'] = $avalableQty;
+	    $ProductList[$k]['subcategory'] = $subcategory;
+	    $ProductList[$k]['brandname'] = $brandname;
+
+            $k++;
+        }
+//echo count($ProductList);
+//        echo "<pre>";
+//        print_r($ProductList);
+//        echo "</pre>";
+
+        $paginationArray['rec_limit'] = $rec_limit;
+        $paginationArray['left_rec'] = $left_rec;
+        $paginationArray['page'] = $page;
+        $paginationArray['resultArrayData'] = $ProductList;
+
+        return $paginationArray;
+    }
+	  public function getstockList($adminid, $productId, $showroomId, $categorytypeid,$subcategoryid, $brandid, $sizeid, $barcode , $noOfPage)
     {
 
         $ProductList = array();
@@ -357,36 +496,36 @@ class Users_model extends CI_Model
 
         $userQuery = $this->db->query($sql);
         $k = 0;
+	$results = array();
         foreach ($userQuery->result() as $row) {
             $productIdFromQuery = $row->productid;
             $showroomIdFromQuery = $row->showroomId;
             $adminidFromQuery = $row->adminid;
 
             $ProductList[$k]['productid'] = $productIdFromQuery;
-            $ProductList[$k]['productname'] = $row->productname;
-            $ProductList[$k]['productrate'] = $row->productrate;
-            $ProductList[$k]['retailerMRP'] = $row->price;
-            $ProductList[$k]['retailerShowroomId'] = $showroomIdFromQuery;
 
-            $ProductList[$k]['barcode'] = $row->barcode;
+            $ProductList[$k]['retailerMRP'] = $row->price;
             $ProductList[$k]['active'] = $row->active;
             $ProductList[$k]['adminid'] = $adminidFromQuery;
-
-            $ProductList[$k]['brandid'] = $row->brandid;
-            $ProductList[$k]['productsize'] = $row->productsize;
             $ProductList[$k]['categorytypeid'] = $row->categorytypeid;
             $ProductList[$k]['subcategoryid'] = $row->subcategoryid;
+	
+		
 
-            $ProductList[$k]['brandname'] = $row->brandname;
-            $ProductList[$k]['size'] = $row->size;
-            $ProductList[$k]['categorytype'] = $row->categorytype;
+		$subcategorQuery= "SELECT t.subcategory ,t.subcategoryid FROM `tbl_subCategory` t WHERE  t.subcategoryid='".$ProductList[$k]['subcategoryid']."' and t.active = 'active'  and adminId = '" . $adminid . "' group by t.subcategory";
+		$subcategoryDetails = $this->db->query($subcategorQuery);
+		$subcategoryArray = $subcategoryDetails->result_array();
+		$subcategory=0;
 
-
+		if(count($subcategoryArray)>0){
+               $subcategory = $subcategoryArray[0]['subcategory'];
+			
+		}
             $salesCountQuery = " SELECT sum(`qty`) as qty,productId, adminid  FROM `tbl_customerreceiptproduct` WHERE adminid='".$adminidFromQuery."' " ;
             if($productIdFromQuery>0 && $productIdFromQuery!="" && $productIdFromQuery!=null){
                 $salesCountQuery .=  " and productId = '".$productIdFromQuery."' ";
             }
-
+			
             if($showroomIdFromQuery>0 && $showroomIdFromQuery!="" && $showroomIdFromQuery!=null){
                 $salesCountQuery .=  " and showroomId = '".$showroomIdFromQuery . "' ";
             }
@@ -399,21 +538,65 @@ class Users_model extends CI_Model
                 $salesQty = $salesCountDetailsArray[0]['qty'];
             }
 
-            $totalPQty = $row->quantity;
-            $avalableQty = $totalPQty - $salesQty;
+		$totalPQty = $row->quantity;
+		$avalableQty = $totalPQty - $salesQty;
 
-            $ProductList[$k]['qty'] = $salesQty;
-            $ProductList[$k]['quantity'] = $totalPQty;
-            $ProductList[$k]['avalableQty'] = $avalableQty;
-
-
+		$totalProductPrice=$avalableQty * $row->price;
+		$results[]=$totalProductPrice;
+		$ProductList[$k]['totalProductPrice'] = $totalProductPrice;
+		$ProductList[$k]['qty'] = $salesQty;
+		$ProductList[$k]['quantity'] = $totalPQty;
+		$ProductList[$k]['avalableQty'] = $avalableQty;
+		$ProductList[$k]['subcategory'] = $subcategory;
+	
             $k++;
-        }
-//        echo "<pre>";
-//        print_r($ProductList);
-//        echo "</pre>";
 
+       }
+		 $ManiResult=implode(",",$results);
+		$final= array_sum($results);
         return $ProductList;
+    }
+public function getSubcategory($adminid)
+{
+$subcategoryArray=array();
+	$subcategorQuery= "SELECT t.subcategory ,t.subcategoryid FROM `tbl_subCategory` t WHERE  t.active = 'active'  and adminId = '" . $adminid . "' group by t.subcategory";
+		$subcategoryDetails = $this->db->query($subcategorQuery);
+		$subcategoryArray = $subcategoryDetails->result_array();
+		$subcategory=0;
+ return $subcategoryArray;
+}
+
+    public function paginationFunction($rec_limit, $page, $countquery)
+    {
+
+        $paginationArray = array();
+
+        $executeQuery = $this->db->query($countquery);
+        $countArray = $executeQuery->result_array();
+        $rec_count = $countArray[0]['count'];
+
+        if ((isset($page) && $page != "") || $page == "0") {
+            $offset = $rec_limit * $page;
+            $page = $page + 1;
+        } else {
+            $page = 0;
+            $offset = 0;
+        }
+
+        $left_rec = $rec_count - ($page * $rec_limit);
+        if ($page == "" || $page == 0) {
+            $left_rec = $rec_count - (1 * $rec_limit);
+        }
+
+        $paginationLimit = " LIMIT $offset, $rec_limit ";
+
+        $paginationArray['left_rec'] = $left_rec;
+        $paginationArray['page'] = $page;
+        $paginationArray['rec_limit'] = $rec_limit;
+        $paginationArray['paginationLimit'] = $paginationLimit;
+
+        return $paginationArray;
+
     }
 
     public function getRetailerProductList($adminid, $productId, $showroomId, $categorytypeid, $brandid, $sizeid, $barcode)
@@ -746,7 +929,7 @@ public function createMaintenance($MaintenanceArray)
 
     public function convertDDMMYYtoYYMMDD($bookingDate)
     {
-        $returnBookingDate = "0000-00-00";
+    $returnBookingDate = "0000-00-00";
         if ($bookingDate != null) {
             if ($bookingDate != "" && $bookingDate != "00-00-0000") {
                 $returnBookingDateArray = explode("-", $bookingDate);
@@ -757,7 +940,19 @@ public function createMaintenance($MaintenanceArray)
         }
         return $returnBookingDate;
     }
-
+ public function convertDDMMYYtoYYMMDDnew($bookingDate)
+    {
+    $returnBookingDate = "0000-00-00";
+        if ($bookingDate != null) {
+            if ($bookingDate != "" && $bookingDate != "00-00-0000") {
+                $returnBookingDateArray = explode("-", $bookingDate);
+                if (count($returnBookingDateArray) > 0) {
+                    $returnBookingDate = $returnBookingDateArray[2] . "-" . $returnBookingDateArray[0] . "-" . $returnBookingDateArray[1];
+                }
+            }
+        }
+        return $returnBookingDate;
+    }
     public function createSizeMaster($SizeDetailsArray)
     {
         $sql = "INSERT INTO tbl_sizemaster (size,adminid,createdat) " . "VALUES (" . $this->db->escape($SizeDetailsArray['size']) . "," . $this->db->escape($SizeDetailsArray['adminid']) . "," . $this->db->escape($SizeDetailsArray['createdAt']) . ")";
@@ -1076,6 +1271,73 @@ public function createMaintenance($MaintenanceArray)
 //            print_r($productListArray);
         return $productListArray;
     }
+	public function createAttendance($salesManAttendancearray)
+    {
+        $sql = "INSERT INTO tbl_Attendance (salesManId, AttendanceDate,showroomId,adminId,createdAt) " . "VALUES (" . $this->db->escape($salesManAttendancearray['salesManarray']) . "," . $this->db->escape($salesManAttendancearray['Attedate']) . "," . $this->db->escape($salesManAttendancearray['showroomId']) . "," . $this->db->escape($salesManAttendancearray['adminid']) . "," . $this->db->escape($salesManAttendancearray['createdAt']) . ")";
+        $this->db->query($sql);
+    }
+	public function getAttendanceList($showroomId,$date){
+	$salesmanList = "";
+
+        $sql = "SELECT j.salesManId FROM tbl_Attendance j WHERE j.showroomId='".$showroomId."' and j.AttendanceDate='".$date."'";
+        $AttendanceQuery = $this->db->query($sql);
+        $returnValue = $AttendanceQuery->result_array();
+	return $returnValue;	
+	}
+public function getMigiraton(){
+	//$sql = "SELECT j.barcode FROM Mens k INNER JOIN tbl_product j ON j.barcode = k.barcodeNew WHERE k.barcodeNew IS NOT NULL AND j.existingProcode IS NOT NULL ";
+	$sql = "SELECT j.barcode FROM tbl_product j WHERE j.active='newproduct'  ";
+        $result = $this->db->query($sql);
+        $returnValue = $result->result_array();
+ 	echo count($returnValue);
+	$uids = Array();
+	foreach($returnValue as $u){ $uids[] = $u['barcode'];
+ $list = implode("','",$uids);
+	$sqlnewupdate = "UPDATE `tbl_product` SET `active`='active' where `barcode`in('".$list."') ";
+$result = $this->db->query($sqlnewupdate);	
+	}
+
+       	} 
+	public function getsalesmanList($showroomId){
+
+        $sql = "SELECT name,userid FROM tbl_user WHERE usertypeid in(4,5) and retailerShowRoomId='".$showroomId."'";
+        $cateQuery = $this->db->query($sql);
+        $returnValue = $cateQuery->result_array();
+	
+        return $returnValue;
+    	}
+	 public function deleteQuery($showroomId, $deleteBillNo)
+    {
+	 $sql = "SELECT id FROM tbl_customerreceipt WHERE billNo='".$deleteBillNo."' and showRoomId= '".$showroomId."' ";
+       	 $reciptarray = $this->db->query($sql);
+        $returnValue = $reciptarray->result_array();
+	if(count($returnValue)>0){
+		$customerreceiptproduct = "DELETE FROM tbl_customerreceiptproduct WHERE showroomId= '".$showroomId."' and receiptId='".$returnValue[0]['id']."'";
+		$this->db->query($customerreceiptproduct);
+
+		$customerreceipt = "DELETE FROM tbl_customerreceipt WHERE showRoomId= '".$showroomId."' and billNo='".$deleteBillNo."'";
+		$this->db->query($customerreceipt);
+		echo "Success";
+	}
+	else {
+		echo "Invalid Billno ";	
+	}
+    }
+	 public function createdailyPayment($dailyPaymentarray)
+    {
+        $sql = "INSERT INTO tbl_dailySalesPament (Paidby,totalAmount,paidDate,description,showroomId,adminId,createdAt) " . "VALUES (" . $this->db->escape($dailyPaymentarray['Paidby']) . "," . $this->db->escape($dailyPaymentarray['Amount']) . "," . $this->db->escape($dailyPaymentarray['DatenewOne']) . "," . $this->db->escape($dailyPaymentarray['Description']) . "," . $this->db->escape($dailyPaymentarray['showroomId']) . "," . $this->db->escape($dailyPaymentarray['adminid']) . "," . $this->db->escape($dailyPaymentarray['createdAt']) . ")";
+        $this->db->query($sql);
+	$msg="success";
+return $msg;
+    }
+public function changeStatus($adminid, $productid)
+    { 
+		$changeStatus = "UPDATE `tbl_product` SET `active`='deactive' WHERE adminid='".$adminid."' and productid='".$productid."'";
+		$this->db->query($changeStatus);
+		echo "Success";
+	
+	}
 }
 
 ?>
+

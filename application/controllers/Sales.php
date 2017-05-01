@@ -114,11 +114,16 @@ class Sales extends CI_Controller
 
         $retailerShowRoomId = $this->session->userdata('retailerShowRoomId');
         $productIdArray = array('barcode' => $barcode, 'retailerShowRoomId' => $retailerShowRoomId);
-        $noOfPage = "0";
+        $rec_limit = "100";
+        $page = "0";
         if ($barcode=="" || $barcode==null){
             $barcode  = 0;
         }
-        $productDetails = $this->users_model->getProductList(0, 0, $retailerShowRoomId,0, 0, 0, 0, $barcode, $noOfPage);
+        $paginationArray = $this->users_model->getProductList(0, 0, $retailerShowRoomId,0, 0, 0, 0, $barcode, $rec_limit, $page);
+        $left_rec = $paginationArray['left_rec'];
+        $productDetails = $paginationArray['resultArrayData'];
+        $rec_limit = $paginationArray['rec_limit'];
+
         $productDetailsArray = array();
         for ($k = 0; $k < count($productDetails); $k++) {
             $productDetailsArray[$k]['productid'] = $productDetails[$k]['productid'];
@@ -192,7 +197,7 @@ class Sales extends CI_Controller
 
         $this->load->view('layout/frontend_header', $dataheader);
         $this->load->view('sales/receipt');
-        $this->load->view('layout/backend_footer');
+       // $this->load->view('layout/backend_footer');
     }
 
     public function returnpos()
@@ -343,7 +348,7 @@ class Sales extends CI_Controller
 		$lowStockproductArray = $this->pos_model->getlowStockProductList($retailerShowRoomId);
 		//print_r($lowStockproductArray);
 		$dataheader['lowStockproductArray']= $lowStockproductArray;
-        $this->load->view('sales/getReportInLowStock',$dataheader);
+        	$this->load->view('sales/getReportInLowStock',$dataheader);
     }
     public function reportsajax()
     {
@@ -440,7 +445,7 @@ public function returnList()
         $sizeid = $this->input->get_post('sizeid');
         $barcode = $this->input->get_post('barcode');
         $showroomId = $this->input->get_post('showroomId');
-        $noOfPage = "All";
+//        $noOfPage = "All";
         $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
         $adminid = "0";
         if ($sessionUserTypeIdIsset == 1) {
@@ -453,7 +458,16 @@ public function returnList()
                 $adminid = $this->session->userdata('adminid');
             }
         }
-        $ProductList = $this->users_model->getProductList($adminid, "0", $showroomId, $categorytypeid, $subcategoryid, $brandid, $sizeid, $barcode, $noOfPage);
+
+        $rec_limit = "All";
+        $page = 0;
+//        $ProductList = $this->users_model->getProductList($adminid, "0", $showroomId, $categorytypeid, $subcategoryid, $brandid, $sizeid, $barcode,  $rec_limit, $page);
+
+          $paginationArray = $this->users_model->getProductList($adminid, "0", $showroomId, $categorytypeid, $subcategoryid, $brandid, $sizeid, $barcode,  $rec_limit, $page);
+          $left_rec = $paginationArray['left_rec'];
+          $ProductList = $paginationArray['resultArrayData'];
+          $rec_limit = $paginationArray['rec_limit'];
+
 //        echo "<pre>";
 //        print_r($ProductList);
 //        echo "</pre>";

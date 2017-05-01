@@ -65,9 +65,17 @@
                             <li><a href="<?php echo base_url(); ?>Product/BrandMaster">Brand </a></li>
                             <li><a href="<?php echo base_url(); ?>Product/SizeMaster">Size </a></li>
                             <li><a href="<?php echo base_url(); ?>Product/ProductMaster">Product </a></li>
+<!--                            <li><a href="--><?php //echo base_url(); ?><!--Frontend/supplierMaster">Supplier Master </a></li>-->
+
+                        </ul>
+                    </li>
+			<li class="has-submenu">
+                        <a href="#"><i class="md md-pages"></i>Extra </a>
+                        <ul class="submenu">
+                          <li><a href="<?php echo base_url(); ?>Product/Attendance">Attendance</a></li>
                           <li><a href="<?php echo base_url(); ?>Product/dailyexpenses">Daily Expenses </a></li>
                           <li><a href="<?php echo base_url(); ?>Product/MaintenanceMaster">Maintenance Master</a></li>
-<!--                            <li><a href="--><?php //echo base_url(); ?><!--Frontend/supplierMaster">Supplier Master </a></li>-->
+<li><a href="<?php echo base_url(); ?>Product/dailyPayment">Daily Payment Master</a></li>
                         </ul>
                     </li>
                     <li class="has-submenu">

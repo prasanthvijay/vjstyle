@@ -187,6 +187,7 @@ class Product extends CI_Controller
 
             $size = $this->input->post('size');
             $createdAt = date("Y-m-d H:i:s");
+
             $SizeDetailsArray = array('size' => $size, 'sizeid' => $actionId, 'adminid' => $adminid, 'createdAt' => $createdAt);
 
             $output = array('status' => "3", 'message' => "Invalid Request");
@@ -308,7 +309,8 @@ class Product extends CI_Controller
 
             $Reasons = $this->input->post('Reason');
             $Amount = $this->input->post('Amount');
-            $Date = $this->input->post('Date');
+
+           $Date = date( "Y-m-d", strtotime( $this->input->post('Date')) );
             $createdAt = date("Y-m-d H:i:s");
             $MaintenanceArray = array('Reasons' => $Reasons, 'Amount' => $Amount,'Date' => $Date, 'adminid' => $adminid,'showroomId'  => $showroomId, 'createdAt' => $createdAt);
 
@@ -492,13 +494,27 @@ class Product extends CI_Controller
             $brandid = $this->input->get_post('brandid');
             $sizeid = $this->input->get_post('sizeid');
             $barcode = $this->input->get_post('barcode');
-            $noOfPage = "0";
-            $ProductList = $this->users_model->getProductList($adminid, "0", $showroomId, $categorytypeid, $subcategoryid, $brandid, $sizeid, $barcode, $noOfPage);
+            $rec_limit = 100;
+            $page = $this->input->get_post('page');
+            $paginationArray = $this->users_model->getProductList($adminid, "0", $showroomId, $categorytypeid, $subcategoryid, $brandid, $sizeid, $barcode, $rec_limit, $page);
+            $left_rec = $paginationArray['left_rec'];
+            $ProductList = $paginationArray['resultArrayData'];
+            $rec_limit = $paginationArray['rec_limit'];
+
+            $dataheader['page'] = $page;
+            $dataheader['left_rec'] = $left_rec;
+            $dataheader['rec_limit'] = $rec_limit;
+
+
         }else if ($type == "ExpensesList") {
 	$ExpensesList = $this->users_model->getExpensesList($adminid, $actionId);
 		}			
 	else if ($type == "MaintenanceList") {
 			$MaintenanceList = $this->users_model->getMaintenanceList($adminid, $actionId);
+		}
+	else if($type=="changeStatus") {
+		$productid = $this->input->get_post('productid');
+            	$BrandList = $this->users_model->changeStatus($adminid, $productid);
 		}
         $dataheader['typeList'] = $type;
         $dataheader['SizeList'] = $SizeList;
@@ -893,8 +909,18 @@ class Product extends CI_Controller
         $actionId = "0";
         $actionType = $this->input->get_post('actionType');
         $productId = $this->input->get_post('actionId');
-        $noOfPage = "0";
-        $productArray = $this->users_model->getProductList($adminid, $productId, $retailerShowRoomId , "0", "0", "0", "0", null, $noOfPage);
+
+        $rec_limit= 100;
+        $page = 0;
+        $paginationArray = $this->users_model->getProductList($adminid, $productId, $retailerShowRoomId , "0", "0", "0", "0", null,  $rec_limit, $page);
+        $left_rec = $paginationArray['left_rec'];
+        $productArray = $paginationArray['resultArrayData'];
+        $rec_limit = $paginationArray['rec_limit'];
+
+        $dataheader['left_rec'] = $left_rec;
+        $dataheader['rec_limit'] = $rec_limit;
+        $dataheader['page'] = $page;
+
         $BrandArray = $this->users_model->getBrandList($adminid, $actionId);
         $SizeArray = $this->users_model->getSizeList($adminid, $actionId);
         $CategoryTypeArray = $this->users_model->getCategoryTypeList($adminid, $actionId);
@@ -924,6 +950,71 @@ class Product extends CI_Controller
         $sizeid = $this->input->get_post('sizeid');
         $barcode = $this->input->get_post('barcode');
         $showroomId = $this->input->get_post('showroomId');
+//        $noOfPage = "All";
+        $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
+        $adminid = "0";
+        if ($sessionUserTypeIdIsset == 1) {
+            $sessionUserTypeId = $this->session->userdata('usertypeid');
+            if ($sessionUserTypeId == 2) {
+                $adminid = $this->session->userdata('userid');
+            } else if ($sessionUserTypeId == 1) {
+                $adminid = $this->input->get_post('adminid');
+            } else if ($sessionUserTypeId == 4) {
+                $adminid = $this->session->userdata('adminid');
+            }
+        }
+
+        $rec_limit = "All";
+        $page = 0;
+        $paginationArray = $this->users_model->getProductList($adminid, "0", $showroomId, $categorytypeid, $subcategoryid, $brandid, $sizeid, $barcode,  $rec_limit, $page);
+        $left_rec = $paginationArray['left_rec'];
+        $ProductList = $paginationArray['resultArrayData'];
+        $rec_limit = $paginationArray['rec_limit'];
+
+        $dataheader['left_rec'] = $left_rec;
+        $dataheader['rec_limit'] = $rec_limit;
+        $dataheader['page'] = $page;
+
+
+//        echo "<pre>";
+//        print_r($ProductList);
+//        echo "</pre>";
+        $stringOfRecord = "productid \t productname \t productrate \t retailerMRP \t retailerShowroomId \t  barcode \t brandid \t productsize \t subcategoryid \t brandname \t size \t categorytype \t avalableQty";
+        for($m=0; $m<count($ProductList);$m++){
+            $productid = $ProductList[$m]['productid'];
+            $productname = $ProductList[$m]['productname'];
+            $productrate = $ProductList[$m]['productrate'];
+            $retailerMRP = $ProductList[$m]['retailerMRP'];
+            $retailerShowroomId = $ProductList[$m]['retailerShowroomId'];
+            $barcode = $ProductList[$m]['barcode'];
+            $brandid = $ProductList[$m]['brandname'];
+            $productsize = $ProductList[$m]['productsize'];
+            $subcategoryid = $ProductList[$m]['subcategory'];
+            $brandname = $ProductList[$m]['brandname'];
+            $size = $ProductList[$m]['size'];
+            $categorytype = $ProductList[$m]['categorytype'];
+            $avalableQty = $ProductList[$m]['avalableQty'];
+
+            $stringOfRecord = $stringOfRecord. "\n $productid \t $productname \t $productrate \t $retailerMRP \t $retailerShowroomId \t $barcode \t $brandid \t $productsize \t $subcategoryid \t $brandname \t $size \t $categorytype \t $avalableQty";
+        }
+
+        $dateTime = date("YmdHis");
+        header("Content-Type: application/vnd.ms-excel; charset=utf-8");
+        header("Content-Disposition: attachement; filename=$dateTime.xls");
+        header("Express: 0");
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header("Cache-Control: private",false);
+
+        echo $stringOfRecord;
+    }
+ public function generatestockExcel(){
+
+        $categorytypeid = $this->input->get_post('categorytypeid');
+        $subcategoryid = $this->input->get_post('subcategoryid');
+        $brandid = $this->input->get_post('brandid');
+        $sizeid = $this->input->get_post('sizeid');
+        $barcode = $this->input->get_post('barcode');
+        $showroomId = $this->input->get_post('showroomId');
         $noOfPage = "All";
         $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
         $adminid = "0";
@@ -937,30 +1028,37 @@ class Product extends CI_Controller
                 $adminid = $this->session->userdata('adminid');
             }
         }
-        $ProductList = $this->users_model->getProductList($adminid, "0", $showroomId, $categorytypeid, $subcategoryid, $brandid, $sizeid, $barcode, $noOfPage);
-//        echo "<pre>";
-//        print_r($ProductList);
-//        echo "</pre>";
-        $stringOfRecord = "productid \t productname \t productrate \t retailerMRP \t retailerShowroomId \t  barcode \t brandid \t productsize \t categorytypeid \t subcategoryid \t brandname \t size \t categorytype \t avalableQty";
-        for($m=0; $m<count($ProductList);$m++){
-            $productid = $ProductList[$m]['productid'];
-            $productname = $ProductList[$m]['productname'];
-            $productrate = $ProductList[$m]['productrate'];
-            $retailerMRP = $ProductList[$m]['retailerMRP'];
-            $retailerShowroomId = $ProductList[$m]['retailerShowroomId'];
-            $barcode = $ProductList[$m]['barcode'];
-            $brandid = $ProductList[$m]['brandid'];
-            $productsize = $ProductList[$m]['productsize'];
-            $categorytypeid = $ProductList[$m]['categorytypeid'];
-            $subcategoryid = $ProductList[$m]['subcategoryid'];
-            $brandname = $ProductList[$m]['brandname'];
-            $size = $ProductList[$m]['size'];
-            $categorytype = $ProductList[$m]['categorytype'];
-            $avalableQty = $ProductList[$m]['avalableQty'];
+        $ProductList = $this->users_model->getstockList($adminid, "0", $showroomId, $categorytypeid, $subcategoryid, $brandid, $sizeid, $barcode, $noOfPage);
+ 	 $subcategoryArray = $this->users_model->getSubcategory($adminid);
 
-            $stringOfRecord = $stringOfRecord. "\n $productid \t $productname \t $productrate \t $retailerMRP \t $retailerShowroomId \t $barcode \t $brandid \t $productsize \t $categorytypeid \t $subcategoryid \t $brandname \t $size \t $categorytype \t $avalableQty";
-        }
-
+ 	
+        $stringOfRecord = "Category \t Quanty \t amount \t totalProductCost";
+	$totalProductPrice="";
+			 for($i=0;$i<count($subcategoryArray);$i++){
+					$subcategory[$i]="";
+					$avalableQty[$i]="";
+					$retailerMRP[$i]="";
+					for($j=0;$j<count($ProductList);$j++){
+						if($subcategoryArray[$i]['subcategoryid']==$ProductList[$j]['subcategoryid']){
+							$avalableQty[$i].=$ProductList[$j]['avalableQty'].',';
+							//$subcategory[$i].=$ProductList[$j]['subcategory'].',';
+							$retailerMRP[$i].=$ProductList[$j]['avalableQty'] * $ProductList[$j]['retailerMRP'].',';
+							
+						}
+						
+					} 
+				
+					$subcategory=$subcategoryArray[$i]['subcategory']; 
+					$avalableQty[$i]=explode(",",rtrim($avalableQty[$i],','));
+					 $finalavalableQty= array_sum($avalableQty[$i]); 
+					$retailerMRP[$i]=explode(",",rtrim($retailerMRP[$i],','));
+					 $amount= array_sum($retailerMRP[$i]);
+					$totalProductPrice.=$amount.',';
+					$stringOfRecord = $stringOfRecord. "\n $subcategory \t $finalavalableQty  \t $amount";	
+	} 	
+         $totalProduct=explode(",",rtrim($totalProductPrice,','));
+	 $totalProductCost= array_sum($totalProduct);
+		$stringOfRecord=$stringOfRecord. "\n $totalProductCost ";
         $dateTime = date("YmdHis");
         header("Content-Type: application/vnd.ms-excel; charset=utf-8");
         header("Content-Disposition: attachement; filename=$dateTime.xls");
@@ -970,10 +1068,33 @@ class Product extends CI_Controller
 
         echo $stringOfRecord;
     }
-    public function Attendance(){
+   public function Attendance(){
+		$showroomId = $this->session->userdata('retailerShowRoomId');
+		$sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
+		$adminid = "0";
+        	$submit = $this->input->get_post('submit');
+		$date = date("Y-m-d");
+		$getAttendanceList =$this->users_model->getAttendanceList($showroomId,$date);
+		if($submit=="Submit")
+		{
+				$createdAt = date("Y-m-d H:i:s");
+				$salesManarray =implode(",",$this->input->get_post('salesManarray')); 
+				$attdate=$this->input->get_post('Attedate');
+				 $Attedateold= str_replace("/","-",$attdate);
+				 $Attedate = $this->users_model->convertDDMMYYtoYYMMDD($Attedateold);
+
+				$salesManAttendancearray = array('salesManarray'=>$salesManarray,'Attedate' => $Attedate,'showroomId' => $showroomId,  'adminid' => $adminid, 'createdAt' => $createdAt);
+				$createAttendance = $this->users_model->createAttendance($salesManAttendancearray); 
+		}
+
+	
+	 	$salesmanList = $this->users_model->getsalesmanList($showroomId);
+               	$dataheader['salesmanList'] = $salesmanList;
         	$dataheader['title'] = "Attendance";
 		$this->load->view('layout/backend_header', $dataheader);
+
         	$this->load->view('layout/backend_menu');
+
 		$this->load->view('product/Attendance');
         	$this->load->view('layout/backend_footer');
 
@@ -1018,6 +1139,53 @@ public function AddExpenses(){
 		$this->load->view('product/MaintenanceMaster');
         	$this->load->view('layout/backend_footer');
 
+	}
+public function Migration(){
+
+		$getMigiraton =$this->users_model->getMigiraton();
+	$this->load->view('product/Migration');
+
+
+	}
+public function dailyPayment(){
+		$showroomId = $this->session->userdata('retailerShowRoomId');
+		$adminid = "0";
+		$salesmanList = $this->users_model->getsalesmanList($showroomId);
+               	$dataheader['salesmanList'] = $salesmanList;
+		$createdailyPayment='';
+		$submit=$this->input->get_post('submit');
+		if($submit=="Submit")
+		{
+				$createdAt = date("Y-m-d H:i:s");
+				$Paidby=$this->input->get_post('Paidby');
+				$Amount=$this->input->get_post('Amount');
+				$Date=$this->input->get_post('Date');
+				$Description=$this->input->get_post('Description');
+ 				$Datenew= str_replace("/","-",$Date);
+				 $DatenewOne = $this->users_model->convertDDMMYYtoYYMMDDnew($Datenew);
+				
+				$dailyPaymentarray = array('Paidby'=>$Paidby,'Amount' => $Amount,'DatenewOne' => $DatenewOne,  'Description' => $Description,'showroomId' => $showroomId, 'adminid' => $adminid, 'createdAt' => $createdAt);
+				$createdailyPayment = $this->users_model->createdailyPayment($dailyPaymentarray); 
+		}
+		$dataheader['msg'] = $createdailyPayment;
+		$dataheader['title'] = "Daily Payment";
+		$this->load->view('layout/backend_header', $dataheader);
+        	$this->load->view('layout/backend_menu');
+		$this->load->view('product/dailyPayment');
+        	$this->load->view('layout/backend_footer');
+
+
+
+	}
+ public function mobilePage(){
+
+        $actiontype = $this->input->get_post('actiontype');
+	if($actiontype=="deleteBill"){
+		$showroomId="3";
+	 	$deleteBillNo = $this->input->get_post('billno');
+         	$deleteQuery = $this->users_model->deleteQuery($showroomId, $deleteBillNo);
+	}
+	$this->load->view('product/mobilePage');
 	}
 public function Maintenance(){
         	

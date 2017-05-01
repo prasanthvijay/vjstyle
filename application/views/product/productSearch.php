@@ -128,6 +128,19 @@
                 <button class="btn btn-icon waves-effect waves-light btn-rounded m-b-5" type="button" onclick="generateProductList()">
                     <i class="fa fa-download"></i>&nbsp;Generate Excel
                 </button>
+		
+            </div>
+        </div>
+    </div>
+  <div class="form-group">
+        <div class="row">
+            <div class="col-md-6">
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-icon btn-warning waves-effect waves-light btn-rounded m-b-5" type="button" onclick="generatestockList()">
+                    <i class="fa fa-download"></i>&nbsp;Generate Stock Report
+                </button>
+		
             </div>
         </div>
     </div>

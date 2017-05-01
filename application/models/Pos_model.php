@@ -33,7 +33,25 @@ class Pos_model extends CI_Model
 
         return $returnValue;
     }
+ public function sumofQuantity($tablename, $fieldname, $condition)
+    {
 
+        $returnValue = array();
+        $fieldnames = "";
+
+        for ($i = 0; $i < count($fieldname); $i++) {
+            $fieldnames .= $fieldname[$i] . ",";
+        }
+        $fieldnames = trim($fieldnames, ",");
+
+
+        echo $sql = "SELECT " . $fieldnames . " FROM " . $tablename . " t WHERE " . $condition;
+        $executeQuery = $this->db->query($sql);
+        $returnValue = $executeQuery->result_array();
+
+
+        return $returnValue;
+    }
     public function productDetails($barcode, $retailerShowRoomId)
     {
 

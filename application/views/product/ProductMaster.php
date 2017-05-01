@@ -52,6 +52,7 @@
                     </div>
                 </div>
             </div>
+		<div id="SuccesstextDiv" align="center" class="text-info"></div>
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-12">
@@ -74,9 +75,10 @@
 
 <input type="hidden" id="count" name="count" value="1">
 <input type="hidden" id="generateBarcdeExcelUrl" name="generateBarcdeExcelUrl" value="generateBarcdeExcel">
+<input type="hidden" id="generatestockExcel" name="generatestockExcel" value="generatestockExcel">
 <input type="hidden" name="ajaxPostUrl" id="ajaxPostUrl" value="<?php echo base_url().'Product/productSearch'?>">
 <script>
-    var postData = "type=ProductList";
+    var postData = "type=ProductList&page=0";
 
     loadMastersList(postData);
     
@@ -110,15 +112,25 @@
         var newSearchPostData = $("#productSearchForm").serialize() + "&"+postData ;
         loadMastersList(newSearchPostData);
     }
-
-    function generateProductList() {
-        var postData = "type=generateBarCode";
+function generateProductList(){
+ var postData = "type=generateBarCode";
         var newSearchPostData = $("#productSearchForm").serialize() + "&"+postData ;
         var generateBarcdeExcelUrl = $("#generateBarcdeExcelUrl").val();
 
         var formname = document.getElementById('productSearchForm');
         formname.method = "post";
         formname.action = generateBarcdeExcelUrl;
+        formname.submit();
+
+}
+    function generatestockList() {
+        var postData = "type=generateBarCode";
+        var newSearchPostData = $("#productSearchForm").serialize() + "&"+postData ;
+        var generatestockExcel = $("#generatestockExcel").val();
+
+        var formname = document.getElementById('productSearchForm');
+        formname.method = "post";
+        formname.action = generatestockExcel;
         formname.submit();
     }
     
@@ -163,6 +175,7 @@
         });
     }
 
+
     function getSubCategoryList() {
         var formData = "type=subCategoryJson&categorytypeid="+$("#categorytypeid").val();
         $.ajax({
@@ -174,4 +187,17 @@
                 $("#subcategoryid").select2();            }
         });
     }
+function changeStatus(productid){
+var postDa="productid="+productid+"&type=changeStatus"
+ $.ajax({
+        url: "BrandList",
+        type: "GET",
+        data: postDa,
+        success: function (data) {
+	$('#SuccesstextDiv').html("Updated Sucessfully...!");
+   	 loadMastersList(postData);
+           $('#datatable-responsive').DataTable();
+        }
+    });
+}
 </script>

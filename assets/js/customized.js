@@ -41,7 +41,7 @@ function loadAddOrEditContentWithModal(postUrl, postData, displayDiv) {
 }
 
 function loadMastersList(postData) {
-
+    $("#usersListDiv").html("<div  style='text-align:center;'><span class='fa fa-circle-o-notch fa-spin fa-3x text-success'></span><br/><br/>Loading ...</div>");
     $.ajax({
         url: "BrandList",
         type: "GET",
