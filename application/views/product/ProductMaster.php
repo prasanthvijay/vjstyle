@@ -28,6 +28,22 @@
                     </div>
                 </div>
             </div>
+		<?php if($sessionUserTypeId==2){ ?>
+			<div class="form-group">
+			<div class="row">
+			<div class="col-md-3"></div>
+			    <label for="for-lable col-md-3" class="form-lable col-md-3">
+				Select Showroom
+			    </label>
+			 <div class="col-sm-3"><select class="form-control">
+						<option value="">Select Showroom</option>
+						               <?php for ($i = 0; $i < count($showroomArray); $i++) { ?>	
+								<option value="<?php echo $showroomArray[$i]['userid']; ?>"><?php echo $showroomArray[$i]['name']; ?></option>
+								<?php } ?>
+				</select></div>	
+			</div>
+			</div>
+		<?php } ?>
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-3"></div>

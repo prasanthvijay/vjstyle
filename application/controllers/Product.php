@@ -452,6 +452,7 @@ class Product extends CI_Controller
         $adminid = "0";
         $showroomId = "0";
         $sessionUserTypeId = "0";
+            $retailerShowRoomId = $this->session->userdata('retailerShowRoomId');
         if ($sessionUserTypeIdIsset == 1) {
             $sessionUserTypeId = $this->session->userdata('usertypeid');
             if ($sessionUserTypeId == 2) {
@@ -466,7 +467,7 @@ class Product extends CI_Controller
 
             }
         }
-
+        //print_r($_SESSION);
         $type = $this->input->get('type');
         $actionId = "0";
         $ExpensesList = array();
@@ -516,6 +517,7 @@ class Product extends CI_Controller
 		$productid = $this->input->get_post('productid');
             	$BrandList = $this->users_model->changeStatus($adminid, $productid);
 		}
+        $dataheader['retailerShowRoomId'] = $retailerShowRoomId;
         $dataheader['typeList'] = $type;
         $dataheader['SizeList'] = $SizeList;
         $dataheader['BrandList'] = $BrandList;
@@ -579,10 +581,13 @@ class Product extends CI_Controller
     {
         $sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
         $adminid = "0";
+$showroomArray ="";
         if ($sessionUserTypeIdIsset == 1) {
             $sessionUserTypeId = $this->session->userdata('usertypeid');
             if ($sessionUserTypeId == 2) {
                 $adminid = $this->session->userdata('userid');
+        	$showroomArray = $this->users_model->getshowroomList($adminid,'3');
+
             } else if ($sessionUserTypeId == 1) {
                 $adminid = $this->input->get_post('adminid');
             } else if ($sessionUserTypeId == 4) {
@@ -591,8 +596,14 @@ class Product extends CI_Controller
         } else {
             redirect(base_url() . "Frontend/logout");
         }
+
+
+//echo "<br><br><br><br><br><br>";
+//print_r($productArray);
+
 //        $adminid = $this->session->userdata('usertypeid');
         $dataheader['sessionUserTypeId'] = $sessionUserTypeId;
+        $dataheader['showroomArray'] = $showroomArray;
         $dataheader['title'] = "Product";
         $this->load->view('layout/backend_header', $dataheader);
         $this->load->view('layout/backend_menu');
@@ -882,6 +893,19 @@ class Product extends CI_Controller
             $productQytArray = $this->users_model->mappedProduct($productId, $showroomId, $adminid, $type);
             $dataheader['productQytArray'] = $productQytArray;
         }
+	if ($type == 'getBarcode') {
+	        $barcode = $this->input->get('barcode');
+	 	$productQytArray = $this->users_model->quCheck($barcode);
+            echo json_encode($productQytArray);
+        }
+	if ($type == 'batchUpdate') {
+	$barcode = $this->input->get('batchId');
+	$operationtype = $this->input->get('operationtype');
+	$qty = $this->input->get('qty');
+	$productQytArray = $this->users_model->qtyUpdate($operationtype,$barcode,$qty);
+
+	}
+	
         $dataheader['type'] = $type;
         $dataheader['count'] = $count;
         $this->load->view('product/getContent', $dataheader);
@@ -1030,8 +1054,7 @@ class Product extends CI_Controller
         }
         $ProductList = $this->users_model->getstockList($adminid, "0", $showroomId, $categorytypeid, $subcategoryid, $brandid, $sizeid, $barcode, $noOfPage);
  	 $subcategoryArray = $this->users_model->getSubcategory($adminid);
-
- 	
+	
         $stringOfRecord = "Category \t Quanty \t amount \t totalProductCost";
 	$totalProductPrice="";
 			 for($i=0;$i<count($subcategoryArray);$i++){
@@ -1039,13 +1062,14 @@ class Product extends CI_Controller
 					$avalableQty[$i]="";
 					$retailerMRP[$i]="";
 					for($j=0;$j<count($ProductList);$j++){
+
 						if($subcategoryArray[$i]['subcategoryid']==$ProductList[$j]['subcategoryid']){
 							$avalableQty[$i].=$ProductList[$j]['avalableQty'].',';
 							//$subcategory[$i].=$ProductList[$j]['subcategory'].',';
 							$retailerMRP[$i].=$ProductList[$j]['avalableQty'] * $ProductList[$j]['retailerMRP'].',';
 							
 						}
-						
+							
 					} 
 				
 					$subcategory=$subcategoryArray[$i]['subcategory']; 
@@ -1069,6 +1093,11 @@ class Product extends CI_Controller
         echo $stringOfRecord;
     }
    public function Attendance(){
+
+
+        	$type = $this->input->get_post('type');
+        	$dataheader['type'] = $type;
+		if($type=="Attendance"){
 		$showroomId = $this->session->userdata('retailerShowRoomId');
 		$sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
 		$adminid = "0";
@@ -1091,6 +1120,22 @@ class Product extends CI_Controller
 	 	$salesmanList = $this->users_model->getsalesmanList($showroomId);
                	$dataheader['salesmanList'] = $salesmanList;
         	$dataheader['title'] = "Attendance";
+
+	}
+	if($type=="Update"){
+		$showroomId = $this->session->userdata('retailerShowRoomId');
+		$sessionUserTypeIdIsset = $this->session->has_userdata('usertypeid');
+		$adminid = "0";
+        	$submit = $this->input->get_post('submit');
+		$date = date("Y-m-d");
+		$getAttendanceList =$this->users_model->getAttendanceList($showroomId,$date);
+	
+	 	$salesmanList = $this->users_model->getsalesmanList($showroomId);
+               	$dataheader['salesmanList'] = $salesmanList;
+        	$dataheader['title'] = "Update";
+
+	}
+
 		$this->load->view('layout/backend_header', $dataheader);
 
         	$this->load->view('layout/backend_menu');
@@ -1107,6 +1152,7 @@ public function dailyexpenses(){
         	$this->load->view('layout/backend_footer');
 
 	}
+
 public function AddExpenses(){
         	
  	$dataheader = array();

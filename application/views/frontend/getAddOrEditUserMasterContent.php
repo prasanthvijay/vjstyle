@@ -134,12 +134,21 @@ if(count($editUsersList)>0){
             <?php } ?>
             <?php if($usertypeid == 3 || $usertypeid == 6){ ?>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="email" class="control-label">Email ID</label>
                             <input type="text" class="form-control" id="email" name="email" parsley-trigger="change" required placeholder="Email ID" value="<?php echo $email; ?>">
                         </div>
                     </div>
+		<?php if($usertypeid == 3) { ?> 
+			<div class="col-md-3">
+                        <div class="form-group">
+                            <label for="email" class="control-label">Barcode Lable</label>
+                            <input type="text" class="form-control" id="Barcode" maxlength="2" name="Barcode" parsley-trigger="change" required placeholder="Barcode Lable" value="">
+                        </div>
+                    </div>
+
+		<?php } ?>
                     <?php if($usertypeid == 6) { ?>
                     <div class="col-md-6">
                         <div class="form-group">

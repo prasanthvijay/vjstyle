@@ -72,7 +72,8 @@
 			<li class="has-submenu">
                         <a href="#"><i class="md md-pages"></i>Extra </a>
                         <ul class="submenu">
-                          <li><a href="<?php echo base_url(); ?>Product/Attendance">Attendance</a></li>
+                          <li><a href="<?php echo base_url(); ?>Product/Attendance?type=Attendance">Attendance</a></li>
+                          <li><a href="<?php echo base_url(); ?>Product/Attendance?type=Update">Update</a></li>
                           <li><a href="<?php echo base_url(); ?>Product/dailyexpenses">Daily Expenses </a></li>
                           <li><a href="<?php echo base_url(); ?>Product/MaintenanceMaster">Maintenance Master</a></li>
 <li><a href="<?php echo base_url(); ?>Product/dailyPayment">Daily Payment Master</a></li>

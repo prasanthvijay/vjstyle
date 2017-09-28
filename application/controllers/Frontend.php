@@ -212,6 +212,7 @@ class Frontend extends CI_Controller
         $name = $this->input->get_post('name');
         $titlename = $this->input->get_post('titlename');
         $email = $this->input->get_post('email');
+        $Barcode = $this->input->get_post('Barcode');
         $password = $this->input->get_post('password');
         $usertypeid = $this->input->get_post('usertypeid');
         $mobile = $this->input->get_post('mobile');
@@ -240,7 +241,7 @@ class Frontend extends CI_Controller
         $doj = $this->users_model->convertDDMMYYtoYYMMDD($doj);
         $dob = $this->users_model->convertDDMMYYtoYYMMDD($dob);
 
-        $userDetailsArray = array('name' => $name, 'email' => $email, 'password' => $password, 'usertypeid' => $usertypeid,
+        $userDetailsArray = array('name' => $name,'Barcode' => $Barcode, 'email' => $email, 'password' => $password, 'usertypeid' => $usertypeid,
             'adminid' => $adminid, 'retailershowroomid' => $retailershowroomid, 'mobile' => $mobile, 'address' => $address,
             'doj' => $doj, 'dob' => $dob,'tinnumber' => $tinnumber,'cinnumber' => $cinnumber,'bankname' => $bankname,'accountno'=>$accountno,'ifscode'=>$ifscode,
             'active' => $active, 'createdAt' => $createdAt,'userid' => $actionId);

@@ -262,7 +262,7 @@
             <tr>
 
                 <td><?php echo $i + 1; $productId = $ProductList[$i]['productid']; ?></td>
-                <td><?php echo $ProductList[$i]['barcode']; ?></td>
+                <td><?php if($retailerShowRoomId==24) { echo str_replace("JR","VG",$ProductList[$i]['barcode']); }else { echo $ProductList[$i]['barcode']; }  ?></td>
                 <td><?php echo $ProductList[$i]['productname']; ?></td>
                 <td><?php echo $ProductList[$i]['avalableQty']; ?></td>
                 <td>

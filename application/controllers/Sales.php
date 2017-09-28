@@ -112,7 +112,7 @@ class Sales extends CI_Controller
     {
         $barcode = $this->input->get_post("barcode");
 
-        $retailerShowRoomId = $this->session->userdata('retailerShowRoomId');
+        echo $retailerShowRoomId = $this->session->userdata('retailerShowRoomId');
         $productIdArray = array('barcode' => $barcode, 'retailerShowRoomId' => $retailerShowRoomId);
         $rec_limit = "100";
         $page = "0";

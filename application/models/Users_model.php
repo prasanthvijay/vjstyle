@@ -368,7 +368,7 @@ class Users_model extends CI_Model
 	 $paginationSql = " order by productid desc ";		
 	}
         if ($showroomId != "0" && $showroomId != "" && $showroomId != null) {
-       //     $sql .= " and a.showroomId = '" . $showroomId . "' ";
+            $sql .= " and a.showroomId = '" . $showroomId . "' ";
         }
 
         $sql = $sql ." group by t.productId". $paginationSql;
@@ -720,7 +720,7 @@ $subcategoryArray=array();
             $retailershowroomid = 0;
         }
 
-        $sql = "INSERT INTO tbl_user (name,email,password,usertypeid,adminid,retailerShowRoomId,mobile,address,doj,dob, tinnumber, cinnumber, BankName,IFSCode,AccountNumber,active,createdat) " . "VALUES (" . $this->db->escape($userDetailsArray['name']) . "," . $this->db->escape($userDetailsArray['email']) . "," . $this->db->escape($userDetailsArray['password']) . "," . $this->db->escape($userDetailsArray['usertypeid']) . "," . $this->db->escape($userDetailsArray['adminid']) . "," . $this->db->escape($retailershowroomid) . "," . $this->db->escape($userDetailsArray['mobile']) . "," . $this->db->escape($userDetailsArray['address']) . "," . $this->db->escape($doj) . "," . $this->db->escape($dob). "," . $this->db->escape($userDetailsArray['tinnumber']) . "," . $this->db->escape($userDetailsArray['cinnumber']) . "," . $this->db->escape($userDetailsArray['bankname'])  . "," . $this->db->escape($userDetailsArray['ifscode'])  . "," . $this->db->escape($userDetailsArray['accountno'])  . "," . $this->db->escape($userDetailsArray['active']) . "," . $this->db->escape($userDetailsArray['createdAt']) . ")";
+        $sql = "INSERT INTO tbl_user (name,email,aliasName,password,usertypeid,adminid,retailerShowRoomId,mobile,address,doj,dob, tinnumber, cinnumber, BankName,IFSCode,AccountNumber,active,createdat) " . "VALUES (" . $this->db->escape($userDetailsArray['name']) . "," . $this->db->escape($userDetailsArray['email']) . "," . $this->db->escape($userDetailsArray['Barcode']) . "," . $this->db->escape($userDetailsArray['password']) . "," . $this->db->escape($userDetailsArray['usertypeid']) . "," . $this->db->escape($userDetailsArray['adminid']) . "," . $this->db->escape($retailershowroomid) . "," . $this->db->escape($userDetailsArray['mobile']) . "," . $this->db->escape($userDetailsArray['address']) . "," . $this->db->escape($doj) . "," . $this->db->escape($dob). "," . $this->db->escape($userDetailsArray['tinnumber']) . "," . $this->db->escape($userDetailsArray['cinnumber']) . "," . $this->db->escape($userDetailsArray['bankname'])  . "," . $this->db->escape($userDetailsArray['ifscode'])  . "," . $this->db->escape($userDetailsArray['accountno'])  . "," . $this->db->escape($userDetailsArray['active']) . "," . $this->db->escape($userDetailsArray['createdAt']) . ")";
         $this->db->query($sql);
     }
 
@@ -1336,6 +1336,61 @@ public function changeStatus($adminid, $productid)
 		$this->db->query($changeStatus);
 		echo "Success";
 	
+	}
+public function quCheck($barcode)
+    	{ 
+$returnValue = array();
+	 $sql = "SELECT j.productid,j.active,sum(k.qty) as salescount FROM tbl_product j inner join tbl_customerreceiptproduct k on k.productId =j.productid WHERE j.barcode ='".$barcode."' and k.showroomId=3 ";
+
+       	$reciptarray = $this->db->query($sql);
+        $return = $reciptarray->result_array();
+
+	if($return[0]['salescount']!=""){
+	$sqldate = "SELECT k.date,j.receiptId FROM tbl_customerreceiptproduct j INNER JOIN tbl_customerreceipt k on k.id=j.receiptId WHERE j.productId ='".$return[0]['productid']."' ORDER BY k.billNo DESC; ";
+       	$reciptarraydate = $this->db->query($sqldate);
+        $returndate = $reciptarraydate->result_array();
+
+	$returnValue[0]['date']=$returndate[0]['date'];
+	}
+	else{
+			$returnValue[0]['date']="Not Sales";
+	}
+
+	$returnValue[0]['productid']=$return[0]['productid'];
+
+	$returnValue[0]['active']=$return[0]['active'];
+		
+		if($return[0]['salescount']==null){
+		$returnValue[0]['salescount']=0;
+		}else{	
+		$returnValue[0]['salescount']=$return[0]['salescount'];
+		}
+		$sql1 = "SELECT j.id,j.quantity,sum(j.quantity) as totalcount FROM tbl_productBatch j WHERE j.productid ='".$return[0]['productid']."'";
+       	$reciptarraynew = $this->db->query($sql1);
+        $returnnew = $reciptarraynew->result_array();
+	$returnValue[0]['totalcount']=$returnnew[0]['totalcount'];
+	$returnValue[0]['quantity']=$returnnew[0]['quantity']-$return[0]['salescount'];
+	$returnValue[0]['id']=$returnnew[0]['id'];
+return $returnValue;
+	
+	}
+public function qtyUpdate($operationtype,$barcode,$qty)
+    	{ 
+		if($operationtype=='status'){
+			$changeStatus = "UPDATE `tbl_product` SET `active`='active' WHERE barcode='".$barcode."'";
+			$this->db->query($changeStatus);
+			echo "Success";
+		}
+		if($operationtype=='qty'){
+			echo $changeStatus = "UPDATE `tbl_productBatch` SET `quantity`='".$qty."' WHERE id='".$barcode."'";
+			$this->db->query($changeStatus);
+			echo "Success";
+		}
+		if($operationtype=='delete'){
+			$changeStatus = "DELETE FROM `tbl_productBatch`WHERE id='".$barcode."'";
+			$this->db->query($changeStatus);
+			echo "Success";
+		}
 	}
 }
 
